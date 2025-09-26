@@ -145,7 +145,12 @@
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
-            if (!message) return;
+            console.log('Send message called with:', message);
+            
+            if (!message) {
+                console.log('Empty message, returning');
+                return;
+            }
 
             // Add user message to chat
             addMessage(message, 'user');
@@ -159,6 +164,7 @@
         }
 
         function sendQuickMessage(message) {
+            console.log('Quick message clicked:', message);
             document.getElementById('messageInput').value = message;
             sendMessage();
         }
@@ -205,6 +211,7 @@
 
         async function sendToAI(message) {
             try {
+                console.log('Sending message to AI:', message);
                 const response = await fetch('/api/ai-assistant', {
                     method: 'POST',
                     headers: {
@@ -216,11 +223,14 @@
                     })
                 });
 
+                console.log('Response status:', response.status);
+                
                 if (!response.ok) {
-                    throw new Error('AI service unavailable');
+                    throw new Error(`AI service unavailable: ${response.status}`);
                 }
 
                 const data = await response.json();
+                console.log('AI Response:', data);
                 
                 // Add AI response to chat
                 addMessage(data.response, 'ai');
@@ -236,7 +246,7 @@
 
             } catch (error) {
                 console.error('AI Error:', error);
-                addMessage("I'm sorry, I'm having trouble connecting to the AI service right now. Please try again later or contact our support team.", 'ai');
+                addMessage(`I'm sorry, I'm having trouble connecting to the AI service right now. Error: ${error.message}. Please try again later or contact our support team.`, 'ai');
             } finally {
                 hideLoading();
             }
