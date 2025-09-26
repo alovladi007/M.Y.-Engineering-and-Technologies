@@ -43,6 +43,36 @@
                     <a href="security.html" class="nav-link">Security</a>
                     <a href="api.html" class="nav-link">API</a>
                     <a href="index.html#demo" class="nav-link">Demo</a>
+                    <!-- Language Dropdown -->
+                    <div class="relative">
+                        <button id="language-dropdown-button" class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md">
+                            <span style="font-size: 20px; margin-right: 6px;">🇺🇸</span>
+                            <span class="hidden sm:inline">English</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="language-dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                            <div class="py-1">
+                                <button onclick="changeLanguage('en')" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <span style="font-size: 20px; margin-right: 8px;">🇺🇸</span>
+                                    English
+                                </button>
+                                <button onclick="changeLanguage('fr')" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <span style="font-size: 20px; margin-right: 8px;">🇫🇷</span>
+                                    Français
+                                </button>
+                                <button onclick="changeLanguage('es')" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <span style="font-size: 20px; margin-right: 8px;">🇪🇸</span>
+                                    Español
+                                </button>
+                                <button onclick="changeLanguage('zh')" class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <span style="font-size: 20px; margin-right: 8px;">🇨🇳</span>
+                                    中文
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="flex items-center space-x-4">
@@ -307,6 +337,27 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+        
+        // Language dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownButton = document.getElementById('language-dropdown-button');
+            const dropdownMenu = document.getElementById('language-dropdown-menu');
+            
+            if (dropdownButton && dropdownMenu) {
+                dropdownButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdownMenu.classList.toggle('hidden');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.add('hidden');
+                    }
+                });
+            }
+        });
     </script>
+    <script src="i18n-dropdown.js"></script>
 </body>
 </html>

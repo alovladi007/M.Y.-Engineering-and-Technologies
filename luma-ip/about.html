@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - LUMA IP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-link { color: #6b7280; transition: color 0.3s; }
+        .nav-link:hover { color: #3b82f6; }
+        .nav-link.active { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                            <span class="text-white text-xl">⚖️</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">LUMA IP</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="nav-link">Product</a>
+                    <a href="features.html" class="nav-link">Features</a>
+                    <a href="pricing.html" class="nav-link">Pricing</a>
+                    <a href="security.html" class="nav-link">Security</a>
+                    <a href="api.html" class="nav-link">API</a>
+                    <a href="index.html#demo" class="nav-link">Demo</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-gray-900 transition-colors">Sign In</button>
+                    <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:opacity-90 transition-opacity text-white">Get Started</button>
+                    <a href="http://localhost:8081/index.html" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                        ← Back to M.Y
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 gradient-text">About LUMA IP</h1>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto mb-12">
+                    We're on a mission to democratize patent filing and make intellectual property protection accessible to all innovators.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6 text-gray-900">Our Mission</h2>
+                    <p class="text-lg text-gray-600 mb-6">
+                        LUMA IP was founded with the belief that protecting innovation shouldn't be complicated or expensive. We combine cutting-edge AI technology with legal expertise to streamline the patent process.
+                    </p>
+                    <p class="text-lg text-gray-600 mb-8">
+                        Our platform empowers inventors, startups, and enterprises to protect their intellectual property efficiently and cost-effectively, ensuring that great ideas can flourish without barriers.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
+                            Join Our Mission
+                        </button>
+                        <button class="px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-2">10,000+</div>
+                            <p class="text-gray-600">Patents Filed</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-2">87%</div>
+                            <p class="text-gray-600">Success Rate</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-2">500+</div>
+                            <p class="text-gray-600">Law Firms</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold gradient-text mb-2">60%</div>
+                            <p class="text-gray-600">Time Saved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Our Team</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Experts in AI, law, and technology working together to revolutionize patent filing
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-8 text-center shadow-sm">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="user" class="h-10 w-10 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">AI Research Team</h3>
+                    <p class="text-gray-600">Leading experts in machine learning and natural language processing, developing cutting-edge AI models for patent analysis.</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 text-center shadow-sm">
+                    <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="scale" class="h-10 w-10 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Legal Experts</h3>
+                    <p class="text-gray-600">Experienced patent attorneys and IP professionals ensuring our platform meets the highest legal standards.</p>
+                </div>
+
+                <div class="bg-white rounded-xl p-8 text-center shadow-sm">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="code" class="h-10 w-10 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Engineering Team</h3>
+                    <p class="text-gray-600">Skilled developers and engineers building robust, scalable solutions for the patent filing process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Our Values</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    The principles that guide everything we do
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="lightbulb" class="h-8 w-8 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Innovation</h3>
+                    <p class="text-gray-600">Pushing the boundaries of what's possible with AI and technology.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="shield-check" class="h-8 w-8 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Trust</h3>
+                    <p class="text-gray-600">Building secure, reliable solutions that our users can depend on.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="users" class="h-8 w-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Accessibility</h3>
+                    <p class="text-gray-600">Making patent protection accessible to innovators of all sizes.</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="target" class="h-8 w-8 text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Excellence</h3>
+                    <p class="text-gray-600">Delivering the highest quality solutions and service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-white">Join Us in Revolutionizing Patent Filing</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-200">
+                Be part of the future of intellectual property protection
+            </p>
+            <div class="flex justify-center space-x-4">
+                <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                    Start Free Trial
+                </button>
+                <button class="px-8 py-4 bg-white/20 text-white font-bold rounded-lg hover:bg-white/30 transition-colors">
+                    Contact Us
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-white text-xl">⚖️</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">LUMA IP</h3>
+                        <p class="text-sm text-gray-400">Legal Utility for Machine Assisted IP Analysis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="product.html" class="hover:text-white transition-colors">Product Overview</a></li>
+                        <li><a href="features.html" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="security.html" class="hover:text-white transition-colors">Security</a></li>
+                        <li><a href="api.html" class="hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="cookies.html" class="hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="compliance.html" class="hover:text-white transition-colors">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <p class="text-sm text-gray-400">© 2024 LUMA IP. All rights reserved. Patent pending.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
