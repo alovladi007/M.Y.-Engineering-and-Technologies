@@ -31,7 +31,7 @@ outputType = "console"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd powerflow && pnpm dev:api"
-waitForPort = 8000
+waitForPort = 4000
 
 [[workflows.workflow]]
 name = "Frontend Web"
@@ -40,20 +40,20 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd powerflow && pnpm dev:web"
-waitForPort = 5000
+waitForPort = 3000
 
 [workflows.workflow.metadata]
 outputType = "webview"
 
 [[ports]]
-localPort = 8000
-externalPort = 8000
+localPort = 4000
+externalPort = 4000
 
 [[ports]]
-localPort = 5000
+localPort = 3000
 externalPort = 80
 
 [deployment]
 deploymentTarget = "autoscale"
-run = ["cd powerflow && pnpm start"]
+run = ["cd powerflow && pnpm dev:all"]
 build = ["cd powerflow && pnpm build"]
