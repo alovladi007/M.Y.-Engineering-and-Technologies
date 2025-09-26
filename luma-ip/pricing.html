@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - LUMA IP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-link { color: #6b7280; transition: color 0.3s; }
+        .nav-link:hover { color: #3b82f6; }
+        .nav-link.active { color: #3b82f6; }
+        .pricing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .pricing-card.popular {
+            border: 2px solid #3b82f6;
+            position: relative;
+        }
+        .pricing-card.popular::before {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #3b82f6;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                            <span class="text-white text-xl">⚖️</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">LUMA IP</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="nav-link">Product</a>
+                    <a href="features.html" class="nav-link">Features</a>
+                    <a href="pricing.html" class="nav-link active">Pricing</a>
+                    <a href="security.html" class="nav-link">Security</a>
+                    <a href="api.html" class="nav-link">API</a>
+                    <a href="index.html#demo" class="nav-link">Demo</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-gray-900 transition-colors">Sign In</button>
+                    <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:opacity-90 transition-opacity text-white">Get Started</button>
+                    <a href="http://localhost:8081/index.html" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                        ← Back to M.Y
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 gradient-text">Simple and Transparent Pricing</h1>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto mb-8">
+                    Choose the plan that fits your needs. Scale up or down at any time.
+                </p>
+                
+                <!-- Billing Toggle -->
+                <div class="flex items-center justify-center space-x-4 mb-12">
+                    <span class="text-gray-600">Monthly</span>
+                    <button class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6"></span>
+                    </button>
+                    <span class="text-gray-600">Annual <span class="text-green-600 font-semibold">(Save 20%)</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Cards -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="pricing-card bg-white border border-gray-200 rounded-2xl p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Starter</h3>
+                        <p class="text-gray-600 mb-6">Perfect for individual practitioners</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-gray-900">$99</span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <button class="w-full px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                            Get Started
+                        </button>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Up to 5 patent filings/month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Basic AI drafting assistance</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Prior art search (100 queries/month)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Email support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">USPTO form generation</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="pricing-card popular bg-white border border-gray-200 rounded-2xl p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                        <p class="text-gray-600 mb-6">For growing patent practices</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-gray-900">$299</span>
+                            <span class="text-gray-600">/month</span>
+                        </div>
+                        <button class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
+                            Start Free Trial
+                        </button>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Unlimited patent filings</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Advanced AI with custom training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Unlimited prior art searches</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Priority support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Team collaboration (up to 10 users)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">API access</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Portfolio analytics</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card bg-white border border-gray-200 rounded-2xl p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                        <p class="text-gray-600 mb-6">For large organizations</p>
+                        <div class="mb-6">
+                            <span class="text-5xl font-bold text-gray-900">Custom</span>
+                        </div>
+                        <button class="w-full px-6 py-3 border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                            Contact Sales
+                        </button>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Everything in Professional</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Unlimited users</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Custom AI model training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Dedicated account manager</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">On-premise deployment option</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">SLA guarantee</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Custom integrations</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600">
+                    Everything you need to know about our pricing and plans
+                </p>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Can I change my plan at any time?</h3>
+                    <p class="text-gray-600">
+                        Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the next billing cycle.
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Is there a free trial?</h3>
+                    <p class="text-gray-600">
+                        Yes, we offer a 14-day free trial for the Professional plan with full access to all features.
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">What payment methods do you accept?</h3>
+                    <p class="text-gray-600">
+                        We accept all major credit cards, ACH transfers, and bank wires for Enterprise plans.
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Do you offer discounts for annual billing?</h3>
+                    <p class="text-gray-600">
+                        Yes, annual billing saves you 20% compared to monthly billing across all plans.
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">What happens if I exceed my plan limits?</h3>
+                    <p class="text-gray-600">
+                        We'll notify you when you're approaching your limits and offer options to upgrade or purchase additional capacity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-white">Ready to Get Started?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-200">
+                Choose the plan that works for you and start transforming your patent practice today
+            </p>
+            <div class="flex justify-center space-x-4">
+                <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                    Start Free Trial
+                </button>
+                <button class="px-8 py-4 bg-white/20 text-white font-bold rounded-lg hover:bg-white/30 transition-colors">
+                    Contact Sales
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-white text-xl">⚖️</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">LUMA IP</h3>
+                        <p class="text-sm text-gray-400">Legal Utility for Machine Assisted IP Analysis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="product.html" class="hover:text-white transition-colors">Product Overview</a></li>
+                        <li><a href="features.html" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="security.html" class="hover:text-white transition-colors">Security</a></li>
+                        <li><a href="api.html" class="hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="cookies.html" class="hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="compliance.html" class="hover:text-white transition-colors">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <p class="text-sm text-gray-400">© 2024 LUMA IP. All rights reserved. Patent pending.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

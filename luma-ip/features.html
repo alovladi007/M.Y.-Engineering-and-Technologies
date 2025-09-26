@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - LUMA IP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-link { color: #6b7280; transition: color 0.3s; }
+        .nav-link:hover { color: #3b82f6; }
+        .nav-link.active { color: #3b82f6; }
+    </style>
+</head>
+<body class="bg-white text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                            <span class="text-white text-xl">⚖️</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">LUMA IP</h1>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="product.html" class="nav-link">Product</a>
+                    <a href="features.html" class="nav-link active">Features</a>
+                    <a href="pricing.html" class="nav-link">Pricing</a>
+                    <a href="security.html" class="nav-link">Security</a>
+                    <a href="api.html" class="nav-link">API</a>
+                    <a href="index.html#demo" class="nav-link">Demo</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-gray-900 transition-colors">Sign In</button>
+                    <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:opacity-90 transition-opacity text-white">Get Started</button>
+                    <a href="http://localhost:8081/index.html" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                        ← Back to M.Y
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 gradient-text">Powerful Features for Patent Professionals</h1>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto mb-12">
+                    Everything you need to draft, file, and manage patents efficiently with AI-powered assistance.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Core Features</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Advanced AI-powered tools designed specifically for patent professionals
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+                <!-- AI-Powered Patent Drafting -->
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                            <i data-lucide="brain" class="h-6 w-6 text-blue-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">AI-Powered Patent Drafting</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        Generate complete patent applications with claims, specifications, and drawings using advanced AI trained on millions of patents.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Automatic claim generation from invention disclosure</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Technical specification writing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Drawing descriptions and annotations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Multiple claim strategies and variations</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Advanced Prior Art Search -->
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                            <i data-lucide="search" class="h-6 w-6 text-purple-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Advanced Prior Art Search</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        Comprehensive semantic search across global patent databases with AI-powered relevance scoring.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Semantic similarity search</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">CPC classification analysis</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Citation network visualization</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Automated invalidity analysis</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Intelligent Docket Management -->
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                            <i data-lucide="calendar" class="h-6 w-6 text-green-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Intelligent Docket Management</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        Never miss a deadline with automated tracking, reminders, and statutory calculations.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Automatic deadline calculation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Multi-jurisdiction support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Team task assignment</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Calendar integration</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- USPTO Form Generation -->
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                            <i data-lucide="file-text" class="h-6 w-6 text-yellow-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">USPTO Form Generation</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        Automatically generate and validate all USPTO forms with pre-filled data.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">ADS, IDS, and other USPTO forms</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Automatic data validation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Electronic filing integration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check" class="h-5 w-5 text-green-600 mr-3 mt-0.5"></i>
+                            <span class="text-gray-600">Fee calculation and payment</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Features -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-gray-900">Additional Features</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Comprehensive tools to support your entire patent practice
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="users" class="h-8 w-8 text-blue-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900">Team Collaboration</h3>
+                    </div>
+                    <p class="text-gray-600">Real-time collaboration with role-based permissions and version control.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="bar-chart" class="h-8 w-8 text-purple-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900">Portfolio Analytics</h3>
+                    </div>
+                    <p class="text-gray-600">Comprehensive analytics and reporting for your entire patent portfolio.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="calculator" class="h-8 w-8 text-green-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900">Fee Calculator</h3>
+                    </div>
+                    <p class="text-gray-600">Accurate fee estimation for all entity types with excess claim calculations.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="globe" class="h-8 w-8 text-yellow-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900">Multi-Language Support</h3>
+                    </div>
+                    <p class="text-gray-600">File patents in multiple languages with professional translation services.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="shield" class="h-8 w-8 text-red-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900">Enterprise Security</h3>
+                    </div>
+                    <p class="text-gray-600">Bank-level encryption, SOC 2 compliance, and audit trails.</p>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="plug" class="h-8 w-8 text-cyan-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900">Integrations</h3>
+                    </div>
+                    <p class="text-gray-600">Connect with existing IP management systems and legal software.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-white">Experience the Power of LUMA IP</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-200">
+                Start your free trial today and see how AI can transform your patent practice
+            </p>
+            <div class="flex justify-center space-x-4">
+                <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                    Start Free Trial
+                </button>
+                <button class="px-8 py-4 bg-white/20 text-white font-bold rounded-lg hover:bg-white/30 transition-colors">
+                    Schedule Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                        <span class="text-white text-xl">⚖️</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">LUMA IP</h3>
+                        <p class="text-sm text-gray-400">Legal Utility for Machine Assisted IP Analysis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Product</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="product.html" class="hover:text-white transition-colors">Product Overview</a></li>
+                        <li><a href="features.html" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="security.html" class="hover:text-white transition-colors">Security</a></li>
+                        <li><a href="api.html" class="hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="cookies.html" class="hover:text-white transition-colors">Cookie Policy</a></li>
+                        <li><a href="compliance.html" class="hover:text-white transition-colors">Compliance</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <p class="text-sm text-gray-400">© 2024 LUMA IP. All rights reserved. Patent pending.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
