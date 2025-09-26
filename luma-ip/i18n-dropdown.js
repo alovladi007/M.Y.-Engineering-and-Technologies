@@ -102,7 +102,23 @@
             'terms.acceptance.title': 'Acceptance of Terms',
             'terms.acceptance.content': 'By accessing and using LUMA IP services, you accept and agree to be bound by the terms and provision of this agreement.',
             'terms.license.title': 'Use License',
-            'terms.license.content': 'Permission is granted to temporarily use LUMA IP services for personal, non-commercial transitory viewing only.'
+            'terms.license.content': 'Permission is granted to temporarily use LUMA IP services for personal, non-commercial transitory viewing only.',
+            
+            // Product
+            'product.title': 'The Complete Patent Platform',
+            'product.subtitle': 'LUMA IP combines cutting-edge AI with legal expertise to streamline every aspect of patent filing, from initial drafting to final prosecution.',
+            'product.startTrial': 'Start Free Trial',
+            'product.watchDemo': 'Watch Demo',
+            
+            // Privacy
+            'privacy.title': 'Privacy Policy',
+            'privacy.lastUpdated': 'Last updated: January 1, 2024',
+            'privacy.collect.title': 'Information We Collect',
+            'privacy.collect.content': 'We collect information you provide directly to us, such as when you create an account, use our services, or contact us for support.',
+            
+            // Cookies
+            'cookies.title': 'Cookie Policy',
+            'cookies.lastUpdated': 'Last updated: January 1, 2024'
         },
         
         fr: {
@@ -204,7 +220,23 @@
             'terms.acceptance.title': 'Acceptation des Conditions',
             'terms.acceptance.content': 'En accédant et en utilisant les services LUMA IP, vous acceptez et convenez d\'être lié par les termes et dispositions de cet accord.',
             'terms.license.title': 'Licence d\'Utilisation',
-            'terms.license.content': 'L\'autorisation est accordée d\'utiliser temporairement les services LUMA IP pour un visionnement transitoire personnel et non commercial uniquement.'
+            'terms.license.content': 'L\'autorisation est accordée d\'utiliser temporairement les services LUMA IP pour un visionnement transitoire personnel et non commercial uniquement.',
+            
+            // Product
+            'product.title': 'La Plateforme Complète de Brevets',
+            'product.subtitle': 'LUMA IP combine une IA de pointe avec une expertise juridique pour rationaliser tous les aspects du dépôt de brevets, du projet initial à la procédure finale.',
+            'product.startTrial': 'Commencer l\'Essai Gratuit',
+            'product.watchDemo': 'Voir la Démo',
+            
+            // Privacy
+            'privacy.title': 'Politique de Confidentialité',
+            'privacy.lastUpdated': 'Dernière mise à jour : 1er janvier 2024',
+            'privacy.collect.title': 'Informations que Nous Collectons',
+            'privacy.collect.content': 'Nous collectons les informations que vous nous fournissez directement, par exemple lorsque vous créez un compte, utilisez nos services ou nous contactez pour obtenir de l\'aide.',
+            
+            // Cookies
+            'cookies.title': 'Politique de Cookies',
+            'cookies.lastUpdated': 'Dernière mise à jour : 1er janvier 2024'
         },
         
         es: {
@@ -306,7 +338,23 @@
             'terms.acceptance.title': 'Aceptación de Términos',
             'terms.acceptance.content': 'Al acceder y usar los servicios de LUMA IP, acepta y se compromete a cumplir con los términos y disposiciones de este acuerdo.',
             'terms.license.title': 'Licencia de Uso',
-            'terms.license.content': 'Se otorga permiso para usar temporalmente los servicios de LUMA IP solo para visualización transitoria personal y no comercial.'
+            'terms.license.content': 'Se otorga permiso para usar temporalmente los servicios de LUMA IP solo para visualización transitoria personal y no comercial.',
+            
+            // Product
+            'product.title': 'La Plataforma Completa de Patentes',
+            'product.subtitle': 'LUMA IP combina IA de vanguardia con experiencia legal para optimizar todos los aspectos de la presentación de patentes, desde el borrador inicial hasta la prosecución final.',
+            'product.startTrial': 'Comenzar Prueba Gratuita',
+            'product.watchDemo': 'Ver Demo',
+            
+            // Privacy
+            'privacy.title': 'Política de Privacidad',
+            'privacy.lastUpdated': 'Última actualización: 1 de enero de 2024',
+            'privacy.collect.title': 'Información que Recopilamos',
+            'privacy.collect.content': 'Recopilamos información que nos proporciona directamente, como cuando crea una cuenta, usa nuestros servicios o nos contacta para obtener soporte.',
+            
+            // Cookies
+            'cookies.title': 'Política de Cookies',
+            'cookies.lastUpdated': 'Última actualización: 1 de enero de 2024'
         },
         
         zh: {
@@ -407,7 +455,23 @@
             'terms.acceptance.title': '接受条款',
             'terms.acceptance.content': '通过访问和使用LUMA IP服务，您接受并同意受本协议的条款和规定约束。',
             'terms.license.title': '使用许可',
-            'terms.license.content': '允许临时使用LUMA IP服务，仅用于个人、非商业的临时查看。'
+            'terms.license.content': '允许临时使用LUMA IP服务，仅用于个人、非商业的临时查看。',
+            
+            // Product
+            'product.title': '完整的专利平台',
+            'product.subtitle': 'LUMA IP将尖端AI与法律专业知识相结合，简化专利申请的各个方面，从初始起草到最终审查。',
+            'product.startTrial': '开始免费试用',
+            'product.watchDemo': '观看演示',
+            
+            // Privacy
+            'privacy.title': '隐私政策',
+            'privacy.lastUpdated': '最后更新：2024年1月1日',
+            'privacy.collect.title': '我们收集的信息',
+            'privacy.collect.content': '我们收集您直接提供给我们的信息，例如当您创建账户、使用我们的服务或联系我们寻求支持时。',
+            
+            // Cookies
+            'cookies.title': 'Cookie 政策',
+            'cookies.lastUpdated': '最后更新：2024年1月1日'
         }
     };
     
