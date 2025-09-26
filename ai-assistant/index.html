@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.Y Engineering AI Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            font-family: 'Inter', sans-serif;
+        }
+        .chat-container {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        .message-bubble {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .typing-indicator {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        .ai-gradient {
+            background: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <nav class="bg-black/90 backdrop-blur-lg border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 ai-gradient rounded-lg flex items-center justify-center">
+                    <i class="fas fa-robot text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white">M.Y Engineering AI Assistant</h1>
+                    <p class="text-sm text-gray-400">Powered by Advanced AI Technology</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="../index.html" class="px-4 py-2 border border-gray-600 rounded-lg hover:bg-gray-800 transition-colors text-gray-300">
+                    ← Back to M.Y
+                </a>
+                <button onclick="clearChat()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    <i class="fas fa-trash mr-2"></i>Clear Chat
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Chat Interface -->
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <div class="chat-container rounded-2xl p-6 h-[600px] flex flex-col">
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="flex-1 overflow-y-auto space-y-4 mb-6">
+                <!-- Welcome Message -->
+                <div class="message-bubble flex items-start space-x-3">
+                    <div class="w-8 h-8 ai-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-2xl px-4 py-3 max-w-[80%]">
+                        <p class="text-white">Hello! I'm the M.Y Engineering AI Assistant. I can help you with:</p>
+                        <ul class="text-gray-300 text-sm mt-2 space-y-1">
+                            <li>• Technical questions about our divisions</li>
+                            <li>• Product information and specifications</li>
+                            <li>• Engineering solutions and recommendations</li>
+                            <li>• Project planning and consultation</li>
+                        </ul>
+                        <p class="text-gray-300 text-sm mt-2">How can I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="mb-4">
+                <p class="text-gray-400 text-sm mb-2">Quick Actions:</p>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="sendQuickMessage('Tell me about PowerFlow')" class="px-3 py-1 bg-blue-600 text-white rounded-full text-sm hover:bg-blue-700 transition-colors">
+                        PowerFlow Info
+                    </button>
+                    <button onclick="sendQuickMessage('What is LUMA IP?')" class="px-3 py-1 bg-purple-600 text-white rounded-full text-sm hover:bg-purple-700 transition-colors">
+                        LUMA IP Info
+                    </button>
+                    <button onclick="sendQuickMessage('Show me cybersecurity solutions')" class="px-3 py-1 bg-green-600 text-white rounded-full text-sm hover:bg-green-700 transition-colors">
+                        Cybersecurity
+                    </button>
+                    <button onclick="sendQuickMessage('Hardware products available')" class="px-3 py-1 bg-orange-600 text-white rounded-full text-sm hover:bg-orange-700 transition-colors">
+                        Hardware
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="flex space-x-3">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    placeholder="Ask me anything about M.Y Engineering..."
+                    class="flex-1 px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button onclick="sendMessage()" class="px-6 py-3 ai-gradient text-white rounded-lg hover:opacity-90 transition-opacity">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-2xl p-8 text-center">
+            <div class="w-16 h-16 ai-gradient rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-robot text-white text-2xl"></i>
+            </div>
+            <p class="text-white text-lg mb-2">AI Assistant is thinking...</p>
+            <div class="typing-indicator flex space-x-1 justify-center">
+                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chatHistory = [];
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message to chat
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Show loading
+            showLoading();
+
+            // Send to AI backend
+            sendToAI(message);
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('messageInput').value = message;
+            sendMessage();
+        }
+
+        function addMessage(content, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-bubble flex items-start space-x-3';
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="flex-1"></div>
+                    <div class="bg-cyan-600 rounded-2xl px-4 py-3 max-w-[80%]">
+                        <p class="text-white">${content}</p>
+                    </div>
+                    <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user text-white text-sm"></i>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 ai-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-2xl px-4 py-3 max-w-[80%]">
+                        <p class="text-white">${content}</p>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+            document.getElementById('loadingOverlay').classList.add('flex');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            document.getElementById('loadingOverlay').classList.remove('flex');
+        }
+
+        async function sendToAI(message) {
+            try {
+                const response = await fetch('/api/ai-assistant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        history: chatHistory
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('AI service unavailable');
+                }
+
+                const data = await response.json();
+                
+                // Add AI response to chat
+                addMessage(data.response, 'ai');
+                
+                // Update chat history
+                chatHistory.push({ role: 'user', content: message });
+                chatHistory.push({ role: 'assistant', content: data.response });
+                
+                // Keep only last 10 messages to avoid token limits
+                if (chatHistory.length > 10) {
+                    chatHistory = chatHistory.slice(-10);
+                }
+
+            } catch (error) {
+                console.error('AI Error:', error);
+                addMessage("I'm sorry, I'm having trouble connecting to the AI service right now. Please try again later or contact our support team.", 'ai');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function clearChat() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = `
+                <div class="message-bubble flex items-start space-x-3">
+                    <div class="w-8 h-8 ai-gradient rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-2xl px-4 py-3 max-w-[80%]">
+                        <p class="text-white">Chat cleared! How can I help you today?</p>
+                    </div>
+                </div>
+            `;
+            chatHistory = [];
+        }
+
+        // Initialize chat
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('messageInput').focus();
+        });
+    </script>
+</body>
+</html>
