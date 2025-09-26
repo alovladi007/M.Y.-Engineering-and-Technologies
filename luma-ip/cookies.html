@@ -181,5 +181,28 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Language dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownButton = document.getElementById('language-dropdown-button');
+            const dropdownMenu = document.getElementById('language-dropdown-menu');
+            
+            if (dropdownButton && dropdownMenu) {
+                dropdownButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    dropdownMenu.classList.toggle('hidden');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.add('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="i18n-dropdown.js"></script>
 </body>
 </html>

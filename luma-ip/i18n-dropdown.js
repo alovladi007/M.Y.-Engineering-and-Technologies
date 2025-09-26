@@ -94,7 +94,15 @@
             'footer.terms': 'Terms of Service',
             'footer.cookiePolicy': 'Cookie Policy',
             'footer.compliance': 'Compliance',
-            'footer.copyright': '© 2024 LUMA IP. All rights reserved. Patent pending.'
+            'footer.copyright': '© 2024 LUMA IP. All rights reserved. Patent pending.',
+            
+            // Terms
+            'terms.title': 'Terms of Service',
+            'terms.lastUpdated': 'Last updated: January 1, 2024',
+            'terms.acceptance.title': 'Acceptance of Terms',
+            'terms.acceptance.content': 'By accessing and using LUMA IP services, you accept and agree to be bound by the terms and provision of this agreement.',
+            'terms.license.title': 'Use License',
+            'terms.license.content': 'Permission is granted to temporarily use LUMA IP services for personal, non-commercial transitory viewing only.'
         },
         
         fr: {
@@ -188,7 +196,15 @@
             'footer.terms': 'Conditions d\'Utilisation',
             'footer.cookiePolicy': 'Politique de Cookies',
             'footer.compliance': 'Conformité',
-            'footer.copyright': '© 2024 LUMA IP. Tous droits réservés. Brevet en instance.'
+            'footer.copyright': '© 2024 LUMA IP. Tous droits réservés. Brevet en instance.',
+            
+            // Terms
+            'terms.title': 'Conditions d\'Utilisation',
+            'terms.lastUpdated': 'Dernière mise à jour : 1er janvier 2024',
+            'terms.acceptance.title': 'Acceptation des Conditions',
+            'terms.acceptance.content': 'En accédant et en utilisant les services LUMA IP, vous acceptez et convenez d\'être lié par les termes et dispositions de cet accord.',
+            'terms.license.title': 'Licence d\'Utilisation',
+            'terms.license.content': 'L\'autorisation est accordée d\'utiliser temporairement les services LUMA IP pour un visionnement transitoire personnel et non commercial uniquement.'
         },
         
         es: {
@@ -282,7 +298,15 @@
             'footer.terms': 'Términos de Servicio',
             'footer.cookiePolicy': 'Política de Cookies',
             'footer.compliance': 'Cumplimiento',
-            'footer.copyright': '© 2024 LUMA IP. Todos los derechos reservados. Patente pendiente.'
+            'footer.copyright': '© 2024 LUMA IP. Todos los derechos reservados. Patente pendiente.',
+            
+            // Terms
+            'terms.title': 'Términos de Servicio',
+            'terms.lastUpdated': 'Última actualización: 1 de enero de 2024',
+            'terms.acceptance.title': 'Aceptación de Términos',
+            'terms.acceptance.content': 'Al acceder y usar los servicios de LUMA IP, acepta y se compromete a cumplir con los términos y disposiciones de este acuerdo.',
+            'terms.license.title': 'Licencia de Uso',
+            'terms.license.content': 'Se otorga permiso para usar temporalmente los servicios de LUMA IP solo para visualización transitoria personal y no comercial.'
         },
         
         zh: {
@@ -375,7 +399,15 @@
             'footer.terms': '服务条款',
             'footer.cookiePolicy': 'Cookie 政策',
             'footer.compliance': '合规性',
-            'footer.copyright': '© 2024 LUMA IP. 保留所有权利。专利待审。'
+            'footer.copyright': '© 2024 LUMA IP. 保留所有权利。专利待审。',
+            
+            // Terms
+            'terms.title': '服务条款',
+            'terms.lastUpdated': '最后更新：2024年1月1日',
+            'terms.acceptance.title': '接受条款',
+            'terms.acceptance.content': '通过访问和使用LUMA IP服务，您接受并同意受本协议的条款和规定约束。',
+            'terms.license.title': '使用许可',
+            'terms.license.content': '允许临时使用LUMA IP服务，仅用于个人、非商业的临时查看。'
         }
     };
     
