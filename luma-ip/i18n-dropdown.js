@@ -15,6 +15,20 @@
             'nav.signIn': 'Sign In',
             'nav.getStarted': 'Get Started',
             
+            // Sign In Page
+            'signin.title': 'Sign In',
+            'signin.subtitle': 'Access your LUMA IP account',
+            'signin.email': 'Email Address',
+            'signin.password': 'Password',
+            'signin.remember': 'Remember me',
+            'signin.forgot': 'Forgot password?',
+            'signin.signIn': 'Sign In',
+            'signin.demoTitle': 'Demo Accounts',
+            'signin.demoUser': 'Demo User Account',
+            'signin.demoAdmin': 'Demo Administrator Account',
+            'signin.noAccount': 'Don\'t have an account?',
+            'signin.signUp': 'Sign up',
+            
             // Hero
             'hero.title': 'Legal Utility for Machine Assisted IP Analysis',
             'hero.subtitle': 'Transform your patent filing process with advanced AI. Generate complete patent applications in minutes, not months. Powered by state-of-the-art language models.',
@@ -258,6 +272,20 @@
             'nav.api': 'API',
             'nav.signIn': 'Se Connecter',
             'nav.getStarted': 'Commencer',
+            
+            // Sign In Page
+            'signin.title': 'Se Connecter',
+            'signin.subtitle': 'Accédez à votre compte LUMA IP',
+            'signin.email': 'Adresse e-mail',
+            'signin.password': 'Mot de passe',
+            'signin.remember': 'Se souvenir de moi',
+            'signin.forgot': 'Mot de passe oublié?',
+            'signin.signIn': 'Se Connecter',
+            'signin.demoTitle': 'Comptes de Démonstration',
+            'signin.demoUser': 'Compte Utilisateur Démo',
+            'signin.demoAdmin': 'Compte Administrateur Démo',
+            'signin.noAccount': 'Vous n\'avez pas de compte?',
+            'signin.signUp': 'S\'inscrire',
             
             // Hero
             'hero.title': 'Utilité Juridique pour l\'Analyse de PI Assistée par Machine',
@@ -597,6 +625,20 @@
             'nav.signIn': 'Iniciar Sesión',
             'nav.getStarted': 'Comenzar',
             
+            // Sign In Page
+            'signin.title': 'Iniciar Sesión',
+            'signin.subtitle': 'Accede a tu cuenta LUMA IP',
+            'signin.email': 'Dirección de correo electrónico',
+            'signin.password': 'Contraseña',
+            'signin.remember': 'Recordarme',
+            'signin.forgot': '¿Olvidaste tu contraseña?',
+            'signin.signIn': 'Iniciar Sesión',
+            'signin.demoTitle': 'Cuentas de Demostración',
+            'signin.demoUser': 'Cuenta de Usuario Demo',
+            'signin.demoAdmin': 'Cuenta de Administrador Demo',
+            'signin.noAccount': '¿No tienes una cuenta?',
+            'signin.signUp': 'Registrarse',
+            
             // Hero
             'hero.title': 'Utilidad Legal para Análisis de PI Asistido por Máquina',
             'hero.subtitle': 'Transforme su proceso de solicitud de patentes con IA avanzada. Genere solicitudes de patentes completas en minutos, no meses. Impulsado por modelos de lenguaje de última generación.',
@@ -933,6 +975,20 @@
             'nav.api': 'API',
             'nav.signIn': '登录',
             'nav.getStarted': '开始使用',
+            
+            // Sign In Page
+            'signin.title': '登录',
+            'signin.subtitle': '访问您的LUMA IP账户',
+            'signin.email': '电子邮件地址',
+            'signin.password': '密码',
+            'signin.remember': '记住我',
+            'signin.forgot': '忘记密码？',
+            'signin.signIn': '登录',
+            'signin.demoTitle': '演示账户',
+            'signin.demoUser': '演示用户账户',
+            'signin.demoAdmin': '演示管理员账户',
+            'signin.noAccount': '没有账户？',
+            'signin.signUp': '注册',
             
             // Hero
             'hero.title': '机器辅助知识产权分析法律工具',
