@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "首页",
+    "features": "功能",
+    "demo": "演示",
+    "pricing": "价格",
+    "contact": "联系",
+    "signIn": "登录",
+    "signUp": "注册",
+    "dashboard": "仪表板",
+    "logout": "退出"
+  },
+  "hero": {
+    "title": "机器辅助知识产权分析法律工具",
+    "subtitle": "通过人工智能驱动的自动化革新您的专利申请流程",
+    "description": "LUMA IP 将尖端人工智能与法律专业知识相结合，简化专利申请，降低成本，加速创新。",
+    "ctaDemo": "试用演示",
+    "ctaLearn": "了解更多",
+    "ctaStart": "开始使用"
+  },
+  "features": {
+    "title": "为什么选择 LUMA IP？",
+    "subtitle": "体验知识产权管理的未来",
+    "ai": {
+      "title": "AI 驱动分析",
+      "description": "先进的机器学习算法分析现有技术并优化专利权利要求"
+    },
+    "automation": {
+      "title": "自动化工作流程",
+      "description": "通过智能自动化和模板简化申请流程"
+    },
+    "collaboration": {
+      "title": "团队协作",
+      "description": "为法律团队和发明人提供实时协作工具"
+    },
+    "security": {
+      "title": "企业级安全",
+      "description": "银行级加密并符合国际知识产权法规"
+    },
+    "analytics": {
+      "title": "分析仪表板",
+      "description": "全面了解您的知识产权组合和申请指标"
+    },
+    "support": {
+      "title": "24/7 支持",
+      "description": "随时获得知识产权专业人士的专家协助"
+    }
+  },
+  "dashboard": {
+    "welcome": "欢迎使用 LUMA IP",
+    "overview": "概览",
+    "patents": "专利",
+    "filings": "申请",
+    "analytics": "分析",
+    "settings": "设置",
+    "newFiling": "新申请",
+    "recentActivity": "最近活动",
+    "totalPatents": "专利总数",
+    "pendingApplications": "待处理申请",
+    "grantedPatents": "已授权专利"
+  },
+  "filing": {
+    "title": "新专利申请",
+    "inventionTitle": "发明名称",
+    "description": "描述",
+    "claims": "权利要求",
+    "drawings": "附图",
+    "submit": "提交申请",
+    "save": "保存草稿",
+    "cancel": "取消"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "发生错误",
+    "success": "成功",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "view": "查看",
+    "download": "下载",
+    "upload": "上传",
+    "search": "搜索",
+    "filter": "筛选",
+    "sort": "排序",
+    "language": "语言"
+  }
+}

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMA IP - Legal Utility for Machine Assisted IP Analysis</title>
+    
+    <!-- i18n Script -->
+    <script src="i18n-dropdown.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: normal;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #667eea;
+        }
+        
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .features {
+            background: white;
+            padding: 4rem 2rem;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .dashboard-preview {
+            background: #f1f5f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+        }
+        
+        .dashboard-header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .dashboard-title {
+            font-size: 1.3rem;
+            color: #334155;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .legal-notice {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 900px;
+        }
+        
+        .legal-notice strong {
+            color: #92400e;
+        }
+        
+        footer {
+            background: #1e293b;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">
+                ⚖️ LUMA IP
+                <span class="tagline">| Legal Utility for Machine Assisted IP Analysis</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>🚀 Welcome to LUMA IP</h1>
+        <p>Legal Utility for Machine Assisted IP Analysis</p>
+        <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem;">
+            Transform your intellectual property workflow with AI-powered analysis,<br>
+            automated patent drafting, and comprehensive IP management tools.
+        </p>
+        <div class="cta-buttons">
+            <button class="btn btn-primary">Start Free Trial</button>
+            <button class="btn btn-secondary">Watch Demo</button>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2>Powerful Features for IP Professionals</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered Drafting</h3>
+                    <p class="feature-description">
+                        Generate patent claims and specifications using advanced AI trained on patent law,
+                        MPEP guidelines, and thousands of granted patents.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Prior Art Search</h3>
+                    <p class="feature-description">
+                        Comprehensive vector similarity search through patent databases, MPEP,
+                        and CFR to identify relevant prior art instantly.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3 class="feature-title">USPTO Form Generation</h3>
+                    <p class="feature-description">
+                        Automatically generate USPTO-compliant forms including ADS, IDS,
+                        and other required documentation with built-in validation.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Portfolio Management</h3>
+                    <p class="feature-description">
+                        Track and manage your entire IP portfolio with comprehensive analytics,
+                        deadline tracking, and collaborative tools.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Enterprise Security</h3>
+                    <p class="feature-description">
+                        Bank-level security with JWT authentication, role-based access control,
+                        and comprehensive audit logging for compliance.
+                    </p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Real-time Collaboration</h3>
+                    <p class="feature-description">
+                        Work seamlessly with your team, clients, and external counsel with
+                        real-time updates and integrated communication tools.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="legal-notice">
+                <strong>⚖️ Legal Notice:</strong> LUMA IP provides automated assistance for intellectual property analysis and patent filing preparation.
+                It does not constitute legal advice. Users must consult with a registered patent practitioner before filing any patent applications.
+            </div>
+            
+            <div class="dashboard-preview" id="dashboard">
+                <div class="dashboard-header">
+                    <h3 class="dashboard-title">📊 Your IP Dashboard</h3>
+                    <p style="color: #64748b;">Real-time overview of your intellectual property portfolio</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Active Patents</div>
+                        <div class="stat-value">247</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Pending Applications</div>
+                        <div class="stat-value">18</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Upcoming Deadlines</div>
+                        <div class="stat-value">5</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">AI Drafts Generated</div>
+                        <div class="stat-value">1,042</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2024 LUMA IP - Legal Utility for Machine Assisted IP Analysis</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Educational and Development Use Only</p>
+    </footer>
+</body>
+</html>

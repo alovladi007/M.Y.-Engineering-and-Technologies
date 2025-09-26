@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMA IP - Legal Utility for Machine Assisted IP Analysis</title>
+    <meta name="description" content="Legal Utility for Machine Assisted IP Analysis - AI-powered intellectual property analysis and patent drafting assistance">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+        }
+        
+        .warning strong {
+            color: #856404;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tech-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .tech-item h3 {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-item ul {
+            list-style: none;
+            color: #6c757d;
+        }
+        
+        .tech-item li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 8px;
+        }
+        
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .badge-ready {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-docker {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .badge-ai {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 LUMA IP</h1>
+            <p class="tagline">Legal Utility for Machine Assisted IP Analysis</p>
+            <div class="status-badges">
+                <span class="status-badge badge-ready">✅ Production Ready</span>
+                <span class="status-badge badge-docker">🐳 Docker Compose</span>
+                <span class="status-badge badge-ai">🤖 AI Powered</span>
+            </div>
+        </header>
+
+        <div class="warning">
+            <strong>⚖️ Legal Notice:</strong> This platform provides automated assistance for patent filing preparation. 
+            It does not constitute legal advice. Users must consult with a registered patent practitioner before filing any patent applications.
+        </div>
+
+        <div class="section">
+            <h2>📋 About This Project</h2>
+            <p>A comprehensive monorepo implementation of an automated patent filing platform featuring:</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li>AI-powered claim and specification drafting using LangGraph</li>
+                <li>USPTO form generation (ADS, IDS)</li>
+                <li>Prior art search with vector similarity</li>
+                <li>Complete docket and deadline management</li>
+                <li>Organization-based multi-tenancy with RBAC</li>
+                <li>Stripe billing integration</li>
+                <li>S3-compatible file storage</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🛠️ Technology Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li>Next.js 14 (App Router)</li>
+                        <li>TypeScript</li>
+                        <li>TailwindCSS</li>
+                        <li>shadcn/ui components</li>
+                    </ul>
+                </div>
+                <div class="tech-item">
+                    <h3>Backend API</h3>
+                    <ul>
+                        <li>NestJS</li>
+                        <li>Prisma ORM</li>
+                        <li>PostgreSQL + pgvector</li>
+                        <li>BullMQ job queues</li>
+                    </ul>
+                </div>
+                <div class="tech-item">
+                    <h3>AI Agent Service</h3>
+                    <ul>
+                        <li>FastAPI (Python)</li>
+                        <li>LangGraph</li>
+                        <li>Celery + Redis</li>
+                        <li>SQLAlchemy</li>
+                    </ul>
+                </div>
+                <div class="tech-item">
+                    <h3>Infrastructure</h3>
+                    <ul>
+                        <li>Docker Compose</li>
+                        <li>MinIO (S3-compatible)</li>
+                        <li>Redis</li>
+                        <li>GitHub Actions CI/CD</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✨ Key Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <h3>🤖 AI-Powered Drafting</h3>
+                    <p>Generate patent claims and specifications using advanced language models trained on patent law</p>
+                </div>
+                <div class="feature">
+                    <h3>📄 Form Generation</h3>
+                    <p>Automatically create USPTO-compliant ADS, IDS, and other forms from your data</p>
+                </div>
+                <div class="feature">
+                    <h3>🔍 Prior Art Search</h3>
+                    <p>Vector similarity search through MPEP, CFR, and patent databases</p>
+                </div>
+                <div class="feature">
+                    <h3>📅 Docket Management</h3>
+                    <p>Track deadlines, tasks, and maintain complete audit trails</p>
+                </div>
+                <div class="feature">
+                    <h3>🔒 Enterprise Security</h3>
+                    <p>JWT auth, RBAC, organization isolation, and comprehensive audit logging</p>
+                </div>
+                <div class="feature">
+                    <h3>💳 Billing Integration</h3>
+                    <p>Stripe integration for subscription management and usage-based billing</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Quick Start</h2>
+            <div class="code-block">
+                <pre># Clone the repository
+git clone https://github.com/alovladi007/Patent-Filing-Platform-Builder.git
+cd Patent-Filing-Platform-Builder/patent-platform
+
+# Start all services with Docker
+./start.sh
+
+# Or manually:
+docker compose -f infra/docker/docker-compose.yml up -d --build
+
+# Access the platform
+# Web UI: http://localhost:3000
+# API Docs: http://localhost:3001/api/docs
+# Agent API: http://localhost:8000/docs</pre>
+            </div>
+            
+            <h3 style="margin-top: 1.5rem;">Demo Credentials</h3>
+            <div class="code-block">
+                <pre>Email: demo@patentplatform.com
+Password: demo123456</pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📁 Repository Structure</h2>
+            <div class="code-block">
+                <pre>patent-platform/
+├── apps/
+│   ├── web/          # Next.js 14 frontend
+│   └── api/          # NestJS backend
+├── services/
+│   └── agent/        # FastAPI AI service
+├── packages/
+│   ├── ui/           # Shared components
+│   └── config/       # Shared configs
+├── infra/
+│   ├── docker/       # Docker configs
+│   ├── prisma/       # Database schema
+│   └── scripts/      # Utility scripts
+└── .github/
+    └── workflows/    # CI/CD</pre>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Resources</h2>
+            <div class="buttons">
+                <a href="https://github.com/alovladi007/Patent-Filing-Platform-Builder" class="btn btn-primary">
+                    📦 View on GitHub
+                </a>
+                <a href="https://github.com/alovladi007/Patent-Filing-Platform-Builder/blob/main/patent-platform/README.md" class="btn btn-secondary">
+                    📖 Documentation
+                </a>
+                <a href="https://github.com/alovladi007/Patent-Filing-Platform-Builder/issues" class="btn btn-secondary">
+                    🐛 Report Issues
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚠️ Important Notes</h2>
+            <ul style="padding-left: 2rem;">
+                <li><strong>This is a full-stack application</strong> that requires Docker and backend services to run</li>
+                <li><strong>Cannot be hosted on GitHub Pages</strong> - requires a VPS, cloud platform, or local Docker environment</li>
+                <li><strong>For production deployment</strong>, consider platforms like AWS, Google Cloud, Azure, or DigitalOcean</li>
+                <li><strong>Environment variables</strong> need to be configured for API keys and services</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 LUMA IP - Educational and Development Use Only</p>
+        <p>Not for production patent filing without proper legal review</p>
+    </footer>
+</body>
+</html>

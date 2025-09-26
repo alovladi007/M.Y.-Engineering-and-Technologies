@@ -1,0 +1,345 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("DIRECT_URL")
+  extensions = [pgvector(map: "vector")]
+}
+
+// User and Organization Models
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  image        String?
+  role         String   @default("USER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  organizations OrganizationMember[]
+  matters       Matter[]
+  docketEntries DocketEntry[]
+  auditLogs     AuditLog[]
+}
+
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  billingPlan String   @default("FREE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members         OrganizationMember[]
+  matters         Matter[]
+  files           File[]
+  billingCustomer BillingCustomer?
+  usageCounters   UsageCounter[]
+  auditLogs       AuditLog[]
+}
+
+model OrganizationMember {
+  id        String   @id @default(cuid())
+  role      String   @default("MEMBER") // OWNER, ADMIN, MEMBER
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orgId])
+  @@index([userId])
+  @@index([orgId])
+}
+
+// Matter Models
+model Matter {
+  id           String    @id @default(cuid())
+  title        String
+  type         String // PROVISIONAL, NONPROVISIONAL, DESIGN, PCT
+  status       String    @default("DRAFT")
+  abstract     String?   @db.Text
+  priorityDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  orgId       String
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdById String
+  createdBy   User         @relation(fields: [createdById], references: [id])
+
+  parentMatterId String?
+  parentMatter   Matter?  @relation("MatterHierarchy", fields: [parentMatterId], references: [id])
+  childMatters   Matter[] @relation("MatterHierarchy")
+
+  inventors        Inventor[]
+  assignees        Assignee[]
+  priorArt         PriorArtReference[]
+  claims           Claim[]
+  specSections     SpecSection[]
+  documents        Document[]
+  tasks            Task[]
+  deadlines        Deadline[]
+  docketEntries    DocketEntry[]
+  agentRuns        AgentRun[]
+
+  @@index([orgId])
+  @@index([createdById])
+  @@index([type])
+  @@index([status])
+}
+
+model Inventor {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  residence   String
+  citizenship String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  @@index([matterId])
+}
+
+model Assignee {
+  id         String   @id @default(cuid())
+  name       String
+  address    String
+  entityType String // INDIVIDUAL, SMALL, LARGE
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  @@index([matterId])
+}
+
+model PriorArtReference {
+  id        String   @id @default(cuid())
+  type      String // US, WO, EP, NPL
+  citation  String
+  url       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  fileId String?
+  file   File?   @relation(fields: [fileId], references: [id])
+
+  @@index([matterId])
+  @@index([type])
+}
+
+model Claim {
+  id           String   @id @default(cuid())
+  number       Int
+  text         String   @db.Text
+  type         String   @default("independent") // independent, dependent
+  isIndependent Boolean @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  parentClaimId String?
+  parentClaim   Claim?  @relation("ClaimDependency", fields: [parentClaimId], references: [id])
+  dependentClaims Claim[] @relation("ClaimDependency")
+
+  @@unique([matterId, number])
+  @@index([matterId])
+  @@index([parentClaimId])
+}
+
+model SpecSection {
+  id        String   @id @default(cuid())
+  kind      String // FIELD, BACKGROUND, SUMMARY, BRIEF_DESC, DETAILED_DESC
+  markdown  String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  @@unique([matterId, kind])
+  @@index([matterId])
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  kind      String // DRAWING, DISCLOSURE, FORM, MISC
+  meta      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  fileId String
+  file   File   @relation(fields: [fileId], references: [id])
+
+  @@index([matterId])
+  @@index([kind])
+}
+
+model File {
+  id         String   @id @default(cuid())
+  bucketKey  String   @unique
+  mime       String
+  bytes      Int
+  sha256     String
+  createdAt  DateTime @default(now())
+
+  ownerOrgId String
+  ownerOrg   Organization @relation(fields: [ownerOrgId], references: [id])
+
+  documents Document[]
+  priorArt  PriorArtReference[]
+
+  @@index([ownerOrgId])
+}
+
+// Task and Deadline Models
+model Task {
+  id        String    @id @default(cuid())
+  title     String
+  kind      String // INTAKE, DRAFT, REVIEW, IDS, FILING
+  status    String    @default("TODO") // TODO, IN_PROGRESS, DONE
+  dueAt     DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  @@index([matterId])
+  @@index([status])
+  @@index([dueAt])
+}
+
+model Deadline {
+  id        String   @id @default(cuid())
+  kind      String // PRIORITY_12M, OA_3M, PCT_30M, MAINT_FEE
+  dueAt     DateTime
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  @@index([matterId])
+  @@index([dueAt])
+}
+
+model DocketEntry {
+  id        String   @id @default(cuid())
+  action    String
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  byUserId String?
+  byUser   User?   @relation(fields: [byUserId], references: [id])
+
+  @@index([matterId])
+  @@index([createdAt])
+}
+
+// AI Agent Models
+model AgentRun {
+  id        String   @id @default(cuid())
+  status    String   @default("QUEUED") // QUEUED, RUNNING, SUCCEEDED, FAILED
+  goals     Json
+  state     Json?
+  output    Json?
+  logs      String[]
+  tokens    Int?
+  costUSD   Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  matterId String
+  matter   Matter @relation(fields: [matterId], references: [id], onDelete: Cascade)
+
+  @@index([matterId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model VectorChunk {
+  id        String                      @id @default(cuid())
+  source    String // MPEP, CFR, TEMPLATE, USER_DOC
+  sourceId  String?
+  text      String                      @db.Text
+  embedding Unsupported("vector(1536)")?
+  metadata  Json?
+  createdAt DateTime                    @default(now())
+
+  @@index([source])
+  @@index([sourceId])
+}
+
+// Billing and Usage Models
+model BillingCustomer {
+  orgId            String       @id
+  org              Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  stripeCustomerId String       @unique
+  plan             String       @default("FREE")
+  seats            Int          @default(1)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model UsageCounter {
+  id          String   @id @default(cuid())
+  key         String // matters_created, agent_runs, storage_bytes
+  periodStart DateTime
+  period      String // MONTH, DAY
+  value       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orgId String
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, key, periodStart, period])
+  @@index([orgId])
+  @@index([periodStart])
+}
+
+// Audit Log
+model AuditLog {
+  id         String   @id @default(cuid())
+  action     String
+  targetType String?
+  targetId   String?
+  ip         String?
+  userAgent  String?
+  meta       Json?
+  createdAt  DateTime @default(now())
+
+  orgId   String
+  org     Organization @relation(fields: [orgId], references: [id])
+  actorId String?
+  actor   User?        @relation(fields: [actorId], references: [id])
+
+  @@index([orgId])
+  @@index([actorId])
+  @@index([createdAt])
+  @@index([action])
+}

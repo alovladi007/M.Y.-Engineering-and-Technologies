@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "demo": "Demo",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Legal Utility for Machine Assisted IP Analysis",
+    "subtitle": "Revolutionize your patent filing process with AI-powered automation",
+    "description": "LUMA IP combines cutting-edge artificial intelligence with legal expertise to streamline patent applications, reduce costs, and accelerate innovation.",
+    "ctaDemo": "Try Demo",
+    "ctaLearn": "Learn More",
+    "ctaStart": "Get Started"
+  },
+  "features": {
+    "title": "Why Choose LUMA IP?",
+    "subtitle": "Experience the future of intellectual property management",
+    "ai": {
+      "title": "AI-Powered Analysis",
+      "description": "Advanced machine learning algorithms analyze prior art and optimize patent claims"
+    },
+    "automation": {
+      "title": "Automated Workflows",
+      "description": "Streamline filing processes with intelligent automation and templates"
+    },
+    "collaboration": {
+      "title": "Team Collaboration",
+      "description": "Real-time collaboration tools for legal teams and inventors"
+    },
+    "security": {
+      "title": "Enterprise Security",
+      "description": "Bank-level encryption and compliance with international IP regulations"
+    },
+    "analytics": {
+      "title": "Analytics Dashboard",
+      "description": "Comprehensive insights into your IP portfolio and filing metrics"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Expert assistance from IP professionals whenever you need it"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome to LUMA IP",
+    "overview": "Overview",
+    "patents": "Patents",
+    "filings": "Filings",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "newFiling": "New Filing",
+    "recentActivity": "Recent Activity",
+    "totalPatents": "Total Patents",
+    "pendingApplications": "Pending Applications",
+    "grantedPatents": "Granted Patents"
+  },
+  "filing": {
+    "title": "New Patent Filing",
+    "inventionTitle": "Invention Title",
+    "description": "Description",
+    "claims": "Claims",
+    "drawings": "Drawings",
+    "submit": "Submit Filing",
+    "save": "Save Draft",
+    "cancel": "Cancel"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "language": "Language"
+  }
+}

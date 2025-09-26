@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security - LUMA IP</title>
+    <meta name="description" content="Enterprise-grade security and compliance for patent data">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- i18n Script -->
+    <script src="../i18n-dropdown.js" defer></script>
+    
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="text-2xl mr-2">⚖️</span>
+                        <span class="text-xl font-bold text-purple-700">LUMA IP</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="product.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.product">Product</a>
+                    <a href="features.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.features">Features</a>
+                    <a href="pricing.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.pricing">Pricing</a>
+                    <a href="security.html" class="text-purple-700 font-semibold" data-i18n="nav.security">Security</a>
+                    <a href="api.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.api">API</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-5xl font-bold mb-6" data-i18n="security.hero.title">Security First, Always</h1>
+            <p class="text-xl max-w-3xl opacity-90" data-i18n="security.hero.description">
+                Your intellectual property is protected by enterprise-grade security, compliance certifications, and industry best practices.
+            </p>
+        </div>
+    </section>
+
+    <!-- Security Features -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12" data-i18n="security.features.title">Security Features</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-lock text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" data-i18n="security.encryption.title">End-to-End Encryption</h3>
+                    <p class="text-gray-600" data-i18n="security.encryption.description">
+                        All data is encrypted at rest with AES-256 and in transit with TLS 1.3
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-user-shield text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" data-i18n="security.access.title">Access Control</h3>
+                    <p class="text-gray-600" data-i18n="security.access.description">
+                        Role-based access control with multi-factor authentication and SSO support
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-history text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" data-i18n="security.audit.title">Audit Logging</h3>
+                    <p class="text-gray-600" data-i18n="security.audit.description">
+                        Complete audit trail of all actions with tamper-proof logging
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-server text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" data-i18n="security.infrastructure.title">Secure Infrastructure</h3>
+                    <p class="text-gray-600" data-i18n="security.infrastructure.description">
+                        Hosted on SOC 2 compliant infrastructure with 99.99% uptime SLA
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-virus text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" data-i18n="security.threat.title">Threat Protection</h3>
+                    <p class="text-gray-600" data-i18n="security.threat.description">
+                        Real-time threat detection with DDoS protection and WAF
+                    </p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-database text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3" data-i18n="security.backup.title">Data Backup</h3>
+                    <p class="text-gray-600" data-i18n="security.backup.description">
+                        Automated daily backups with point-in-time recovery
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12" data-i18n="security.compliance.title">Compliance & Certifications</h2>
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <i class="fas fa-certificate text-4xl text-purple-600 mb-4"></i>
+                    <h3 class="font-semibold mb-2">SOC 2 Type II</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="security.soc2">Certified compliant</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <i class="fas fa-shield-alt text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="font-semibold mb-2">ISO 27001</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="security.iso">Certified</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <i class="fas fa-user-lock text-4xl text-green-600 mb-4"></i>
+                    <h3 class="font-semibold mb-2">GDPR</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="security.gdpr">Compliant</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <i class="fas fa-flag-usa text-4xl text-red-600 mb-4"></i>
+                    <h3 class="font-semibold mb-2">CCPA</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="security.ccpa">Compliant</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold mb-4" data-i18n="footer.product">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="product.html" class="hover:text-white" data-i18n="nav.product">Product</a></li>
+                        <li><a href="features.html" class="hover:text-white" data-i18n="footer.features">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white" data-i18n="footer.pricing">Pricing</a></li>
+                        <li><a href="security.html" class="hover:text-white" data-i18n="footer.security">Security</a></li>
+                        <li><a href="api.html" class="hover:text-white" data-i18n="footer.api">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" data-i18n="footer.company">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="company/about.html" class="hover:text-white" data-i18n="footer.about">About</a></li>
+                        <li><a href="company/blog.html" class="hover:text-white" data-i18n="footer.blog">Blog</a></li>
+                        <li><a href="company/careers.html" class="hover:text-white" data-i18n="footer.careers">Careers</a></li>
+                        <li><a href="company/contact.html" class="hover:text-white" data-i18n="footer.contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" data-i18n="footer.legal">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="legal/privacy.html" class="hover:text-white" data-i18n="footer.privacy">Privacy Policy</a></li>
+                        <li><a href="legal/terms.html" class="hover:text-white" data-i18n="footer.terms">Terms of Service</a></li>
+                        <li><a href="legal/cookie.html" class="hover:text-white" data-i18n="footer.cookie">Cookie Policy</a></li>
+                        <li><a href="legal/compliance.html" class="hover:text-white" data-i18n="footer.compliance">Compliance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-2">⚖️</span>
+                        <span class="text-xl font-bold">LUMA IP</span>
+                    </div>
+                    <p class="text-gray-400 text-sm" data-i18n="footer.copyright">
+                        © 2024 LUMA IP. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

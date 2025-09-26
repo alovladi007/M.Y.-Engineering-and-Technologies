@@ -1,0 +1,65 @@
+# Render Blueprint Configuration for LUMA IP
+# Simplified version using npm instead of pnpm
+# Last updated: Fix deployment issues
+
+databases:
+  # PostgreSQL Database
+  - name: patent-db
+    databaseName: patentdb
+    user: patentuser
+    plan: free
+
+services:
+  # Backend API Service (NestJS)
+  - type: web
+    name: patent-api
+    runtime: node
+    plan: free
+    buildCommand: |
+      cd patent-platform && \
+      npm install && \
+      cd apps/api && \
+      npx prisma generate --schema=../../infra/prisma/schema.prisma && \
+      npm run build
+    startCommand: |
+      cd patent-platform/apps/api && \
+      npx prisma migrate deploy --schema=../../infra/prisma/schema.prisma && \
+      npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: patent-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: "*"
+
+  # Frontend Web Service (Next.js)
+  - type: web
+    name: patent-web
+    runtime: node
+    plan: free
+    buildCommand: |
+      cd patent-platform && \
+      npm install && \
+      cd apps/web && \
+      npm run build
+    startCommand: |
+      cd patent-platform/apps/web && \
+      npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: patent-api
+          property: host
+

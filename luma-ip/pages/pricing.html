@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - LUMA IP</title>
+    <meta name="description" content="Flexible pricing plans for patent professionals and organizations">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- i18n Script -->
+    <script src="../i18n-dropdown.js" defer></script>
+    
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="text-2xl mr-2">⚖️</span>
+                        <span class="text-xl font-bold text-purple-700">LUMA IP</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="product.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.product">Product</a>
+                    <a href="features.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.features">Features</a>
+                    <a href="pricing.html" class="text-purple-700 font-semibold" data-i18n="nav.pricing">Pricing</a>
+                    <a href="security.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.security">Security</a>
+                    <a href="api.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.api">API</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-purple-600 to-pink-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-6" data-i18n="pricing.hero.title">Simple, Transparent Pricing</h1>
+            <p class="text-xl max-w-3xl mx-auto opacity-90" data-i18n="pricing.hero.description">
+                Choose the plan that fits your needs. Scale up or down anytime.
+            </p>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Toggle -->
+            <div class="flex justify-center mb-12">
+                <div class="bg-gray-200 rounded-full p-1 flex">
+                    <button class="px-6 py-2 rounded-full bg-white shadow-sm font-medium" data-i18n="pricing.monthly">Monthly</button>
+                    <button class="px-6 py-2 rounded-full text-gray-600" data-i18n="pricing.annual">Annual (Save 20%)</button>
+                </div>
+            </div>
+
+            <!-- Plans Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-2" data-i18n="pricing.starter.title">Starter</h3>
+                    <p class="text-gray-600 mb-6" data-i18n="pricing.starter.description">Perfect for individual practitioners</p>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold">$299</span>
+                        <span class="text-gray-600" data-i18n="pricing.starter.period">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.starter.feature1">Up to 5 patent filings/month</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.starter.feature2">Basic AI drafting assistance</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.starter.feature3">Prior art search (100 queries/month)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.starter.feature4">Email support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.starter.feature5">USPTO form generation</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 px-6 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition" data-i18n="pricing.getStarted">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Professional Plan (Most Popular) -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 border-2 border-purple-600 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold" data-i18n="pricing.mostPopular">
+                            MOST POPULAR
+                        </span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2" data-i18n="pricing.professional.title">Professional</h3>
+                    <p class="text-gray-600 mb-6" data-i18n="pricing.professional.description">For growing patent practices</p>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold">$999</span>
+                        <span class="text-gray-600" data-i18n="pricing.professional.period">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature1">Unlimited patent filings</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature2">Advanced AI with custom training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature3">Unlimited prior art searches</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature4">Priority support</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature5">Team collaboration (up to 10 users)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature6">API access</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.professional.feature7">Portfolio analytics</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 px-6 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition" data-i18n="pricing.startTrial">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <h3 class="text-2xl font-bold mb-2" data-i18n="pricing.enterprise.title">Enterprise</h3>
+                    <p class="text-gray-600 mb-6" data-i18n="pricing.enterprise.description">For large organizations</p>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold" data-i18n="pricing.enterprise.custom">Custom</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature1">Everything in Professional</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature2">Unlimited users</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature3">Custom AI model training</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature4">Dedicated account manager</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature5">On-premise deployment option</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature6">SLA guarantee</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                            <span data-i18n="pricing.enterprise.feature7">Custom integrations</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 px-6 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition" data-i18n="pricing.contactSales">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-100">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12" data-i18n="pricing.faq.title">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div class="bg-white rounded-lg p-6">
+                    <h3 class="font-semibold mb-2" data-i18n="pricing.faq.q1">Can I change plans anytime?</h3>
+                    <p class="text-gray-600" data-i18n="pricing.faq.a1">
+                        Yes, you can upgrade or downgrade your plan at any time. Changes take effect at the next billing cycle.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg p-6">
+                    <h3 class="font-semibold mb-2" data-i18n="pricing.faq.q2">Is there a free trial?</h3>
+                    <p class="text-gray-600" data-i18n="pricing.faq.a2">
+                        Yes, we offer a 14-day free trial for Professional plan with full access to all features.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg p-6">
+                    <h3 class="font-semibold mb-2" data-i18n="pricing.faq.q3">What payment methods do you accept?</h3>
+                    <p class="text-gray-600" data-i18n="pricing.faq.a3">
+                        We accept all major credit cards, ACH transfers, and wire transfers for Enterprise plans.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-semibold mb-4" data-i18n="footer.product">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="product.html" class="hover:text-white" data-i18n="nav.product">Product</a></li>
+                        <li><a href="features.html" class="hover:text-white" data-i18n="footer.features">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white" data-i18n="footer.pricing">Pricing</a></li>
+                        <li><a href="security.html" class="hover:text-white" data-i18n="footer.security">Security</a></li>
+                        <li><a href="api.html" class="hover:text-white" data-i18n="footer.api">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" data-i18n="footer.company">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="company/about.html" class="hover:text-white" data-i18n="footer.about">About</a></li>
+                        <li><a href="company/blog.html" class="hover:text-white" data-i18n="footer.blog">Blog</a></li>
+                        <li><a href="company/careers.html" class="hover:text-white" data-i18n="footer.careers">Careers</a></li>
+                        <li><a href="company/contact.html" class="hover:text-white" data-i18n="footer.contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4" data-i18n="footer.legal">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="legal/privacy.html" class="hover:text-white" data-i18n="footer.privacy">Privacy Policy</a></li>
+                        <li><a href="legal/terms.html" class="hover:text-white" data-i18n="footer.terms">Terms of Service</a></li>
+                        <li><a href="legal/cookie.html" class="hover:text-white" data-i18n="footer.cookie">Cookie Policy</a></li>
+                        <li><a href="legal/compliance.html" class="hover:text-white" data-i18n="footer.compliance">Compliance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl mr-2">⚖️</span>
+                        <span class="text-xl font-bold">LUMA IP</span>
+                    </div>
+                    <p class="text-gray-400 text-sm" data-i18n="footer.copyright">
+                        © 2024 LUMA IP. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

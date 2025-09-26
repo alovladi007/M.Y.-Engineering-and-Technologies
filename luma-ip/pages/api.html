@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API - LUMA IP</title>
+    <meta name="description" content="Developer API for patent automation">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../i18n-dropdown.js" defer></script>
+    <link rel="stylesheet" href="../styles/pages.css">
+</head>
+<body class="bg-gray-50">
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="text-2xl mr-2">⚖️</span>
+                        <span class="text-xl font-bold text-purple-700">LUMA IP</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="product.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.product">Product</a>
+                    <a href="features.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.features">Features</a>
+                    <a href="pricing.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.pricing">Pricing</a>
+                    <a href="security.html" class="text-gray-700 hover:text-purple-700" data-i18n="nav.security">Security</a>
+                    <a href="api.html" class="text-purple-700 font-semibold" data-i18n="nav.api">API</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-20 bg-gradient-to-br from-indigo-600 to-blue-700 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-5xl font-bold mb-6" data-i18n="api.hero.title">Developer API</h1>
+            <p class="text-xl max-w-3xl opacity-90" data-i18n="api.hero.description">
+                Integrate LUMA IP's patent automation capabilities into your applications with our RESTful API.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-8" data-i18n="api.endpoints.title">API Endpoints</h2>
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <pre class="bg-gray-900 text-green-400 p-6 rounded-lg overflow-x-auto">
+GET    /api/v1/patents
+POST   /api/v1/patents/draft
+GET    /api/v1/prior-art/search
+POST   /api/v1/claims/analyze
+GET    /api/v1/docket/deadlines
+                </pre>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

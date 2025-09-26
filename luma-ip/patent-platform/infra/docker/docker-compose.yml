@@ -1,0 +1,200 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database with pgvector
+  db:
+    image: ankane/pgvector:v0.5.1
+    container_name: luma-ip-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lumaipdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - luma-ip-network
+
+  # Redis for queues and caching
+  redis:
+    image: redis:7-alpine
+    container_name: luma-ip-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - luma-ip-network
+
+  # MinIO for S3-compatible storage
+  minio:
+    image: minio/minio:latest
+    container_name: luma-ip-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - luma-ip-network
+
+  # MailDev for email testing
+  maildev:
+    image: maildev/maildev:latest
+    container_name: luma-ip-maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - luma-ip-network
+
+  # Next.js Web Application
+  web:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.web
+    container_name: luma-ip-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - api
+    volumes:
+      - ../../apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - luma-ip-network
+
+  # NestJS API
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.api
+    container_name: luma-ip-api
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/lumaipdb
+      - DIRECT_URL=postgresql://postgres:postgres@db:5432/lumaipdb
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your_jwt_secret_key_min_32_characters_long
+      - COOKIE_NAME=luma_ip_auth
+      - S3_ENDPOINT=http://minio:9000
+      - S3_REGION=us-east-1
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin
+      - S3_BUCKET=luma-ip-vault
+      - AGENT_BASE_URL=http://agent:8000
+      - AGENT_SHARED_SECRET=supersecret
+      - APP_URL=http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    volumes:
+      - ../../apps/api:/app
+      - /app/node_modules
+      - /app/dist
+    networks:
+      - luma-ip-network
+
+  # Python Agent Service
+  agent:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.agent
+    container_name: luma-ip-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/lumaipdb
+      - REDIS_URL=redis://redis:6379
+      - NEST_API_URL=http://api:3001
+      - AGENT_SHARED_SECRET=supersecret
+      - DEBUG=true
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../../services/agent:/app
+    networks:
+      - luma-ip-network
+
+  # Celery Worker
+  agent-worker:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.celery
+    container_name: luma-ip-agent-worker
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/lumaipdb
+      - REDIS_URL=redis://redis:6379
+      - NEST_API_URL=http://api:3001
+      - AGENT_SHARED_SECRET=supersecret
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../../services/agent:/app
+    command: celery -A app.workers.agent_tasks worker --loglevel=info
+    networks:
+      - luma-ip-network
+
+  # Celery Beat Scheduler
+  agent-beat:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.celery
+    container_name: luma-ip-agent-beat
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/lumaipdb
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ../../services/agent:/app
+    command: celery -A app.workers.agent_tasks beat --loglevel=info
+    networks:
+      - luma-ip-network
+
+networks:
+  luma-ip-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

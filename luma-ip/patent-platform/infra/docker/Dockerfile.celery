@@ -1,0 +1,28 @@
+FROM python:3.11-slim
+
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy and install Python dependencies
+COPY services/agent/pyproject.toml services/agent/poetry.lock* ./
+RUN pip install poetry && \
+    poetry config virtualenvs.create false && \
+    poetry install --no-interaction --no-ansi
+
+# Copy application code
+COPY services/agent/app ./app
+
+# Create non-root user
+RUN useradd -m -u 1001 celery && \
+    chown -R celery:celery /app
+
+USER celery
+
+# Default command (will be overridden in docker-compose)
+CMD ["celery", "-A", "app.workers.agent_tasks", "worker", "--loglevel=info"]

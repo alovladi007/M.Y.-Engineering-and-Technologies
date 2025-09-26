@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "features": "Características",
+    "demo": "Demo",
+    "pricing": "Precios",
+    "contact": "Contacto",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "dashboard": "Panel",
+    "logout": "Cerrar Sesión"
+  },
+  "hero": {
+    "title": "Utilidad Legal para Análisis de PI Asistido por Máquina",
+    "subtitle": "Revolucione su proceso de solicitud de patentes con automatización impulsada por IA",
+    "description": "LUMA IP combina inteligencia artificial de vanguardia con experiencia legal para agilizar las solicitudes de patentes, reducir costos y acelerar la innovación.",
+    "ctaDemo": "Probar Demo",
+    "ctaLearn": "Aprender Más",
+    "ctaStart": "Comenzar"
+  },
+  "features": {
+    "title": "¿Por qué elegir LUMA IP?",
+    "subtitle": "Experimente el futuro de la gestión de propiedad intelectual",
+    "ai": {
+      "title": "Análisis con IA",
+      "description": "Algoritmos avanzados de aprendizaje automático analizan el arte previo y optimizan las reivindicaciones de patentes"
+    },
+    "automation": {
+      "title": "Flujos de Trabajo Automatizados",
+      "description": "Agilice los procesos de presentación con automatización inteligente y plantillas"
+    },
+    "collaboration": {
+      "title": "Colaboración en Equipo",
+      "description": "Herramientas de colaboración en tiempo real para equipos legales e inventores"
+    },
+    "security": {
+      "title": "Seguridad Empresarial",
+      "description": "Cifrado de nivel bancario y cumplimiento con las regulaciones internacionales de PI"
+    },
+    "analytics": {
+      "title": "Panel de Análisis",
+      "description": "Información completa sobre su cartera de PI y métricas de presentación"
+    },
+    "support": {
+      "title": "Soporte 24/7",
+      "description": "Asistencia experta de profesionales de PI cuando la necesite"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bienvenido a LUMA IP",
+    "overview": "Resumen",
+    "patents": "Patentes",
+    "filings": "Solicitudes",
+    "analytics": "Análisis",
+    "settings": "Configuración",
+    "newFiling": "Nueva Solicitud",
+    "recentActivity": "Actividad Reciente",
+    "totalPatents": "Total de Patentes",
+    "pendingApplications": "Solicitudes Pendientes",
+    "grantedPatents": "Patentes Otorgadas"
+  },
+  "filing": {
+    "title": "Nueva Solicitud de Patente",
+    "inventionTitle": "Título de la Invención",
+    "description": "Descripción",
+    "claims": "Reivindicaciones",
+    "drawings": "Dibujos",
+    "submit": "Enviar Solicitud",
+    "save": "Guardar Borrador",
+    "cancel": "Cancelar"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "view": "Ver",
+    "download": "Descargar",
+    "upload": "Cargar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "language": "Idioma"
+  }
+}

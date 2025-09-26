@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "demo": "Démo",
+    "pricing": "Tarifs",
+    "contact": "Contact",
+    "signIn": "Se Connecter",
+    "signUp": "S'inscrire",
+    "dashboard": "Tableau de Bord",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "title": "Utilité Juridique pour l'Analyse de PI Assistée par Machine",
+    "subtitle": "Révolutionnez votre processus de dépôt de brevet avec l'automatisation alimentée par l'IA",
+    "description": "LUMA IP combine l'intelligence artificielle de pointe avec l'expertise juridique pour rationaliser les demandes de brevet, réduire les coûts et accélérer l'innovation.",
+    "ctaDemo": "Essayer la Démo",
+    "ctaLearn": "En Savoir Plus",
+    "ctaStart": "Commencer"
+  },
+  "features": {
+    "title": "Pourquoi Choisir LUMA IP?",
+    "subtitle": "Découvrez l'avenir de la gestion de la propriété intellectuelle",
+    "ai": {
+      "title": "Analyse par IA",
+      "description": "Des algorithmes d'apprentissage automatique avancés analysent l'art antérieur et optimisent les revendications de brevet"
+    },
+    "automation": {
+      "title": "Flux de Travail Automatisés",
+      "description": "Rationalisez les processus de dépôt avec une automatisation intelligente et des modèles"
+    },
+    "collaboration": {
+      "title": "Collaboration d'Équipe",
+      "description": "Outils de collaboration en temps réel pour les équipes juridiques et les inventeurs"
+    },
+    "security": {
+      "title": "Sécurité d'Entreprise",
+      "description": "Chiffrement de niveau bancaire et conformité aux réglementations internationales sur la PI"
+    },
+    "analytics": {
+      "title": "Tableau de Bord Analytique",
+      "description": "Aperçus complets de votre portefeuille de PI et des métriques de dépôt"
+    },
+    "support": {
+      "title": "Support 24/7",
+      "description": "Assistance experte de professionnels de la PI quand vous en avez besoin"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bienvenue sur LUMA IP",
+    "overview": "Aperçu",
+    "patents": "Brevets",
+    "filings": "Dépôts",
+    "analytics": "Analytique",
+    "settings": "Paramètres",
+    "newFiling": "Nouveau Dépôt",
+    "recentActivity": "Activité Récente",
+    "totalPatents": "Total des Brevets",
+    "pendingApplications": "Demandes en Attente",
+    "grantedPatents": "Brevets Accordés"
+  },
+  "filing": {
+    "title": "Nouveau Dépôt de Brevet",
+    "inventionTitle": "Titre de l'Invention",
+    "description": "Description",
+    "claims": "Revendications",
+    "drawings": "Dessins",
+    "submit": "Soumettre le Dépôt",
+    "save": "Enregistrer le Brouillon",
+    "cancel": "Annuler"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "download": "Télécharger",
+    "upload": "Télécharger",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "language": "Langue"
+  }
+}

@@ -1,0 +1,63 @@
+# Minimal Render Blueprint Configuration for LUMA IP
+# Start with this simpler configuration, then upgrade to full version
+
+databases:
+  # PostgreSQL Database
+  - name: patent-db
+    databaseName: patentdb
+    user: patentuser
+    plan: free
+    
+services:
+  # Backend API Service (NestJS)
+  - type: web
+    name: patent-api
+    runtime: node
+    plan: free
+    buildCommand: |
+      cd patent-platform && \
+      npm install -g pnpm@8.14.0 && \
+      pnpm install --no-frozen-lockfile && \
+      cd apps/api && \
+      pnpm run prisma:generate && \
+      cd ../.. && \
+      pnpm run build --filter=@apps/api
+    startCommand: |
+      cd patent-platform/apps/api && \
+      npx prisma migrate deploy --schema=../../infra/prisma/schema.prisma && \
+      npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: patent-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: "*"
+
+  # Frontend Web Service (Next.js)
+  - type: web
+    name: patent-web
+    runtime: node
+    plan: free
+    buildCommand: |
+      cd patent-platform && \
+      npm install -g pnpm@8.14.0 && \
+      pnpm install --no-frozen-lockfile && \
+      pnpm run build --filter=patent-platform-web
+    startCommand: |
+      cd patent-platform/apps/web && \
+      npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: patent-api
+          property: host
