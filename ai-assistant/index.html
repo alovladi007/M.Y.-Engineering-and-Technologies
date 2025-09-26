@@ -98,6 +98,9 @@
                     <button onclick="sendQuickMessage('Hardware products available')" class="px-3 py-1 bg-orange-600 text-white rounded-full text-sm hover:bg-orange-700 transition-colors">
                         Hardware
                     </button>
+                    <button onclick="testAI()" class="px-3 py-1 bg-red-600 text-white rounded-full text-sm hover:bg-red-700 transition-colors">
+                        Test AI
+                    </button>
                 </div>
             </div>
 
@@ -265,6 +268,42 @@
                 </div>
             `;
             chatHistory = [];
+        }
+
+        function testAI() {
+            console.log('Test AI button clicked');
+            addMessage('Testing AI connection...', 'user');
+            showLoading();
+            
+            // Test with a simple message
+            fetch('/api/ai-assistant', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: 'Hello, this is a test',
+                    history: []
+                })
+            })
+            .then(response => {
+                console.log('Test response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Test response data:', data);
+                addMessage(data.response, 'ai');
+            })
+            .catch(error => {
+                console.error('Test error:', error);
+                addMessage(`Test failed: ${error.message}`, 'ai');
+            })
+            .finally(() => {
+                hideLoading();
+            });
         }
 
         // Initialize chat
