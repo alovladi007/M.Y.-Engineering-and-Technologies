@@ -24,11 +24,14 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .demo-tab.active { background-color: #3b82f6; color: white; }
+        .nav-link { color: #6b7280; transition: color 0.3s; }
+        .nav-link:hover { color: #3b82f6; }
+        .nav-link.active { color: #3b82f6; }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-white text-gray-900">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-lg z-50 border-b border-gray-800">
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg z-50 border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center space-x-4">
@@ -37,28 +40,79 @@
                             <span class="text-white text-xl">⚖️</span>
                         </div>
                         <div>
-                            <h1 class="text-xl font-bold">LUMA IP</h1>
+                            <h1 class="text-xl font-bold text-gray-900">LUMA IP</h1>
                         </div>
                     </div>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#product" class="hover:text-blue-400 transition-colors">Product</a>
-                    <a href="#features" class="hover:text-blue-400 transition-colors">Features</a>
-                    <a href="#pricing" class="hover:text-blue-400 transition-colors">Pricing</a>
-                    <a href="#security" class="hover:text-blue-400 transition-colors">Security</a>
-                    <a href="#api" class="hover:text-blue-400 transition-colors">API</a>
-                    <a href="#demo" class="hover:text-blue-400 transition-colors">Demo</a>
+                    <a href="#product" class="nav-link" data-i18n="nav.product">Product</a>
+                    <a href="#features" class="nav-link" data-i18n="nav.features">Features</a>
+                    <a href="#pricing" class="nav-link" data-i18n="nav.pricing">Pricing</a>
+                    <a href="#security" class="nav-link" data-i18n="nav.security">Security</a>
+                    <a href="#api" class="nav-link" data-i18n="nav.api">API</a>
+                    <a href="#demo" class="nav-link" data-i18n="nav.demo">Demo</a>
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-sm">🇺🇸</span>
-                        <span class="text-sm">English</span>
+                    <!-- Language Dropdown -->
+                    <div class="relative">
+                        <button 
+                            id="language-dropdown-button"
+                            onclick="toggleLanguageDropdown()"
+                            class="flex items-center px-3 py-2 text-gray-700 hover:text-purple-700 font-medium transition"
+                            style="min-width: 120px;"
+                        >
+                            <span style="font-size: 20px; margin-right: 6px;">🇺🇸</span>
+                            <span class="hidden sm:inline">English</span>
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <div 
+                            id="language-dropdown-menu"
+                            class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50"
+                        >
+                            <button
+                                onclick="changeLanguage('en'); toggleLanguageDropdown();"
+                                class="w-full flex items-center px-4 py-3 hover:bg-purple-50 transition bg-purple-50"
+                                style="text-align: left;"
+                            >
+                                <span style="font-size: 20px; margin-right: 10px;">🇺🇸</span>
+                                <span class="text-gray-700 font-medium">English</span>
+                                <svg class="w-4 h-4 ml-auto text-purple-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            </button>
+                            <button
+                                onclick="changeLanguage('fr'); toggleLanguageDropdown();"
+                                class="w-full flex items-center px-4 py-3 hover:bg-purple-50 transition"
+                                style="text-align: left;"
+                            >
+                                <span style="font-size: 20px; margin-right: 10px;">🇫🇷</span>
+                                <span class="text-gray-700 font-medium">Français</span>
+                            </button>
+                            <button
+                                onclick="changeLanguage('es'); toggleLanguageDropdown();"
+                                class="w-full flex items-center px-4 py-3 hover:bg-purple-50 transition"
+                                style="text-align: left;"
+                            >
+                                <span style="font-size: 20px; margin-right: 10px;">🇪🇸</span>
+                                <span class="text-gray-700 font-medium">Español</span>
+                            </button>
+                            <button
+                                onclick="changeLanguage('zh'); toggleLanguageDropdown();"
+                                class="w-full flex items-center px-4 py-3 hover:bg-purple-50 transition"
+                                style="text-align: left;"
+                            >
+                                <span style="font-size: 20px; margin-right: 10px;">🇨🇳</span>
+                                <span class="text-gray-700 font-medium">中文</span>
+                            </button>
+                        </div>
                     </div>
-                    <button class="text-gray-400 hover:text-white transition-colors">Sign In</button>
-                    <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:opacity-90 transition-opacity">Get Started</button>
-                    <a href="http://localhost:8081/index.html" class="px-4 py-2 border border-white/20 rounded-lg hover:bg-white/10 transition-colors">
+                    
+                    <button class="text-gray-700 hover:text-gray-900 transition-colors" data-i18n="nav.signIn">Sign In</button>
+                    <button class="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg hover:opacity-90 transition-opacity text-white" data-i18n="nav.getStarted">Get Started</button>
+                    <a href="http://localhost:8081/index.html" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
                         ← Back to M.Y
                     </a>
                 </div>
@@ -67,19 +121,19 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-20 pb-16 bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900">
+    <section class="pt-20 pb-16 bg-gradient-to-br from-gray-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text">LUMA IP</h1>
-                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">Legal Utility for Machine Assisted IP Analysis</p>
-                <p class="text-lg text-gray-400 max-w-4xl mx-auto mb-12">
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8" data-i18n="hero.title">Legal Utility for Machine Assisted IP Analysis</p>
+                <p class="text-lg text-gray-500 max-w-4xl mx-auto mb-12" data-i18n="hero.subtitle">
                     Transform your patent filing process with advanced AI. Generate complete patent applications in minutes, not months. Powered by state-of-the-art language models.
                 </p>
                 <div class="flex justify-center space-x-4 mb-16">
-                    <button class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
+                    <button class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity" data-i18n="hero.watchDemo">
                         Watch Demo
                     </button>
-                    <button class="px-8 py-4 bg-white/10 rounded-lg font-semibold text-white hover:bg-white/20 transition-colors">
+                    <button class="px-8 py-4 bg-white border border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 transition-colors" data-i18n="hero.startFiling">
                         Start Filing
                     </button>
                 </div>
@@ -87,20 +141,20 @@
                 <!-- Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-blue-400 mb-2">10,000+</div>
-                        <div class="text-gray-400">Patents Filed</div>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">10,000+</div>
+                        <div class="text-gray-500" data-i18n="stats.patentsFiled">Patents Filed</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-purple-400 mb-2">87%</div>
-                        <div class="text-gray-400">Grant Rate</div>
+                        <div class="text-4xl font-bold text-purple-600 mb-2">87%</div>
+                        <div class="text-gray-500" data-i18n="stats.grantRate">Grant Rate</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-green-400 mb-2">60%</div>
-                        <div class="text-gray-400">Time Saved</div>
+                        <div class="text-4xl font-bold text-green-600 mb-2">60%</div>
+                        <div class="text-gray-500" data-i18n="stats.timeSaved">Time Saved</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-4xl font-bold text-yellow-400 mb-2">500+</div>
-                        <div class="text-gray-400">Law Firms</div>
+                        <div class="text-4xl font-bold text-yellow-600 mb-2">500+</div>
+                        <div class="text-gray-500" data-i18n="stats.lawFirms">Law Firms</div>
                     </div>
                 </div>
             </div>
@@ -108,220 +162,220 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 bg-gray-800">
+    <section id="features" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Everything You Need for Patent Filing</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">A complete platform that handles the entire patent lifecycle</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900" data-i18n="features.title">Everything You Need for Patent Filing</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="features.subtitle">A complete platform that handles the entire patent lifecycle</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass rounded-xl p-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-4">
-                        <i data-lucide="zap" class="h-8 w-8 text-blue-400 mr-3"></i>
-                        <h3 class="text-xl font-semibold">AI-Powered Drafting</h3>
+                        <i data-lucide="zap" class="h-8 w-8 text-blue-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900" data-i18n="features.aiDrafting.title">AI-Powered Drafting</h3>
                     </div>
-                    <p class="text-gray-400">Generate patent claims and specifications using GPT-4 trained on millions of patents</p>
+                    <p class="text-gray-600" data-i18n="features.aiDrafting.description">Generate patent claims and specifications using GPT-4 trained on millions of patents</p>
                 </div>
 
-                <div class="glass rounded-xl p-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-4">
-                        <i data-lucide="file-text" class="h-8 w-8 text-purple-400 mr-3"></i>
-                        <h3 class="text-xl font-semibold">USPTO Form Generation</h3>
+                        <i data-lucide="file-text" class="h-8 w-8 text-purple-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900" data-i18n="features.usptoForms.title">USPTO Form Generation</h3>
                     </div>
-                    <p class="text-gray-400">Automatically create ADS, IDS, and other USPTO forms with validated data</p>
+                    <p class="text-gray-600" data-i18n="features.usptoForms.description">Automatically create ADS, IDS, and other USPTO forms with validated data</p>
                 </div>
 
-                <div class="glass rounded-xl p-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-4">
-                        <i data-lucide="search" class="h-8 w-8 text-green-400 mr-3"></i>
-                        <h3 class="text-xl font-semibold">Prior Art Search</h3>
+                        <i data-lucide="search" class="h-8 w-8 text-green-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900" data-i18n="features.priorArt.title">Prior Art Search</h3>
                     </div>
-                    <p class="text-gray-400">Vector-based semantic search through global patent databases</p>
+                    <p class="text-gray-600" data-i18n="features.priorArt.description">Vector-based semantic search through global patent databases</p>
                 </div>
 
-                <div class="glass rounded-xl p-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-4">
-                        <i data-lucide="calendar" class="h-8 w-8 text-yellow-400 mr-3"></i>
-                        <h3 class="text-xl font-semibold">Intelligent Docket Management</h3>
+                        <i data-lucide="calendar" class="h-8 w-8 text-yellow-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900" data-i18n="features.docket.title">Intelligent Docket Management</h3>
                     </div>
-                    <p class="text-gray-400">Never miss a deadline with automated tracking, reminders, and statutory calculations.</p>
+                    <p class="text-gray-600" data-i18n="features.docket.description">Never miss a deadline with automated tracking, reminders, and statutory calculations.</p>
                 </div>
 
-                <div class="glass rounded-xl p-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-4">
-                        <i data-lucide="users" class="h-8 w-8 text-red-400 mr-3"></i>
-                        <h3 class="text-xl font-semibold">Team Collaboration</h3>
+                        <i data-lucide="users" class="h-8 w-8 text-red-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900" data-i18n="features.teamCollab.title">Team Collaboration</h3>
                     </div>
-                    <p class="text-gray-400">Work together with role-based access control and real-time updates</p>
+                    <p class="text-gray-600" data-i18n="features.teamCollab.description">Work together with role-based access control and real-time updates</p>
                 </div>
 
-                <div class="glass rounded-xl p-8">
+                <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-lg transition-shadow">
                     <div class="flex items-center mb-4">
-                        <i data-lucide="shield" class="h-8 w-8 text-cyan-400 mr-3"></i>
-                        <h3 class="text-xl font-semibold">Enterprise Security</h3>
+                        <i data-lucide="shield" class="h-8 w-8 text-cyan-600 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-900" data-i18n="features.enterpriseSec.title">Enterprise Security</h3>
                     </div>
-                    <p class="text-gray-400">Bank-level encryption, SOC 2 compliance, and audit trails</p>
+                    <p class="text-gray-600" data-i18n="features.enterpriseSec.description">Bank-level encryption, SOC 2 compliance, and audit trails</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 5-Step Process -->
-    <section class="py-20 bg-gray-900">
+    <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Simple 5-Step Process</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">From idea to filed patent in record time</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900" data-i18n="workflow.title">Simple 5-Step Process</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="workflow.subtitle">From idea to filed patent in record time</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
                 <div class="text-center">
-                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">1</span>
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">1</span>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Describe Your Invention</h3>
-                    <p class="text-gray-400 text-sm">Input your invention details and technical specifications</p>
+                    <h3 class="text-lg font-semibold mb-2 text-gray-900" data-i18n="workflow.step1.title">Describe Your Invention</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="workflow.step1.description">Input your invention details and technical specifications</p>
                 </div>
                 
                 <div class="text-center">
-                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">2</span>
+                    <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">2</span>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">AI Generation</h3>
-                    <p class="text-gray-400 text-sm">Our LLM generates claims, specifications, and drawings</p>
+                    <h3 class="text-lg font-semibold mb-2 text-gray-900" data-i18n="workflow.step2.title">AI Generation</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="workflow.step2.description">Our LLM generates claims, specifications, and drawings</p>
                 </div>
                 
                 <div class="text-center">
-                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">3</span>
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">3</span>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Prior Art Analysis</h3>
-                    <p class="text-gray-400 text-sm">Automatic search and patentability scoring</p>
+                    <h3 class="text-lg font-semibold mb-2 text-gray-900" data-i18n="workflow.step3.title">Prior Art Analysis</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="workflow.step3.description">Automatic search and patentability scoring</p>
                 </div>
                 
                 <div class="text-center">
-                    <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">4</span>
+                    <div class="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">4</span>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">Review & Edit</h3>
-                    <p class="text-gray-400 text-sm">Refine the generated documents with AI assistance</p>
+                    <h3 class="text-lg font-semibold mb-2 text-gray-900" data-i18n="workflow.step4.title">Review & Edit</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="workflow.step4.description">Refine the generated documents with AI assistance</p>
                 </div>
                 
                 <div class="text-center">
-                    <div class="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl font-bold">5</span>
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-white">5</span>
                     </div>
-                    <h3 class="text-lg font-semibold mb-2">File with USPTO</h3>
-                    <p class="text-gray-400 text-sm">Submit directly or export for traditional filing</p>
+                    <h3 class="text-lg font-semibold mb-2 text-gray-900" data-i18n="workflow.step5.title">File with USPTO</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="workflow.step5.description">Submit directly or export for traditional filing</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Demo Section -->
-    <section id="demo" class="py-20 bg-gray-800">
+    <section id="demo" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">See LUMA IP in Action</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Experience the power of AI-driven patent filing</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900" data-i18n="demo.title">See LUMA IP in Action</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="demo.subtitle">Experience the power of AI-driven patent filing</p>
             </div>
             
             <!-- Demo Navigation -->
             <div class="flex justify-center mb-8">
-                <div class="bg-gray-700 rounded-lg p-2 flex space-x-2">
-                    <button onclick="showDemoTab('dashboard')" class="demo-tab px-4 py-2 rounded-lg bg-blue-600 text-white active">Dashboard</button>
-                    <button onclick="showDemoTab('filing')" class="demo-tab px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">New Filing</button>
-                    <button onclick="showDemoTab('portfolio')" class="demo-tab px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">Portfolio</button>
-                    <button onclick="showDemoTab('prior-art')" class="demo-tab px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">Prior Art</button>
+                <div class="bg-gray-100 rounded-lg p-2 flex space-x-2">
+                    <button onclick="showDemoTab('dashboard')" class="demo-tab px-4 py-2 rounded-lg bg-blue-600 text-white active" data-i18n="demo.tabs.dashboard">Dashboard</button>
+                    <button onclick="showDemoTab('filing')" class="demo-tab px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors" data-i18n="demo.tabs.filing">New Filing</button>
+                    <button onclick="showDemoTab('portfolio')" class="demo-tab px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors" data-i18n="demo.tabs.portfolio">Portfolio</button>
+                    <button onclick="showDemoTab('prior-art')" class="demo-tab px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors" data-i18n="demo.tabs.priorArt">Prior Art</button>
                 </div>
             </div>
             
             <!-- Demo Content -->
-            <div class="glass rounded-xl p-8">
+            <div class="bg-white border border-gray-200 rounded-xl p-8 shadow-lg">
                 <!-- Dashboard Demo -->
                 <div id="dashboard-demo" class="demo-content active">
-                    <h3 class="text-2xl font-bold mb-6">Patent Portfolio Dashboard</h3>
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900" data-i18n="demo.dashboard.title">Patent Portfolio Dashboard</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-gray-700 rounded-lg p-6 text-center">
-                            <div class="text-3xl font-bold text-blue-400 mb-2">247</div>
-                            <div class="text-sm text-gray-400 mb-1">Active Patents</div>
-                            <div class="text-xs text-green-400">+12% from last month</div>
+                        <div class="bg-gray-50 rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-blue-600 mb-2">247</div>
+                            <div class="text-sm text-gray-600 mb-1" data-i18n="demo.dashboard.activePatents">Active Patents</div>
+                            <div class="text-xs text-green-600">+12% from last month</div>
                         </div>
-                        <div class="bg-gray-700 rounded-lg p-6 text-center">
-                            <div class="text-3xl font-bold text-yellow-400 mb-2">18</div>
-                            <div class="text-sm text-gray-400 mb-1">Pending</div>
-                            <div class="text-xs text-yellow-400">5 require action</div>
+                        <div class="bg-gray-50 rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-yellow-600 mb-2">18</div>
+                            <div class="text-sm text-gray-600 mb-1" data-i18n="demo.dashboard.pending">Pending</div>
+                            <div class="text-xs text-yellow-600">5 require action</div>
                         </div>
-                        <div class="bg-gray-700 rounded-lg p-6 text-center">
-                            <div class="text-3xl font-bold text-red-400 mb-2">5</div>
-                            <div class="text-sm text-gray-400 mb-1">Deadlines</div>
-                            <div class="text-xs text-red-400">Next: March 15</div>
+                        <div class="bg-gray-50 rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-red-600 mb-2">5</div>
+                            <div class="text-sm text-gray-600 mb-1" data-i18n="demo.dashboard.deadlines">Deadlines</div>
+                            <div class="text-xs text-red-600">Next: March 15</div>
                         </div>
-                        <div class="bg-gray-700 rounded-lg p-6 text-center">
-                            <div class="text-3xl font-bold text-green-400 mb-2">$24.5M</div>
-                            <div class="text-sm text-gray-400 mb-1">Portfolio Value</div>
-                            <div class="text-xs text-green-400">+18% increase</div>
+                        <div class="bg-gray-50 rounded-lg p-6 text-center">
+                            <div class="text-3xl font-bold text-green-600 mb-2">$24.5M</div>
+                            <div class="text-sm text-gray-600 mb-1" data-i18n="demo.dashboard.portfolioValue">Portfolio Value</div>
+                            <div class="text-xs text-green-600">+18% increase</div>
                         </div>
                     </div>
                     
-                    <h4 class="text-lg font-semibold mb-4">Recent Activity</h4>
+                    <h4 class="text-lg font-semibold mb-4 text-gray-900" data-i18n="demo.dashboard.recentActivity">Recent Activity</h4>
                     <div class="space-y-3">
-                        <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <i data-lucide="file-text" class="h-5 w-5 text-blue-400 mr-3"></i>
+                                <i data-lucide="file-text" class="h-5 w-5 text-blue-600 mr-3"></i>
                                 <div>
-                                    <p class="text-sm font-medium">Office Action Response</p>
-                                    <p class="text-xs text-gray-400">US10,123,456 • 2 hours ago</p>
+                                    <p class="text-sm font-medium text-gray-900">Office Action Response</p>
+                                    <p class="text-xs text-gray-600">US10,123,456 • 2 hours ago</p>
                                 </div>
                             </div>
-                            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Submitted</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Submitted</span>
                         </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <i data-lucide="edit" class="h-5 w-5 text-purple-400 mr-3"></i>
+                                <i data-lucide="edit" class="h-5 w-5 text-purple-600 mr-3"></i>
                                 <div>
-                                    <p class="text-sm font-medium">Claims Amended</p>
-                                    <p class="text-xs text-gray-400">EP3,234,567 • 5 hours ago</p>
+                                    <p class="text-sm font-medium text-gray-900">Claims Amended</p>
+                                    <p class="text-xs text-gray-600">EP3,234,567 • 5 hours ago</p>
                                 </div>
                             </div>
-                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">In Review</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">In Review</span>
                         </div>
-                        <div class="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <i data-lucide="search" class="h-5 w-5 text-green-400 mr-3"></i>
+                                <i data-lucide="search" class="h-5 w-5 text-green-600 mr-3"></i>
                                 <div>
-                                    <p class="text-sm font-medium">Prior Art Search</p>
-                                    <p class="text-xs text-gray-400">New Filing #42 • 1 day ago</p>
+                                    <p class="text-sm font-medium text-gray-900">Prior Art Search</p>
+                                    <p class="text-xs text-gray-600">New Filing #42 • 1 day ago</p>
                                 </div>
                             </div>
-                            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Completed</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Completed</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- New Filing Demo -->
                 <div id="filing-demo" class="demo-content">
-                    <h3 class="text-2xl font-bold mb-6">New Patent Filing</h3>
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">New Patent Filing</h3>
                     <div class="flex items-center mb-6">
                         <div class="flex space-x-2">
-                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold">1</div>
-                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold">2</div>
-                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold">3</div>
-                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold">4</div>
-                            <div class="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-sm font-bold">5</div>
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-sm font-bold text-white">1</div>
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">2</div>
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">3</div>
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">4</div>
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold text-gray-600">5</div>
                         </div>
                     </div>
                     
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Invention Title</label>
-                            <input type="text" placeholder="Enter your invention title" class="w-full bg-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label class="block text-sm font-medium mb-2 text-gray-700">Invention Title</label>
+                            <input type="text" placeholder="Enter your invention title" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Technical Field</label>
-                            <select class="w-full bg-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label class="block text-sm font-medium mb-2 text-gray-700">Technical Field</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option>Software/AI</option>
                                 <option>Biotechnology</option>
                                 <option>Mechanical</option>
@@ -330,8 +384,8 @@
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Patent Type</label>
-                            <select class="w-full bg-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label class="block text-sm font-medium mb-2 text-gray-700">Patent Type</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option>Utility</option>
                                 <option>Design</option>
                                 <option>Plant</option>
@@ -339,8 +393,8 @@
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Brief Description</label>
-                            <textarea rows="4" placeholder="Describe your invention in detail..." class="w-full bg-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <label class="block text-sm font-medium mb-2 text-gray-700">Brief Description</label>
+                            <textarea rows="4" placeholder="Describe your invention in detail..." class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                         </div>
                         
                         <button class="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity">
@@ -351,22 +405,22 @@
                 
                 <!-- Portfolio Demo -->
                 <div id="portfolio-demo" class="demo-content">
-                    <h3 class="text-2xl font-bold mb-6">Patent Portfolio</h3>
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Patent Portfolio</h3>
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4">
-                                    <i data-lucide="check-circle" class="h-6 w-6 text-green-400"></i>
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="check-circle" class="h-6 w-6 text-green-600"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold">AI-Powered Medical Diagnosis System</h4>
-                                    <p class="text-sm text-gray-400">US10,123,456 • Filed: 2021-03-15</p>
+                                    <h4 class="font-semibold text-gray-900">AI-Powered Medical Diagnosis System</h4>
+                                    <p class="text-sm text-gray-600">US10,123,456 • Filed: 2021-03-15</p>
                                     <p class="text-sm text-gray-500">An AI system for automated medical diagnosis using deep learning...</p>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm mb-2 block">Granted</span>
-                                <div class="text-sm">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm mb-2 block">Granted</span>
+                                <div class="text-sm text-gray-600">
                                     <div>Value: $2.5M</div>
                                     <div>Citations: 47</div>
                                     <div>Maintenance: 2025-03-15</div>
@@ -374,20 +428,20 @@
                             </div>
                         </div>
                         
-                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mr-4">
-                                    <i data-lucide="clock" class="h-6 w-6 text-yellow-400"></i>
+                                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="clock" class="h-6 w-6 text-yellow-600"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold">Quantum Computing Algorithm for Optimization</h4>
-                                    <p class="text-sm text-gray-400">EP3,234,567 • Filed: 2022-07-10</p>
+                                    <h4 class="font-semibold text-gray-900">Quantum Computing Algorithm for Optimization</h4>
+                                    <p class="text-sm text-gray-600">EP3,234,567 • Filed: 2022-07-10</p>
                                     <p class="text-sm text-gray-500">A quantum algorithm for solving complex optimization problems...</p>
                                 </div>
                             </div>
                             <div class="text-right">
-                                <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm mb-2 block">Published</span>
-                                <div class="text-sm">
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm mb-2 block">Published</span>
+                                <div class="text-sm text-gray-600">
                                     <div>Value: $1.8M</div>
                                     <div>Citations: 23</div>
                                     <div>Maintenance: 2024-07-10</div>
@@ -399,11 +453,11 @@
                 
                 <!-- Prior Art Demo -->
                 <div id="prior-art-demo" class="demo-content">
-                    <h3 class="text-2xl font-bold mb-6">Prior Art Search</h3>
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900">Prior Art Search</h3>
                     <div class="mb-6">
                         <div class="flex space-x-4">
-                            <input type="text" placeholder="Search patents..." class="flex-1 bg-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <button class="px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+                            <input type="text" placeholder="Search patents..." class="flex-1 border border-gray-300 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button class="px-6 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2 text-white">
                                 <i data-lucide="search" class="h-5 w-5"></i>
                                 <span>Search</span>
                             </button>
@@ -411,32 +465,32 @@
                     </div>
                     
                     <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4">
-                                    <i data-lucide="file-text" class="h-6 w-6 text-blue-400"></i>
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="file-text" class="h-6 w-6 text-blue-600"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold">System and Method for Automated Data Processing</h4>
-                                    <p class="text-sm text-gray-400">US10,987,654 • 2019-03-15</p>
+                                    <h4 class="font-semibold text-gray-900">System and Method for Automated Data Processing</h4>
+                                    <p class="text-sm text-gray-600">US10,987,654 • 2019-03-15</p>
                                     <p class="text-sm text-gray-500">A system for processing data using machine learning algorithms...</p>
                                 </div>
                             </div>
-                            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">92% Relevance</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">92% Relevance</span>
                         </div>
                         
-                        <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                             <div class="flex items-center">
-                                <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mr-4">
-                                    <i data-lucide="file-text" class="h-6 w-6 text-purple-400"></i>
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i data-lucide="file-text" class="h-6 w-6 text-purple-600"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-semibold">Artificial Intelligence Platform for Analysis</h4>
-                                    <p class="text-sm text-gray-400">EP2,345,678 • 2018-07-22</p>
+                                    <h4 class="font-semibold text-gray-900">Artificial Intelligence Platform for Analysis</h4>
+                                    <p class="text-sm text-gray-600">EP2,345,678 • 2018-07-22</p>
                                     <p class="text-sm text-gray-500">An AI platform for comprehensive data analysis and prediction...</p>
                                 </div>
                             </div>
-                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">87% Relevance</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">87% Relevance</span>
                         </div>
                     </div>
                 </div>
@@ -447,13 +501,13 @@
     <!-- CTA Section -->
     <section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Revolutionize Your Patent Practice?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of patent professionals using LUMA IP</p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white" data-i18n="cta.title">Ready to Revolutionize Your Patent Practice?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-200" data-i18n="cta.subtitle">Join thousands of patent professionals using LUMA IP</p>
             <div class="flex justify-center space-x-4">
-                <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-lg hover:bg-gray-100 transition-colors" data-i18n="cta.startTrial">
                     Start Free Trial
                 </button>
-                <button class="px-8 py-4 bg-white/20 text-white font-bold rounded-lg hover:bg-white/30 transition-colors">
+                <button class="px-8 py-4 bg-white/20 text-white font-bold rounded-lg hover:bg-white/30 transition-colors" data-i18n="cta.scheduleDemo">
                     Schedule Demo
                 </button>
             </div>
@@ -469,50 +523,53 @@
                         <span class="text-white text-xl">⚖️</span>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold">LUMA IP</h3>
-                        <p class="text-sm text-gray-400">Legal Utility for Machine Assisted IP Analysis</p>
+                        <h3 class="text-xl font-bold text-white">LUMA IP</h3>
+                        <p class="text-sm text-gray-400" data-i18n="footer.tagline">Legal Utility for Machine Assisted IP Analysis</p>
                     </div>
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h4 class="font-semibold mb-4">Product</h4>
+                    <h4 class="font-semibold mb-4 text-white" data-i18n="footer.product">Product</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">Product Overview</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.productOverview">Product Overview</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.features">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.pricing">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.security">Security</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.api">API</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Company</h4>
+                    <h4 class="font-semibold mb-4 text-white" data-i18n="footer.company">Company</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.about">About</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.blog">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.careers">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.contact">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <h4 class="font-semibold mb-4 text-white" data-i18n="footer.legal">Legal</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Cookie Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Compliance</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.privacy">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.terms">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.cookiePolicy">Cookie Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors" data-i18n="footer.compliance">Compliance</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <p class="text-sm text-gray-400">© 2024 LUMA IP. All rights reserved. Patent pending.</p>
+                    <p class="text-sm text-gray-400" data-i18n="footer.copyright">© 2024 LUMA IP. All rights reserved. Patent pending.</p>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- i18n JavaScript -->
+    <script src="i18n-dropdown.js"></script>
 
     <script>
         // Initialize Lucide icons
@@ -528,7 +585,7 @@
             // Remove active class from all buttons
             document.querySelectorAll('.demo-tab').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white', 'active');
-                btn.classList.add('hover:bg-gray-600');
+                btn.classList.add('hover:bg-gray-200');
             });
             
             // Show selected content
@@ -536,7 +593,7 @@
             
             // Add active class to clicked button
             event.currentTarget.classList.add('bg-blue-600', 'text-white', 'active');
-            event.currentTarget.classList.remove('hover:bg-gray-600');
+            event.currentTarget.classList.remove('hover:bg-gray-200');
         }
 
         // Smooth scrolling for navigation links
@@ -551,6 +608,24 @@
                     });
                 }
             });
+        });
+
+        // Language dropdown functionality
+        function toggleLanguageDropdown() {
+            const menu = document.getElementById('language-dropdown-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('language-dropdown-menu');
+            const button = document.getElementById('language-dropdown-button');
+            
+            if (dropdown && button && !button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
         });
     </script>
 </body>
