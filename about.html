@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - M.Y. Engineering and Technologies</title>
+    <meta name="description" content="Learn about M.Y. Engineering and Technologies - Leading provider of advanced technology solutions in photonics, cybersecurity, hardware, and biomedical engineering.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-lg z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent transform hover:scale-105 transition-transform cursor-pointer">M.Y. Engineering and Technologies</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="hover:text-cyan-400 transition-colors font-medium">Home</a>
+                <a href="about.html" class="text-cyan-400 font-medium">About</a>
+                <a href="careers.html" class="hover:text-cyan-400 transition-colors font-medium">Careers</a>
+                <a href="contact.html" class="hover:text-cyan-400 transition-colors font-medium">Contact</a>
+                <button class="px-4 py-2 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition-colors" onclick="openLouis()">AI Assistant</button>
+            </div>
+            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 animated-gradient">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">About M.Y. Engineering</h1>
+            <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
+                Pioneering the future of technology through innovative engineering solutions across photonics, cybersecurity, hardware, and biomedical applications.
+            </p>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-bold gradient-text">Our Mission</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        To accelerate technological advancement by developing cutting-edge solutions that solve complex engineering challenges. 
+                        We are committed to pushing the boundaries of what's possible in photonics, cybersecurity, hardware design, and biomedical technology.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-300">Innovation-driven approach to engineering challenges</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-300">Collaborative partnerships with industry leaders</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-gray-300">Sustainable and ethical technology development</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-bold gradient-text">Our Vision</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        To be the global leader in advanced engineering solutions, recognized for our ability to transform complex technological challenges 
+                        into practical, innovative solutions that benefit society and drive economic growth.
+                    </p>
+                    <div class="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 p-6 rounded-lg border border-cyan-500/30">
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Core Values</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Excellence in engineering and innovation</li>
+                            <li>• Integrity in all business practices</li>
+                            <li>• Collaboration and knowledge sharing</li>
+                            <li>• Environmental responsibility</li>
+                            <li>• Continuous learning and improvement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Stats -->
+    <section class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Company Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-cyan-400 mb-2">15+</div>
+                    <div class="text-gray-300">Years of Experience</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-cyan-400 mb-2">500+</div>
+                    <div class="text-gray-300">Projects Completed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-cyan-400 mb-2">50+</div>
+                    <div class="text-gray-300">Patents Filed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-cyan-400 mb-2">25+</div>
+                    <div class="text-gray-300">Countries Served</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Team -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Leadership Team</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="w-20 h-20 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-black">MA</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-2">Dr. Marie Antoinette</h3>
+                    <p class="text-cyan-400 text-center mb-4">Chief Executive Officer</p>
+                    <p class="text-gray-300 text-center text-sm">Leading expert in photonics and quantum technologies with over 20 years of experience in advanced engineering solutions.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="w-20 h-20 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-black">LV</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-2">Louis Vladimir</h3>
+                    <p class="text-cyan-400 text-center mb-4">Chief Technology Officer</p>
+                    <p class="text-gray-300 text-center text-sm">Specialist in cybersecurity and hardware design, driving innovation in secure computing and embedded systems.</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="w-20 h-20 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="text-2xl font-bold text-black">AE</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-center mb-2">Dr. Antoine Engineering</h3>
+                    <p class="text-cyan-400 text-center mb-4">Chief Innovation Officer</p>
+                    <p class="text-gray-300 text-center text-sm">Pioneer in biomedical engineering and AI applications, leading research in medical imaging and diagnostic technologies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Focus -->
+    <section class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16 gradient-text">Technology Focus Areas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-700">
+                    <div class="text-4xl mb-4">🔬</div>
+                    <h3 class="text-xl font-semibold mb-3">Photonics & Optics</h3>
+                    <p class="text-gray-300 text-sm">Advanced optical systems, laser technologies, and photonic integrated circuits for next-generation applications.</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-700">
+                    <div class="text-4xl mb-4">🔒</div>
+                    <h3 class="text-xl font-semibold mb-3">Cybersecurity</h3>
+                    <p class="text-gray-300 text-sm">Cutting-edge security solutions including hardware security modules, cryptographic systems, and threat detection.</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-700">
+                    <div class="text-4xl mb-4">🔧</div>
+                    <h3 class="text-xl font-semibold mb-3">Hardware Design</h3>
+                    <p class="text-gray-300 text-sm">FPGA development, microchip design, and embedded systems for high-performance computing applications.</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-700">
+                    <div class="text-4xl mb-4">🏥</div>
+                    <h3 class="text-xl font-semibold mb-3">Biomedical Engineering</h3>
+                    <p class="text-gray-300 text-sm">Medical imaging systems, AI-powered diagnostics, and biomedical sensors for healthcare applications.</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-700">
+                    <div class="text-4xl mb-4">🌍</div>
+                    <h3 class="text-xl font-semibold mb-3">Geospatial Technology</h3>
+                    <p class="text-gray-300 text-sm">Satellite systems, Earth observation technologies, and geospatial analytics for environmental monitoring.</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-lg border border-gray-700">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-xl font-semibold mb-3">Nanotechnology</h3>
+                    <p class="text-gray-300 text-sm">Advanced materials, nanoscale fabrication, and quantum technologies for next-generation applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 animated-gradient">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">Ready to Work With Us?</h2>
+            <p class="text-xl text-gray-200 mb-8">Join us in shaping the future of technology. Explore career opportunities or start a collaboration.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="careers.html" class="px-8 py-3 bg-white text-black font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                    View Careers
+                </a>
+                <a href="contact.html" class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-black transition-colors">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="text-gray-400">
+                © 2024 M.Y. Engineering and Technologies. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openLouis() {
+            alert('AI Assistant feature coming soon!');
+        }
+    </script>
+</body>
+</html>
