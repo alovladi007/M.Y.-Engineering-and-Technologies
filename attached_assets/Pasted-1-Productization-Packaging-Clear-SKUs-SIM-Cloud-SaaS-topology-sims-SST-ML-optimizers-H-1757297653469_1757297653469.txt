@@ -1,0 +1,117 @@
+1) Productization & Packaging
+
+Clear SKUs
+
+SIM Cloud (SaaS): topology sims + SST + ML optimizers.
+
+HIL Kit (bench hardware): Pi gateway, gate-driver board, low-voltage DAB/inverter power stage, wiring harness, shunts/NTCs, E-STOP.
+
+Charging Stack: CCS/OCPP add-on with conformance test harness.
+
+Data-Center Energy OS: collectors + PUE/ITUE + power-capping.
+Offer Enterprise (SAML/SCIM, air-gapped, priority support).
+
+Pricing & Licensing: per-seat (SIM), per-device (HIL gateway), per-rack (DC module); open-core or commercial license with SDKs (Py/TS).
+
+Customer-ready docs: quick-starts, safety manual, BOM, wiring guides, troubleshooting trees, API/SDK refs, example notebooks.
+
+2) Technical Scale-up
+
+Cloud architecture: Terraform + Kubernetes (GKE/EKS/AKS), Postgres/Timescale HA, Redis Cluster, object storage for traces, mTLS everywhere.
+
+Telemetry at scale: MQTT→Kafka bridge, schema registry (Avro/Protobuf), tiered retention (hot/cold), role-scoped data access.
+
+Performance: JIT/GPU acceleration (Numba/JAX/CuPy), vectorized kernels, distributed sweeps (Ray/Dask), results caching.
+
+Extensibility: plugin API for new topologies/devices; vendor curve-ingestion pipeline (PDF→CSV→LUT fit).
+
+Verification: golden test benches (PLECS/SPICE parity), uncertainty quantification, sim↔bench auto-calibration.
+
+3) Safety, Compliance & Certification
+
+Functional safety (by market):
+
+EV/drive: ISO 26262 (ASIL decomposition, FMEDA, safety case); ISO/SAE 21434 (cybersecurity).
+
+Industrial/grid: IEC 62443 (cyber), IEC 61800-5-1 (drives safety), IEEE 1547/1547.1 (grid-tie).
+
+EVSE/Charging: CharIN CCS conformance (ISO 15118-2/-20, DIN 70121), OCPP 2.0.1 certification, UL 2202/2231/2251 where relevant.
+
+Inverters/SST: UL 1741 (SA)/IEEE 1547, CISPR 11/32 (EMI/EMC), anti-islanding tests.
+
+Components: AEC-Q101/-Q100 parts for automotive variants; traceable lot data.
+
+Labs & partners: book UL/TÜV/Intertek test time early; create internal pre-compliance rigs (EMI, surge, hipot).
+
+Process: FMEA/FMEDA, hazard analysis, traceability matrix, safety manual, production test specs.
+
+4) Hardware & Supply Chain
+
+Reference designs: LV DAB, 3-phase inverter, totem-pole PFC PSU shelves; CAD, Gerbers, firmware presets.
+
+DFM/DFT with a qualified CM; EVT/DVT/PVT gates; HALT/HASS; thermal/derating analysis.
+
+Spares & lifecycle: alternates for SiC/GaN, magnetics lead times, firmware update policy (signed OTA).
+
+5) Security & Data Governance
+
+Platform: SOC 2 Type II roadmap (or ISO 27001), SBOMs, signed artifacts, SSO/SAML/SCIM, secrets in Vault, least-privilege policies.
+
+Device: secure boot + signed firmware, mTLS device identity (PKI), rotating credentials, tamper logging.
+
+Data: retention schedules, tenant isolation, GDPR/CCPA handling, audit trails.
+
+6) Quality, Testing & SRE
+
+Test pyramid: unit/prop tests for kernels; HIL-in-the-loop CI using vcan0 and fixture playback; protocol conformance suites for CCS/OCPP/CANopen.
+
+SRE: SLIs/SLOs (API latency, job success, message lag), on-call runbooks, chaos drills, backups & restore tests.
+
+Observability: OpenTelemetry (traces/metrics/logs), Grafana dashboards, anomaly alerts.
+
+7) Go-to-Market & Partnerships
+
+Wedge use-cases:
+
+Tier 1: EV traction inverter/charger teams—HIL + optimizer.
+
+Energy: PV/storage inverter OEMs—SST chain design + compliance tooling.
+
+AI data centers: PUE optimization + power-cap MPC pilots.
+
+Alliances: device vendors (Wolfspeed, Infineon, ST, TI, Navitas), magnetics OEMs, EMS/CMs, charging networks, utilities, colos.
+
+Proofs: 3 public case studies (efficiency ↑, ZVS margin, energy cost ↓), conference demos (APEC, PCIM, CharIN, OCP Summit).
+
+8) Team & Roles (initial 9–14 FTE)
+
+PE/Controls (2–3), Firmware (2), Backend (2), Front-end (1), DevOps/SRE (1), Compliance/QA (1–2), PM/AE (1), Solutions/FAE (1).
+Augment with part-time EMI/EMC and safety consultants.
+
+9) Roadmap (first 12 months)
+
+Q1: GA for SIM Cloud; HIL Kit EVT; SOC 2 program kickoff; 2 design partners.
+
+Q2: DAB LV HIL in customer labs; CCS/OCPP conformance beta; Kafka pipeline; case study #1.
+
+Q3: Data-center Energy OS pilots (2 racks each); UL pre-compliance pass; case study #2.
+
+Q4: Enterprise features (SAML/SCIM, air-gapped); OCPP cert; CharIN partial pass; case study #3; revenue targets.
+
+10) KPIs
+
+Engineering: model-to-bench error <5%, ZVS map coverage >95%, mean sim job time <30s p95.
+
+Ops: 99.9% API uptime, <1% ingest loss, MTTR <1h.
+
+Biz: 3 pilot → 2 paying conversions/quarter, $ARR per logo, NRR >115%, CAC payback <12 months.
+
+11) Risk & Mitigation
+
+Device supply → approved alternates, modular boards.
+
+Compliance delays → pre-test labs + staged submissions.
+
+Protocol stack complexity → conformance fixtures + vendor test benches.
+
+Security events → SBOMs, continuous scanning, signed updates, incident playbooks.

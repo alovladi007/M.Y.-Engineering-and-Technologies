@@ -1,0 +1,658 @@
+You are Claude Code, tasked with generating a complete monorepo implementing an **Advanced Power Electronics** platform for EV and Renewable Energy — including **software simulation (SIM)**, **Hardware‑in‑the‑Loop (HIL)** bench control, and **Solid‑State Transformer (SST) + SiC/GaN** extensions. Produce all files with real code, not placeholders. Use clean architecture, strong typing, tests, and docs. Include READMEs and inline comments explaining control/simulation math near each kernel.
+
+\========================
+OVERALL REQUIREMENTS
+====================
+
+* **Monorepo**: pnpm + turbo. Structure:
+
+  * apps/
+
+    * **web**  (Next.js 14 App Router, TypeScript, Tailwind, shadcn/ui, Recharts, Zustand, next-auth)
+    * **api**  (NestJS 10, TypeScript; API gateway + RBAC; orchestrates jobs; MQTT/WebSocket bridge)
+    * **docs** (Docusaurus quickstart with architecture guides)
+  * services/
+
+    * **sim**    (Python 3.11 FastAPI microservice for power electronics simulation + control)
+    * **ml**     (Python 3.11 FastAPI microservice for predictive maintenance/optimization)
+    * **stream** (Node or Python MQTT gateway; optional)
+    * **hil-agent** (Python 3.11 FastAPI asyncio agent for HIL on Raspberry Pi; MQTT↔SocketCAN bridge)
+  * firmware/
+
+    * **control-fw** (C/C++; STM32G4 default; PWM/ADC/FOC/DC-DC; CAN FD; state machine)
+  * infra/
+
+    * **docker-compose.yml** (postgres+timescale, redis, mosquitto, all services, api, web)
+    * **docker-compose.hil.yml** (adds hil-agent, grafana optional)
+    * **init-sql/** (TimescaleDB setup)
+    * **scripts/** (pi-setup.sh, device enrollment, seeding)
+  * shared/
+
+    * **schemas/** (zod + pydantic JSON Schemas kept in sync)
+    * **can/** (bench.dbc CAN spec)
+    * **proto/** (optional gRPC for sim↔ml)
+
+* **Datastores**:
+
+  * **Postgres 16 + TimescaleDB** for time-series telemetry and OLTP (projects, designs, runs, bench, SST).
+  * **Redis** for job queue and caching.
+  * **MQTT (mosquitto)** for live topics: telemetry/<project>/<run>/<signal> and bench/\*.
+
+* **Auth & RBAC**:
+
+  * next-auth in web (Email magic link + Google). JWTs to talk to NestJS API.
+  * NestJS guards for RBAC: Admin, Engineer, Viewer; multi-tenant via org\_id.
+
+* **Observability**: pino (api), structlog (py), OpenAPI for all services, health endpoints.
+
+* **CI** (GitHub Actions): lint + typecheck + unit tests (node + python), backend OpenAPI diff, docker build.
+
+* **Testing**:
+
+  * web: Playwright + React Testing Library
+  * api: Jest (e2e + unit)
+  * sim/ml: pytest + hypothesis + mypy
+
+* **Seed data**: demo projects (EV traction inverter @ 400/800V, OBC bidirectional DC‑DC, DC fast charger, PV string inverter with MPPT, SST chains). Synthetic drive cycles and irradiance/temperature traces.
+
+* **License**: MIT. **HV Safety** disclaimer in README and UI (Bench Mode modal).
+
+\========================
+DOMAIN & FEATURES (BASE)
+========================
+
+**Design Library**
+
+* Topologies: Interleaved Boost, LLC resonant, Bidirectional Half/Full‑Bridge DC‑DC (EV OBC & traction DC link), 3‑phase 2‑level inverter with LCL filter (grid‑tie) or PMSM drive (EV traction).
+* Components:
+
+  * Switch: {tech: SiC|GaN, Vds/Vce, Rds\_on/Ice, Qg, Qoss, Eon/Eoff vs Id, Coss(v), gate charge curve, RthJC, package}
+  * Diode (if needed), Magnetics (L, C, core loss params), Heatsinks (Rth), Shunts/NTCs.
+* Controllers:
+
+  * DC‑DC: current‑mode control (PI), V^2, resonant tank control for LLC
+  * MPPT: Perturb\&Observe, Incremental Conductance
+  * Inverters: SVPWM and DPWM, deadtime compensation
+  * Motor control: PMSM FOC (Clarke/Park, Id/Iq PI, flux/torque control), speed loop PI
+  * Grid‑tie: SRF‑PLL and current control in dq
+* Loss/Thermal:
+
+  * Conduction: Pcond = I\_rms^2 \* Rds\_on(T)
+  * Switching: integrate Eon/Eoff over operating Id, V, T
+  * Capacitor RMS ripple & ESR loss; inductor copper + core (Steinmetz)
+
+**Simulation Kernels (services/sim)**
+
+* ODE solvers (RK4 + adaptive dt; stiff fallback via scipy solve\_ivp 'Radau').
+* Circuits:
+  a) Interleaved Boost (2–4 phases), ripple and phase shedding.
+  b) LLC Resonant (half‑bridge): tank equations, ZVS region.
+  c) Bidirectional DC‑DC (buck/boost) with synchronous rectification.
+  d) 3‑phase inverter:
+
+  * SVPWM, DPWM, deadtime, DC‑link ripple.
+  * PMSM plant model (Ld, Lq, Ke, Rs, J, B) and FOC loops.
+  * Grid‑tie inverter with LCL filter and SRF‑PLL.
+* PV model: Single‑diode (Rs, Rsh); I‑V/P‑V vs irradiance & temperature.
+* Waveforms:
+
+  * Per‑step: v, i, duty, phase angle, Id/Iq, torque/speed (motor), PLL angle/freq, DC‑link ripple.
+  * Derived: THD, PF, efficiency, switching loss breakdown, temperature rise (Cauer RC).
+* APIs (FastAPI):
+
+  * POST /simulate/run  {project\_id, topology, parameters, controller, timespan, step\_hint}
+  * GET  /simulate/run/\:id  -> status + summary
+  * WS   /simulate/stream/\:id -> live waveform chunks
+  * POST /calc/losses, /calc/thermal
+
+**ML & Optimization (services/ml)**
+
+* Predictive Maintenance:
+
+  * LSTM/TCN for failure precursors from telemetry (voltage ripple, inductor temp, switching energy drift).
+  * Anomaly detection (IsolationForest or autoencoder) for abnormal THD/PF/temperature patterns.
+* Control Optimization:
+
+  * MPC: one‑step horizon penalizing ripple/THD/loss with dv/dt, di/dt constraints.
+  * RL stub (Soft Actor‑Critic) targeting duty/freq modulation under constraints (train on sim rollouts).
+* APIs:
+
+  * POST /ml/train (dataset spec, model)
+  * POST /ml/predict (signal batch or live stream)
+  * POST /ml/optimize (plant spec → optimal gains/schedules)
+
+**API Gateway (apps/api, NestJS)**
+
+* Modules: auth, orgs, projects, designs, runs, components, telemetry, **bench** (HIL), **sst**.
+* Expose REST + WS (socket.io). Persist run metadata and write telemetry to Timescale hypertables.
+* Schedule jobs (sim/ml) via HTTP; bridge MQTT topics to WS clients.
+* OpenAPI (Swagger) generated; zod schema parity via openapi‑zod‑client in web.
+
+**Web App (apps/web, Next.js)**
+
+* Pages:
+
+  * / (overview) with cards for EV Traction, OBC, DC Fast Charge, PV/Storage, Grid‑Tie, **SST**.
+  * /projects, /projects/\:id (tabs: Design, Simulation, Telemetry, Analytics)
+  * Design Studio: forms + calculators (inductor ripple, LLC tank, LCL sizing).
+  * Simulation Runner: params, live Recharts, CSV export.
+  * Motor Control Lab: FOC tuning; Id/Iq plots; torque/speed curves.
+  * PV/MPPT Lab: I‑V/P‑V sweeps; MPPT convergence.
+  * Analytics: loss sunburst, THD bars, PF gauge, thermal map.
+  * Admin: components library CRUD; org/team & roles.
+  * **Bench**: live HIL controls/telemetry (see HIL section).
+* State via Zustand; TanStack Query for data; sockets for live.
+* Authentication via next-auth; RBAC UI guards.
+* "New Design" wizards for each topology with sane defaults.
+
+\========================
+DATA MODEL (Postgres)
+=====================
+
+* orgs(id, name)
+* users(id, org\_id, email, role)
+* projects(id, org\_id, name, domain {EV, PV, GRID, SST}, notes)
+* designs(id, project\_id, topology, parameters JSONB, controller JSONB, created\_by)
+* components(id, org\_id, kind, params JSONB, vendor, pn)
+* runs(id, project\_id, design\_id, mode {SIM|HIL}, status, started\_at, finished\_at, summary JSONB)
+* telemetry(time TIMESTAMPTZ, run\_id, signal TEXT, value DOUBLE PRECISION)  → Timescale hypertable (time, run\_id)
+* **bench\_devices**(id, org\_id, label, can\_profile, if\_name, last\_seen\_at)
+* **bench\_can**(time TIMESTAMPTZ, device\_id, can\_id INT, dlc INT, data BYTEA, ts\_hw BIGINT)  → hypertable
+* **bench\_signals**(time TIMESTAMPTZ, device\_id, signal TEXT, value DOUBLE PRECISION)        → hypertable
+* **transformer\_cores**(id, vendor, core\_type, Ae, Ve, le, window, material\_id)
+* **magnetic\_materials**(id, name, Steinmetz\_k, alpha, beta, freq\_range)
+* **device\_curves**(id, pn, tech, Vds, Id, Rds\_on\_25C, RthJC, curves JSONB)
+* **sst\_designs**(id, project\_id, stage\_chain JSONB, mft JSONB, constraints JSONB)
+
+Create hypertables and indexes in infra/init-sql. Add continuous aggs for downsampling charts.
+
+\========================
+IMPLEMENTATION DETAILS (BASE)
+=============================
+
+**Core Algorithms (Python sim service)**
+
+* **SVPWM**: sector detection, vector times (T1, T2, T0); optional DPWM clamp.
+
+* **PMSM model**:
+  v\_d = R\_s i\_d + L\_d di\_d/dt − ω\_e L\_q i\_q
+
+  v\_q = R\_s i\_q + L\_q di\_q/dt + ω\_e (L\_d i\_d + K\_e)
+
+  τ\_e = 1.5 p (λ i\_q + (L\_d−L\_q) i\_d i\_q);  ω\_m = (τ\_e − B ω\_m − τ\_load)/J
+
+* **SRF‑PLL**: Park of grid voltage, PI on q‑axis → 0, integrate angle.
+
+* **Interleaved Boost**: multi‑phase duty, ripple estimator, phase shedding.
+
+* **LLC**: resonant tank (Lr, Cr, Lm), frequency control, ZVS detection flag.
+
+* **Loss models**: Eon/Eoff lookup vs Id (scaled by fsw, Vdc), Pcond via Rds\_on(T) or Vce\_sat.
+
+* **Thermal**: Cauer RC ladder; Tj via convolution of loss with thermal impulse response; ambient + heatsink Rth.
+
+* **EMI hooks**: compute di/dt, dv/dt stats; export for future CISPR estimation.
+
+**ML service**
+
+* Dataloaders from Timescale; windowing, scaling, rFFT features.
+* Models: LSTM + attention for RUL proxy; TCN for anomaly score; export ONNX.
+* MPC (cvxpy) examples for boost & inverter current control.
+
+\========================
+DEVELOPER EXPERIENCE
+====================
+
+* docker compose up --build → web at [http://localhost:3000](http://localhost:3000)
+* Makefile (or npm scripts) for: init\_db, dev, test, seed, fmt.
+* Seed script: demo components (SiC MOSFETs, GaN HEMTs), magnetics, heatsinks; 4+ demo projects; designs & runs.
+* Docs: architecture README + sequence diagrams (“Run a Simulation”, “FOC Loop”, “MPPT”).
+* Postman collection and OpenAPI JSON for api/sim/ml; CSV export of waveforms; server‑side PDF report per run.
+
+\========================
+QUALITY BARS (BASE)
+===================
+
+* Implement at least:
+
+  * 3 kernels end‑to‑end (interleaved boost, LLC, 3‑phase inverter + PMSM FOC)
+  * 2 MPPT algorithms
+  * Loss + thermal calculators wired to UI
+  * 1 ML model trained on synthetic telemetry (tiny epoch) with inference endpoint
+  * Playwright test that runs a sim from UI and verifies live plot reception
+* Provide .env.example with safe defaults.
+
+\=================================
+HIL PROFILE (BENCH SETUP, MERGED)
+=================================
+
+**Goal**: Drive a real power stage with a Pi‑based bench agent, dedicated control MCU (STM32G4), gate‑driver board, and full CAN logging into TimescaleDB. Keep same API/web/ML services and add a selectable **HIL mode** per Run.
+
+**Hardware Reference**
+
+* Coordinator: Raspberry Pi 5/4 (64‑bit OS).
+* CAN: SocketCAN via USB‑CAN FD / MCP2517FD HAT / PCIe CAN FD (Pi 5).
+* Control MCU: STM32G431/STM32G474 Nucleo (Alt: Teensy 4.1 or TI C2000 LP).
+* Gate drivers: DRV8353 (3‑phase) or UCC27211 / LMG1210 for DC‑DC; isolated supplies; desat/OC.
+* Sensing: INA240 front‑end, NTCs to ADC.
+* Interlocks: E‑STOP loop (latching), pre‑charge relay, DC contactor, driver EN pins, OC/OV/OT cutoff.
+
+**New Repo Elements**
+
+* apps/web: add **/bench** tab: live CAN telemetry, state machine, ARM/RUN/STOP, setpoints, fault log.
+* apps/api: **bench module**
+
+  * REST + WS:
+
+    * POST /bench/\:device/arm | /run | /stop
+    * POST /bench/\:device/setpoints {duty|speed|iq\_ref|mppt\_mode|fsw|vref}
+  * Publishes MQTT bench/cmd/*; stores bench/telemetry/* to Timescale.
+* services/**hil-agent** (Python, runs on Pi): bridges MQTT↔SocketCAN, timestamps frames, decodes via DBC, streams to API; FastAPI health endpoints; local buffer/backfill; optional CSV/MDF4 logs.
+* firmware/**control-fw** (STM32G4): PWM (center‑aligned, complementary, deadtime), sync ADC, PI loops + FOC, CAN FD, state machine IDLE→ARMED→RUN→FAULT, calibrations in firmware/config/calib.yaml, hard interlocks.
+* shared/can/**bench.dbc**: CAN message spec below.
+* infra: docker-compose.hil.yml (adds hil-agent, grafana optional); scripts/pi-setup.sh (bootstrap SocketCAN + agent).
+
+**MQTT & CAN Topic Map**
+
+* MQTT:
+
+  * Commands (API→Pi): bench/cmd/<device>/arm|run|stop
+  * Setpoints: bench/cmd/<device>/sp/{duty|speed|iq|vref|fsw|mode}
+  * Telemetry: bench/telemetry/<device>/raw\_can and /decoded/{pack,phase,thermal,faults}
+  * Heartbeat: bench/hb/<device>
+* CAN (11‑bit IDs):
+
+  * 0x100 CMD\_CTRL     (start/stop/arm; seq, crc)
+  * 0x101 CMD\_SP\_1     (duty%, fsw\_khz)
+  * 0x102 CMD\_SP\_2     (iq\_ref\_A, vref\_V, mppt\_mode)
+  * 0x180 ACK\_STATUS   (state, ack\_code, fault\_code)
+  * 0x200 TLM\_PACK\_1   (v\_bus\_V, i\_bus\_A, p\_out\_W)
+  * 0x201 TLM\_PHASE\_I  (i\_a\_A, i\_b\_A, i\_c\_A)
+  * 0x202 TLM\_MOTOR    (omega\_e, omega\_m, torque)
+  * 0x203 TLM\_THERM    (tj\_C, hs\_C, board\_C)
+  * 0x210 TLM\_PV       (irr\_Wm2, pv\_v\_V, pv\_i\_A, mppt\_duty)
+  * 0x220 FAULTS       (bits: OC, OV, OT, UVLO, DESAT, CAN\_LOSS, ESTOP)
+
+**Raspberry Pi SocketCAN Setup**
+
+* USB‑CAN FD: system exposes `can0`.
+* MCP2517FD (SPI) overlay in /boot/firmware/config.txt:
+
+  * `dtoverlay=mcp251xfd,spi0-0,interrupt=25`
+  * `sudo ip link set can0 up type can bitrate 500000 dbitrate 2000000 fd on`
+* Dev (no hardware):
+
+  * `sudo modprobe vcan`
+  * `sudo ip link add dev vcan0 type vcan && sudo ip link set up vcan0`
+  * Set `HIL_AGENT_CAN_IF=vcan0`.
+
+**HIL‑Agent (Python)**
+
+* Libs: python‑can, cantools, asyncio‑mqtt, pydantic, uvicorn.
+* Functions:
+
+  1. Bridge CAN↔MQTT; DBC encode/decode.
+  2. Local buffering + backfill on reconnect.
+  3. Optional CSV/MDF4 logs (rotated).
+  4. Health endpoints (/health, /stats); CLI tools (dbc‑verify, replay).
+* Ship systemd unit `hil-agent.service`, .env template, Dockerfile (linux/arm64).
+
+**Control Firmware (STM32G4)**
+
+* Timers: TIM1 for 3‑phase inverter (CH1‑3, complementary), programmable deadtime; TIM8 optional.
+* ADC: dual injected conversions synced mid‑on‑time; DMA.
+* FOC stack (inverter): Clarke/Park, PI Id/Iq with anti‑windup, decoupling, speed PI.
+* DC‑DC mode: peak or average current‑mode; slope compensation, soft‑start, phase‑shedding.
+* PLL (optional grid): SRF‑PLL.
+* Safety: COMP‑triggered PWM kill; DESAT pin → FAULT; SW limits V/I/T; E‑STOP.
+* CAN: Rx CMD frames; Tx ACK + telemetry @ 1–5 ms.
+
+**API (NestJS) Bench Module**
+
+* Services: BenchCommandService (publish MQTT), BenchIngestService (subscribe telemetry), BenchTimescaleService (write hypertables).
+* DTOs: ArmDto, RunDto, StopDto, SetpointsDto (zod + class‑validator).
+* WS gateway: emit live decoded telemetry per {device\_id} room.
+
+**Web (Next.js) Bench UI**
+
+* Route: /bench/\:deviceId
+
+  * Cards: State Machine (IDLE/ARMED/RUN/FAULT), E‑STOP, DC link, phase currents, temps.
+  * Controls: ARM/RUN/STOP; set Duty/Speed/Iq/Vref; fsw slider; MPPT toggle.
+  * Live charts (Recharts): currents; v\_bus/i\_bus/Pout; temps; faults timeline.
+  * Run dialog: Mode SIM|HIL; if HIL → device select + safety checklist modal.
+
+**Security & Enrollment**
+
+* Each Pi generates keypair (age/ed25519). Admin approves → device record bound to org.
+* MQTT mTLS per device (mosquitto auth plugin). API commands require JWT; audit log of all commands.
+
+**Safety Checklist (Required)**
+
+* Pre‑charge verified; drivers disabled on power‑up; ESTOP latched/tested.
+* Isolation for probes/grounds; differential probes for HV.
+* FW current/voltage limits below hardware max; soft‑start defaults.
+* HV disclaimer in README + UI.
+
+**Pi Bootstrap Script (create `infra/scripts/pi-setup.sh`)**
+
+* Contents:
+
+```
+#!/usr/bin/env bash
+set -euo pipefail
+sudo apt-get update
+sudo apt-get install -y can-utils python3-venv git
+python3 -m venv ~/hil
+source ~/hil/bin/activate
+pip install --upgrade pip
+pip install fastapi uvicorn[standard] python-can cantools asyncio-mqtt pydantic[dotenv]
+sudo modprobe vcan || true
+sudo ip link add dev vcan0 type vcan || true
+sudo ip link set up vcan0 || true
+echo "HIL agent deps installed. Set CAN IF via HIL_AGENT_CAN_IF=vcan0 and run: uvicorn hil_agent.app:app --host 0.0.0.0 --port 8081"
+```
+
+**Developer Test (No Hardware)**
+
+* Enable vcan0; run hil-agent with bench.dbc; use `cangen vcan0 -L 8 -I 0x200 -g 5`.
+* Verify MQTT topics and DB ingestion; Bench UI charts update.
+* Playwright test: “HIL smoke” starts a HIL run in dev mode; publishes canned frames; asserts charts update and run summary written.
+
+\=========================================
+SOLID‑STATE EXTENSION (SST + SiC/GaN, MERGED)
+=============================================
+
+**Goal**: Add medium‑frequency, solid‑state conversion paths for EV DCFC and renewables. Implement a 3‑stage SST (AC‑DC → DAB (MV/LV) → AC/DC), advanced SiC/GaN device models, grid services (IEEE‑1547 style), and bench‑safe scaled HIL.
+
+**New Domains & Use Cases**
+
+* MV/LV SST for:
+
+  1. EV DC Fast Charging (MV AC → regulated LV DC bus 400–1000 V)
+  2. PV + Storage MV intertie (LV AC/DC ↔ MV AC)
+  3. Microgrid (grid‑forming/following, LV black‑start)
+
+**Architecture (3‑Stage SST)**
+
+* Stage 1 (AC‑DC): 3‑phase Vienna or 2/3‑level NPC rectifier with SRF‑PLL, unity PF, low THD.
+* Stage 2 (Isolation): **Dual‑Active Bridge (DAB)** with Medium‑Frequency Transformer (MFT).
+* Stage 3 (DC/AC or DC/DC): LV inverter (grid‑tie) or regulated HV DC bus for chargers.
+
+**Simulation Service: New Kernels**
+
+1. **3‑Level NPC Rectifier**
+
+   * dq model with LCL filter; current control in dq; DC‑link regulation.
+   * Metrics: THD, PF, ripple, current imbalance.
+2. **DAB + MFT**
+
+   * State‑space with leakage Llk, magnetizing Lm; MFT copper/core losses (i^2R + generalized Steinmetz).
+   * Phase‑shift power: analytical check P≈(n·V1·V2/(2π·f\_s·Llk))·φ·(1−|φ|/π) with exact waveform integration in sim.
+   * Controls: SPS and TPS (leading/lagging + duty skew); soft‑start; ZVS flag; deadtime model.
+3. **LV Grid‑Side Inverter**
+
+   * Grid‑forming (P‑f/Q‑V droop) and grid‑following (PLL); virtual inertia.
+4. **SiC/GaN Device Model Pack**
+
+   * Nonlinear Coss(v), Qg(v), Eon/Eoff(Id,V,T) LUTs + spline; reverse conduction (SiC body diode) with Qrr; GaN third‑quadrant channel; Rds\_on(T) drift; dynamic Rds\_on (GaN); thermal Cauer fit.
+
+**APIs (sim)**
+
+* POST /simulate/sst/run { topology\_chain:\["NPC3L","DAB","INV"], params:{npc3l:{...}, dab:{...}, inv:{...}, mft:{core,Ae,Ve,le,k\_b,Steinmetz:{k,alpha,beta}}, devices:{primary:{tech:"SiC",pn:"…"},secondary:{tech:"GaN",pn:"…"}} }
+* POST /simulate/sst/sweep (φ sweep, fs sweep, device compare)
+* GET /simulate/sst/run/\:id, WS stream like base.
+* Outputs: DC‑link dynamics, DAB P‑φ curve, ZVS map, transformer temp map, grid metrics (THD, PF), efficiency stack.
+
+**ML & Optimization Upgrades**
+
+* Loss optimizer: choose (device, fs, φ, Llk) to maximize η subject to ZVS and Tmax.
+* PHM for MFT: sequence model on core temp/ripple flux → hotspot & loss drift forecast.
+* DAB‑tuned anomaly detection (ZVS collapse, circulating current spikes).
+* MPC: minimize circulating current with constraints on dv/dt, di/dt, φ̇.
+* API: POST /ml/optimize/sst → (fs, φ schedule, device pick, predicted η, ZVS heatmap).
+
+**Web UI Additions**
+
+* New **SST workspace**:
+
+  * Chain builder: drag blocks (NPC3L → DAB → INV/DC).
+  * **MFT designer**: core/material selector; turns; window utilization; skin/proximity loss estimate.
+  * **Device chooser**: SiC/GaN compare (η, Tj, ZVS area) with vendor curves.
+  * **ZVS map** & loss sunburst; grid services panel (Volt‑VAR, PF, ride‑through).
+* Calculators:
+
+  * LCL sizing (f\_res, damping)
+  * DAB Llk target from ripple/ZVS
+  * MFT core loss via iGSE & copper AC resistance model
+
+**HIL (Scaled Bench) Add‑Ons**
+
+* DAB low‑voltage rig (e.g., 48↔24 V) with GaN half/full‑bridge + planar MFT proto.
+* New CAN frames:
+
+  * 0x230 DAB\_CMD (φ\_mdeg, fs\_khz)
+  * 0x231 DAB\_STATUS (zvs\_window, circ\_current\_A)
+  * 0x232 MFT\_THERM (tj\_swA/B, t\_core, t\_winding)
+* Bench UI: φ slider, fs slider, ZVS indicator LED, “safe corridor” overlay; enforce φ, fs against safe map; E‑STOP → SPS φ=0, fs=min.
+
+**Grid Services & Compliance**
+
+* Grid‑following: SRF‑PLL with ROCOF cap; dq current control with feedforward.
+* Grid‑forming: P‑f / Q‑V droop; black‑start; ride‑through window.
+* Volt‑VAR/Volt‑Watt curves editor; export JSON profiles.
+* Fault ride‑through simulation: sag/swell, under/over‑freq; log compliance KPIs.
+
+**Tests & Seed Content**
+
+* Seed designs:
+
+  1. DCFC: NPC3L(800Vdc) → DAB(50 kHz MFT) → DC 950 V bus
+  2. PV+Storage MV intertie: NPC3L → DAB → LV inverter grid‑forming
+* Playwright: SST sim run with ZVS map update vs φ.
+* Pytest:
+
+  * DAB P‑φ curve sanity vs analytical.
+  * Transformer loss vs frequency vs Steinmetz regression.
+  * SiC vs GaN swap regression (η, Tj).
+* Jest e2e: /ml/optimize/sst returns feasible (φ, fs) under constraints.
+
+\========================
+DELIVERABLES (UNIFIED)
+======================
+
+1. Full monorepo with code and docs.
+2. One‑command spin‑up: `docker compose up --build` (or `-f docker-compose.hil.yml` for HIL stack).
+3. Admin login hint (magic link) & demo tour modal.
+4. Postman collection and OpenAPI JSON for api/sim/ml.
+5. Example notebooks in services/sim/notebooks:
+
+   * FOC step response & Bode plot
+   * PV I‑V/P‑V sweep and MPPT convergence
+   * Loss/thermal sweep (switch choice, fsw, duty)
+   * SST DAB P‑φ and ZVS maps
+6. CSV export of waveforms; PDF report generator summarizing a run.
+7. HIL artifacts: bench.dbc, hil-agent with systemd, pi‑setup.sh, firmware build scripts, wiring diagrams.
+
+\========================
+FINAL INSTRUCTIONS
+==================
+
+* Generate the repository with **actual source files** implementing the above (no placeholders).
+* Ensure **tests pass** in CI with minimal seeded data.
+* Add concise comments explaining equations and control loops.
+* Provide `.env.example` across apps/services and secure defaults.
+
+\=========================================
+CANopen Profiles & Industrial Fieldbus (Add‑On)
+===============================================
+
+**Goal**: Provide standards‑based control/telemetry for bench hardware and plant integration using **CANopen (CiA‑301)** and the **Drives Profile CiA‑402** semantics where suitable.
+
+**Modes**
+
+* Bench device CAN modes: `raw_dbc` (default), `canopen_301`, `canopen_402` (drive‑like control for inverter/PMSM), switchable in device settings.
+
+**CANopen Essentials**
+
+* NMT states: Initializing → Pre‑operational → Operational → Stopped.
+* COB‑IDs (11‑bit): NMT 0x000, SYNC 0x080, Time 0x100, Emergency 0x080+0x?? (per node), PDO1 Tx 0x180+node, PDO1 Rx 0x200+node, SDO Tx 0x580+node, SDO Rx 0x600+node, Heartbeat 0x700+node.
+* Heartbeat producer/consumer configurable; SYNC period configurable (ms).
+
+**Object Dictionary (OD) Map**
+
+* 0x1000 Device Type, 0x1001 Error Register, 0x1017 Producer Heartbeat Time, 0x1018 Identity.
+* 0x2000‑0x2FFF vendor‑specific signals: pack voltage/current, phase currents, temperatures, MPPT duty, PLL freq, etc.
+* **CiA‑402 subset for inverter/PMSM** (optional):
+
+  * 0x6040 Controlword, 0x6041 Statusword, 0x6060 Modes of Operation, 0x6061 Modes Display,
+  * 0x6071 Target Torque, 0x607A Target Position, 0x60FF Target Velocity,
+  * 0x606C Actual Velocity, 0x6077 Actual Torque, 0x6064 Position Actual Value.
+  * Map FOC targets to CiA‑402: `iq_ref` ↔ Target Torque, speed setpoint ↔ Target Velocity.
+
+**PDO Mapping Examples**
+
+* TPDO1 (0x180+node): v\_bus\_V (u16\@1e1), i\_bus\_A (u16\@1e1), state (u8), fault\_bits (u16)
+* TPDO2 (0x280+node): i\_a\_A, i\_b\_A, i\_c\_A (s16\@1e1)
+* TPDO3 (0x380+node): tj\_C (u16\@1), hs\_C (u16\@1), board\_C (u16\@1)
+* RPDO1 (0x200+node): controlword (u16), mode (s8), iq\_ref\_A (s16\@1e1)
+* RPDO2 (0x300+node): vref\_V (u16\@1e1), fsw\_khz (u16\@1e2)
+
+**Repo Additions**
+
+* `services/hil-agent/canopen/`:
+
+  * Lightweight CANopen stack (NMT, SDO, PDO, Heartbeat, SYNC)
+  * OD YAML → codegen for entries and PDO layouts
+  * EDS generator: `shared/can/bench.eds` built from OD YAML
+* `firmware/control-fw/canopen/`:
+
+  * CiA‑301 transport (CAN FD tolerant in classic mode), heartbeat producer, SYNC consumer
+  * Optional CiA‑402 glue layer mapping FOC/DC‑DC controls ↔ 0x6040/0x6060/targets
+* API extensions:
+
+  * `/bench/:device/canopen/state` (read NMT, heartbeat), `/bench/:device/canopen/od` (SDO browse/read/write)
+* Web UI:
+
+  * Toggle CAN mode, live OD browser, PDO map inspector, EDS download.
+
+**Tests**
+
+* HIL Playwright: switch device to CANopen, verify PDO streams; Jest e2e: SDO write modifies setpoint; Pytest: OD serialization round‑trip.
+
+\=========================================
+EV Fast Charging Protocols — CCS/DCFC Stubs
+===========================================
+
+**Goal**: Provide realistic **protocol state machines** for EVSE/EV (simulation) and stubs for lab integration to support **CCS (ISO 15118‑2/‑20, DIN 70121, IEC 61851)**. Focus on DCFC flows; include OCPP backend hooks.
+
+**New Service**: `services/ccs/` (Python FastAPI)
+
+* State machines:
+
+  * **AC/DC control pilot** (IEC 61851): CP/PP states abstracted; simulator emits A/B/C/D transitions & PWM duty.
+  * **PLC/EXI stubs**: message schemas for ISO 15118 SessionSetup, ServiceDiscovery, ContractAuth (PnC), CableCheck, PreCharge, PowerDelivery, MeteringReceipt, Termination. (Transport mocked; binary EXI encoding placeholder.)
+  * **DIN 70121** minimal flow for legacy DC.
+* Security:
+
+  * TLS context & certificate placeholders for PnC (V2G root, OEM/CSO leafs); not for production.
+* EVSE Controller:
+
+  * Translates EV requests → DC bus setpoints (V/I) to **sim** or **HIL bench** (scaled), enforces pre‑charge and contactor states.
+* APIs:
+
+  * `POST /ccs/session/start` → session\_id
+  * `WS /ccs/session/:id` → stepwise messages/events
+  * `POST /ccs/evse/set_limits {v_max, i_max, ramp, safety}`
+  * Hooks to **api** gateway: `/api/ccs/*` proxies, run linkage to projects/runs.
+
+**Backend Connector**: OCPP (1.6J / 2.0.1 minimal)
+
+* `services/ocpp/` optional WS server with ChargePoint <→ CentralSystem stubs (BootNotification, Heartbeat, StatusNotification, MeterValues, Start/StopTx).
+* Bind **ccs** sessions to OCPP transactions; store meter values in Timescale.
+
+**Web UI (Charging)**
+
+* New **Charging** panel per project:
+
+  * Handshake timeline (ISO15118 steps), live DC setpoints/actuals, contactor/pre‑charge visualization.
+  * Sim toggles: DIN vs ISO, AC vs DC; PnC on/off; certificate viewer (demo certs).
+
+**HIL Notes**
+
+* Physical PLC not implemented; use simulated transport to drive DC setpoints on lab DAB/DC‑DC at low voltage. CP/PP simulated via GPIO abstraction; **safety interlocks remain enforced**.
+
+**Tests & Seeds**
+
+* Seed: two CCS sessions (DIN + ISO), successful DC charge to target SOC; regression test for pre‑charge slope and current demand loop.
+
+\=========================================
+AI Servers & Data‑Center Energy Module
+======================================
+
+**Goal**: Extend platform to **data‑center/AI server power**—from grid/UPS/PDU to rack 48V shelves and on‑board VRMs—plus telemetry and optimization for ML clusters.
+
+**New Workspace**: **/datacenter**
+
+* Dashboards: PUE/ITUE gauges, Sankey power flow (Grid→UPS→PDU→Rack→Node→GPU/CPU/VRM), per‑rack thermal map, cost/KWh, carbon.
+* Controls: power caps, scheduling hints, what‑if sliders (ambient, setpoint, workload), PSU efficiency maps.
+
+**New Services**
+
+1. `services/dc-energy/` (Python FastAPI):
+
+   * **Telemetry collectors**:
+
+     * **NVML/DCGM** (GPU power, clocks, utilization), CPU **RAPL** (pkg/dram), **IPMI/Redfish** (node power), **PMBus/SMBus** for PSU/VRM (via i2c-tools)
+     * Rack PDU (SNMP/Modbus TCP), UPS (Modbus, SNMP)
+   * **Models**:
+
+     * Forecasting (Temporal Fusion Transformer/Prophet baseline) of rack/node power; PUE estimator
+     * Workload → power surrogate (e.g., tokens/s → W, GPU util → W)
+   * **Optimizers**:
+
+     * RL/MPC for **power capping** and **cooling setpoint** control under SLA
+   * APIs: `/dc/collect/*`, `/dc/forecast`, `/dc/optimize/cap`, `/dc/pue`
+
+2. `services/sim` additions (power electronics for DCs):
+
+   * **Totem‑Pole PFC** (SiC) 3‑phase & single‑phase models; CCM with average current control; efficiency/THD
+   * **LLC/HB DC‑DC** (2‑stage PSU: PFC→LLC→48V)
+   * **380Vdc HVDC bus** distribution model with busbars + droop, rack power shelves → 48V
+   * **VRM multiphase buck** (analytical + transient) to CPU/GPU rails; transient response, ripple, loss
+
+**DB Extensions**
+
+* `sites(id, name, tz, grid_mix)`
+* `rooms(id, site_id)` `racks(id, room_id, name, rated_kw)` `nodes(id, rack_id, hostname, role)`
+* `sensors(id, scope{site/room/rack/node/psu/gpu}, kind, meta)`
+* Hypertables: `energy(time, scope_id, metric, value)`; `thermal(time, scope_id, metric, value)`
+
+**API/Web**
+
+* `/datacenter/*` routes: rack explorer, node details (live NVML/DCGM), PSU/VRM status
+* Energy KPIs: PUE, ITUE, W/Token (model‑specific), carbon intensity tracking by grid mix
+* What‑if: simulate PSU upgrade (SiC totem‑pole PFC map vs legacy), cooling delta‑T effects, power cap strategies
+
+**HIL**
+
+* Optional: attach PMBus dev boards to Pi; read PSU telemetry over I2C; log via hil‑agent → Timescale
+
+**Tests & Seeds**
+
+* Seed: small AI cluster (2 racks, 8 nodes, 8×GPU each), synthetic traces; compare PSU maps (LLC+SiC vs legacy) and show energy savings
+* Pytest: VRM transient within spec for step load; PFC THD under EN61000‑3‑2 limits (simulated)
+* Playwright: Live rack heatmap & power cap control loop demo
+
+\=========================================
+UNIFIED DELIVERABLE UPDATES
+===========================
+
+* New services committed (`ccs`, `ocpp`, `dc-energy`, CANopen in `hil-agent` & firmware glue)
+* Docs:
+
+  * `docs/canopen.md`, `docs/ccs.md`, `docs/datacenter.md`
+  * Sequence diagrams: CCS handshake, OCPP linkage, power‑cap MPC
+* Seed content for charging sessions and data‑center cluster
+* CI jobs for new services; contract tests between api ↔ ccs/ocpp ↔ web
+* `.env.example` updated with OCPP/CCS endpoints, NVML/DCGM toggles, IPMI creds (mock), PMBus bus IDs
