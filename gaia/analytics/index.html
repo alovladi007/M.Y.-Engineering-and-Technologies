@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Analytics - Advanced Energy Intelligence</title>
+    <meta name="description" content="Comprehensive analytics and insights for energy optimization and carbon footprint reduction">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.05) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .energy-gradient { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%); }
+        .carbon-gradient { background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%); }
+        .efficiency-gradient { background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%); }
+        .cost-gradient { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%); }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .insight-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 197, 253, 0.02) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .prediction-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.02) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full glass-effect z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 energy-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">GAIA</span>
+                        <p class="text-xs text-slate-400">Analytics</p>
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="../index.html" class="nav-link text-slate-300 hover:text-white">Home</a>
+                    <a href="../dashboard/index.html" class="nav-link text-slate-300 hover:text-white">Dashboard</a>
+                    <a href="#" class="nav-link active text-white">Analytics</a>
+                    <a href="../controller/index.html" class="nav-link text-slate-300 hover:text-white">Controller</a>
+                    <a href="../api/index.html" class="nav-link text-slate-300 hover:text-white">API</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="http://127.0.0.1:8081/index.html" class="px-4 py-2 border border-slate-600 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 text-sm">
+                        ← Back to M.Y
+                    </a>
+                    <button class="px-6 py-2 energy-gradient text-white font-semibold rounded-lg hover:opacity-90 transition-all">
+                        <i class="fas fa-download mr-2"></i>Export Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen">
+        <!-- Header Section -->
+        <div class="bg-slate-800 py-12">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-4xl font-bold mb-2">Advanced Analytics</h1>
+                        <p class="text-slate-400">Deep insights into energy consumption patterns and optimization opportunities</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <select class="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white">
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>Last 3 months</option>
+                            <option>Last year</option>
+                        </select>
+                        <button class="px-6 py-2 border border-slate-600 text-slate-300 font-semibold rounded-lg hover:bg-slate-700 transition-all">
+                            <i class="fas fa-cog mr-2"></i>Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tabs -->
+        <div class="container mx-auto px-4 py-8">
+            <div class="glass-effect rounded-2xl p-8 mb-8">
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <button class="tab-btn px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold" data-tab="overview">
+                        <i class="fas fa-chart-pie mr-2"></i>Overview
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="trends">
+                        <i class="fas fa-chart-line mr-2"></i>Trends
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="predictions">
+                        <i class="fas fa-crystal-ball mr-2"></i>Predictions
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="insights">
+                        <i class="fas fa-lightbulb mr-2"></i>Insights
+                    </button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content active">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Energy Consumption Breakdown -->
+                        <div class="insight-card rounded-2xl p-6" data-aos="fade-up">
+                            <h3 class="text-xl font-bold mb-6">Energy Consumption Breakdown</h3>
+                            <div class="chart-container">
+                                <canvas id="energyBreakdownChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Carbon Footprint Analysis -->
+                        <div class="prediction-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-xl font-bold mb-6">Carbon Footprint Analysis</h3>
+                            <div class="chart-container">
+                                <canvas id="carbonAnalysisChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="metric-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 energy-gradient rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-bolt text-white text-xl"></i>
+                                </div>
+                                <span class="text-2xl font-bold text-blue-400">1,247 kW</span>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Average Power</h4>
+                            <p class="text-slate-400 text-sm">Peak: 1,450 kW | Low: 980 kW</p>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="400">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 carbon-gradient rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-leaf text-white text-xl"></i>
+                                </div>
+                                <span class="text-2xl font-bold text-green-400">2.1 tCO₂</span>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Carbon Saved</h4>
+                            <p class="text-slate-400 text-sm">Equivalent to 8.4 trees planted</p>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="500">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 efficiency-gradient rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-white text-xl"></i>
+                                </div>
+                                <span class="text-2xl font-bold text-yellow-400">94.2%</span>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Efficiency Score</h4>
+                            <p class="text-slate-400 text-sm">Industry average: 78%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trends Tab -->
+                <div id="trends" class="tab-content">
+                    <div class="grid grid-cols-1 gap-8">
+                        <!-- Power Consumption Trends -->
+                        <div class="insight-card rounded-2xl p-6" data-aos="fade-up">
+                            <h3 class="text-xl font-bold mb-6">Power Consumption Trends (30 Days)</h3>
+                            <div class="chart-container">
+                                <canvas id="powerTrendsChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Efficiency Trends -->
+                        <div class="prediction-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-xl font-bold mb-6">Efficiency Improvement Trends</h3>
+                            <div class="chart-container">
+                                <canvas id="efficiencyTrendsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Predictions Tab -->
+                <div id="predictions" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Energy Forecast -->
+                        <div class="insight-card rounded-2xl p-6" data-aos="fade-up">
+                            <h3 class="text-xl font-bold mb-6">Energy Consumption Forecast</h3>
+                            <div class="chart-container">
+                                <canvas id="energyForecastChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Cost Savings Projection -->
+                        <div class="prediction-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-xl font-bold mb-6">Cost Savings Projection</h3>
+                            <div class="chart-container">
+                                <canvas id="costProjectionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Insights -->
+                    <div class="mt-8">
+                        <h3 class="text-2xl font-bold mb-6">AI-Powered Insights</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="insight-card rounded-2xl p-6" data-aos="fade-up">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 energy-gradient rounded-xl flex items-center justify-center mr-4">
+                                        <i class="fas fa-robot text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold">Optimization Opportunity</h4>
+                                        <p class="text-sm text-slate-400">AI Analysis</p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 mb-4">
+                                    Your cluster shows 15% potential energy savings by rescheduling non-critical workloads to off-peak hours.
+                                </p>
+                                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                                    <i class="fas fa-play mr-2"></i>Apply Optimization
+                                </button>
+                            </div>
+
+                            <div class="prediction-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 carbon-gradient rounded-xl flex items-center justify-center mr-4">
+                                        <i class="fas fa-chart-line text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold">Carbon Reduction Forecast</h4>
+                                        <p class="text-sm text-slate-400">Predictive Analysis</p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 mb-4">
+                                    Based on current trends, you're projected to reduce carbon emissions by 45% over the next quarter.
+                                </p>
+                                <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+                                    <i class="fas fa-chart-bar mr-2"></i>View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights Tab -->
+                <div id="insights" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="insight-card rounded-2xl p-6" data-aos="fade-up">
+                            <div class="w-12 h-12 energy-gradient rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-lightbulb text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Peak Usage Optimization</h4>
+                            <p class="text-slate-400 text-sm mb-4">
+                                Shift 30% of workloads to off-peak hours to reduce energy costs by $12K monthly.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-green-400 font-medium">High Impact</span>
+                                <button class="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                                    Implement
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="prediction-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="w-12 h-12 carbon-gradient rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-leaf text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Renewable Energy Integration</h4>
+                            <p class="text-slate-400 text-sm mb-4">
+                                Increase renewable energy usage by 25% to achieve carbon neutrality by Q4.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-green-400 font-medium">Medium Impact</span>
+                                <button class="px-3 py-1 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition-colors">
+                                    Plan
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="insight-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
+                            <div class="w-12 h-12 efficiency-gradient rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-cogs text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Hardware Optimization</h4>
+                            <p class="text-slate-400 text-sm mb-4">
+                                Upgrade 3 legacy servers to reduce power consumption by 18% and improve efficiency.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-yellow-400 font-medium">Low Impact</span>
+                                <button class="px-3 py-1 bg-yellow-600 text-white rounded-lg text-sm hover:bg-yellow-700 transition-colors">
+                                    Evaluate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
+                    tabBtns.forEach(b => b.classList.add('text-slate-300'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('bg-blue-600', 'text-white');
+                    btn.classList.remove('text-slate-300');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+
+            // Initialize all charts
+            initializeCharts();
+        });
+
+        function initializeCharts() {
+            // Energy Breakdown Chart
+            const energyBreakdownCtx = document.getElementById('energyBreakdownChart').getContext('2d');
+            new Chart(energyBreakdownCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Compute', 'Storage', 'Network', 'Cooling', 'Other'],
+                    datasets: [{
+                        data: [45, 25, 15, 10, 5],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#e2e8f0',
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Carbon Analysis Chart
+            const carbonAnalysisCtx = document.getElementById('carbonAnalysisChart').getContext('2d');
+            new Chart(carbonAnalysisCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Carbon Emissions (tCO₂)',
+                        data: [3.2, 2.8, 2.1, 1.9],
+                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                        borderColor: '#10b981',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Power Trends Chart
+            const powerTrendsCtx = document.getElementById('powerTrendsChart').getContext('2d');
+            new Chart(powerTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 30}, (_, i) => `Day ${i + 1}`),
+                    datasets: [{
+                        label: 'Power Consumption (kW)',
+                        data: Array.from({length: 30}, () => Math.floor(Math.random() * 200) + 1000),
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Efficiency Trends Chart
+            const efficiencyTrendsCtx = document.getElementById('efficiencyTrendsChart').getContext('2d');
+            new Chart(efficiencyTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 30}, (_, i) => `Day ${i + 1}`),
+                    datasets: [{
+                        label: 'Efficiency (%)',
+                        data: Array.from({length: 30}, () => Math.floor(Math.random() * 10) + 85),
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Energy Forecast Chart
+            const energyForecastCtx = document.getElementById('energyForecastChart').getContext('2d');
+            new Chart(energyForecastCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                    datasets: [{
+                        label: 'Historical',
+                        data: [1200, 1180, 1150, 1120, 1100, 1080],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Forecast',
+                        data: [null, null, null, null, 1050, 1020],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Cost Projection Chart
+            const costProjectionCtx = document.getElementById('costProjectionChart').getContext('2d');
+            new Chart(costProjectionCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [{
+                        label: 'Projected Savings ($K)',
+                        data: [35, 42, 48, 55],
+                        backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                        borderColor: '#8b5cf6',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

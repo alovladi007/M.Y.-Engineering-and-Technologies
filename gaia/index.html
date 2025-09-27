@@ -4,476 +4,795 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAIA: Green Adaptive Infrastructure Automation</title>
+    <meta name="description" content="Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration and carbon-aware scheduling">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 50%, #6fa8dc 100%);
-            min-height: 100vh;
-            color: white;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .back-button {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            text-decoration: none;
-            border-radius: 25px;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .back-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        .logo {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39, #4CAF50);
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
             background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient 4s ease infinite;
+            animation: gradientShift 15s ease infinite;
         }
         
-        @keyframes gradient {
+        @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
-        .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-        
-        .tagline {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .features-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #4CAF50;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .feature-card {
+        .glass-effect {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .typing-effect {
+            overflow: hidden;
+            border-right: .15em solid #3b82f6;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3b82f6; }
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.05) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .energy-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+        }
+        
+        .carbon-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        }
+        
+        .efficiency-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+        }
+        
+        .cost-gradient {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+        }
+        
+        .nav-link {
+            position: relative;
             transition: all 0.3s ease;
         }
         
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        .nav-link:hover::after {
+            width: 100%;
         }
         
-        .feature-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #4CAF50;
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
         }
         
-        .feature-description {
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-        
-        .platform-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .platform-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .platform-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .platform-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-        
-        .platform-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #4CAF50;
-        }
-        
-        .platform-description {
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .platform-button {
-            background: linear-gradient(45deg, #4CAF50, #8BC34A);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            text-decoration: none;
-            border-radius: 25px;
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
             display: inline-block;
-            transition: all 0.3s ease;
-            font-weight: bold;
+            margin-right: 8px;
         }
         
-        .platform-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        .status-active { background-color: #10b981; }
+        .status-warning { background-color: #f59e0b; }
+        .status-error { background-color: #ef4444; }
+        .status-idle { background-color: #6b7280; }
+        
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
         }
         
-        .carbon-dashboard {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+        .data-stream {
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            animation: stream 2s linear infinite;
         }
         
-        .dashboard-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .dashboard-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 0.5rem;
-        }
-        
-        .dashboard-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        .cta-section {
-            text-align: center;
-            margin: 4rem 0;
-        }
-        
-        .cta-button {
-            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
-            color: white;
-            padding: 1.2rem 2.5rem;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
-        }
-        
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .footer-text {
-            opacity: 0.7;
-            font-size: 0.9rem;
+        @keyframes stream {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <a href="http://127.0.0.1:8081/index.html" class="back-button">← Back to M.Y Engineering</a>
-        
-        <div class="header">
-            <div class="logo">🌱 GAIA</div>
-            <div class="subtitle">Green Adaptive Infrastructure Automation</div>
-            <div class="tagline">
-                A new paradigm in sustainable computing. This Kubernetes-native platform reduces data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling. GAIA doesn't just optimize—it harmonizes, finding the perfect balance between performance and planetary responsibility.
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full glass-effect z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 energy-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">GAIA</span>
+                        <p class="text-xs text-slate-400">Green Adaptive Infrastructure</p>
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#dashboard" class="nav-link text-slate-300 hover:text-white">Dashboard</a>
+                    <a href="#analytics" class="nav-link text-slate-300 hover:text-white">Analytics</a>
+                    <a href="#controller" class="nav-link text-slate-300 hover:text-white">Controller</a>
+                    <a href="#api" class="nav-link text-slate-300 hover:text-white">API</a>
+                    <a href="#docs" class="nav-link text-slate-300 hover:text-white">Documentation</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="http://127.0.0.1:8081/index.html" class="px-4 py-2 border border-slate-600 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 text-sm">
+                        ← Back to M.Y
+                    </a>
+                    <button class="px-6 py-2 energy-gradient text-white font-semibold rounded-lg hover:opacity-90 transition-all transform hover:scale-105">
+                        Get Started
+                    </button>
+                </div>
             </div>
         </div>
-        
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">15-30%</div>
-                <div class="stat-label">Energy Reduction</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">99.9%</div>
-                <div class="stat-label">Uptime Guarantee</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">40%</div>
-                <div class="stat-label">Carbon Footprint Reduction</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Adaptive Monitoring</div>
-            </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero min-h-screen flex items-center relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-32 h-32 border border-blue-400 rounded-full animate-spin"></div>
+            <div class="absolute top-40 right-32 w-24 h-24 border border-blue-300 rounded-full animate-pulse"></div>
+            <div class="absolute bottom-32 left-1/3 w-16 h-16 border border-blue-500 rounded-full animate-bounce"></div>
         </div>
         
-        <div class="features-section">
-            <div class="section-title">Core Capabilities</div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <div class="feature-title">Intelligent Orchestration</div>
-                    <div class="feature-description">
-                        AI-powered workload distribution that automatically balances performance requirements with energy efficiency across your entire infrastructure.
-                    </div>
+        <div class="container mx-auto px-4 py-20 relative z-10">
+            <div class="max-w-6xl mx-auto text-center" data-aos="fade-up">
+                <div class="mb-8">
+                    <span class="inline-block px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium mb-4">
+                        <i class="fas fa-bolt mr-2"></i>Kubernetes-Native Platform
+                    </span>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
-                    <div class="feature-title">Adaptive Control Loops</div>
-                    <div class="feature-description">
-                        Self-tuning systems that continuously optimize resource allocation based on real-time demand patterns and environmental conditions.
-                    </div>
-                </div>
+                <h1 class="text-6xl md:text-8xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+                        GAIA
+                    </span>
+                </h1>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <div class="feature-title">Carbon-Aware Scheduling</div>
-                    <div class="feature-description">
-                        Smart scheduling that prioritizes renewable energy sources and shifts workloads to minimize carbon footprint during peak consumption periods.
-                    </div>
-                </div>
+                <p class="text-2xl md:text-3xl font-light mb-4 text-slate-300">
+                    Green Adaptive Infrastructure Automation
+                </p>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Real-Time Analytics</div>
-                    <div class="feature-description">
-                        Comprehensive dashboards providing insights into energy consumption, carbon emissions, and optimization opportunities across your infrastructure.
-                    </div>
-                </div>
+                <p class="text-xl text-slate-400 mb-12 max-w-4xl mx-auto leading-relaxed">
+                    Reduce data center energy consumption by <span class="text-blue-400 font-bold">15-30%</span> through intelligent orchestration, 
+                    adaptive control loops, and carbon-aware scheduling. The future of sustainable computing is here.
+                </p>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <div class="feature-title">Predictive Maintenance</div>
-                    <div class="feature-description">
-                        Machine learning algorithms that predict hardware failures and optimize maintenance schedules to prevent downtime and reduce energy waste.
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <div class="feature-title">Kubernetes Native</div>
-                    <div class="feature-description">
-                        Built specifically for Kubernetes environments with seamless integration, custom operators, and native resource management capabilities.
-                    </div>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                    <button class="px-8 py-4 energy-gradient text-white font-bold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 shadow-2xl">
+                        <i class="fas fa-play mr-2"></i>Launch Dashboard
+                    </button>
+                    <button class="px-8 py-4 border border-slate-600 text-slate-300 font-semibold rounded-xl hover:bg-slate-800 transition-all">
+                        <i class="fas fa-book mr-2"></i>View Documentation
+                    </button>
                 </div>
             </div>
         </div>
         
-        <div class="platform-section">
-            <div class="section-title">Platform Components</div>
-            <div class="platform-grid">
-                <div class="platform-card">
-                    <div class="platform-title">🌱 GAIA Controller</div>
-                    <div class="platform-description">
-                        Central orchestration engine that manages resource allocation, workload scheduling, and energy optimization across your entire Kubernetes cluster.
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-2xl text-slate-400"></i>
+        </div>
+    </section>
+
+    <!-- Real-time Metrics Section -->
+    <section id="dashboard" class="py-20 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Real-Time Energy Intelligence</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    Monitor, optimize, and control your infrastructure with unprecedented precision
+                </p>
+            </div>
+            
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="metric-card rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 energy-gradient rounded-xl flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-xl"></i>
+                        </div>
+                        <span class="status-indicator status-active"></span>
                     </div>
-                    <a href="controller/" class="platform-button">Access Controller</a>
+                    <h3 class="text-3xl font-bold mb-2">1,247 kW</h3>
+                    <p class="text-slate-400 mb-2">Current Power Consumption</p>
+                    <div class="flex items-center text-green-400">
+                        <i class="fas fa-arrow-down mr-1"></i>
+                        <span class="text-sm font-medium">-23% from baseline</span>
+                    </div>
                 </div>
                 
-                <div class="platform-card">
-                    <div class="platform-title">📈 Analytics Dashboard</div>
-                    <div class="platform-description">
-                        Comprehensive monitoring and analytics platform providing real-time insights into energy consumption, carbon emissions, and optimization metrics.
+                <div class="metric-card rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 carbon-gradient rounded-xl flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-xl"></i>
+                        </div>
+                        <span class="status-indicator status-active"></span>
                     </div>
-                    <a href="dashboard/" class="platform-button">View Dashboard</a>
+                    <h3 class="text-3xl font-bold mb-2">2.1 tCO₂</h3>
+                    <p class="text-slate-400 mb-2">Carbon Emissions Saved</p>
+                    <div class="flex items-center text-green-400">
+                        <i class="fas fa-arrow-down mr-1"></i>
+                        <span class="text-sm font-medium">-40% this month</span>
+                    </div>
                 </div>
                 
-                <div class="platform-card">
-                    <div class="platform-title">⚙️ Configuration Manager</div>
-                    <div class="platform-description">
-                        Advanced configuration management system for setting up energy policies, carbon targets, and optimization parameters across your infrastructure.
+                <div class="metric-card rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 efficiency-gradient rounded-xl flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-xl"></i>
+                        </div>
+                        <span class="status-indicator status-active"></span>
                     </div>
-                    <a href="config/" class="platform-button">Manage Config</a>
+                    <h3 class="text-3xl font-bold mb-2">94.2%</h3>
+                    <p class="text-slate-400 mb-2">Energy Efficiency</p>
+                    <div class="flex items-center text-green-400">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span class="text-sm font-medium">+12% improvement</span>
+                    </div>
                 </div>
                 
-                <div class="platform-card">
-                    <div class="platform-title">🔌 API Gateway</div>
-                    <div class="platform-description">
-                        RESTful API and GraphQL endpoints for integrating GAIA with existing monitoring tools, CI/CD pipelines, and third-party services.
+                <div class="metric-card rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="400">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 cost-gradient rounded-xl flex items-center justify-center">
+                            <i class="fas fa-dollar-sign text-white text-xl"></i>
+                        </div>
+                        <span class="status-indicator status-active"></span>
                     </div>
-                    <a href="api/" class="platform-button">Explore API</a>
+                    <h3 class="text-3xl font-bold mb-2">$47.2K</h3>
+                    <p class="text-slate-400 mb-2">Cost Savings</p>
+                    <div class="flex items-center text-green-400">
+                        <i class="fas fa-arrow-up mr-1"></i>
+                        <span class="text-sm font-medium">+28% this quarter</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Dashboard Preview -->
+            <div class="glass-effect rounded-3xl p-8" data-aos="fade-up" data-aos-delay="500">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-2xl font-bold">Live Energy Dashboard</h3>
+                    <div class="flex items-center space-x-4">
+                        <span class="flex items-center text-green-400">
+                            <span class="status-indicator status-active"></span>
+                            Live Data
+                        </span>
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-cog mr-2"></i>Configure
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="platform-card">
-                    <div class="platform-title">📚 Documentation</div>
-                    <div class="platform-description">
-                        Comprehensive documentation, tutorials, and best practices for implementing and optimizing GAIA in your environment.
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Power Consumption Trend</h4>
+                        <div class="chart-container">
+                            <canvas id="powerChart"></canvas>
+                        </div>
                     </div>
-                    <a href="docs/" class="platform-button">Read Docs</a>
-                </div>
-                
-                <div class="platform-card">
-                    <div class="platform-title">🧪 Sandbox Environment</div>
-                    <div class="platform-description">
-                        Interactive sandbox for testing GAIA configurations, experimenting with optimization strategies, and validating energy savings.
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Carbon Footprint Reduction</h4>
+                        <div class="chart-container">
+                            <canvas id="carbonChart"></canvas>
+                        </div>
                     </div>
-                    <a href="sandbox/" class="platform-button">Launch Sandbox</a>
                 </div>
             </div>
         </div>
-        
-        <div class="carbon-dashboard">
-            <div class="section-title">Live Carbon Impact Dashboard</div>
-            <div class="dashboard-grid">
-                <div class="dashboard-item">
-                    <div class="dashboard-value">2.3M</div>
-                    <div class="dashboard-label">CO₂ Saved (kg)</div>
+    </section>
+
+    <!-- Advanced Features Section -->
+    <section id="analytics" class="py-20 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Advanced Analytics & Control</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    Harness the power of AI-driven optimization and predictive analytics
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Intelligent Orchestration -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 energy-gradient rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Intelligent Orchestration</h3>
+                    <p class="text-slate-400 mb-6">
+                        AI-powered workload distribution that automatically balances performance with energy efficiency across your entire infrastructure.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Machine Learning Optimization</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Real-time Load Balancing</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Predictive Scaling</li>
+                    </ul>
                 </div>
-                <div class="dashboard-item">
-                    <div class="dashboard-value">847</div>
-                    <div class="dashboard-label">Trees Equivalent</div>
+                
+                <!-- Adaptive Control Loops -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 carbon-gradient rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-sync-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Adaptive Control Loops</h3>
+                    <p class="text-slate-400 mb-6">
+                        Self-tuning systems that continuously optimize resource allocation and energy consumption in real-time.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Self-Healing Infrastructure</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Dynamic Resource Allocation</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Automated Optimization</li>
+                    </ul>
                 </div>
-                <div class="dashboard-item">
-                    <div class="dashboard-value">$1.2M</div>
-                    <div class="dashboard-label">Energy Cost Saved</div>
-                </div>
-                <div class="dashboard-item">
-                    <div class="dashboard-value">94%</div>
-                    <div class="dashboard-label">Renewable Energy</div>
-                </div>
-                <div class="dashboard-item">
-                    <div class="dashboard-value">156</div>
-                    <div class="dashboard-label">Active Clusters</div>
-                </div>
-                <div class="dashboard-item">
-                    <div class="dashboard-value">99.97%</div>
-                    <div class="dashboard-label">Uptime</div>
+                
+                <!-- Carbon-Aware Scheduling -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 efficiency-gradient rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Carbon-Aware Scheduling</h3>
+                    <p class="text-slate-400 mb-6">
+                        Smart scheduling that prioritizes renewable energy sources and low-carbon grids for maximum environmental impact.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-300">
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Renewable Energy Integration</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Carbon Footprint Tracking</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-400 mr-2"></i>Green Grid Optimization</li>
+                    </ul>
                 </div>
             </div>
         </div>
-        
-        <div class="cta-section">
-            <h2 style="margin-bottom: 1rem; font-size: 2rem;">Ready to Transform Your Infrastructure?</h2>
-            <p style="margin-bottom: 2rem; opacity: 0.9; font-size: 1.1rem;">
-                Join the sustainable computing revolution. Start optimizing your infrastructure today.
-            </p>
-            <a href="demo/" class="cta-button">Start Free Trial</a>
-        </div>
-        
-        <div class="footer">
-            <div class="footer-text">
-                GAIA - Green Adaptive Infrastructure Automation | M.Y Engineering and Technologies
+    </section>
+
+    <!-- Platform Architecture -->
+    <section id="controller" class="py-20 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Platform Architecture</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    Built for enterprise-scale deployment with Kubernetes-native design
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h3 class="text-3xl font-bold mb-6">Core Components</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 energy-gradient rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-cogs text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">GAIA Controller</h4>
+                                <p class="text-slate-400">Central orchestration engine for intelligent resource management and policy enforcement.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 carbon-gradient rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-bar text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Analytics Engine</h4>
+                                <p class="text-slate-400">Real-time monitoring, energy consumption analysis, and carbon impact metrics.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 efficiency-gradient rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-code text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">API Gateway</h4>
+                                <p class="text-slate-400">Secure and scalable RESTful API and GraphQL endpoints for seamless integration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <div class="glass-effect rounded-3xl p-8">
+                        <h4 class="text-xl font-semibold mb-6 text-center">System Architecture</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                                <span class="text-sm font-medium">Kubernetes Cluster</span>
+                                <span class="status-indicator status-active"></span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                                <span class="text-sm font-medium">Energy Monitoring</span>
+                                <span class="status-indicator status-active"></span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                                <span class="text-sm font-medium">AI Optimization</span>
+                                <span class="status-indicator status-active"></span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                                <span class="text-sm font-medium">Carbon Tracking</span>
+                                <span class="status-indicator status-active"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- API Documentation -->
+    <section id="api" class="py-20 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Developer API</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    Comprehensive RESTful API and GraphQL endpoints for seamless integration
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-2xl font-bold mb-6">Quick Start</h3>
+                    <div class="glass-effect rounded-2xl p-6">
+                        <div class="bg-slate-800 rounded-lg p-4 mb-4">
+                            <code class="text-green-400 text-sm">
+                                curl -X POST https://api.gaia.energy/v1/optimize \<br>
+                                &nbsp;&nbsp;-H "Authorization: Bearer YOUR_API_KEY" \<br>
+                                &nbsp;&nbsp;-H "Content-Type: application/json" \<br>
+                                &nbsp;&nbsp;-d '{"cluster_id": "prod-cluster-1"}'
+                            </code>
+                        </div>
+                        <p class="text-slate-400 text-sm">
+                            Start optimizing your cluster with a single API call
+                        </p>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-2xl font-bold mb-6">Available Endpoints</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 glass-effect rounded-lg">
+                            <div>
+                                <span class="text-blue-400 font-mono text-sm">GET</span>
+                                <span class="text-white ml-3">/v1/metrics/energy</span>
+                            </div>
+                            <span class="text-slate-400 text-sm">Real-time energy data</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 glass-effect rounded-lg">
+                            <div>
+                                <span class="text-green-400 font-mono text-sm">POST</span>
+                                <span class="text-white ml-3">/v1/optimize</span>
+                            </div>
+                            <span class="text-slate-400 text-sm">Trigger optimization</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 glass-effect rounded-lg">
+                            <div>
+                                <span class="text-blue-400 font-mono text-sm">GET</span>
+                                <span class="text-white ml-3">/v1/analytics/carbon</span>
+                            </div>
+                            <span class="text-slate-400 text-sm">Carbon footprint data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-blue-800">
+        <div class="container mx-auto px-4 text-center">
+            <div data-aos="fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Infrastructure?</h2>
+                <p class="text-xl text-blue-100 mb-12 max-w-3xl mx-auto">
+                    Join leading enterprises already reducing their energy consumption and carbon footprint with GAIA
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    <button class="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-blue-50 transition-all transform hover:scale-105">
+                        <i class="fas fa-rocket mr-2"></i>Start Free Trial
+                    </button>
+                    <button class="px-8 py-4 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-blue-600 transition-all">
+                        <i class="fas fa-phone mr-2"></i>Schedule Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 energy-gradient rounded-lg flex items-center justify-center">
+                            <i class="fas fa-leaf text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">GAIA</span>
+                    </div>
+                    <p class="text-slate-400 mb-6">
+                        The future of sustainable computing through intelligent infrastructure automation.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Status</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 GAIA. All rights reserved. | <a href="#" class="hover:text-white transition-colors">Privacy Policy</a> | <a href="#" class="hover:text-white transition-colors">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Power Consumption Chart
+            const powerCtx = document.getElementById('powerChart').getContext('2d');
+            new Chart(powerCtx, {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                    datasets: [{
+                        label: 'Power Consumption (kW)',
+                        data: [1200, 1100, 1300, 1250, 1180, 1150],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#94a3b8'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Carbon Footprint Chart
+            const carbonCtx = document.getElementById('carbonChart').getContext('2d');
+            new Chart(carbonCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Reduced', 'Baseline'],
+                    datasets: [{
+                        data: [40, 60],
+                        backgroundColor: ['#10b981', '#374151'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add floating animation to metric cards
+        document.querySelectorAll('.metric-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('floating-card');
+        });
+    </script>
+
+    <!-- Professional Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">GAIA</span>
+                            <p class="text-xs text-slate-400">Green Adaptive Infrastructure Automation</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4">
+                        Revolutionizing data center energy efficiency through intelligent orchestration and carbon-aware scheduling.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-lg"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Platform Features -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Platform Features</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition-colors">Intelligent Orchestration</a></li>
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition-colors">Carbon-Aware Scheduling</a></li>
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition-colors">Adaptive Control Loops</a></li>
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition-colors">Real-time Monitoring</a></li>
+                        <li><a href="#features" class="text-slate-400 hover:text-white transition-colors">Energy Analytics</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="dashboard/index.html" class="text-slate-400 hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="analytics/index.html" class="text-slate-400 hover:text-white transition-colors">Analytics</a></li>
+                        <li><a href="controller/index.html" class="text-slate-400 hover:text-white transition-colors">Controller</a></li>
+                        <li><a href="api/index.html" class="text-slate-400 hover:text-white transition-colors">API Documentation</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors">Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Legal -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact</h3>
+                    <div class="space-y-2 text-sm text-slate-400">
+                        <p><i class="fas fa-envelope mr-2"></i>contact@gaia.energy</p>
+                        <p><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>San Francisco, CA</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-800">
+                        <p class="text-xs text-slate-500">
+                            © 2024 M.Y. Engineering and Technologies. All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

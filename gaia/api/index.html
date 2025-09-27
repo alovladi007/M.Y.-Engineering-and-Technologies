@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA API - Developer Documentation</title>
+    <meta name="description" content="Comprehensive RESTful API and GraphQL endpoints for seamless integration with GAIA platform">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .api-endpoint {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.05) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .method-get { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .method-post { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .method-put { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .method-delete { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        
+        .code-block {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .endpoint-card {
+            transition: all 0.3s ease;
+        }
+        
+        .endpoint-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full glass-effect z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-leaf text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">GAIA</span>
+                        <p class="text-xs text-slate-400">API Documentation</p>
+                    </div>
+                </div>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="../index.html" class="nav-link text-slate-300 hover:text-white">Home</a>
+                    <a href="../dashboard/index.html" class="nav-link text-slate-300 hover:text-white">Dashboard</a>
+                    <a href="../analytics/index.html" class="nav-link text-slate-300 hover:text-white">Analytics</a>
+                    <a href="../controller/index.html" class="nav-link text-slate-300 hover:text-white">Controller</a>
+                    <a href="#" class="nav-link active text-white">API</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="http://127.0.0.1:8081/index.html" class="px-4 py-2 border border-slate-600 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 text-sm">
+                        ← Back to M.Y
+                    </a>
+                    <button class="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg hover:opacity-90 transition-all">
+                        <i class="fas fa-key mr-2"></i>Get API Key
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen">
+        <!-- Header Section -->
+        <div class="bg-slate-800 py-12">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">GAIA API Documentation</h1>
+                    <p class="text-xl text-slate-400 mb-8">
+                        Comprehensive RESTful API and GraphQL endpoints for seamless integration with the GAIA platform
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all">
+                            <i class="fas fa-rocket mr-2"></i>Quick Start
+                        </button>
+                        <button class="px-6 py-3 border border-slate-600 text-slate-300 font-semibold rounded-lg hover:bg-slate-700 transition-all">
+                            <i class="fas fa-download mr-2"></i>Download SDK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Tabs -->
+        <div class="container mx-auto px-4 py-8">
+            <div class="glass-effect rounded-2xl p-8 mb-8">
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <button class="tab-btn px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold" data-tab="overview">
+                        <i class="fas fa-info-circle mr-2"></i>Overview
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="endpoints">
+                        <i class="fas fa-code mr-2"></i>Endpoints
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="authentication">
+                        <i class="fas fa-key mr-2"></i>Authentication
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="examples">
+                        <i class="fas fa-play mr-2"></i>Examples
+                    </button>
+                    <button class="tab-btn px-6 py-3 text-slate-300 hover:text-white transition-colors" data-tab="sdk">
+                        <i class="fas fa-download mr-2"></i>SDK
+                    </button>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content active">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div data-aos="fade-up">
+                            <h3 class="text-2xl font-bold mb-6">Getting Started</h3>
+                            <div class="space-y-6">
+                                <div class="api-endpoint rounded-xl p-6">
+                                    <h4 class="text-lg font-semibold mb-3">Base URL</h4>
+                                    <code class="text-blue-400 font-mono">https://api.gaia.energy/v1</code>
+                                </div>
+                                
+                                <div class="api-endpoint rounded-xl p-6">
+                                    <h4 class="text-lg font-semibold mb-3">Authentication</h4>
+                                    <p class="text-slate-300 mb-3">All API requests require authentication using your API key:</p>
+                                    <div class="code-block p-4">
+                                        <code class="text-green-400">
+                                            Authorization: Bearer YOUR_API_KEY
+                                        </code>
+                                    </div>
+                                </div>
+                                
+                                <div class="api-endpoint rounded-xl p-6">
+                                    <h4 class="text-lg font-semibold mb-3">Rate Limits</h4>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between">
+                                            <span class="text-slate-300">Free Tier</span>
+                                            <span class="text-blue-400">1,000 requests/hour</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-slate-300">Pro Tier</span>
+                                            <span class="text-blue-400">10,000 requests/hour</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-slate-300">Enterprise</span>
+                                            <span class="text-blue-400">Unlimited</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div data-aos="fade-up" data-aos-delay="200">
+                            <h3 class="text-2xl font-bold mb-6">Quick Example</h3>
+                            <div class="api-endpoint rounded-xl p-6">
+                                <h4 class="text-lg font-semibold mb-3">Get Energy Metrics</h4>
+                                <div class="code-block p-4">
+                                    <pre><code class="language-bash">curl -X GET "https://api.gaia.energy/v1/metrics/energy" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"</code></pre>
+                                </div>
+                                
+                                <h5 class="text-md font-semibold mb-2 mt-4">Response</h5>
+                                <div class="code-block p-4">
+                                    <pre><code class="language-json">{
+  "status": "success",
+  "data": {
+    "current_power": 1247,
+    "efficiency": 94.2,
+    "carbon_saved": 2.1,
+    "cost_savings": 47200,
+    "timestamp": "2024-01-20T18:00:00Z"
+  }
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Endpoints Tab -->
+                <div id="endpoints" class="tab-content">
+                    <div class="space-y-6">
+                        <!-- Energy Metrics -->
+                        <div class="endpoint-card api-endpoint rounded-xl p-6" data-aos="fade-up">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-4">
+                                    <span class="method-get px-3 py-1 text-white text-sm font-semibold rounded">GET</span>
+                                    <code class="text-lg font-mono">/v1/metrics/energy</code>
+                                </div>
+                                <span class="text-sm text-slate-400">Real-time energy data</span>
+                            </div>
+                            <p class="text-slate-300 mb-4">Retrieve current energy consumption metrics and optimization status.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold mb-2">Parameters</h5>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <code class="text-blue-400">cluster_id</code>
+                                            <span class="text-slate-400">optional</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <code class="text-blue-400">timeframe</code>
+                                            <span class="text-slate-400">optional</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold mb-2">Response Fields</h5>
+                                    <div class="space-y-1 text-sm text-slate-300">
+                                        <div>• current_power (kW)</div>
+                                        <div>• efficiency (%)</div>
+                                        <div>• carbon_saved (tCO₂)</div>
+                                        <div>• cost_savings ($)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Start Optimization -->
+                        <div class="endpoint-card api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-4">
+                                    <span class="method-post px-3 py-1 text-white text-sm font-semibold rounded">POST</span>
+                                    <code class="text-lg font-mono">/v1/optimize</code>
+                                </div>
+                                <span class="text-sm text-slate-400">Trigger optimization</span>
+                            </div>
+                            <p class="text-slate-300 mb-4">Start energy optimization for specified clusters or workloads.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold mb-2">Request Body</h5>
+                                    <div class="code-block p-4">
+                                        <pre><code class="language-json">{
+  "cluster_id": "prod-cluster-1",
+  "optimization_level": "aggressive",
+  "constraints": {
+    "max_power": 1500,
+    "carbon_budget": 2.0
+  }
+}</code></pre>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold mb-2">Response</h5>
+                                    <div class="code-block p-4">
+                                        <pre><code class="language-json">{
+  "status": "success",
+  "optimization_id": "opt_123456",
+  "estimated_savings": {
+    "power": 15,
+    "carbon": 0.3,
+    "cost": 1200
+  }
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Analytics Data -->
+                        <div class="endpoint-card api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="200">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-4">
+                                    <span class="method-get px-3 py-1 text-white text-sm font-semibold rounded">GET</span>
+                                    <code class="text-lg font-mono">/v1/analytics/carbon</code>
+                                </div>
+                                <span class="text-sm text-slate-400">Carbon footprint data</span>
+                            </div>
+                            <p class="text-slate-300 mb-4">Get detailed carbon footprint analysis and reduction metrics.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h5 class="font-semibold mb-2">Query Parameters</h5>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between">
+                                            <code class="text-blue-400">start_date</code>
+                                            <span class="text-slate-400">required</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <code class="text-blue-400">end_date</code>
+                                            <span class="text-slate-400">required</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <code class="text-blue-400">granularity</code>
+                                            <span class="text-slate-400">hour|day|week</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="font-semibold mb-2">Response Fields</h5>
+                                    <div class="space-y-1 text-sm text-slate-300">
+                                        <div>• total_emissions (tCO₂)</div>
+                                        <div>• emissions_saved (tCO₂)</div>
+                                        <div>• reduction_percentage (%)</div>
+                                        <div>• renewable_energy_usage (%)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentication Tab -->
+                <div id="authentication" class="tab-content">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8">Authentication</h3>
+                        
+                        <div class="space-y-8">
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up">
+                                <h4 class="text-xl font-semibold mb-4">API Key Authentication</h4>
+                                <p class="text-slate-300 mb-4">
+                                    All API requests must include your API key in the Authorization header:
+                                </p>
+                                <div class="code-block p-4">
+                                    <pre><code class="language-http">Authorization: Bearer YOUR_API_KEY</code></pre>
+                                </div>
+                            </div>
+
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="200">
+                                <h4 class="text-xl font-semibold mb-4">Getting Your API Key</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
+                                        <div>
+                                            <p class="font-semibold">Sign up for GAIA</p>
+                                            <p class="text-slate-400 text-sm">Create your account at gaia.energy</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
+                                        <div>
+                                            <p class="font-semibold">Navigate to API Settings</p>
+                                            <p class="text-slate-400 text-sm">Go to Settings → API Keys in your dashboard</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
+                                        <div>
+                                            <p class="font-semibold">Generate API Key</p>
+                                            <p class="text-slate-400 text-sm">Click "Generate New Key" and copy the key</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="400">
+                                <h4 class="text-xl font-semibold mb-4">Security Best Practices</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-shield-alt text-green-400 mt-1"></i>
+                                        <div>
+                                            <p class="font-semibold">Keep your API key secure</p>
+                                            <p class="text-slate-400 text-sm">Never expose it in client-side code or public repositories</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-rotate text-green-400 mt-1"></i>
+                                        <div>
+                                            <p class="font-semibold">Rotate keys regularly</p>
+                                            <p class="text-slate-400 text-sm">Generate new keys periodically and revoke old ones</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-eye-slash text-green-400 mt-1"></i>
+                                        <div>
+                                            <p class="font-semibold">Use environment variables</p>
+                                            <p class="text-slate-400 text-sm">Store API keys in secure environment variables</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Examples Tab -->
+                <div id="examples" class="tab-content">
+                    <div class="space-y-8">
+                        <h3 class="text-2xl font-bold mb-8">Code Examples</h3>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Python Example -->
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up">
+                                <h4 class="text-xl font-semibold mb-4">Python</h4>
+                                <div class="code-block p-4">
+                                    <pre><code class="language-python">import requests
+
+# Set up the API client
+api_key = "YOUR_API_KEY"
+base_url = "https://api.gaia.energy/v1"
+headers = {
+    "Authorization": f"Bearer {api_key}",
+    "Content-Type": "application/json"
+}
+
+# Get energy metrics
+response = requests.get(f"{base_url}/metrics/energy", headers=headers)
+data = response.json()
+
+print(f"Current Power: {data['data']['current_power']} kW")
+print(f"Efficiency: {data['data']['efficiency']}%")
+
+# Start optimization
+optimization_data = {
+    "cluster_id": "prod-cluster-1",
+    "optimization_level": "aggressive"
+}
+
+response = requests.post(
+    f"{base_url}/optimize", 
+    headers=headers, 
+    json=optimization_data
+)
+result = response.json()
+print(f"Optimization ID: {result['optimization_id']}")</code></pre>
+                                </div>
+                            </div>
+
+                            <!-- JavaScript Example -->
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="200">
+                                <h4 class="text-xl font-semibold mb-4">JavaScript</h4>
+                                <div class="code-block p-4">
+                                    <pre><code class="language-javascript">const API_KEY = 'YOUR_API_KEY';
+const BASE_URL = 'https://api.gaia.energy/v1';
+
+// Create API client
+const apiClient = {
+  async request(endpoint, options = {}) {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    });
+    return response.json();
+  }
+};
+
+// Get energy metrics
+async function getEnergyMetrics() {
+  const data = await apiClient.request('/metrics/energy');
+  console.log(`Current Power: ${data.data.current_power} kW`);
+  console.log(`Efficiency: ${data.data.efficiency}%`);
+}
+
+// Start optimization
+async function startOptimization() {
+  const result = await apiClient.request('/optimize', {
+    method: 'POST',
+    body: JSON.stringify({
+      cluster_id: 'prod-cluster-1',
+      optimization_level: 'aggressive'
+    })
+  });
+  console.log(`Optimization ID: ${result.optimization_id}`);
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SDK Tab -->
+                <div id="sdk" class="tab-content">
+                    <div class="space-y-8">
+                        <h3 class="text-2xl font-bold mb-8">Software Development Kits</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up">
+                                <div class="flex items-center mb-4">
+                                    <i class="fab fa-python text-3xl text-blue-400 mr-4"></i>
+                                    <div>
+                                        <h4 class="text-lg font-semibold">Python SDK</h4>
+                                        <p class="text-sm text-slate-400">pip install gaia-sdk</p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 mb-4">Official Python SDK for easy integration with GAIA APIs.</p>
+                                <button class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    <i class="fas fa-download mr-2"></i>Download
+                                </button>
+                            </div>
+
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                                <div class="flex items-center mb-4">
+                                    <i class="fab fa-js-square text-3xl text-yellow-400 mr-4"></i>
+                                    <div>
+                                        <h4 class="text-lg font-semibold">JavaScript SDK</h4>
+                                        <p class="text-sm text-slate-400">npm install @gaia/sdk</p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 mb-4">Node.js and browser-compatible JavaScript SDK.</p>
+                                <button class="w-full px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
+                                    <i class="fas fa-download mr-2"></i>Download
+                                </button>
+                            </div>
+
+                            <div class="api-endpoint rounded-xl p-6" data-aos="fade-up" data-aos-delay="200">
+                                <div class="flex items-center mb-4">
+                                    <i class="fab fa-java text-3xl text-orange-400 mr-4"></i>
+                                    <div>
+                                        <h4 class="text-lg font-semibold">Java SDK</h4>
+                                        <p class="text-sm text-slate-400">Maven/Gradle</p>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 mb-4">Enterprise-grade Java SDK for Spring Boot applications.</p>
+                                <button class="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                                    <i class="fas fa-download mr-2"></i>Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTab = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
+                    tabBtns.forEach(b => b.classList.add('text-slate-300'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('bg-blue-600', 'text-white');
+                    btn.classList.remove('text-slate-300');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
