@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator
+  namespace: inference
+  labels:
+    app: load-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: load-generator
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      containers:
+      - name: load-generator
+        image: curlimages/curl:latest
+        command: ["/bin/sh"]
+        args:
+        - -c
+        - |
+          while true; do
+            # Generate load for vLLM service
+            curl -X POST "http://vllm-inference.inference.svc.cluster.local:8000/generate" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "prompt": "The future of artificial intelligence is",
+                "max_tokens": 50,
+                "temperature": 0.7
+              }' || true
+            
+            # Generate load for TensorRT-LLM service
+            curl -X POST "http://trtllm-inference.inference.svc.cluster.local:8000/generate" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "prompt": "Machine learning algorithms can",
+                "max_tokens": 50,
+                "temperature": 0.7
+              }' || true
+            
+            # Random delay between requests (1-5 seconds)
+            sleep $((RANDOM % 5 + 1))
+          done
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"

@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm-inference
+  namespace: inference
+  labels:
+    app: vllm-inference
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vllm-inference
+  template:
+    metadata:
+      labels:
+        app: vllm-inference
+      annotations:
+        energy.yourorg.io/gpu-power-cap-w: "250"
+    spec:
+      containers:
+      - name: vllm
+        image: ghcr.io/yourorg/energy-orchestrator/vllm-shim:v0.5.0
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MODEL_NAME
+          value: "microsoft/DialoGPT-medium"
+        - name: ENERGY_BATCH_HINT
+          value: "4"
+        - name: ENERGY_POWER_CAP_W
+          value: "250"
+        - name: ENERGY_OPTIMIZATION_ENABLED
+          value: "true"
+        - name: ENERGY_API_URL
+          value: "http://energy-api.energy-system.svc.cluster.local:8000"
+        resources:
+          requests:
+            nvidia.com/gpu: 1
+            memory: "8Gi"
+            cpu: "2"
+          limits:
+            nvidia.com/gpu: 1
+            memory: "16Gi"
+            cpu: "4"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-inference
+  namespace: inference
+  labels:
+    app: vllm-inference
+spec:
+  selector:
+    app: vllm-inference
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: vllm-inference-hpa
+  namespace: inference
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: vllm-inference
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Pods
+    pods:
+      metric:
+        name: energy_joules_per_request
+      target:
+        type: AverageValue
+        averageValue: "150"

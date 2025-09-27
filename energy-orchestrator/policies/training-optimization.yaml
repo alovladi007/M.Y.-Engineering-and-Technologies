@@ -1,0 +1,20 @@
+apiVersion: energy.io/v1alpha1
+kind: EnergyPolicy
+metadata:
+  name: training-optimization
+  namespace: energy-system
+spec:
+  targetNamespace: training
+  powerCaps:
+    gpu: 300  # Higher power for training workloads
+    cpu: 200
+  sla:
+    p95LatencyMs: 1000  # More lenient for training
+    errorRatePercent: 1.0
+  autoscaling:
+    targetJoulesPerRequest: 200
+    minReplicas: 1
+    maxReplicas: 5
+  optimization:
+    enabled: true
+    aggressiveness: conservative  # Conservative for training stability

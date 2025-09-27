@@ -1,0 +1,20 @@
+apiVersion: energy.io/v1alpha1
+kind: EnergyPolicy
+metadata:
+  name: inference-optimization
+  namespace: energy-system
+spec:
+  targetNamespace: inference
+  powerCaps:
+    gpu: 250  # Watts
+    cpu: 150  # Watts
+  sla:
+    p95LatencyMs: 200
+    errorRatePercent: 0.1
+  autoscaling:
+    targetJoulesPerRequest: 150
+    minReplicas: 2
+    maxReplicas: 10
+  optimization:
+    enabled: true
+    aggressiveness: balanced
