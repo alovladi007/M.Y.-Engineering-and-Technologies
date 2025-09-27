@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Features - Green Adaptive Infrastructure Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        .energy-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="glass-effect border-b border-slate-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-8">
+                    <a href="../index.html" class="text-2xl font-bold energy-gradient bg-clip-text text-transparent">
+                        GAIA
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="../index.html" class="text-slate-300 hover:text-white">Home</a>
+                        <a href="features.html" class="text-white font-semibold">Features</a>
+                        <a href="pricing.html" class="text-slate-300 hover:text-white">Pricing</a>
+                        <a href="api.html" class="text-slate-300 hover:text-white">API</a>
+                        <a href="../docs/index.html" class="text-slate-300 hover:text-white">Documentation</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-slate-300 hover:text-white">
+                        ← Back to M.Y
+                    </a>
+                    <button class="px-6 py-2 energy-gradient text-white font-semibold rounded-lg hover:opacity-90 transition-all">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6" data-aos="fade-up">
+                Powerful Features for
+                <span class="energy-gradient bg-clip-text text-transparent">Energy Optimization</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="200">
+                Discover the comprehensive capabilities that make GAIA the leading platform for intelligent energy management in data centers.
+            </p>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="py-20 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-6">Core Optimization Features</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    Advanced algorithms and intelligent systems that deliver measurable energy savings
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Dynamic Power Management</h3>
+                    <p class="text-slate-400 mb-6">
+                        Real-time GPU/CPU power capping with PID control algorithms for optimal energy efficiency.
+                    </p>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>• Intelligent power scaling</li>
+                        <li>• Thermal-aware optimization</li>
+                        <li>• Automatic load balancing</li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-layer-group text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Adaptive Batching</h3>
+                    <p class="text-slate-400 mb-6">
+                        Automatic batch size optimization for latency targets while maximizing throughput.
+                    </p>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>• Dynamic batch sizing</li>
+                        <li>• Latency-aware optimization</li>
+                        <li>• Throughput maximization</li>
+                    </ul>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Energy-Aware Autoscaling</h3>
+                    <p class="text-slate-400 mb-6">
+                        KEDA-based scaling on Joules/request metrics for intelligent resource allocation.
+                    </p>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>• Per-app energy budgets</li>
+                        <li>• Smart scaling decisions</li>
+                        <li>• Cost optimization</li>
+                    </ul>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-leaf text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Green Window Scheduling</h3>
+                    <p class="text-slate-400 mb-6">
+                        Carbon-aware workload scheduling during low-carbon energy periods.
+                    </p>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>• Carbon footprint reduction</li>
+                        <li>• Time-based optimization</li>
+                        <li>• Environmental impact tracking</li>
+                    </ul>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-cogs text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Closed-Loop Tuning</h3>
+                    <p class="text-slate-400 mb-6">
+                        Automatic optimization of TensorRT-LLM parameters for maximum efficiency.
+                    </p>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>• Continuous optimization</li>
+                        <li>• ML-based tuning</li>
+                        <li>• Performance monitoring</li>
+                    </ul>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="glass-effect rounded-2xl p-8 hover-lift" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-bar text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Comprehensive Analytics</h3>
+                    <p class="text-slate-400 mb-6">
+                        Real-time monitoring and detailed analytics for energy consumption patterns.
+                    </p>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>• Real-time dashboards</li>
+                        <li>• Historical analysis</li>
+                        <li>• Predictive insights</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Features -->
+    <section class="py-20 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-6">Advanced Capabilities</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    Enterprise-grade features for sophisticated energy management
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h3 class="text-3xl font-bold mb-6">Intelligent Monitoring Stack</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 energy-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-eye text-sm text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Real-time Observability</h4>
+                                <p class="text-slate-400">Prometheus metrics, Grafana dashboards, and comprehensive alerting system.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 energy-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-bell text-sm text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Smart Alerting</h4>
+                                <p class="text-slate-400">Slack/Webhook integration with intelligent threshold management.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 energy-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-pdf text-sm text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Automated Reporting</h4>
+                                <p class="text-slate-400">PDF energy reports with baseline vs treatment analysis and savings metrics.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <div class="glass-effect rounded-2xl p-8">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 energy-gradient rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-rocket text-3xl text-white"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold">Performance Metrics</h4>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="glass-effect rounded-lg p-4">
+                                <div class="text-3xl font-bold text-green-400 mb-2">15-30%</div>
+                                <div class="text-sm text-slate-400">Energy Reduction</div>
+                            </div>
+                            <div class="glass-effect rounded-lg p-4">
+                                <div class="text-3xl font-bold text-blue-400 mb-2">&lt;5%</div>
+                                <div class="text-sm text-slate-400">Latency Impact</div>
+                            </div>
+                            <div class="glass-effect rounded-lg p-4">
+                                <div class="text-3xl font-bold text-purple-400 mb-2">&gt;80%</div>
+                                <div class="text-sm text-slate-400">GPU Utilization</div>
+                            </div>
+                            <div class="glass-effect rounded-lg p-4">
+                                <div class="text-3xl font-bold text-orange-400 mb-2">-30%</div>
+                                <div class="text-sm text-slate-400">Idle Energy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-slate-900 to-slate-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">
+                Ready to Optimize Your Energy Consumption?
+            </h2>
+            <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                Join leading organizations using GAIA to reduce energy costs while maintaining peak performance.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="400">
+                <button class="px-8 py-4 energy-gradient text-white font-bold rounded-xl hover:opacity-90 transition-all transform hover:scale-105">
+                    <i class="fas fa-play mr-2"></i>Launch Dashboard
+                </button>
+                <button class="px-8 py-4 border border-slate-600 text-slate-300 font-semibold rounded-xl hover:bg-slate-800 transition-all">
+                    <i class="fas fa-book mr-2"></i>View Documentation
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-700 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold energy-gradient bg-clip-text text-transparent mb-4">GAIA</h3>
+                    <p class="text-slate-400 mb-6">
+                        Green Adaptive Infrastructure Automation - Optimizing energy consumption for a sustainable future.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="features.html" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="api.html" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="../docs/index.html" class="hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../company/about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="../company/careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="../company/contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="../company/blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../support/help-center.html" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="../support/community.html" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="../support/status.html" class="hover:text-white transition-colors">Status</a></li>
+                        <li><a href="../support/security.html" class="hover:text-white transition-colors">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 M.Y. Engineering and Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

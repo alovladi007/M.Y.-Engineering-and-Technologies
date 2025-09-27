@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Documentation - Green Adaptive Infrastructure Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        .energy-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); }
+        .code-block { background: #0f172a; border: 1px solid #334155; }
+        .sidebar { position: sticky; top: 100px; height: calc(100vh - 100px); overflow-y: auto; }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="glass-effect border-b border-slate-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-8">
+                    <a href="../index.html" class="text-2xl font-bold energy-gradient bg-clip-text text-transparent">
+                        GAIA
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="../index.html" class="text-slate-300 hover:text-white">Home</a>
+                        <a href="../pages/product/features.html" class="text-slate-300 hover:text-white">Features</a>
+                        <a href="../pages/product/pricing.html" class="text-slate-300 hover:text-white">Pricing</a>
+                        <a href="../pages/product/api.html" class="text-slate-300 hover:text-white">API</a>
+                        <a href="index.html" class="text-white font-semibold">Documentation</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-slate-300 hover:text-white">
+                        ← Back to M.Y
+                    </a>
+                    <button class="px-6 py-2 energy-gradient text-white font-semibold rounded-lg hover:opacity-90 transition-all">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="grid lg:grid-cols-4 gap-8">
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="glass-effect rounded-2xl p-6 sidebar">
+                    <h3 class="text-lg font-bold mb-6">Documentation</h3>
+                    <nav class="space-y-2">
+                        <a href="#getting-started" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Getting Started</a>
+                        <a href="#installation" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Installation</a>
+                        <a href="#configuration" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Configuration</a>
+                        <a href="#api-reference" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">API Reference</a>
+                        <a href="#deployment" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Deployment</a>
+                        <a href="#monitoring" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Monitoring</a>
+                        <a href="#troubleshooting" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Troubleshooting</a>
+                        <a href="#examples" class="block py-2 px-4 rounded-lg hover:bg-slate-800 transition-colors">Examples</a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="lg:col-span-3">
+                <!-- Getting Started -->
+                <section id="getting-started" class="mb-16">
+                    <h1 class="text-4xl font-bold mb-6" data-aos="fade-up">Getting Started</h1>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h2 class="text-2xl font-bold mb-4">Welcome to GAIA</h2>
+                        <p class="text-slate-300 mb-6">
+                            GAIA (Green Adaptive Infrastructure Automation) is a comprehensive Kubernetes-native energy optimization platform 
+                            that reduces data center energy consumption by 15-30% while maintaining performance SLAs.
+                        </p>
+                        
+                        <h3 class="text-xl font-bold mb-4">Key Features</h3>
+                        <ul class="space-y-2 text-slate-300 mb-6">
+                            <li>• Dynamic power management with PID control</li>
+                            <li>• Adaptive batching for latency optimization</li>
+                            <li>• Energy-aware autoscaling with KEDA</li>
+                            <li>• Green window carbon-aware scheduling</li>
+                            <li>• Closed-loop TensorRT-LLM tuning</li>
+                            <li>• Comprehensive monitoring and reporting</li>
+                        </ul>
+
+                        <h3 class="text-xl font-bold mb-4">Prerequisites</h3>
+                        <ul class="space-y-2 text-slate-300">
+                            <li>• Kubernetes 1.24+</li>
+                            <li>• Helm 3.0+</li>
+                            <li>• NVIDIA GPU Operator (for GPU nodes)</li>
+                            <li>• Prometheus and Grafana (included in deployment)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Installation -->
+                <section id="installation" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Installation</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Quick Start</h3>
+                        <p class="text-slate-300 mb-6">Deploy GAIA with a single command using our comprehensive deployment script.</p>
+                        
+                        <div class="code-block rounded-lg p-6 mb-6">
+                            <pre class="text-sm text-green-400 overflow-x-auto"><code># Clone the repository
+git clone https://github.com/yourorg/energy-orchestrator
+cd energy-orchestrator
+
+# Deploy everything
+./deploy-all.sh</code></pre>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-4">Manual Installation</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">1. Build Images</h4>
+                                <div class="code-block rounded-lg p-4">
+                                    <pre class="text-sm text-green-400"><code>make build REG=ghcr.io/yourorg/energy-orchestrator TAG=v0.7.0</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">2. Deploy Stack</h4>
+                                <div class="code-block rounded-lg p-4">
+                                    <pre class="text-sm text-green-400"><code>helm upgrade --install energy ./infra/charts/energy \
+  --namespace energy-system \
+  --create-namespace</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">3. Apply Policies</h4>
+                                <div class="code-block rounded-lg p-4">
+                                    <pre class="text-sm text-green-400"><code>kubectl apply -f policies/
+kubectl apply -f examples/</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Configuration -->
+                <section id="configuration" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Configuration</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Environment Variables</h3>
+                        <p class="text-slate-300 mb-6">Configure GAIA using environment variables in your values.yaml file.</p>
+                        
+                        <div class="code-block rounded-lg p-6 mb-6">
+                            <pre class="text-sm text-green-400 overflow-x-auto"><code># Core optimization settings
+alerts:
+  targetJoulesPerReq: 200  # J/request target
+
+# Green windows (UTC)
+greenWindow:
+  windows: "00:00-06:00,22:00-24:00"
+  powerRelaxPercent: 5
+
+# TRT-LLM tuning
+trtllmTuner:
+  targetP95Seconds: 0.2
+  batchMin: 1
+  batchMax: 8</code></pre>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-4">Energy Policies</h3>
+                        <p class="text-slate-300 mb-6">Create custom energy optimization policies using the EnergyPolicy CRD.</p>
+                        
+                        <div class="code-block rounded-lg p-6">
+                            <pre class="text-sm text-green-400 overflow-x-auto"><code>apiVersion: energy.io/v1alpha1
+kind: EnergyPolicy
+metadata:
+  name: inference-optimization
+spec:
+  targetNamespace: default
+  powerCaps:
+    gpu: 250
+  sla:
+    p95LatencyMs: 200
+  autoscaling:
+    targetJoulesPerRequest: 150</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- API Reference -->
+                <section id="api-reference" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">API Reference</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Authentication</h3>
+                        <p class="text-slate-300 mb-6">All API requests require authentication using Bearer tokens.</p>
+                        
+                        <div class="code-block rounded-lg p-6 mb-6">
+                            <pre class="text-sm text-green-400"><code>curl -H "Authorization: Bearer YOUR_API_KEY" \
+  https://api.gaia.energy/v1/metrics</code></pre>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-4">Endpoints</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 glass-effect rounded-lg">
+                                <div>
+                                    <span class="px-2 py-1 bg-green-500 text-white text-xs rounded mr-3">GET</span>
+                                    <code>/v1/metrics</code>
+                                </div>
+                                <span class="text-slate-400">Get energy metrics</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 glass-effect rounded-lg">
+                                <div>
+                                    <span class="px-2 py-1 bg-blue-500 text-white text-xs rounded mr-3">POST</span>
+                                    <code>/v1/policies</code>
+                                </div>
+                                <span class="text-slate-400">Create policy</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-4 glass-effect rounded-lg">
+                                <div>
+                                    <span class="px-2 py-1 bg-purple-500 text-white text-xs rounded mr-3">PUT</span>
+                                    <code>/v1/optimize</code>
+                                </div>
+                                <span class="text-slate-400">Trigger optimization</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Deployment -->
+                <section id="deployment" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Deployment</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Production Deployment</h3>
+                        <p class="text-slate-300 mb-6">Deploy GAIA in production with proper resource allocation and monitoring.</p>
+                        
+                        <h4 class="text-lg font-semibold mb-3">Resource Requirements</h4>
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="glass-effect rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-blue-400 mb-2">2 CPU</div>
+                                <div class="text-sm text-slate-400">Controller</div>
+                            </div>
+                            <div class="glass-effect rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-green-400 mb-2">4GB RAM</div>
+                                <div class="text-sm text-slate-400">Energy API</div>
+                            </div>
+                            <div class="glass-effect rounded-lg p-4 text-center">
+                                <div class="text-2xl font-bold text-purple-400 mb-2">50GB</div>
+                                <div class="text-sm text-slate-400">Prometheus</div>
+                            </div>
+                        </div>
+
+                        <h4 class="text-lg font-semibold mb-3">High Availability</h4>
+                        <ul class="space-y-2 text-slate-300">
+                            <li>• Deploy multiple replicas for critical components</li>
+                            <li>• Use persistent volumes for data retention</li>
+                            <li>• Configure proper resource limits and requests</li>
+                            <li>• Set up monitoring and alerting</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Monitoring -->
+                <section id="monitoring" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Monitoring</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Access Dashboards</h3>
+                        <p class="text-slate-300 mb-6">Access Grafana and Prometheus dashboards for monitoring energy optimization.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="glass-effect rounded-lg p-6">
+                                <h4 class="text-lg font-semibold mb-3">Grafana</h4>
+                                <div class="code-block rounded-lg p-4 mb-4">
+                                    <pre class="text-sm text-green-400"><code>kubectl -n energy-system \
+  port-forward svc/energy-grafana 3000:80</code></pre>
+                                </div>
+                                <p class="text-sm text-slate-400">Access at http://localhost:3000 (admin/prom-operator)</p>
+                            </div>
+                            
+                            <div class="glass-effect rounded-lg p-6">
+                                <h4 class="text-lg font-semibold mb-3">Prometheus</h4>
+                                <div class="code-block rounded-lg p-4 mb-4">
+                                    <pre class="text-sm text-green-400"><code>kubectl -n energy-system \
+  port-forward svc/energy-prometheus 9090:9090</code></pre>
+                                </div>
+                                <p class="text-sm text-slate-400">Access at http://localhost:9090</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-4">Key Metrics</h3>
+                        <ul class="space-y-2 text-slate-300">
+                            <li>• <code>energy:cluster_joules_per_request</code> - Cluster efficiency</li>
+                            <li>• <code>energy:app_joules_per_request</code> - Per-app consumption</li>
+                            <li>• <code>node_gpu_power_watts</code> - GPU power usage</li>
+                            <li>• <code>energy:app_p95_latency_seconds</code> - Application latency</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting -->
+                <section id="troubleshooting" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Troubleshooting</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Common Issues</h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">High Latency After Optimization</h4>
+                                <p class="text-slate-300 mb-3">Reduce PID controller gains to be less aggressive.</p>
+                                <div class="code-block rounded-lg p-4">
+                                    <pre class="text-sm text-green-400"><code>kubectl -n energy-system edit configmap energy-controller-config
+# Decrease kp, ki values</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Insufficient Energy Savings</h4>
+                                <p class="text-slate-300 mb-3">Enable more aggressive optimization settings.</p>
+                                <div class="code-block rounded-lg p-4">
+                                    <pre class="text-sm text-green-400"><code>helm upgrade energy ./infra/charts/energy \
+  --set optimization.mode=aggressive \
+  --set optimization.powerLimits.gpuFloor=100</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-semibold mb-2">Pods Not Scaling</h4>
+                                <p class="text-slate-300 mb-3">Check KEDA metrics and configuration.</p>
+                                <div class="code-block rounded-lg p-4">
+                                    <pre class="text-sm text-green-400"><code>kubectl get scaledobject -A
+kubectl describe scaledobject vllm-energy-scaler</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Examples -->
+                <section id="examples" class="mb-16">
+                    <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Examples</h2>
+                    <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-bold mb-4">Python SDK Example</h3>
+                        <div class="code-block rounded-lg p-6 mb-6">
+                            <pre class="text-sm text-green-400 overflow-x-auto"><code>import gaia
+
+# Initialize client
+client = gaia.Client(
+    api_key="your-api-key",
+    endpoint="https://api.gaia.energy"
+)
+
+# Get cluster metrics
+metrics = client.get_metrics(
+    cluster_id="prod-cluster-1",
+    time_range="1h"
+)
+
+print(f"Energy efficiency: {metrics.joules_per_request} J/request")
+print(f"Power consumption: {metrics.total_power}W")
+print(f"GPU utilization: {metrics.gpu_utilization}%")</code></pre>
+                        </div>
+
+                        <h3 class="text-xl font-bold mb-4">Generate Energy Report</h3>
+                        <div class="code-block rounded-lg p-6">
+                            <pre class="text-sm text-green-400 overflow-x-auto"><code># Generate energy savings report
+kubectl -n energy-system create job \
+  --from=job/energy-report-generator manual-report
+
+# Wait for completion
+kubectl -n energy-system wait \
+  --for=condition=complete job/manual-report
+
+# Extract PDF
+POD=$(kubectl -n energy-system get pods \
+  -l job-name=manual-report -o jsonpath='{.items[0].metadata.name}')
+kubectl cp energy-system/$POD:/out/energy-report.pdf ./energy-report.pdf</code></pre>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-700 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold energy-gradient bg-clip-text text-transparent mb-4">GAIA</h3>
+                    <p class="text-slate-400 mb-6">
+                        Green Adaptive Infrastructure Automation - Optimizing energy consumption for a sustainable future.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../pages/product/features.html" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="../pages/product/pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="../pages/product/api.html" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../pages/company/about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="../pages/company/careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="../pages/company/contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="../pages/company/blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../pages/support/help-center.html" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="../pages/support/community.html" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="../pages/support/status.html" class="hover:text-white transition-colors">Status</a></li>
+                        <li><a href="../pages/support/security.html" class="hover:text-white transition-colors">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 M.Y. Engineering and Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

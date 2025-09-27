@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About GAIA - Green Adaptive Infrastructure Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        .energy-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
+        .glass-effect { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="glass-effect border-b border-slate-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-8">
+                    <a href="../../index.html" class="text-2xl font-bold energy-gradient bg-clip-text text-transparent">
+                        GAIA
+                    </a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="../../index.html" class="text-slate-300 hover:text-white">Home</a>
+                        <a href="../product/features.html" class="text-slate-300 hover:text-white">Features</a>
+                        <a href="../product/pricing.html" class="text-slate-300 hover:text-white">Pricing</a>
+                        <a href="../product/api.html" class="text-slate-300 hover:text-white">API</a>
+                        <a href="../../docs/index.html" class="text-slate-300 hover:text-white">Documentation</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="../../../index.html" class="text-slate-300 hover:text-white">
+                        ← Back to M.Y
+                    </a>
+                    <a href="../product/pricing.html" class="px-6 py-2 energy-gradient text-white font-semibold rounded-lg hover:opacity-90 transition-all">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6" data-aos="fade-up">
+                About
+                <span class="energy-gradient bg-clip-text text-transparent">GAIA</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                Pioneering the future of sustainable computing through intelligent energy optimization and carbon-aware infrastructure automation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-4xl font-bold mb-6">Our Mission</h2>
+                    <p class="text-xl text-slate-400 mb-8">
+                        At GAIA, we believe that sustainable computing is not just an environmental imperative—it's a competitive advantage. 
+                        Our mission is to revolutionize how data centers consume energy while maintaining peak performance.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 energy-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-leaf text-sm text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Environmental Impact</h4>
+                                <p class="text-slate-400">Reducing carbon footprint through intelligent energy management and green scheduling.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 energy-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line text-sm text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Performance Excellence</h4>
+                                <p class="text-slate-400">Maintaining SLAs while achieving significant energy savings through advanced optimization.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 energy-gradient rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-cogs text-sm text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-semibold mb-2">Innovation</h4>
+                                <p class="text-slate-400">Leveraging cutting-edge AI and machine learning for autonomous energy optimization.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left">
+                    <div class="glass-effect rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center">Impact by Numbers</h3>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-green-400 mb-2">15-30%</div>
+                                <div class="text-sm text-slate-400">Energy Reduction</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-blue-400 mb-2">500+</div>
+                                <div class="text-sm text-slate-400">Organizations</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-purple-400 mb-2">1M+</div>
+                                <div class="text-sm text-slate-400">Nodes Optimized</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-orange-400 mb-2">50%</div>
+                                <div class="text-sm text-slate-400">Cost Savings</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-6">Our Team</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    A diverse team of engineers, researchers, and sustainability experts dedicated to transforming data center operations.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up">
+                    <div class="w-20 h-20 energy-gradient rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Engineering Excellence</h3>
+                    <p class="text-slate-400">Our engineering team combines deep Kubernetes expertise with advanced optimization algorithms to deliver cutting-edge solutions.</p>
+                </div>
+
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-20 h-20 energy-gradient rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-brain text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Research & Innovation</h3>
+                    <p class="text-slate-400">Our research team pioneers new approaches to energy optimization, from PID controllers to machine learning-based tuning.</p>
+                </div>
+
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-20 h-20 energy-gradient rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-globe text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Sustainability Focus</h3>
+                    <p class="text-slate-400">Our sustainability experts ensure that every feature we build contributes to a greener, more sustainable future.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-4xl font-bold mb-6">Our Values</h2>
+                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
+                    The principles that guide everything we do at GAIA
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-leaf text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Sustainability</h3>
+                    <p class="text-slate-400">Environmental responsibility is at the core of everything we build and every decision we make.</p>
+                </div>
+
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-rocket text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Innovation</h3>
+                    <p class="text-slate-400">We push the boundaries of what's possible in energy optimization and infrastructure automation.</p>
+                </div>
+
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-users text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Collaboration</h3>
+                    <p class="text-slate-400">We believe in the power of teamwork and open collaboration to solve complex challenges.</p>
+                </div>
+
+                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Reliability</h3>
+                    <p class="text-slate-400">We build systems that organizations can trust to run their critical infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-slate-900 to-slate-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">
+                Join the Sustainable Computing Revolution
+            </h2>
+            <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                Be part of the movement that's transforming data centers worldwide through intelligent energy optimization.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="../product/pricing.html" class="px-8 py-4 energy-gradient text-white font-bold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 inline-block">
+                    <i class="fas fa-play mr-2"></i>Get Started Today
+                </a>
+                <a href="../company/careers.html" class="px-8 py-4 border border-slate-600 text-slate-300 font-semibold rounded-xl hover:bg-slate-800 transition-all inline-block">
+                    <i class="fas fa-briefcase mr-2"></i>Join Our Team
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-700 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold energy-gradient bg-clip-text text-transparent mb-4">GAIA</h3>
+                    <p class="text-slate-400 mb-6">
+                        Green Adaptive Infrastructure Automation - Optimizing energy consumption for a sustainable future.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../product/features.html" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="../product/pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="../product/api.html" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="../../docs/index.html" class="hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="../support/help-center.html" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="../support/community.html" class="hover:text-white transition-colors">Community</a></li>
+                        <li><a href="../support/status.html" class="hover:text-white transition-colors">Status</a></li>
+                        <li><a href="../support/security.html" class="hover:text-white transition-colors">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 M.Y. Engineering and Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>
