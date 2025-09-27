@@ -1,0 +1,49 @@
+# KEDA ScaledObject for per-app energy scaling on vLLM demo
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: vllm-energy-scaler
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: vllm-demo
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://energy-kube-prometheus-prometheus.energy-system.svc.cluster.local:9090
+      metricName: app_joules_per_request
+      query: 'energy:app_joules_per_request{app="vllm-demo"}'
+      threshold: '150'  # Target J/request for this app
+  - type: prometheus
+    metadata:
+      serverAddress: http://energy-kube-prometheus-prometheus.energy-system.svc.cluster.local:9090
+      metricName: app_p95_latency
+      query: 'energy:app_p95_latency_seconds{app="vllm-demo"} * 1000'
+      threshold: '200'  # P95 target in ms
+---
+# KEDA ScaledObject for TensorRT-LLM demo
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: trtllm-energy-scaler
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: trtllm-demo
+  minReplicaCount: 1
+  maxReplicaCount: 8
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://energy-kube-prometheus-prometheus.energy-system.svc.cluster.local:9090
+      metricName: app_joules_per_request
+      query: 'energy:app_joules_per_request{app="trtllm-demo"}'
+      threshold: '180'  # Slightly higher target for TRT-LLM
+  - type: prometheus
+    metadata:
+      serverAddress: http://energy-kube-prometheus-prometheus.energy-system.svc.cluster.local:9090
+      metricName: app_request_rate
+      query: 'rate(app_requests_total{app="trtllm-demo"}[1m])'
+      threshold: '100'  # Scale on request rate too

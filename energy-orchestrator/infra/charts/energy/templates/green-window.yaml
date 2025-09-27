@@ -1,0 +1,52 @@
+{{- if .Values.greenWindow.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: green-window-config
+  namespace: {{ .Values.namespace }}
+data:
+  windows: |
+    # UTC time windows for low-carbon energy
+    # Format: HH:MM-HH:MM (24hr, UTC)
+    00:00-06:00  # Night time (typically lower carbon)
+    22:00-24:00  # Late evening
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-window-operator
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: green-window-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: green-window-operator
+  template:
+    metadata:
+      labels:
+        app: green-window-operator
+    spec:
+      serviceAccountName: energy-controller
+      containers:
+      - name: operator
+        image: {{ .Values.imageRegistry }}/green-window:{{ .Values.imageTag }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: GREEN_WINDOWS
+          value: "{{ .Values.greenWindow.windows | default "00:00-06:00,22:00-24:00" }}"
+        - name: TARGET_NAMESPACES
+          value: "{{ .Values.greenWindow.targetNamespaces | join "," }}"
+        - name: POWER_RELAX_PERCENT
+          value: "{{ .Values.greenWindow.powerRelaxPercent | default 5 }}"
+        - name: BATCH_BUMP
+          value: "{{ .Values.greenWindow.batchBump | default 1 }}"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+{{- end }}

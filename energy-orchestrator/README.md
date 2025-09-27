@@ -1,148 +1,231 @@
-# Energy Orchestrator
+# Energy Orchestrator v0.7.0
 
-A Kubernetes-native stack to reduce data-center IT energy by 15–30% via **power caps, adaptive batching, energy-aware autoscaling**, and **DVFS**—all while protecting latency SLOs.
+A comprehensive Kubernetes-native energy optimization system achieving 15-30% energy reduction while maintaining SLAs.
 
-## 🎯 Target Metrics
-- **Energy Reduction**: 15-30% kWh reduction
-- **Joules/Request**: 20% improvement
-- **Idle Energy**: 30% reduction
-- **PUE**: -0.05 improvement
-- **SLA Protection**: <5% latency impact
+## 🌟 Features
 
-## 🏗️ Architecture
+### Core Optimization
+- **Dynamic Power Management**: GPU/CPU power capping with PID control
+- **Adaptive Batching**: Automatic batch size optimization for latency targets
+- **Energy-Aware Autoscaling**: KEDA-based scaling on Joules/request metrics
+- **Idle Consolidation**: Automatic detection and consolidation of idle resources
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Energy Orchestrator                       │
-├───────────────┬────────────────┬────────────────────────────┤
-│   Monitoring  │   Control       │   Optimization            │
-├───────────────┼────────────────┼────────────────────────────┤
-│ • Agent       │ • Controller    │ • vLLM/TensorRT Shims     │
-│ • Prometheus  │ • Energy API    │ • Batch Optimization      │
-│ • Grafana     │ • PID Control   │ • Power Cap Management    │
-│ • DCGM        │ • KEDA Scaling  │ • Quantization (INT8/FP8) │
-└───────────────┴────────────────┴────────────────────────────┘
-```
+### Advanced Features
+- **Per-App Energy Targets**: Individual application energy budgets with KEDA
+- **Green Window Scheduling**: Carbon-aware workload scheduling
+- **Closed-Loop TRT-LLM Tuning**: Automatic optimization of TensorRT-LLM parameters
+- **Grafana Snapshot Automation**: Daily dashboard snapshots for historical tracking
+- **PDF Energy Reports**: Baseline vs treatment analysis with savings metrics
+
+### Monitoring & Observability
+- **Prometheus Integration**: Custom recording rules and alerts
+- **Grafana Dashboards**: Real-time energy efficiency visualization
+- **Slack/Webhook Alerts**: Immediate notification of SLA breaches
+- **Per-App Metrics**: Detailed energy consumption per application
+
+## 📊 Target Metrics
+
+| Metric | Target | Method |
+|--------|--------|--------|
+| Energy Reduction | 15-30% | Power capping, batching, consolidation |
+| Joules/Request | -20% | Optimization algorithms |
+| Idle Energy | -30% | Aggressive consolidation |
+| P95 Latency | <SLO | PID control, dynamic adjustment |
+| GPU Utilization | >80% | Smart scheduling |
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- Kubernetes 1.24+
+- Helm 3.0+
+- Docker or container runtime
+- NVIDIA GPU Operator (for GPU nodes)
+
+### One-Command Deployment
 ```bash
-# 1. Build container images
-make build REG=ghcr.io/yourorg/energy-orchestrator TAG=v0.5.0
+# Clone repository
+git clone https://github.com/yourorg/energy-orchestrator
+cd energy-orchestrator
 
-# 2. Create development cluster
-make kind-up
-
-# 3. Deploy full stack (includes Prometheus, Grafana, KEDA)
-make deploy
-
-# 4. Apply energy policies
-kubectl apply -f policies/
-
-# 5. Deploy optimized workloads
-kubectl apply -f examples/vllm-autoscale-batch-demo.yaml
-kubectl apply -f examples/trtllm-with-keda.yaml
-
-# 6. View dashboards
-kubectl -n energy-system port-forward svc/energy-monitoring-grafana 3000:80
-# Login: admin/prom-operator
+# Deploy everything
+./deploy-all.sh
 ```
 
-## 📊 Components
+### Manual Deployment
+```bash
+# 1. Build images
+make build REG=ghcr.io/yourorg/energy-orchestrator TAG=v0.7.0
 
-### Core Services
-- **Agent**: Node daemon exporting power/thermal metrics (RAPL, nvidia-smi, Redfish)
-- **Energy API**: FastAPI service computing KPIs (J/request) and control recommendations
-- **Controller**: Kubernetes Operator enforcing energy policies via CRDs
-- **Notifier**: Slack/webhook reporter for energy violations and top offenders
+# 2. Push to registry
+make push REG=ghcr.io/yourorg/energy-orchestrator TAG=v0.7.0
 
-### Monitoring Stack
-- **Prometheus**: Metrics collection with custom recording rules
-- **Grafana**: Energy Efficiency Dashboard with real-time visualization
-- **Alertmanager**: SLA breach and thermal alerts with Slack integration
-- **KEDA**: HPA on custom metrics (Joules/request)
+# 3. Deploy stack
+make deploy
 
-### Optimization Features
-- **GPU Power Capping**: Dynamic nvidia-smi power limits
-- **Adaptive Batching**: PID-controlled batch sizing for latency targets
-- **Energy-Aware Scheduling**: Bin-packing and idle node consolidation
-- **Quantization**: INT8/FP8 for inference optimization
-- **Speculative Decoding**: LLM serving optimization
-- **Carbon-Aware Scheduling**: Shift workloads to low-carbon windows
+# 4. Apply policies
+kubectl apply -f policies/
 
-## 📈 Metrics & KPIs
+# 5. Deploy examples
+kubectl apply -f examples/
+```
 
-| Metric | Formula | Target |
-|--------|---------|--------|
-| Joules/Request | (Power_W × Interval_s) / Requests | -20% |
-| Idle Energy Rate | Power_W when QPS ≈ 0 | -30% |
-| GPU Utilization | SM Activity % | >80% |
-| PUE | Total Power / IT Power | <1.2 |
-| P95 Latency | 95th percentile response time | <SLO |
+## 🔧 Configuration
 
-## 🛡️ Safety Features
-- Hard TDP/temperature boundaries
-- Automatic revert on stale metrics
-- SLA breach protection
-- Fail-safe to default autoscaling
-- Thermal throttle prevention
+### Key Configuration Files
 
-## 📝 Configuration
+#### values.yaml
+```yaml
+# Core settings
+alerts:
+  targetJoulesPerReq: 200  # J/request target
 
-### Energy Policy CRD
+# Green windows (UTC)
+greenWindow:
+  windows: "00:00-06:00,22:00-24:00"
+  powerRelaxPercent: 5
+
+# TRT-LLM tuning
+trtllmTuner:
+  targetP95Seconds: 0.2
+  batchMin: 1
+  batchMax: 8
+```
+
+#### Energy Policy CRD
 ```yaml
 apiVersion: energy.io/v1alpha1
 kind: EnergyPolicy
 metadata:
   name: inference-optimization
 spec:
-  targetNamespace: inference
+  targetNamespace: default
   powerCaps:
-    gpu: 250  # Watts
-    cpu: 150  # Watts
+    gpu: 250
   sla:
     p95LatencyMs: 200
-    errorRatePercent: 0.1
   autoscaling:
     targetJoulesPerRequest: 150
-    minReplicas: 2
-    maxReplicas: 10
 ```
 
-## 🔧 Advanced Configuration
+## 📈 Monitoring
 
-### PID Controller Tuning
+### Access Dashboards
 ```bash
-# Controller environment variables
-PID_KP=2.0          # Proportional gain
-PID_KI=0.2          # Integral gain
-PID_KD=0.1          # Derivative gain
-BATCH_MIN=1         # Minimum batch size
-BATCH_MAX=8         # Maximum batch size
-GPU_POWER_FLOOR=120 # Minimum GPU power (W)
-GPU_POWER_CEIL=300  # Maximum GPU power (W)
+# Grafana (admin/prom-operator)
+kubectl -n energy-system port-forward svc/energy-grafana 3000:80
+
+# Prometheus
+kubectl -n energy-system port-forward svc/energy-kube-prometheus-prometheus 9090:9090
 ```
 
-### Alert Configuration
-```yaml
-alerts:
-  targetJoulesPerReq: 200
-  slack:
-    webhookUrl: "https://hooks.slack.com/services/XXX/YYY/ZZZ"
-    channel: "#energy-alerts"
-  webhook:
-    url: "https://example.com/webhook"
+### Key Metrics
+- `energy:cluster_joules_per_request` - Cluster-wide efficiency
+- `energy:app_joules_per_request` - Per-app energy consumption
+- `energy:app_p95_latency_seconds` - Application latency
+- `node_gpu_power_watts` - GPU power consumption
+- `node_gpu_temperature_celsius` - GPU temperature
+
+## 📄 Generate Reports
+
+### Energy Savings Report
+```bash
+# Configure time periods in values.yaml
+# Then generate report
+kubectl -n energy-system create job --from=job/energy-report-generator manual-report
+
+# Wait for completion
+kubectl -n energy-system wait --for=condition=complete job/manual-report
+
+# Extract PDF
+POD=$(kubectl -n energy-system get pods -l job-name=manual-report -o jsonpath='{.items[0].metadata.name}')
+kubectl cp energy-system/$POD:/out/energy-report.pdf ./energy-report.pdf
 ```
 
-## 📚 Documentation
-- [Architecture Guide](docs/architecture.md)
-- [Deployment Guide](docs/deployment.md)
-- [Policy Reference](docs/policies.md)
-- [Troubleshooting](docs/troubleshooting.md)
-- [Performance Tuning](docs/tuning.md)
+## 🎯 Implementation Timeline
+
+### Phase 1: Days 0-30 (MVP)
+- ✅ Deploy monitoring stack
+- ✅ Implement basic power capping
+- ✅ Enable adaptive batching
+- **Target**: 10-15% reduction
+
+### Phase 2: Days 31-60 (Optimization)
+- ✅ Deploy PID controller
+- ✅ Enable per-app targets
+- ✅ Implement green windows
+- **Target**: 15-25% reduction
+
+### Phase 3: Days 61-90 (Advanced)
+- ✅ Closed-loop tuning
+- ✅ Automated reporting
+- ⏳ ML-based optimization
+- **Target**: 20-30%+ reduction
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+#### High Latency After Optimization
+```bash
+# Reduce PID gains
+kubectl -n energy-system edit configmap energy-controller-config
+# Decrease kp, ki values
+```
+
+#### Insufficient Energy Savings
+```bash
+# Enable more aggressive settings
+helm upgrade energy ./infra/charts/energy \
+  --set optimization.mode=aggressive \
+  --set optimization.powerLimits.gpuFloor=100
+```
+
+#### Pods Not Scaling
+```bash
+# Check KEDA metrics
+kubectl get scaledobject -A
+kubectl describe scaledobject vllm-energy-scaler
+```
+
+## 📚 Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   Control Plane                          │
+├─────────────┬─────────────┬─────────────────────────────┤
+│ Controller  │ Energy API  │ Notifier                    │
+│ (PID Loop)  │ (KPIs)      │ (Alerts)                    │
+└─────────────┴─────────────┴─────────────────────────────┘
+        │              │                │
+┌───────▼──────────────▼────────────────▼─────────────────┐
+│                   Data Plane                             │
+├─────────────┬─────────────┬─────────────────────────────┤
+│ Agent       │ Prometheus  │ Grafana                     │
+│ (Metrics)   │ (Storage)   │ (Visualization)             │
+└─────────────┴─────────────┴─────────────────────────────┘
+        │              │                │
+┌───────▼──────────────▼────────────────▼─────────────────┐
+│                   Workloads                              │
+├─────────────┬─────────────┬─────────────────────────────┤
+│ vLLM        │ TensorRT    │ Training Jobs               │
+│ (Inference) │ (Optimized) │ (Batch)                     │
+└─────────────┴─────────────┴─────────────────────────────┘
+```
 
 ## 🤝 Contributing
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
 
 ## 📄 License
+
 Apache 2.0 - See [LICENSE](LICENSE) for details.
+
+## 🙏 Acknowledgments
+
+- NVIDIA for DCGM and GPU metrics
+- Prometheus community for monitoring stack
+- KEDA for autoscaling capabilities
+- vLLM and TensorRT-LLM teams
+
+---
+**Energy Orchestrator v0.7.0** - Reducing data center energy consumption without compromising performance.

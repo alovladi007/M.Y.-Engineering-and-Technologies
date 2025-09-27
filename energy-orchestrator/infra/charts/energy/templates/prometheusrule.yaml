@@ -1,0 +1,97 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: energy-alerts
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: energy-orchestrator
+    prometheus: kube-prometheus
+spec:
+  groups:
+  - name: energy.rules
+    interval: 30s
+    rules:
+    # Recording rules - Cluster level
+    - record: energy:cluster_joules_per_request
+      expr: |
+        sum(rate(node_total_power_watts[5m])) 
+        / 
+        sum(rate(app_requests_total[5m]))
+    
+    # Per-app energy metrics
+    - record: energy:app_joules_per_request
+      expr: |
+        (sum(rate(node_total_power_watts[5m])) * 
+         (rate(app_requests_total[5m]) / ignoring(app) group_left sum(rate(app_requests_total[5m]))))
+        / 
+        rate(app_requests_total[5m])
+    
+    - record: energy:app_p95_latency_seconds
+      expr: |
+        histogram_quantile(0.95,
+          sum(rate(app_request_duration_seconds_bucket[5m])) by (app, le)
+        )
+    
+    - record: energy:node_efficiency_score
+      expr: |
+        (1 - (node_total_power_watts / 500)) * 
+        (node_gpu_utilization_percent / 100) * 100
+    
+    - record: energy:app_power_share_watts
+      expr: |
+        sum(rate(node_total_power_watts[5m])) * 
+        (rate(app_requests_total[5m]) / ignoring(app) group_left sum(rate(app_requests_total[5m])))
+    
+  - name: energy.alerts
+    rules:
+    - alert: SLAP95Breach
+      expr: energy:app_p95_latency_seconds > {{ .Values.defaultPolicies.inference.p95LatencyMs | default 200 }} / 1000
+      for: 5m
+      labels:
+        severity: warning
+        component: energy
+      annotations:
+        summary: "P95 latency breach for app {{ $labels.app }}"
+        description: "App {{ $labels.app }} has P95 latency of {{ $value }}s, exceeding SLO"
+    
+    - alert: AppEnergyExcessive
+      expr: energy:app_joules_per_request > {{ .Values.alerts.targetJoulesPerReq | default 200 }}
+      for: 10m
+      labels:
+        severity: warning
+        component: energy
+      annotations:
+        summary: "App {{ $labels.app }} energy inefficient"
+        description: "App {{ $labels.app }} using {{ $value }} J/request"
+    
+    - alert: GPUThermalBreach
+      expr: node_gpu_temperature_celsius > 85
+      for: 2m
+      labels:
+        severity: critical
+        component: energy
+      annotations:
+        summary: "GPU thermal limit exceeded on {{ $labels.node }}"
+        description: "GPU {{ $labels.gpu_index }} on node {{ $labels.node }} is at {{ $value }}°C"
+    
+    - alert: ExcessiveEnergyPerRequest
+      expr: energy:cluster_joules_per_request > {{ .Values.alerts.targetJoulesPerReq }}
+      for: 10m
+      labels:
+        severity: warning
+        component: energy
+      annotations:
+        summary: "Cluster energy efficiency degraded"
+        description: "Cluster is using {{ $value }} J/request, above target"
+    
+    - alert: IdleNodeWaste
+      expr: count(node_gpu_utilization_percent < 5) > 3
+      for: 30m
+      labels:
+        severity: info
+        component: energy
+      annotations:
+        summary: "Multiple idle GPUs detected"
+        description: "{{ $value }} GPUs are idle, consider consolidation"
+{{- end }}

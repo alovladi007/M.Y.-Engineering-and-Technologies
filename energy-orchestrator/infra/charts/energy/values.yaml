@@ -1,200 +1,151 @@
-# Default values for energy.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-imageRegistry: "ghcr.io/yourorg/energy-orchestrator"
-imageTag: "v0.5.0"
+# Energy Orchestrator v0.7.0 - Complete Configuration
+namespace: energy-system
+imageRegistry: ghcr.io/yourorg/energy-orchestrator
+imageTag: v0.7.0
 imagePullPolicy: IfNotPresent
 
-# Global settings
-global:
-  namespace: energy-system
-
-# Agent configuration
+# Core Components
 agent:
   enabled: true
-  replicaCount: 1
-  image:
-    repository: agent
-    pullPolicy: IfNotPresent
-  service:
-    type: ClusterIP
-    port: 9100
+  daemonset: true
   resources:
-    limits:
+    requests:
       cpu: 100m
       memory: 128Mi
-    requests:
-      cpu: 50m
-      memory: 64Mi
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  daemonSet: true
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
-# Energy API configuration
 energyApi:
   enabled: true
-  replicaCount: 2
-  image:
-    repository: energy-api
-    pullPolicy: IfNotPresent
+  replicas: 2
   service:
     type: ClusterIP
     port: 8000
   resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
     requests:
       cpu: 200m
       memory: 256Mi
-  env:
-    PROM_URL: "http://energy-monitoring-kube-prometheus-prometheus.energy-system.svc.cluster.local:9090"
-    ENERGY_THRESHOLD: "200"
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
+    limits:
+      cpu: 1000m
+      memory: 1Gi
 
-# Controller configuration
 controller:
   enabled: true
-  replicaCount: 1
-  image:
-    repository: controller
-    pullPolicy: IfNotPresent
+  replicas: 1
   resources:
-    limits:
+    requests:
       cpu: 200m
       memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+
+notifier:
+  enabled: true
+  interval: 3600
+  resources:
     requests:
       cpu: 100m
       memory: 128Mi
-  env:
-    PROM_URL: "http://energy-monitoring-kube-prometheus-prometheus.energy-system.svc.cluster.local:9090"
-    ENERGY_API_URL: "http://energy-api.energy-system.svc.cluster.local:8000"
-    JOULES_PER_REQ_THRESHOLD: "200"
-    PID_KP: "2.0"
-    PID_KI: "0.2"
-    PID_KD: "0.1"
-    BATCH_MIN: "1"
-    BATCH_MAX: "8"
-    GPU_POWER_FLOOR: "120"
-    GPU_POWER_CEIL: "300"
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
+    limits:
+      cpu: 500m
+      memory: 512Mi
 
-# Monitoring stack
+# Advanced Features
+greenWindow:
+  enabled: true
+  windows: "00:00-06:00,22:00-24:00"  # UTC
+  targetNamespaces:
+    - default
+    - batch-jobs
+  powerRelaxPercent: 5
+  batchBump: 1
+
+trtllmTuner:
+  enabled: true
+  targetNamespace: default
+  appLabel: trtllm-demo
+  targetP95Seconds: 0.2
+  batchMin: 1
+  batchMax: 8
+  powerCapMin: 120
+  powerCapMax: 300
+
+# Monitoring
 monitoring:
   enabled: true
-  kube-prometheus-stack:
-    prometheus:
-      prometheusSpec:
-        serviceMonitorSelectorNilUsesHelmValues: false
-        ruleSelectorNilUsesHelmValues: false
-        additionalScrapeConfigs:
-          - job_name: 'energy-agent'
-            kubernetes_sd_configs:
-              - role: endpoints
-                namespaces:
-                  names:
-                    - energy-system
-            relabel_configs:
-              - source_labels: [__meta_kubernetes_service_name]
-                action: keep
-                regex: energy-agent
-    grafana:
-      enabled: true
-      adminPassword: prom-operator
-      dashboardProviders:
-        dashboardproviders.yaml:
-          apiVersion: 1
-          providers:
-          - name: 'energy-dashboards'
-            orgId: 1
-            folder: 'Energy Orchestrator'
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/energy
-      dashboards:
-        energy-dashboards:
-          energy-overview:
-            gnetId: 0
-            revision: 1
-            datasource: Prometheus
-          energy-details:
-            gnetId: 0
-            revision: 1
-            datasource: Prometheus
+  grafana:
+    enabled: true
+    adminPassword: admin-energy-2024
+  prometheus:
+    retention: 30d
+    storageSize: 50Gi
 
-# KEDA autoscaling
+# Grafana Features
+grafana:
+  apiUrl: ""  # Auto-detected if empty
+  apiToken: ""  # Set your Grafana API token
+  dashboards:
+    uids:
+      - energy-efficiency
+      - app-energy
+  snapshot:
+    enabled: true
+    schedule: "0 2 * * *"  # Daily at 2 AM
+    expiresSeconds: 86400
+    webhookUrl: ""  # Optional webhook for snapshot URLs
+
+# Report Generation
+report:
+  enabled: false  # Enable when ready to generate report
+  promUrl: ""  # Auto-detected if empty
+  start: "2025-01-01T00:00:00Z"
+  mid: "2025-01-15T00:00:00Z"
+  end: "2025-01-30T00:00:00Z"
+
+# KEDA
 keda:
   enabled: true
-  metricsServer:
+
+# Alerts
+alerts:
+  enabled: true
+  targetJoulesPerReq: 200
+  slack:
     enabled: true
-  operator:
-    replicaCount: 1
-    resources:
-      limits:
-        cpu: 1000m
-        memory: 1000Mi
-      requests:
-        cpu: 100m
-        memory: 100Mi
+    webhookUrl: ""
+    channel: "#energy-alerts"
+  webhook:
+    enabled: false
+    url: ""
 
-# ServiceMonitor for Prometheus
-serviceMonitor:
-  enabled: true
-  interval: 30s
-  scrapeTimeout: 10s
+# Optimization Parameters
+optimization:
+  pidGains:
+    kp: 2.0
+    ki: 0.2
+    kd: 0.0
+  batchLimits:
+    min: 1
+    max: 8
+  powerLimits:
+    gpuFloor: 120
+    gpuCeiling: 300
+    cpuFloor: 50
+    cpuCeiling: 150
 
-# RBAC
-rbac:
-  create: true
-
-# ServiceAccount
-serviceAccount:
-  create: true
-  annotations: {}
-  name: ""
-
-# Pod Security Policy
-podSecurityPolicy:
-  enabled: false
-
-# Network Policy
-networkPolicy:
-  enabled: false
-
-# Ingress
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts:
-    - host: energy.local
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
-
-# Persistence
-persistence:
-  enabled: false
-  storageClass: ""
-  accessMode: ReadWriteOnce
-  size: 8Gi
-
-# Security Context
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  fsGroup: 1000
-
-# Pod Disruption Budget
-podDisruptionBudget:
-  enabled: true
-  minAvailable: 1
+# Default Policies
+defaultPolicies:
+  inference:
+    p95LatencyMs: 200
+    errorRatePercent: 0.1
+    targetJoulesPerRequest: 150
+  training:
+    p95LatencyMs: 5000
+    errorRatePercent: 1.0
+    targetJoulesPerRequest: 500
+  batch:
+    p95LatencyMs: 30000
+    errorRatePercent: 2.0
+    targetJoulesPerRequest: 1000

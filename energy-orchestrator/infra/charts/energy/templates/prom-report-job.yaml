@@ -1,0 +1,50 @@
+{{- if .Values.report.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: energy-report-storage
+  namespace: {{ .Values.namespace }}
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: energy-report-generator
+  namespace: {{ .Values.namespace }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+      - name: report-output
+        persistentVolumeClaim:
+          claimName: energy-report-storage
+      containers:
+      - name: report-gen
+        image: {{ .Values.imageRegistry }}/prom-report:{{ .Values.imageTag }}
+        env:
+        - name: PROM_URL
+          value: "{{ .Values.report.promUrl | default (printf "http://%s-kube-prometheus-prometheus.%s.svc.cluster.local:9090" .Release.Name .Values.namespace) }}"
+        - name: START
+          value: "{{ .Values.report.start }}"
+        - name: MID
+          value: "{{ .Values.report.mid }}"
+        - name: END
+          value: "{{ .Values.report.end }}"
+        - name: OUT
+          value: "/out/energy-report.pdf"
+        volumeMounts:
+        - name: report-output
+          mountPath: /out
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+{{- end }}

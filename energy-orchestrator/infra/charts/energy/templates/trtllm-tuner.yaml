@@ -1,0 +1,48 @@
+{{- if .Values.trtllmTuner.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trtllm-tuner
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: trtllm-tuner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trtllm-tuner
+  template:
+    metadata:
+      labels:
+        app: trtllm-tuner
+    spec:
+      serviceAccountName: energy-controller
+      containers:
+      - name: tuner
+        image: {{ .Values.imageRegistry }}/controller-tuner:{{ .Values.imageTag }}
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: PROM_URL
+          value: "http://{{ .Release.Name }}-kube-prometheus-prometheus.{{ .Values.namespace }}.svc.cluster.local:9090"
+        - name: TARGET_NS
+          value: "{{ .Values.trtllmTuner.targetNamespace }}"
+        - name: APP_LABEL
+          value: "{{ .Values.trtllmTuner.appLabel }}"
+        - name: TARGET_P95_S
+          value: "{{ .Values.trtllmTuner.targetP95Seconds }}"
+        - name: BATCH_MIN
+          value: "{{ .Values.trtllmTuner.batchMin }}"
+        - name: BATCH_MAX
+          value: "{{ .Values.trtllmTuner.batchMax }}"
+        - name: CAP_MIN
+          value: "{{ .Values.trtllmTuner.powerCapMin }}"
+        - name: CAP_MAX
+          value: "{{ .Values.trtllmTuner.powerCapMax }}"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+{{- end }}

@@ -1,0 +1,49 @@
+{{- if .Values.grafana.snapshot.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-token
+  namespace: {{ .Values.namespace }}
+type: Opaque
+stringData:
+  token: {{ .Values.grafana.apiToken | quote }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: grafana-snapshotter
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: "{{ .Values.grafana.snapshot.schedule | default "0 2 * * *" }}"  # Daily at 2 AM
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: snapshotter
+            image: {{ .Values.imageRegistry }}/grafana-snapshotter:{{ .Values.imageTag }}
+            env:
+            - name: GRAFANA_URL
+              value: "{{ .Values.grafana.apiUrl | default (printf "http://%s-grafana.%s.svc.cluster.local" .Release.Name .Values.namespace) }}"
+            - name: GRAFANA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-token
+                  key: token
+            - name: DASHBOARD_UIDS
+              value: "{{ .Values.grafana.dashboards.uids | join "," }}"
+            - name: EXPIRES_SECONDS
+              value: "{{ .Values.grafana.snapshot.expiresSeconds | default 86400 }}"
+            - name: SNAPSHOT_NAME_PREFIX
+              value: "energy-auto"
+            - name: WEBHOOK_URL
+              value: "{{ .Values.grafana.snapshot.webhookUrl }}"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 500m
+                memory: 256Mi
+{{- end }}
