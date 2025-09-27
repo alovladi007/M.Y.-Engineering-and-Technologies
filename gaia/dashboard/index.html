@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Analytics Dashboard - Green Adaptive Infrastructure Automation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a4d3a 0%, #2d5a47 50%, #4a7c59 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-large {
+            grid-column: span 8;
+        }
+        
+        .card-medium {
+            grid-column: span 6;
+        }
+        
+        .card-small {
+            grid-column: span 4;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #4CAF50;
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .chart-container {
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .chart-placeholder {
+            text-align: center;
+            opacity: 0.7;
+        }
+        
+        .chart-placeholder .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        
+        .timeline-warning {
+            background: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+        }
+        
+        .timeline-info {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+        }
+        
+        .cluster-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .cluster-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .cluster-info h4 {
+            color: #4CAF50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cluster-stats {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .cluster-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-healthy {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        
+        .status-warning {
+            background: rgba(255, 152, 0, 0.2);
+            color: #FF9800;
+        }
+        
+        .status-critical {
+            background: rgba(244, 67, 54, 0.2);
+            color: #F44336;
+        }
+        
+        .alerts-section {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .alert-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        
+        .alert-success {
+            background: rgba(76, 175, 80, 0.1);
+            border-left-color: #4CAF50;
+        }
+        
+        .alert-warning {
+            background: rgba(255, 152, 0, 0.1);
+            border-left-color: #FF9800;
+        }
+        
+        .alert-error {
+            background: rgba(244, 67, 54, 0.1);
+            border-left-color: #F44336;
+        }
+        
+        .alert-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📊 GAIA Analytics Dashboard</div>
+            <div class="nav-buttons">
+                <a href="../index.html" class="nav-button">← Back to GAIA</a>
+                <a href="../controller/" class="nav-button">Controller</a>
+                <a href="../config/" class="nav-button">Config</a>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <!-- Energy Overview -->
+            <div class="card card-large">
+                <div class="card-title">Energy Consumption Overview</div>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <div class="metric-value">2.3kW</div>
+                        <div class="metric-label">Current Power</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">23.7%</div>
+                        <div class="metric-label">Energy Saved</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">94%</div>
+                        <div class="metric-label">Renewable Energy</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">$0.12</div>
+                        <div class="metric-label">Cost/Hour</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <div class="icon">📈</div>
+                        <div>Energy Consumption Chart</div>
+                        <div style="font-size: 0.9rem; opacity: 0.7;">Real-time power usage over 24 hours</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carbon Impact -->
+            <div class="card card-small">
+                <div class="card-title">Carbon Impact</div>
+                <div class="metric-item">
+                    <div class="metric-value">847kg</div>
+                    <div class="metric-label">CO₂ Saved Today</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">2.3M</div>
+                    <div class="metric-label">Total CO₂ Saved</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">156</div>
+                    <div class="metric-label">Trees Equivalent</div>
+                </div>
+            </div>
+            
+            <!-- Performance Metrics -->
+            <div class="card card-small">
+                <div class="card-title">Performance</div>
+                <div class="metric-item">
+                    <div class="metric-value">99.97%</div>
+                    <div class="metric-label">Uptime</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">156</div>
+                    <div class="metric-label">Active Clusters</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">847</div>
+                    <div class="metric-label">Active Pods</div>
+                </div>
+            </div>
+            
+            <!-- Resource Utilization -->
+            <div class="card card-medium">
+                <div class="card-title">Resource Utilization</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <div class="icon">🔄</div>
+                        <div>CPU & Memory Usage</div>
+                        <div style="font-size: 0.9rem; opacity: 0.7;">Real-time resource utilization</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cost Savings -->
+            <div class="card card-medium">
+                <div class="card-title">Cost Savings</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <div class="icon">💰</div>
+                        <div>Energy Cost Reduction</div>
+                        <div style="font-size: 0.9rem; opacity: 0.7;">Monthly savings trend</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="card card-medium">
+                <div class="card-title">Recent Activity</div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-success">✅</div>
+                        <div>
+                            <div style="font-weight: bold;">Energy optimization applied</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Production cluster - 15% energy reduction</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-warning">⚠️</div>
+                        <div>
+                            <div style="font-weight: bold;">High CPU usage detected</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Staging cluster - Auto-scaling triggered</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-info">ℹ️</div>
+                        <div>
+                            <div style="font-weight: bold;">Renewable energy available</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Workloads shifted to green energy</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon timeline-success">✅</div>
+                        <div>
+                            <div style="font-weight: bold;">Carbon target achieved</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Monthly target exceeded by 12%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cluster Status -->
+            <div class="card card-medium">
+                <div class="card-title">Cluster Status</div>
+                <div class="cluster-list">
+                    <div class="cluster-item">
+                        <div class="cluster-info">
+                            <h4>Production-US-East</h4>
+                            <div class="cluster-stats">CPU: 78% | Memory: 65% | Pods: 156</div>
+                        </div>
+                        <div class="cluster-status status-healthy">Healthy</div>
+                    </div>
+                    <div class="cluster-item">
+                        <div class="cluster-info">
+                            <h4>Staging-US-West</h4>
+                            <div class="cluster-stats">CPU: 45% | Memory: 52% | Pods: 89</div>
+                        </div>
+                        <div class="cluster-status status-warning">Optimizing</div>
+                    </div>
+                    <div class="cluster-item">
+                        <div class="cluster-info">
+                            <h4>Development-EU</h4>
+                            <div class="cluster-stats">CPU: 23% | Memory: 31% | Pods: 34</div>
+                        </div>
+                        <div class="cluster-status status-healthy">Idle</div>
+                    </div>
+                    <div class="cluster-item">
+                        <div class="cluster-info">
+                            <h4>Analytics-Asia</h4>
+                            <div class="cluster-stats">CPU: 89% | Memory: 76% | Pods: 67</div>
+                        </div>
+                        <div class="cluster-status status-warning">High Load</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alerts -->
+            <div class="card card-small">
+                <div class="card-title">System Alerts</div>
+                <div class="alerts-section">
+                    <div class="alert-item alert-success">
+                        <div class="alert-title">Energy Target Met</div>
+                        <div>Monthly energy reduction target achieved</div>
+                        <div class="alert-time">2 hours ago</div>
+                    </div>
+                    <div class="alert-item alert-warning">
+                        <div class="alert-title">High CPU Usage</div>
+                        <div>Analytics cluster CPU usage above 85%</div>
+                        <div class="alert-time">4 hours ago</div>
+                    </div>
+                    <div class="alert-item alert-success">
+                        <div class="alert-title">Carbon Offset Applied</div>
+                        <div>Additional carbon offset credits purchased</div>
+                        <div class="alert-time">6 hours ago</div>
+                    </div>
+                    <div class="alert-item alert-info">
+                        <div class="alert-title">Renewable Energy Peak</div>
+                        <div>Solar energy production at maximum</div>
+                        <div class="alert-time">8 hours ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Demo - Green Adaptive Infrastructure Automation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a4d3a 0%, #2d5a47 50%, #4a7c59 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39, #4CAF50);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 4s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #4CAF50;
+            text-align: center;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .demo-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .demo-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+        
+        .demo-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .interactive-demo {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .demo-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .control-group {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .control-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+        
+        .control-slider {
+            width: 100%;
+            margin: 1rem 0;
+        }
+        
+        .control-value {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 1rem 0;
+        }
+        
+        .simulation-area {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .simulation-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .simulation-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .simulation-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .metric-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-button">← Back to GAIA</a>
+        
+        <div class="header">
+            <div class="logo">🧪 GAIA Demo</div>
+            <div class="subtitle">Experience Green Adaptive Infrastructure Automation</div>
+        </div>
+        
+        <div class="demo-section">
+            <div class="section-title">Interactive Demos</div>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <div class="demo-title">🌱 Energy Optimization</div>
+                    <div class="demo-description">
+                        See how GAIA automatically optimizes energy consumption across your Kubernetes clusters in real-time.
+                    </div>
+                    <a href="#energy-demo" class="demo-button">Launch Demo</a>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-title">🌍 Carbon Awareness</div>
+                    <div class="demo-description">
+                        Watch GAIA intelligently schedule workloads based on renewable energy availability and carbon intensity.
+                    </div>
+                    <a href="#carbon-demo" class="demo-button">Launch Demo</a>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-title">⚡ Smart Orchestration</div>
+                    <div class="demo-description">
+                        Experience how GAIA balances performance requirements with energy efficiency through adaptive control loops.
+                    </div>
+                    <a href="#orchestration-demo" class="demo-button">Launch Demo</a>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-title">📊 Analytics Dashboard</div>
+                    <div class="demo-description">
+                        Explore comprehensive analytics and monitoring capabilities with real-time insights and reporting.
+                    </div>
+                    <a href="../dashboard/" class="demo-button">View Dashboard</a>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-title">🔧 Configuration</div>
+                    <div class="demo-description">
+                        Learn how to configure GAIA policies, energy targets, and optimization parameters for your environment.
+                    </div>
+                    <a href="../config/" class="demo-button">Configure</a>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-title">🚀 Quick Start</div>
+                    <div class="demo-description">
+                        Get started with GAIA in minutes using our guided setup wizard and pre-configured templates.
+                    </div>
+                    <a href="#quickstart" class="demo-button">Start Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="interactive-demo" id="energy-demo">
+            <div class="section-title">Energy Optimization Simulation</div>
+            <div class="demo-controls">
+                <div class="control-group">
+                    <div class="control-title">Energy Efficiency Mode</div>
+                    <input type="range" class="control-slider" id="efficiency-slider" min="0" max="100" value="75">
+                    <div class="control-value" id="efficiency-value">75%</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.8;">
+                        <span>Performance</span>
+                        <span>Efficiency</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">Workload Intensity</div>
+                    <input type="range" class="control-slider" id="workload-slider" min="0" max="100" value="60">
+                    <div class="control-value" id="workload-value">60%</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.8;">
+                        <span>Low</span>
+                        <span>High</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">Renewable Energy</div>
+                    <input type="range" class="control-slider" id="renewable-slider" min="0" max="100" value="85">
+                    <div class="control-value" id="renewable-value">85%</div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; opacity: 0.8;">
+                        <span>Grid</span>
+                        <span>Renewable</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="simulation-area">
+                <div class="simulation-icon">⚡</div>
+                <div class="simulation-text">GAIA is optimizing your infrastructure...</div>
+                <div class="simulation-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value" id="power-value">2.3kW</div>
+                        <div class="metric-label">Current Power</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="savings-value">23.7%</div>
+                        <div class="metric-label">Energy Saved</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="co2-value">1.2kg</div>
+                        <div class="metric-label">CO₂/Hour</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="cost-value">$0.12</div>
+                        <div class="metric-label">Cost/Hour</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2 style="margin-bottom: 1rem; font-size: 2rem;">Ready to Transform Your Infrastructure?</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.9; font-size: 1.1rem;">
+                Experience the power of sustainable computing. Start your free trial today.
+            </p>
+            <a href="#signup" class="cta-button">Start Free Trial</a>
+        </div>
+    </div>
+    
+    <script>
+        // Interactive demo functionality
+        const efficiencySlider = document.getElementById('efficiency-slider');
+        const workloadSlider = document.getElementById('workload-slider');
+        const renewableSlider = document.getElementById('renewable-slider');
+        
+        const efficiencyValue = document.getElementById('efficiency-value');
+        const workloadValue = document.getElementById('workload-value');
+        const renewableValue = document.getElementById('renewable-value');
+        
+        const powerValue = document.getElementById('power-value');
+        const savingsValue = document.getElementById('savings-value');
+        const co2Value = document.getElementById('co2-value');
+        const costValue = document.getElementById('cost-value');
+        
+        function updateSimulation() {
+            const efficiency = parseInt(efficiencySlider.value);
+            const workload = parseInt(workloadSlider.value);
+            const renewable = parseInt(renewableSlider.value);
+            
+            // Update display values
+            efficiencyValue.textContent = efficiency + '%';
+            workloadValue.textContent = workload + '%';
+            renewableValue.textContent = renewable + '%';
+            
+            // Calculate simulated metrics
+            const basePower = 3.0; // Base power consumption
+            const efficiencyFactor = (100 - efficiency) / 100;
+            const workloadFactor = workload / 100;
+            const renewableFactor = renewable / 100;
+            
+            const currentPower = (basePower * workloadFactor * efficiencyFactor).toFixed(1);
+            const energySavings = (efficiency * 0.3).toFixed(1);
+            const co2Emission = (currentPower * 0.5 * (1 - renewableFactor * 0.8)).toFixed(1);
+            const hourlyCost = (currentPower * 0.05 * (1 - renewableFactor * 0.3)).toFixed(2);
+            
+            // Update metric displays
+            powerValue.textContent = currentPower + 'kW';
+            savingsValue.textContent = energySavings + '%';
+            co2Value.textContent = co2Emission + 'kg';
+            costValue.textContent = '$' + hourlyCost;
+        }
+        
+        // Add event listeners
+        efficiencySlider.addEventListener('input', updateSimulation);
+        workloadSlider.addEventListener('input', updateSimulation);
+        renewableSlider.addEventListener('input', updateSimulation);
+        
+        // Initialize simulation
+        updateSimulation();
+        
+        // Auto-update simulation every 3 seconds
+        setInterval(updateSimulation, 3000);
+    </script>
+</body>
+</html>

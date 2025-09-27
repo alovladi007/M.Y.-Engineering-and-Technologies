@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA: Green Adaptive Infrastructure Automation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 50%, #6fa8dc 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .logo {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39, #4CAF50);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 4s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .features-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #4CAF50;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+        
+        .feature-description {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .platform-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .platform-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .platform-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .platform-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #4CAF50;
+        }
+        
+        .platform-description {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .platform-button {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .platform-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .carbon-dashboard {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .dashboard-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dashboard-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dashboard-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 4rem 0;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #4CAF50, #8BC34A, #CDDC39);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(76, 175, 80, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer-text {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="http://127.0.0.1:8081/index.html" class="back-button">← Back to M.Y Engineering</a>
+        
+        <div class="header">
+            <div class="logo">🌱 GAIA</div>
+            <div class="subtitle">Green Adaptive Infrastructure Automation</div>
+            <div class="tagline">
+                A new paradigm in sustainable computing. This Kubernetes-native platform reduces data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling. GAIA doesn't just optimize—it harmonizes, finding the perfect balance between performance and planetary responsibility.
+            </div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">15-30%</div>
+                <div class="stat-label">Energy Reduction</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">Uptime Guarantee</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40%</div>
+                <div class="stat-label">Carbon Footprint Reduction</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Adaptive Monitoring</div>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <div class="section-title">Core Capabilities</div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Intelligent Orchestration</div>
+                    <div class="feature-description">
+                        AI-powered workload distribution that automatically balances performance requirements with energy efficiency across your entire infrastructure.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title">Adaptive Control Loops</div>
+                    <div class="feature-description">
+                        Self-tuning systems that continuously optimize resource allocation based on real-time demand patterns and environmental conditions.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-title">Carbon-Aware Scheduling</div>
+                    <div class="feature-description">
+                        Smart scheduling that prioritizes renewable energy sources and shifts workloads to minimize carbon footprint during peak consumption periods.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Real-Time Analytics</div>
+                    <div class="feature-description">
+                        Comprehensive dashboards providing insights into energy consumption, carbon emissions, and optimization opportunities across your infrastructure.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">Predictive Maintenance</div>
+                    <div class="feature-description">
+                        Machine learning algorithms that predict hardware failures and optimize maintenance schedules to prevent downtime and reduce energy waste.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <div class="feature-title">Kubernetes Native</div>
+                    <div class="feature-description">
+                        Built specifically for Kubernetes environments with seamless integration, custom operators, and native resource management capabilities.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="platform-section">
+            <div class="section-title">Platform Components</div>
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-title">🌱 GAIA Controller</div>
+                    <div class="platform-description">
+                        Central orchestration engine that manages resource allocation, workload scheduling, and energy optimization across your entire Kubernetes cluster.
+                    </div>
+                    <a href="controller/" class="platform-button">Access Controller</a>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-title">📈 Analytics Dashboard</div>
+                    <div class="platform-description">
+                        Comprehensive monitoring and analytics platform providing real-time insights into energy consumption, carbon emissions, and optimization metrics.
+                    </div>
+                    <a href="dashboard/" class="platform-button">View Dashboard</a>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-title">⚙️ Configuration Manager</div>
+                    <div class="platform-description">
+                        Advanced configuration management system for setting up energy policies, carbon targets, and optimization parameters across your infrastructure.
+                    </div>
+                    <a href="config/" class="platform-button">Manage Config</a>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-title">🔌 API Gateway</div>
+                    <div class="platform-description">
+                        RESTful API and GraphQL endpoints for integrating GAIA with existing monitoring tools, CI/CD pipelines, and third-party services.
+                    </div>
+                    <a href="api/" class="platform-button">Explore API</a>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-title">📚 Documentation</div>
+                    <div class="platform-description">
+                        Comprehensive documentation, tutorials, and best practices for implementing and optimizing GAIA in your environment.
+                    </div>
+                    <a href="docs/" class="platform-button">Read Docs</a>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-title">🧪 Sandbox Environment</div>
+                    <div class="platform-description">
+                        Interactive sandbox for testing GAIA configurations, experimenting with optimization strategies, and validating energy savings.
+                    </div>
+                    <a href="sandbox/" class="platform-button">Launch Sandbox</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carbon-dashboard">
+            <div class="section-title">Live Carbon Impact Dashboard</div>
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="dashboard-value">2.3M</div>
+                    <div class="dashboard-label">CO₂ Saved (kg)</div>
+                </div>
+                <div class="dashboard-item">
+                    <div class="dashboard-value">847</div>
+                    <div class="dashboard-label">Trees Equivalent</div>
+                </div>
+                <div class="dashboard-item">
+                    <div class="dashboard-value">$1.2M</div>
+                    <div class="dashboard-label">Energy Cost Saved</div>
+                </div>
+                <div class="dashboard-item">
+                    <div class="dashboard-value">94%</div>
+                    <div class="dashboard-label">Renewable Energy</div>
+                </div>
+                <div class="dashboard-item">
+                    <div class="dashboard-value">156</div>
+                    <div class="dashboard-label">Active Clusters</div>
+                </div>
+                <div class="dashboard-item">
+                    <div class="dashboard-value">99.97%</div>
+                    <div class="dashboard-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2 style="margin-bottom: 1rem; font-size: 2rem;">Ready to Transform Your Infrastructure?</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.9; font-size: 1.1rem;">
+                Join the sustainable computing revolution. Start optimizing your infrastructure today.
+            </p>
+            <a href="demo/" class="cta-button">Start Free Trial</a>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-text">
+                GAIA - Green Adaptive Infrastructure Automation | M.Y Engineering and Technologies
+            </div>
+        </div>
+    </div>
+</body>
+</html>
