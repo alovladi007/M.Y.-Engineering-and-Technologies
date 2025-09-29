@@ -80,7 +80,7 @@ export function Navigation() {
                 Settings
               </Button>
             </Link>
-            <a href="http://localhost:8080/index.html" target="_self" rel="noopener">
+            <a href="http://localhost:8080/" target="_self" rel="noopener">
               <Button variant="outline">
                 ← Back to M.Y
               </Button>
