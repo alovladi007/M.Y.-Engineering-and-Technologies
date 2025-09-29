@@ -1,0 +1,131 @@
+========================
+SOLID-STATE EXTENSION (SST + SiC/GaN)
+========================
+Goal: Add medium-frequency, solid-state conversion paths for EV DCFC and renewables. Implement a 3-stage SST (AC-DC → DAB (MV/LV) → AC/DC), advanced SiC/GaN device models, grid services (IEEE-1547 style), and bench-safe scaled HIL.
+
+========================
+NEW DOMAINS & USE CASES
+========================
+- MV/LV Solid-State Transformer (SST) for:
+  1) EV DC Fast Charging (MV AC → regulated LV DC bus 400–1000 V),
+  2) PV + Storage MV intertie (grid-tie LV AC/DC ↔ MV AC),
+  3) Microgrid support (grid-forming/following, black-start at LV).
+
+========================
+ARCHITECTURE (3-STAGE SST)
+========================
+Stage 1 (AC-DC): 3-phase Vienna or 2-level/3-level NPC rectifier with SRF-PLL, unity PF, low THD.
+Stage 2 (MV/LV Isolation): Dual-Active Bridge (DAB) with Medium-Frequency Transformer (MFT).
+Stage 3 (DC/AC or DC/DC): LV inverter (grid-tie) or regulated DC bus for chargers.
+
+Add selectable topologies:
+- NPC 3-level rectifier (with SVPWM-3L), LCL input filter.
+- DAB variants: single, triple-phase-shift (TPS) control, series-parallel MFT option.
+- LV side: 3-phase inverter (grid-forming/following), or HV DC bus for CCS/ChaoJi modules.
+
+========================
+SIM SERVICE: NEW KERNELS
+========================
+1) 3-Level NPC Rectifier:
+   - dq model with LCL filter; current control in dq; DC-link regulation.
+   - Metrics: THD, PF, switching ripple, input current imbalance.
+
+2) DAB + MFT:
+   - Full state-space with leakage Llk, magnetizing Lm, MFT copper/core losses (i^2R + generalized Steinmetz).
+   - Phase-shift power: P ≈ (n*V1*V2/(2π*f_s*Llk)) * φ*(1−|φ|/π) (exact model uses waveform integration).
+   - Controls: SPS (single phase-shift) and TPS (leading/lagging bridge phase + duty skew).
+   - Soft-start, ZVS detection flag vs load/voltage ratio, deadtime modeling.
+
+3) LV Grid-Side Inverter:
+   - Grid-forming (droop f-V, P-f / Q-V) and grid-following (PLL) modes.
+   - Virtual inertia/emulated impedance options.
+
+4) SiC/GaN Device Model Pack:
+   - Nonlinear Coss(v), Qg(v), Eon/Eoff(Id, V, T) LUTs + spline fit.
+   - Reverse conduction (SiC body diode) with Qrr model, GaN third-quadrant channel conduction.
+   - Rds_on(T) drift, dynamic Rds_on (GaN) factor.
+   - Thermal: Cauer ladder fitting from RθJC / Zth curves; Kelvin-source layout hint.
+
+APIs (sim):
+- POST /simulate/sst/run { topology_chain: ["NPC3L","DAB","INV"], params:{npc3l:{...}, dab:{...}, inv:{...}, mft:{core, Ae, Ve, le, k_b, Steinmetz:{k, alpha, beta}}, devices:{primary:{tech:"SiC", pn:"…"}, secondary:{tech:"GaN", pn:"…"}} }
+- POST /simulate/sst/sweep (e.g., φ sweep, fs sweep, device compare)
+- GET /simulate/sst/run/:id, WS stream as existing.
+
+Outputs:
+- DC-link dynamics, DAB power vs phase-shift, ZVS map, transformer temp map, grid metrics (THD, PF), efficiency stack.
+
+========================
+ML & OPTIMIZATION UPGRADES
+========================
+- Loss optimizer: choose (device, fs, φ, Llk) to maximize η under ZVS constraint and component Tmax.
+- PHM for MFT: sequence model on core temp/ripple flux → hotspot prediction & loss drift.
+- Anomaly detection tuned for DAB (e.g., ZVS margin collapse, circulating current spikes).
+- MPC hook: minimizes circulating current with constraints on dv/dt, di/dt, φ̇.
+
+APIs (ml):
+- POST /ml/optimize/sst (design JSON) → returns (fs, φ schedule, device pick, predicted η, ZVS margin heatmap).
+
+========================
+WEB UI ADDITIONS
+========================
+- New “SST” workspace:
+  - Chain builder: drag blocks (NPC3L → DAB → INV/DC).
+  - MFT designer: core/material selector, turns, window utilization, skin/proximity loss estimator.
+  - Device chooser: SiC/GaN comparison view (η, Tj, ZVS area) with vendor curves.
+  - ZVS map & loss sunburst; grid services panel (Volt-VAR, PF, ride-through).
+- Calculators:
+  - LCL sizing (f_res, damping).
+  - DAB Llk target from ripple and ZVS constraints.
+  - MFT core loss via iGSE & copper loss with AC resistance model.
+
+========================
+DATA MODEL (DB)
+========================
+- transformer_cores(id, vendor, core_type, Ae, Ve, le, window, material_id)
+- magnetic_materials(id, name, Steinmetz_k, alpha, beta, freq_range)
+- device_curves(id, pn, tech, Vds, Id, Rds_on_25C, RthJC, curves:{Eon, Eoff, Qg, Coss, Rds_on(T)})
+- sst_designs(id, project_id, stage_chain JSONB, mft JSONB, constraints JSONB)
+- sst_runs extends runs with chain metadata
+
+Timescale hypertables unchanged for telemetry; add views for ZVS margin and transformer hotspots.
+
+========================
+HIL (SCALED BENCH) ADD-ONS
+========================
+- DAB low-voltage rig (e.g., 48 V ↔ 24 V) with GaN half/full-bridge + planar MFT proto.
+- New CAN frames:
+  - 0x230 DAB_CMD (φ_mdeg, fs_khz)
+  - 0x231 DAB_STATUS (zvs_window, circ_current_A)
+  - 0x232 MFT_THERM (tj_swA/B, t_core, t_winding)
+- Bench UI controls: φ slider, fs slider, ZVS indicator LED, “safe corridor” overlay.
+- Safety: enforce φ, fs against pre-computed safe map; E-STOP clears to SPS φ=0, fs=min.
+
+========================
+GRID SERVICES & COMPLIANCE
+========================
+- Grid-following: SRF-PLL with ROCOF cap; current dq control with feedforward.
+- Grid-forming: P-f / Q-V droop, black-start sequence, ride-through window.
+- Volt-VAR and Volt-Watt curves editor; exportable as JSON profiles.
+- Fault ride-through simulation: sag/swell profiles, over/under-freq tests; log compliance KPIs.
+
+========================
+TESTS & SEED CONTENT
+========================
+- Seed designs:
+  1) DCFC path: NPC3L(800Vdc) → DAB(MFT 50 kHz) → DC 950 V bus
+  2) PV+Storage MV intertie: NPC3L → DAB → LV inverter grid-forming
+- Playwright: run SST sim, show ZVS map updating as φ changes.
+- Pytest:
+  - DAB power vs phase-shift curve sanity vs analytical model,
+  - Transformer loss vs frequency vs Steinmetz regression,
+  - SiC vs GaN device swap regression (η, Tj).
+- Jest e2e: API /ml/optimize/sst returns feasible φ,fs under constraints.
+
+========================
+DOCS
+========================
+- docs/sst.md:
+  - DAB control (SPS/TPS) derivations, ZVS conditions and Llk tradeoffs.
+  - MFT design quick guide (core selection, window fill, copper skin/proximity, thermal).
+  - Grid-forming vs grid-following control block diagrams.
+  - Safety & HIL bring-up for DAB bench (probe strategy, first-pulse checklist).

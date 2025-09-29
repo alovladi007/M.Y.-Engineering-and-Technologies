@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Next.js Frontend
+  web:
+    image: node:20-alpine
+    container_name: powerflow-web
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+    command: sh -c "npm install -g pnpm && pnpm install && pnpm dev"
+    networks:
+      - powerflow-network
+
+  # NestJS API Gateway
+  api:
+    image: node:20-alpine
+    container_name: powerflow-api
+    working_dir: /app
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./apps/api:/app
+      - /app/node_modules
+      - /app/dist
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    command: sh -c "npm install -g pnpm && pnpm install && pnpm dev"
+    networks:
+      - powerflow-network
+
+networks:
+  powerflow-network:
+    driver: bridge

@@ -1,0 +1,224 @@
+# Create a Postman collection and a Mosquitto smoke-test script for the platform.
+import json, os, textwrap, time, uuid, base64, pathlib
+
+base_dir = "/mnt/data"
+os.makedirs(base_dir, exist_ok=True)
+
+# ---------- Postman Collection (v2.1) ----------
+collection = {
+  "info": {
+    "name": "Advanced Power Electronics Platform — Core Flows",
+    "_postman_id": str(uuid.uuid4()),
+    "description": "Ready-to-run API requests covering SIM, HIL, CCS/DCFC, Data-Center Energy, ML/Optimizer, Telemetry ingest, Admin ops, and Billing usage examples.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "SIM — Start SST/DAB Run",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "url": {"raw":"{{SIM_BASE}}/simulate/sst/run","host":["{{SIM_BASE}}"],"path":["simulate","sst","run"]},
+        "body": {
+          "mode":"raw",
+          "raw": json.dumps({
+            "project_id":"{{PROJECT_ID}}",
+            "topology_chain":["NPC3L","DAB","INV"],
+            "params":{
+              "npc3l":{"vac_ll_rms":400.0,"f_grid":60.0,"lcl":{"Lf":1.8e-3,"Cf":8.2e-6,"Rg":0.3},"v_dc_target":800.0},
+              "dab":{"V1":800.0,"V2":950.0,"n":1.1,"fs":50000,"Llk":8e-6,"deadtime_ns":80},
+              "inv":{"mode":"grid_following","lcl":{"Lf":1.6e-3,"Cf":6.8e-6},"pf_target":0.99},
+              "mft":{"core":"E70","Ae":3.8e-4,"Ve":1.1e-4,"le":0.18,"Steinmetz":{"k":0.0023,"alpha":1.45,"beta":2.1}}
+            },
+            "devices":{"primary":{"tech":"SiC","pn":"C3M0060065J2"},"secondary":{"tech":"GaN","pn":"GS66508T"}},
+            "controller":{"phi_rad":0.8,"fs_override":52000},
+            "timespan_s":0.5,"step_hint_s":1e-6
+          }, indent=2)
+        }
+      }
+    },
+    {
+      "name": "SIM — Loss/Thermal Calc",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{SIM_BASE}}/calc/losses","host":["{{SIM_BASE}}"],"path":["calc","losses"]},
+        "body":{"mode":"raw","raw":json.dumps({"device":{"tech":"SiC","pn":"C3M0060065J2"},"operating":{"Id":45.0,"V":800.0,"Tj":85.0,"fsw":50000}}, indent=2)}
+      }
+    },
+    {
+      "name": "HIL — ARM Device",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Authorization","value":"Bearer {{JWT}}"}],
+        "url":{"raw":"{{API_BASE}}/v1/bench/{{DEVICE_ID}}/arm","host":["{{API_BASE}}"],"path":["v1","bench","{{DEVICE_ID}}","arm"]}
+      }
+    },
+    {
+      "name": "HIL — RUN Device",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Authorization","value":"Bearer {{JWT}}"}],
+        "url":{"raw":"{{API_BASE}}/v1/bench/{{DEVICE_ID}}/run","host":["{{API_BASE}}"],"path":["v1","bench","{{DEVICE_ID}}","run"]}
+      }
+    },
+    {
+      "name": "HIL — Setpoints",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Authorization","value":"Bearer {{JWT}}"},{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{API_BASE}}/v1/bench/{{DEVICE_ID}}/sp","host":["{{API_BASE}}"],"path":["v1","bench","{{DEVICE_ID}}","sp"]},
+        "body":{"mode":"raw","raw":json.dumps({"mode":"FOC","iq_ref_A":12.0,"vref_V":48.0,"fsw_Hz":50000}, indent=2)}
+      }
+    },
+    {
+      "name": "CANopen — SDO Write (Mode Switch)",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{API_BASE}}/v1/bench/{{DEVICE_ID}}/canopen/od","host":["{{API_BASE}}"],"path":["v1","bench","{{DEVICE_ID}}","canopen","od"]},
+        "body":{"mode":"raw","raw":json.dumps({"index":"0x6060","sub":0,"type":"s8","value":6}, indent=2)}
+      }
+    },
+    {
+      "name": "CCS — Start ISO15118 Session",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{CCS_BASE}}/ccs/session/start","host":["{{CCS_BASE}}"],"path":["ccs","session","start"]},
+        "body":{"mode":"raw","raw":json.dumps({"evse_id":"EVSE-DC-0001","protocol":"ISO15118-2","pnC":False,"v_max":950,"i_max":350}, indent=2)}
+      }
+    },
+    {
+      "name": "DC-Energy — Optimize Rack Cap",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{DC_BASE}}/dc/optimize/cap","host":["{{DC_BASE}}"],"path":["dc","optimize","cap"]},
+        "body":{"mode":"raw","raw":json.dumps({"rack":"rackA","target_kw":28.0,"sla":{"latency_ms_p95":200},"horizon_min":15}, indent=2)}
+      }
+    },
+    {
+      "name": "ML — Optimize SST",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{ML_BASE}}/ml/optimize/sst","host":["{{ML_BASE}}"],"path":["ml","optimize","sst"]},
+        "body":{"mode":"raw","raw":json.dumps({"design":{"V1":800,"V2":950,"n":1.1,"Llk":8e-6,"fs_range":[40000,80000],"devices":["C3M0060065J2","GS66508T"]},"constraints":{"ZVS":True,"Tj_max_C":125,"PF_min":0.99}}, indent=2)}
+      }
+    },
+    {
+      "name": "Telemetry — Batch Ingest",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{API_BASE}}/v1/telemetry/batch","host":["{{API_BASE}}"],"path":["v1","telemetry","batch"]},
+        "body":{"mode":"raw","raw":json.dumps({"org_id":"{{ORG_ID}}","run_id":"{{RUN_ID}}","points":[{"t":"2025-09-07T14:33:12.123Z","signal":"v_bus","value":797.2},{"t":"2025-09-07T14:33:12.123Z","signal":"i_q","value":32.7},{"t":"2025-09-07T14:33:12.123Z","signal":"Tj_C","value":92.4}]}, indent=2)}
+      }
+    },
+    {
+      "name": "Admin — Approve Device",
+      "request": {
+        "method":"POST",
+        "header":[{"key":"Authorization","value":"Bearer {{ADMIN_JWT}}"},{"key":"Content-Type","value":"application/json"}],
+        "url":{"raw":"{{API_BASE}}/v1/admin/devices/approve","host":["{{API_BASE}}"],"path":["v1","admin","devices","approve"]},
+        "body":{"mode":"raw","raw":json.dumps({"csr":"-----BEGIN CERTIFICATE REQUEST-----\\nBASE64...\\n-----END CERTIFICATE REQUEST-----","org_id":"{{ORG_ID}}","label":"pi-gw-001"}, indent=2)}
+      }
+    }
+  ],
+  "variable": [
+    {"key":"SIM_BASE","value":"http://localhost:8001"},
+    {"key":"ML_BASE","value":"http://localhost:8002"},
+    {"key":"CCS_BASE","value":"http://localhost:8020"},
+    {"key":"DC_BASE","value":"http://localhost:8030"},
+    {"key":"API_BASE","value":"http://localhost:8080"},
+    {"key":"JWT","value":"dev.jwt.token"},
+    {"key":"ADMIN_JWT","value":"admin.dev.jwt.token"},
+    {"key":"PROJECT_ID","value":"a2f9b1ce-7f47-4a3e-9e3e-7f4c9a01d5e1"},
+    {"key":"ORG_ID","value":"7b1f6a3f-3b2c-4a8e-9db1-7a7c7b1e4aa0"},
+    {"key":"RUN_ID","value":"r_01J8C2AF4ZQNBW8HF2V9E9YQ9K"},
+    {"key":"DEVICE_ID","value":"pi-gw-001"}
+  ]
+}
+
+postman_path = os.path.join(base_dir, "AdvancedPowerElectronics.postman_collection.json")
+with open(postman_path, "w") as f:
+    json.dump(collection, f, indent=2)
+
+# ---------- Postman Environment (optional) ----------
+environment = {
+  "id": str(uuid.uuid4()),
+  "name": "Local Dev",
+  "values": [
+    {"key":"SIM_BASE","value":"http://localhost:8001","enabled":True},
+    {"key":"ML_BASE","value":"http://localhost:8002","enabled":True},
+    {"key":"CCS_BASE","value":"http://localhost:8020","enabled":True},
+    {"key":"DC_BASE","value":"http://localhost:8030","enabled":True},
+    {"key":"API_BASE","value":"http://localhost:8080","enabled":True},
+    {"key":"JWT","value":"dev.jwt.token","enabled":True},
+    {"key":"ADMIN_JWT","value":"admin.dev.jwt.token","enabled":True},
+    {"key":"PROJECT_ID","value":"a2f9b1ce-7f47-4a3e-9e3e-7f4c9a01d5e1","enabled":True},
+    {"key":"ORG_ID","value":"7b1f6a3f-3b2c-4a8e-9db1-7a7c7b1e4aa0","enabled":True},
+    {"key":"RUN_ID","value":"r_01J8C2AF4ZQNBW8HF2V9E9YQ9K","enabled":True},
+    {"key":"DEVICE_ID","value":"pi-gw-001","enabled":True}
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+  "_postman_exported_using": "ChatGPT python_user_visible"
+}
+env_path = os.path.join(base_dir, "LocalDev.postman_environment.json")
+with open(env_path, "w") as f:
+    json.dump(environment, f, indent=2)
+
+# ---------- Mosquitto Smoke Test Script ----------
+mosq_script = """#!/usr/bin/env bash
+set -euo pipefail
+
+BROKER_HOST="${1:-localhost}"
+BROKER_PORT="${2:-1883}"
+DEVICE="${3:-pi-gw-001}"
+
+echo "Publishing HIL commands to mqtt://${BROKER_HOST}:${BROKER_PORT} for device ${DEVICE}"
+
+# ARM
+mosquitto_pub -h "${BROKER_HOST}" -p "${BROKER_PORT}" -t "bench/cmd/${DEVICE}/arm" -m '{"seq":1}'
+sleep 0.2
+
+# Setpoints (FOC mode)
+mosquitto_pub -h "${BROKER_HOST}" -p "${BROKER_PORT}" -t "bench/cmd/${DEVICE}/sp" -m '{"duty":null,"iq":12.0,"vref":48.0,"fsw":50000,"mode":"FOC"}'
+sleep 0.2
+
+# Simulated decoded telemetry (phase currents) — useful when hil-agent not running
+mosquitto_pub -h "${BROKER_HOST}" -p "${BROKER_PORT}" -t "bench/telemetry/${DEVICE}/decoded/phase" -m '{"ts": 1736352012.455, "i_a_A": 11.2, "i_b_A": -5.1, "i_c_A": -6.1}'
+
+# Simulated raw CAN
+mosquitto_pub -h "${BROKER_HOST}" -p "${BROKER_PORT}" -t "bench/telemetry/${DEVICE}/raw_can" -m '{"ts":1736352012.455,"id":512,"dlc":8,"data":"u7kBAA4CkAI=","if":"can0"}'
+
+echo "Done. Subscribe in another terminal:"
+echo "  mosquitto_sub -h ${BROKER_HOST} -p ${BROKER_PORT} -t 'bench/#' -v"
+"""
+mosq_path = os.path.join(base_dir, "mosquitto_smoketest.sh")
+with open(mosq_path, "w") as f:
+    f.write(mosq_script)
+os.chmod(mosq_path, 0o755)
+
+# ---------- README ----------
+readme = f"""# Advanced Power Electronics — API & MQTT Smoke Test
+
+## Files
+- **Postman Collection**: `AdvancedPowerElectronics.postman_collection.json`
+- **Postman Environment**: `LocalDev.postman_environment.json`
+- **Mosquitto Script**: `mosquitto_smoketest.sh`
+
+## Usage
+
+### Postman
+1. Import the collection and environment into Postman.
+2. Select the **Local Dev** environment.
+3. Run requests from top to bottom (SIM → HIL → CCS → DC-Energy → ML → Telemetry → Admin).
+
+### MQTT Smoke Test
+Requires mosquitto clients:
+```bash
+chmod +x mosquitto_smoketest.sh
+./mosquitto_smoketest.sh localhost 1883 pi-gw-001
