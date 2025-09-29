@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Not Found</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Helvetica Neue, sans-serif; background:#0b1220; color:#e2e8f0; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0 }
+    .card { background:#111827; border:1px solid #1f2937; padding:24px 28px; border-radius:12px; max-width:720px; box-shadow:0 10px 30px rgba(0,0,0,.35) }
+    a { color:#93c5fd }
+    code { background:#111827; padding:2px 6px; border-radius:6px; border:1px solid #1f2937 }
+  </style>
+  <script>
+    (function() {
+      try {
+        var path = window.location.pathname || '';
+        // Normalize trailing slash
+        if (path.endsWith('/')) path = path.slice(0, -1);
+
+        // Known division routes mapping
+        var routes = {
+          '/powerflow': '/powerflow/index.html',
+          '/luma-ip': '/luma-ip/index.html',
+          '/gaia': '/gaia/index.html',
+          '/orion': '/orion/index.html'
+        };
+
+        if (routes[path]) {
+          window.location.replace(routes[path] + window.location.search + window.location.hash);
+          return;
+        }
+
+        // If directly requesting powerflow.html without extension mapping
+        if (path === '/powerflow.html') {
+          window.location.replace('/powerflow/index.html' + window.location.search + window.location.hash);
+          return;
+        }
+      } catch (e) {
+        // no-op; fall through to manual links
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h1 style="margin:0 0 12px 0; font-size:22px; font-weight:700;">Page not found</h1>
+    <p style="margin:0 0 16px 0; opacity:.8">If you were trying to access a division directly, use these links:</p>
+    <ul style="margin:0 0 12px 18px; line-height:1.9">
+      <li><a href="/powerflow/index.html">PowerFlow</a></li>
+      <li><a href="/luma-ip/index.html">LUMA IP</a></li>
+      <li><a href="/gaia/index.html">GAIA</a></li>
+      <li><a href="/orion/index.html">O.R.I.O.N</a></li>
+    </ul>
+    <p style="margin:12px 0 0 0">Or go back to the <a href="/index.html">home page</a>.</p>
+  </div>
+</body>
+</html>
