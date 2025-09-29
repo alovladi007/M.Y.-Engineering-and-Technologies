@@ -7,37 +7,387 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta name="version" content="3.0-">
-    <meta name="last-modified" content="2025-01-20T18:00:00Z">
-    <!-- FORCE REFRESH: MediMetrics Moved to Research Projects - Version 3.0 -->
-    <title>M.Y. Engineering and Technologies - Advanced Technology Solutions</title>
+    <meta name="version" content="4.0-">
+    <meta name="last-modified" content="2025-01-20T20:00:00Z">
+    <!-- PREMIUM DESIGN: Sophisticated Tech Platform - Version 4.0 -->
+    <title>M.Y. Engineering and Technologies - Next-Gen Technology Solutions</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="M.Y. Engineering and Technologies - Leading provider of advanced photonics, cybersecurity, hardware, and biomedical technology solutions.">
-    <meta name="keywords" content="photonics, cybersecurity, hardware, medical imaging AI, FPGA, microchips, optoelectronics, healthcare analytics">
-    <meta name="author" content="Aurora Borealis Photonics">
+    <meta name="description" content="M.Y. Engineering and Technologies - Pioneering the future with cutting-edge technology solutions across 8 specialized divisions.">
+    <meta name="keywords" content="advanced technology, energy optimization, cybersecurity, AI, quantum computing, sustainable tech, innovation">
+    <meta name="author" content="M.Y. Engineering and Technologies">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Aurora Borealis Photonics">
-    <meta property="og:description" content="Advanced technology solutions in photonics, cybersecurity, and biomedical engineering">
+    <meta property="og:title" content="M.Y. Engineering and Technologies">
+    <meta property="og:description" content="Pioneering the future with cutting-edge technology solutions">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://auroraborealisphonics.com">
+    <meta property="og:url" content="https://myengineering.tech">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- GSAP for animations -->
+    <!-- GSAP for advanced animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
     
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
     <!-- Custom Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Framer Motion CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.css">
     
     <style>
+        :root {
+            --primary: #00d4ff;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.2);
+            --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
         body {
-            font-family: 'Sora', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease;
+            opacity: 0.3;
+        }
+
+        /* Premium Typography */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Advanced Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+        }
+
+        @keyframes matrix-rain {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        @keyframes morphing {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glass Morphism 2.0 */
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Hover Effects */
+        .hover-3d {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hover-3d:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        .nav-blur {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 20s ease infinite;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: matrix-rain 8s infinite linear;
+        }
+
+        /* Division Cards */
+        .division-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .division-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .division-card:hover::before {
+            left: 100%;
+        }
+
+        .division-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Morphing Shapes */
+        .morphing-shape {
+            animation: morphing 8s ease-in-out infinite;
+            background: var(--gradient-1);
+            opacity: 0.1;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Button Styles */
+        .btn-premium {
+            position: relative;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-premium:hover::before {
+            left: 100%;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Matrix Effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100vh;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--primary);
+            animation: matrix-rain 3s infinite linear;
         }
         
         /* Custom gradient text */
@@ -108,14 +458,6 @@
             image-rendering: crisp-edges;
         }
         
-        .bg-neuromorphic {
-            background-image: url('Neuromorphic Technology.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-        }
         
         .bg-fpga {
             background-image: url('FPGA.webp');
@@ -144,14 +486,6 @@
             image-rendering: crisp-edges;
         }
         
-        .bg-photomask {
-            background-image: url('Photomask Image.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
-        }
         
         .bg-geospatial {
             background-image: url('sunrise.webp');
@@ -222,26 +556,36 @@
         }
     </script>
 <body class="bg-black text-white overflow-x-hidden">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
+
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-lg z-50 border-b border-gray-800">
+    <nav class="fixed top-0 w-full nav-blur z-50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <div class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent transform hover:scale-105 transition-transform cursor-pointer">M.Y. Engineering and Technologies</div>
+                <div class="text-2xl font-bold text-gradient hover-glow cursor-pointer transition-all duration-300">
+                    M.Y. Engineering
             </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="hover:text-cyan-400 transition-colors font-medium">Home</a>
-                <a href="#projects" class="hover:text-cyan-400 transition-colors font-medium">Projects</a>
-                    <a href="http://127.0.0.1:5003" target="_blank" class="hover:text-cyan-400 transition-colors font-medium">LUMA IP</a>
-                <a href="cybersecurity.html" class="hover:text-cyan-400 transition-colors font-medium">Cybersecurity</a>
-                <a href="hardware.html" class="hover:text-cyan-400 transition-colors font-medium">Hardware</a>
-                <a href="biomedical-division.html" class="hover:text-cyan-400 transition-colors font-medium">Biomedical</a>
-                <a href="geospatial.html" class="hover:text-cyan-400 transition-colors font-medium">Geospatial</a>
-                <a href="orion.html" class="hover:text-cyan-400 transition-colors font-medium">O.R.I.O.N</a>
-                <a href="http://127.0.0.1:5001" class="hover:text-cyan-400 transition-colors font-medium">PowerFlow</a>
-                <a href="http://127.0.0.1:5006" class="hover:text-cyan-400 transition-colors font-medium">GAIA</a>
-                <button class="px-4 py-2 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition-colors" onclick="openLouis()">AI Assistant</button>
             </div>
-            <button class="lg:hidden text-white" onclick="toggleMobileMenu()">
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Home</a>
+                <a href="#projects" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Research</a>
+                <a href="cybersecurity.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Cybersecurity</a>
+                <a href="hardware.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Hardware</a>
+                <a href="biomedical-division.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Biomedical</a>
+                <a href="geospatial.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Geospatial</a>
+                <a href="orion.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">O.R.I.O.N</a>
+                <a href="http://127.0.0.1:5001" target="_blank" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">PowerFlow</a>
+                <a href="http://127.0.0.1:5003" target="_blank" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">LUMA IP</a>
+                <a href="http://127.0.0.1:5006" target="_blank" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">GAIA</a>
+                <button class="btn-premium hover-glow" onclick="openLouis()">
+                    AI Assistant
+                </button>
+            </div>
+            <button class="lg:hidden text-white hover-glow" id="mobileMenuBtn">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -249,19 +593,21 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div class="hidden bg-black/95 backdrop-blur-md" id="mobileMenu">
+        <div class="hidden glass-premium mx-4 mt-2 rounded-2xl" id="mobileMenu">
             <div class="px-6 py-4 space-y-4">
-                <a href="index.html" class="block hover:text-cyan-400 transition-colors font-medium">Home</a>
-                <a href="#projects" class="block hover:text-cyan-400 transition-colors font-medium">Projects</a>
-                <a href="http://127.0.0.1:5003" target="_blank" class="block hover:text-cyan-400 transition-colors font-medium">LUMA IP</a>
-                <a href="cybersecurity.html" class="block hover:text-cyan-400 transition-colors font-medium">Cybersecurity</a>
-                <a href="hardware.html" class="block hover:text-cyan-400 transition-colors font-medium">Hardware</a>
-                <a href="biomedical-division.html" class="block hover:text-cyan-400 transition-colors font-medium">Biomedical</a>
-                <a href="geospatial.html" class="block hover:text-cyan-400 transition-colors font-medium">Geospatial</a>
-                <a href="orion.html" class="block hover:text-cyan-400 transition-colors font-medium">O.R.I.O.N</a>
-                <a href="http://127.0.0.1:5001" class="block hover:text-cyan-400 transition-colors font-medium">PowerFlow</a>
-                <a href="http://127.0.0.1:5006" class="block hover:text-cyan-400 transition-colors font-medium">GAIA</a>
-                <button class="w-full px-4 py-2 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition-colors" onclick="openLouis()">AI Assistant</button>
+                <a href="index.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Home</a>
+                <a href="#projects" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Research</a>
+                <a href="cybersecurity.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Cybersecurity</a>
+                <a href="hardware.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Hardware</a>
+                <a href="biomedical-division.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Biomedical</a>
+                <a href="geospatial.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Geospatial</a>
+                <a href="orion.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">O.R.I.O.N</a>
+                <a href="http://127.0.0.1:5001" target="_blank" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">PowerFlow</a>
+                <a href="http://127.0.0.1:5003" target="_blank" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">LUMA IP</a>
+                <a href="http://127.0.0.1:5006" target="_blank" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">GAIA</a>
+                <button class="btn-premium w-full" onclick="openLouis()">
+                    AI Assistant
+                </button>
             </div>
         </div>
     </nav>
@@ -272,115 +618,61 @@
         <section class="relative h-screen overflow-hidden">
             <div class="hero-slider swiper h-full">
                 <div class="swiper-wrapper">
-                    <!-- Slide 1: Microchips -->
+                    <!-- Slide 1: PowerFlow -->
                     <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-microchips"></div>
-                        <div class="absolute inset-0 bg-[#001933]/30"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6 animate-fadeInUp">
-                                <p class="text-cyan-400 uppercase tracking-wider">Innovation in Silicon</p>
-                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    Advanced Microchip Solutions
-                                </h1>
-                                <p class="text-gray-300">Cutting-edge semiconductor technology powering the next generation of computing and AI applications.</p>
-                                <a href="hardware.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Explore Solutions
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 2: FPGA -->
-                    <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-fpga"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-900 via-blue-900 to-indigo-900"></div>
                         <div class="absolute inset-0 bg-[#001933]/30"></div>
                         <div class="relative z-10 flex items-center h-full px-6 md:px-20">
                             <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Programmable Logic</p>
+                                <p class="text-cyan-400 uppercase tracking-wider">Energy Management</p>
                                 <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    FPGA Technology
+                                    PowerFlow
                                 </h1>
-                                <p class="text-gray-300">High-performance field-programmable gate arrays for accelerated computing and signal processing.</p>
-                                <a href="hardware.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    View Products
-                                </a>
+                                <p class="text-gray-300">Intelligent energy management platform optimizing power distribution and consumption across smart grids and industrial systems.</p>
+                                <div class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md">
+                                    Energy Technology
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Slide 3: Cybersecurity -->
+                    <!-- Slide 2: LUMA IP -->
                     <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-cybersecurity"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900"></div>
                         <div class="absolute inset-0 bg-[#001933]/30"></div>
                         <div class="relative z-10 flex items-center h-full px-6 md:px-20">
                             <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Quantum-Safe Security</p>
+                                <p class="text-purple-400 uppercase tracking-wider">Intellectual Property</p>
                                 <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    Cybersecurity Excellence
+                                    LUMA IP
                                 </h1>
-                                <p class="text-gray-300">Enterprise-grade security solutions protecting against current and future quantum threats.</p>
-                                <a href="cybersecurity.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Secure Your Future
-                                </a>
+                                <p class="text-gray-300">Patent portfolio management and intellectual property strategy for protecting and commercializing innovative technologies.</p>
+                                <div class="inline-block bg-purple-400 text-white font-semibold px-6 py-3 rounded-md">
+                                    IP Management
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Slide 4: Bioinformatics -->
+                    <!-- Slide 3: GAIA -->
                     <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-bioinformatics"></div>
-                        <div class="absolute inset-0 bg-[#001933]/10"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Healthcare Innovation</p>
-                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    Bioinformatics & AI
-                                </h1>
-                                <p class="text-gray-300">Machine learning powered solutions for genomics, drug discovery, and personalized medicine.</p>
-                                <a href="biomedical-division.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Discover Biomedical
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 5: Photomask -->
-                    <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-photomask"></div>
-                        <div class="absolute inset-0 bg-[#001933]/15"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Precision Manufacturing</p>
-                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    Photomask Technology
-                                </h1>
-                                <p class="text-gray-300">Advanced lithography solutions enabling next-generation semiconductor fabrication.</p>
-                                <a href="hardware.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Learn More
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 6: Neuromorphic Chips -->
-                    <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-neuromorphic"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-900 via-emerald-900 to-teal-900"></div>
                         <div class="absolute inset-0 bg-[#001933]/30"></div>
                         <div class="relative z-10 flex items-center h-full px-6 md:px-20">
                             <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Brain-Inspired Computing</p>
+                                <p class="text-green-400 uppercase tracking-wider">Sustainable Computing</p>
                                 <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    Neuromorphic Chips
+                                    GAIA
                                 </h1>
-                                <p class="text-gray-300">Revolutionary brain-inspired processors enabling ultra-low power AI and cognitive computing applications.</p>
-                                <a href="hardware.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Discover More
-                                </a>
+                                <p class="text-gray-300">Green Adaptive Infrastructure Automation - Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling.</p>
+                                <div class="inline-block bg-green-500 text-white font-semibold px-6 py-3 rounded-md">
+                                    Green Technology
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Slide 7: GALILEO -->
+                    <!-- Slide 4: Geospatial -->
                     <div class="swiper-slide relative">
                         <div class="absolute inset-0 bg-geospatial"></div>
                         <div class="absolute inset-0 bg-[#001933]/20"></div>
@@ -391,47 +683,27 @@
                                     GALILEO
                                 </h1>
                                 <p class="text-gray-300">Geospatial Analysis Language for Intelligent Learning of the Environment and Observations - Advanced satellite imagery analysis and environmental monitoring.</p>
-                                <a href="geospatial.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Explore Solutions
-                                </a>
+                                <div class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md">
+                                    Spatial Intelligence
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Slide 8: O.R.I.O.N -->
+                    <!-- Slide 5: Hardware Engineering -->
                     <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-orion"></div>
-                        <div class="absolute inset-0 bg-[#001933]/20"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Advanced Materials & Power Electronics</p>
-                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    O.R.I.O.N
-                                </h1>
-                                <p class="text-gray-300 text-lg font-semibold mb-2">Optimized Research & Innovation for Organized Nanomaterials</p>
-                                <p class="text-gray-300">Optoelectronic materials and advanced power electronics for next-generation R&D. Specializing in III-V semiconductors, GaN/SiC devices, AI-assisted design, and nano-fabrication services.</p>
-                                <a href="orion.html" class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md hover:bg-cyan-300 transition">
-                                    Explore Division
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 9: GAIA -->
-                    <div class="swiper-slide relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-green-900 via-emerald-800 to-teal-900"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900"></div>
                         <div class="absolute inset-0 bg-[#001933]/30"></div>
                         <div class="relative z-10 flex items-center h-full px-6 md:px-20">
                             <div class="max-w-xl space-y-6">
-                                <p class="text-green-400 uppercase tracking-wider">Sustainable Computing</p>
+                                <p class="text-gray-400 uppercase tracking-wider">Hardware Engineering</p>
                                 <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-                                    GAIA
+                                    Advanced Hardware
                                 </h1>
-                                <p class="text-gray-300 text-lg font-semibold mb-2">Green Adaptive Infrastructure Automation</p>
-                                <p class="text-gray-300">Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling.</p>
-                                <a href="http://127.0.0.1:5006" target="_blank" class="inline-block bg-green-500 text-white font-semibold px-6 py-3 rounded-md hover:bg-green-400 transition">
-                                    Explore Platform
-                                </a>
+                                <p class="text-gray-300">Cutting-edge hardware development including FPGA design, microchips, processors, and custom electronics for industrial applications.</p>
+                                <div class="inline-block bg-gray-600 text-white font-semibold px-6 py-3 rounded-md">
+                                    Hardware Solutions
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -445,6 +717,8 @@
                 <div class="swiper-pagination"></div>
             </div>
         </section>
+
+        <!-- Research Projects Section -->
 
         <!-- Technology Showcase -->
         <section class="py-20 px-6 bg-black">
@@ -518,264 +792,293 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="py-20 px-6 bg-gray-900/50">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Research Projects</h2>
-                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Pioneering research initiatives pushing the boundaries of technology</p>
+
+        <!-- PowerFlow Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-cyan-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-blue-400 uppercase tracking-wider text-lg font-medium">Energy Technology</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                PowerFlow
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Intelligent Energy Management</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Advanced energy optimization platform with real-time monitoring, predictive analytics, and automated load balancing for industrial applications.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="http://127.0.0.1:5001" target="_blank" class="inline-block bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LUMA IP Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-indigo-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-purple-400 uppercase tracking-wider text-lg font-medium">Intellectual Property</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                LUMA IP
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Patent Portfolio Management</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Comprehensive intellectual property solutions with patent analytics, portfolio optimization, and strategic IP consulting for technology companies.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="http://127.0.0.1:5003" target="_blank" class="inline-block bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAIA Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-green-400 uppercase tracking-wider text-lg font-medium">Sustainable Computing</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                GAIA
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Green Adaptive Infrastructure Automation</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration and carbon-aware scheduling.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="http://127.0.0.1:5006" target="_blank" class="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cybersecurity Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-red-400 uppercase tracking-wider text-lg font-medium">Security Technology</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Cybersecurity
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Advanced Threat Protection</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Comprehensive cybersecurity solutions with AI-powered threat detection, zero-trust architecture, and real-time incident response capabilities.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="cybersecurity.html" class="inline-block bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-red-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Security Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hardware Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden" style="background-image: url('advanced microchip.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-slate-500/5"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-gray-400 uppercase tracking-wider text-lg font-medium">Hardware Engineering</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Hardware
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Advanced Hardware Solutions</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Cutting-edge hardware development including FPGA design, microchips, processors, and custom electronics for industrial applications.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="hardware.html" class="inline-block bg-gradient-to-r from-gray-600 to-slate-600 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-gray-700 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Explore Hardware
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+        </section>
+
+        <!-- Biomedical Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden" style="background-image: url('Biomedical Lab.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-rose-500/5"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-pink-400 uppercase tracking-wider text-lg font-medium">Medical Technology</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Biomedical
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Healthcare Innovation</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Advanced biomedical solutions including medical imaging AI, diagnostic tools, and healthcare analytics for improved patient outcomes.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="biomedical-division.html" class="inline-block bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Explore Solutions
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+        </section>
+
+        <!-- Geospatial Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden" style="background-image: url('Satellite for Geospatial.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-blue-500/5"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-indigo-400 uppercase tracking-wider text-lg font-medium">Spatial Intelligence</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Geospatial
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">GALILEO Platform</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Advanced geospatial analytics and mapping solutions with real-time satellite data processing, environmental monitoring, and location intelligence.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="geospatial.html" class="inline-block bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch GALILEO
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+        </section>
+
+        <!-- O.R.I.O.N Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-yellow-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-amber-400 uppercase tracking-wider text-lg font-medium">Advanced Materials</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                O.R.I.O.N
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Power Electronics Innovation</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Revolutionary power electronics and advanced materials research for next-generation energy systems, semiconductors, and electronic components.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="orion.html" class="inline-block bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-semibold px-8 py-4 rounded-lg text-lg hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Explore O.R.I.O.N
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Research Groups Section -->
+    <section id="projects" class="py-20 px-6 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Research Groups</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Pioneering research initiatives pushing the boundaries of technology</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Neuromorphic Computing Research Card -->
+                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-amber-400/50 transition-all duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative p-8">
+                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">
+                            <a href="neuromorphic-computing.html" class="hover:text-amber-400 transition-colors">Neuromorphic Computing Research</a>
+                        </h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Investigation of memristor-based neuromorphic computing architectures for AI applications.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm">Python</span>
+                            <span class="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-sm">TensorFlow</span>
+                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">SPICE</span>
+                        </div>
+                        <a href="neuromorphic-computing.html" class="inline-flex items-center text-amber-400 font-medium hover:text-amber-300 transition-colors group">
+                            <span>View Project</span>
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Neuromorphic Computing Research Card -->
-                    <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-amber-400/50 transition-all duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-3">
-                                <a href="neuromorphic-computing.html" class="hover:text-amber-400 transition-colors">Neuromorphic Computing Research</a>
-                            </h3>
-                            <p class="text-gray-400 mb-6 leading-relaxed">Investigation of memristor-based neuromorphic computing architectures for AI applications.</p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm">Python</span>
-                                <span class="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-sm">TensorFlow</span>
-                                <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">SPICE</span>
-                            </div>
-                            <a href="neuromorphic-computing.html" class="inline-flex items-center text-amber-400 font-medium hover:text-amber-300 transition-colors group">
-                                <span>View Project</span>
-                                <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
+                <!-- MediMetrics Enterprise Card -->
+                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-blue-400/50 transition-all duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative p-8">
+                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
                         </div>
-                    </div>
-                    
-                        <div class="relative p-8">
-                            <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-3">
-                                <a href="medimetrics.html" class="hover:text-blue-400 transition-colors">MediMetrics Enterprise</a>
-                            </h3>
-                            <p class="text-gray-400 mb-6 leading-relaxed">HIPAA-compliant medical image analysis platform with AI-powered diagnostics for healthcare organizations.</p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Healthcare AI</span>
-                                <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">HIPAA</span>
-                                <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm">Medical Imaging</span>
-                            </div>
-                            <a href="medimetrics.html" class="inline-flex items-center text-blue-400 font-medium hover:text-blue-300 transition-colors group">
-                                <span>Explore Platform</span>
-                                <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                </svg>
-                            </a>
+                        <h3 class="text-2xl font-bold text-white mb-3">
+                            <a href="medimetrics.html" class="hover:text-blue-400 transition-colors">MediMetrics Enterprise</a>
+                        </h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">HIPAA-compliant medical image analysis platform with AI-powered diagnostics for healthcare organizations.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Healthcare AI</span>
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">HIPAA</span>
+                            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm">Medical Imaging</span>
                         </div>
+                        <a href="medimetrics.html" class="inline-flex items-center text-blue-400 font-medium hover:text-blue-300 transition-colors group">
+                            <span>Explore Platform</span>
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- ABOUT ME SECTION WITH SLIDER -->
-        <section id="about-me" class="relative w-full h-screen overflow-hidden">
-            <div class="swiper aboutSwiper w-full h-full">
-                <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide relative w-full h-full">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1350&q=80" alt="Microchip" class="absolute inset-0 w-full h-full object-cover"/>
-                        <div class="absolute inset-0 bg-[#001933]/70"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">About Me</p>
-                                <h2 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">Embedded Systems Engineer</h2>
-                                <p class="text-gray-300">I craft high-performance solutions that bridge hardware and software, turning ideas into silicon.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="swiper-slide relative w-full h-full">
-                        <img src="https://images.unsplash.com/photo-1517430816045-df4b7de01f17?auto=format&fit=crop&w=1350&q=80" alt="FPGA" class="absolute inset-0 w-full h-full object-cover"/>
-                        <div class="absolute inset-0 bg-[#001933]/70"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">About Me</p>
-                                <h2 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">Hardware Innovator</h2>
-                                <p class="text-gray-300">Specialised in FPGA and SoC architectures for real-time signal processing.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pagination & Navigation -->
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </section>
-
-        <!-- TECHNICAL SKILLS SECTION WITH SLIDER -->
-        <section id="technical-skills" class="relative w-full h-screen overflow-hidden">
-            <div class="swiper skillsSwiper w-full h-full">
-                <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide relative w-full h-full">
-                        <img src="https://images.unsplash.com/photo-1559027615-cdcb5c8ee0d4?auto=format&fit=crop&w=1350&q=80" alt="Machine Learning" class="absolute inset-0 w-full h-full object-cover"/>
-                        <div class="absolute inset-0 bg-[#001933]/70"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Technical Skills</p>
-                                <h2 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">Machine Learning</h2>
-                                <p class="text-gray-300">TensorFlow, PyTorch, and on-device inference optimisation.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="swiper-slide relative w-full h-full">
-                        <img src="https://images.unsplash.com/photo-1526378722373-3f9ec3a7da1b?auto=format&fit=crop&w=1350&q=80" alt="Cloud DevOps" class="absolute inset-0 w-full h-full object-cover"/>
-                        <div class="absolute inset-0 bg-[#001933]/70"></div>
-                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
-                            <div class="max-w-xl space-y-6">
-                                <p class="text-cyan-400 uppercase tracking-wider">Technical Skills</p>
-                                <h2 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">Cloud & DevOps</h2>
-                                <p class="text-gray-300">Kubernetes, Docker, and CI/CD pipelines for scalable deployments.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pagination & Navigation -->
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </section>
-
-        <!-- Subsidiaries Section -->
-        <section class="py-20 bg-black">
-            <div class="max-w-7xl mx-auto px-6">
-               <div class="text-center mb-16">
-                   <h2 class="text-4xl md:text-5xl font-bold mb-6">Our Divisions</h2>
-                   <p class="text-xl text-gray-400 max-w-3xl mx-auto">Eight specialized divisions working together to shape the future of technology</p>
-               </div>
-               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <a href="http://127.0.0.1:5003" target="_blank" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">⚖️</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">LUMA IP</h3>
-                                    <span class="text-xs text-gray-400">Legal Utility for Machine Assisted IP Analysis</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Transform your patent filing process with advanced AI. Generate complete patent applications in minutes, not months. Powered by state-of-the-art language models.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Platform →</button>
-                        </div>
-                    </a>
-                    <a href="cybersecurity.html" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-indigo-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">🛡️</span>
-                                <h3 class="text-2xl font-bold">Citadel InfoSec</h3>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Advanced cybersecurity solutions for enterprise-grade protection. Hardware security, software defense, and AI-guided assistance.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Division →</button>
-                        </div>
-                    </a>
-                    <a href="hardware.html" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">💻</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">Aurora Borealis Photonics</h3>
-                                    <span class="text-xs text-gray-400">Systems and Hardware</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Cutting-edge photonics and hardware solutions. FPGA design, system-on-chip, and nano-systems engineering.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Division →</button>
-                        </div>
-                    </a>
-                    <a href="biomedical-division.html" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">🧬</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">Biomedical Division</h3>
-                                    <span class="text-xs text-gray-400">BioTensor Labs & Signal Processing Platform</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">ML research, bioimaging, biosensing, and real-time EEG/ECG/HRV signal processing with TimescaleDB.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Division →</button>
-                        </div>
-                    </a>
-                    <a href="geospatial.html" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">🌍</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">GALILEO</h3>
-                                    <span class="text-xs text-gray-400">Geospatial Analysis Language for Intelligent Learning of the Environment and Observations</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Full-stack geospatial intelligence platform. Environmental monitoring across air, land, and underwater domains.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Platform →</button>
-                        </div>
-                    </a>
-                    <a href="orion.html" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500 to-purple-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">✨</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">O.R.I.O.N</h3>
-                                    <span class="text-xs text-gray-400">Optimized Research & Innovation for Organized Nanomaterials</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Optoelectronic materials and advanced power electronics for next-generation R&D. III-V semiconductors, GaN/SiC devices, and AI-assisted design.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Division →</button>
-                        </div>
-                    </a>
-                    <a href="http://127.0.0.1:5001" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">⚡</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">PowerFlow</h3>
-                                    <span class="text-xs text-gray-400">Advanced Power Electronics Platform</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Design, simulate, and optimize power electronics systems with native SST/DAB simulation, real-time ZVS optimization, and integrated HIL testing.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Platform →</button>
-                        </div>
-                    </a>
-                    
-                    <!-- GAIA Division -->
-                    <a href="http://127.0.0.1:5006" target="_blank" class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-green-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer block">
-                        <div class="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                        <div class="relative p-8">
-                            <div class="flex items-center mb-4">
-                                <span class="text-4xl mr-4">🌱</span>
-                                <div class="flex flex-col">
-                                    <h3 class="text-2xl font-bold">GAIA</h3>
-                                    <span class="text-xs text-gray-400">Green Adaptive Infrastructure Automation</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 mb-6 leading-relaxed">Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling.</p>
-                            <button class="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg font-semibold text-white opacity-0 group-hover:opacity-100 transition-all duration-300">Explore Platform →</button>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-black py-12 border-t border-gray-800">
@@ -887,24 +1190,246 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Swiper Initialization -->
+    <!-- Advanced JavaScript -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            new Swiper('.aboutSwiper', {
-                effect: 'fade',
-                loop: true,
-                autoplay: { delay: 6000, disableOnInteraction: false },
-                pagination: { el: '.aboutSwiper .swiper-pagination', clickable: true },
-                navigation: { nextEl: '.aboutSwiper .swiper-button-next', prevEl: '.aboutSwiper .swiper-button-prev' }
-            });
-            new Swiper('.skillsSwiper', {
-                effect: 'fade',
-                loop: true,
-                autoplay: { delay: 6000, disableOnInteraction: false },
-                pagination: { el: '.skillsSwiper .swiper-pagination', clickable: true },
-                navigation: { nextEl: '.skillsSwiper .swiper-button-next', prevEl: '.skillsSwiper .swiper-button-prev' }
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            gsap.to('#loadingScreen', {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }
             });
         });
+
+
+
+        // Scroll Animations
+        function initScrollAnimations() {
+            gsap.utils.toArray('.fade-in').forEach((element) => {
+                gsap.fromTo(element, 
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.slide-in-left').forEach((element) => {
+                gsap.fromTo(element,
+                    { opacity: 0, x: -100 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.slide-in-right').forEach((element) => {
+                gsap.fromTo(element,
+                    { opacity: 0, x: 100 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+        }
+
+        // Parallax Effects
+        function initParallax() {
+            gsap.utils.toArray('.morphing-shape').forEach((shape) => {
+                gsap.to(shape, {
+                    y: -100,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: shape,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            });
+        }
+
+        // Text Animations
+        function initTextAnimations() {
+            gsap.utils.toArray('.text-gradient').forEach((text) => {
+                gsap.fromTo(text,
+                    { backgroundPosition: '0% 50%' },
+                    {
+                        backgroundPosition: '100% 50%',
+                        duration: 2,
+                        ease: "power2.inOut",
+                        repeat: -1,
+                        yoyo: true
+                    }
+                );
+            });
+        }
+
+        // Division Card Hover Effects
+        function initDivisionCards() {
+            gsap.utils.toArray('.division-card').forEach((card) => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        scale: 1.05,
+                        y: -20,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        y: 0,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+                });
+            });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                gsap.fromTo(mobileMenu, 
+                    { opacity: 0, y: -20 },
+                    { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+                );
+            } else {
+                gsap.to(mobileMenu, {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => mobileMenu.classList.add('hidden')
+                });
+            }
+        }
+
+        // Navbar Scroll Effect
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            
+            ScrollTrigger.create({
+                start: "top -80",
+                end: 99999,
+                toggleClass: {className: "bg-black/95", targets: navbar}
+            });
+        }
+
+        // Particle System
+        function createParticles() {
+            const heroSection = document.querySelector('.hero-bg');
+            if (!heroSection) return;
+
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heroSection.appendChild(particle);
+            }
+        }
+
+        // Initialize Swiper
+        function initSwiper() {
+            const heroSwiper = new Swiper('.hero-slider', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                speed: 1000,
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initSwiper();
+            initScrollAnimations();
+            initParallax();
+            initTextAnimations();
+            initDivisionCards();
+            initNavbarScroll();
+            createParticles();
+
+            // Mobile menu event listener
+            document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        gsap.to(window, {
+                            duration: 1,
+                            scrollTo: { y: target, offsetY: 80 },
+                            ease: "power2.inOut"
+                        });
+                    }
+            });
+        });
+        });
+
+        // AI Assistant function
+        function openLouis() {
+            window.open('http://127.0.0.1:5005', '_blank');
+        }
+
+        // Performance optimization
+        window.addEventListener('scroll', gsap.throttle(() => {
+            // Throttled scroll events
+        }, 16));
     </script>
 
     <!-- Enhanced Professional Footer -->
@@ -1271,4 +1796,6 @@
     </footer>
 </body>
 </html>
+
+
 
