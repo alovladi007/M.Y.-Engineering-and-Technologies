@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - BIOMEDICAL Platform</title>
+    <meta name="description" content="BIOMEDICAL Analytics - Advanced healthcare data analytics and insights">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-pink-400">BIOMEDICAL</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../dashboard/index.html" class="nav-link text-slate-300 hover:text-white">Dashboard</a>
+                        <a href="index.html" class="nav-link active text-white">Analytics</a>
+                        <a href="../controller/index.html" class="nav-link text-slate-300 hover:text-white">Controller</a>
+                        <a href="../api/index.html" class="nav-link text-slate-300 hover:text-white">API</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-sm font-medium rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                        <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                        <span class="sm:hidden">M.Y Eng</span>
+                    </a>
+                    <button class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-lg hover:opacity-90 transition-all">
+                        <i class="fas fa-download mr-2"></i>Export Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-12 bg-gradient-to-br from-slate-900 via-pink-900/20 to-purple-900/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold mb-4 gradient-text">BIOMEDICAL Analytics</h1>
+                    <p class="text-xl text-gray-300">Advanced healthcare data analytics and insights</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Overview -->
+        <section class="py-12 bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Patient Demographics -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Patient Demographics</h3>
+                        <div class="chart-container">
+                            <canvas id="demographicsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Health Trends -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Health Trends (Last 30 Days)</h3>
+                        <div class="chart-container">
+                            <canvas id="trendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Metrics -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">Key Performance Indicators</h2>
+                    <p class="text-xl text-gray-400">Comprehensive healthcare metrics and insights</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-pink-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-pink-400 mb-2">15,247</div>
+                        <p class="text-gray-400">Total Patients</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-purple-400 mb-2">94.2%</div>
+                        <p class="text-gray-400">Diagnostic Accuracy</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-blue-400 mb-2">2.3min</div>
+                        <p class="text-gray-400">Avg. Diagnosis Time</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-emerald-400 mb-2">98.7%</div>
+                        <p class="text-gray-400">Patient Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Analytics -->
+        <section class="py-12 bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Disease Prevalence -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Disease Prevalence</h3>
+                        <div class="chart-container">
+                            <canvas id="diseaseChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Outcomes -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Treatment Outcomes</h3>
+                        <div class="chart-container">
+                            <canvas id="outcomesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Advanced healthcare technology platform for modern medicine.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../dashboard/index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-pink-400">Analytics</a></li>
+                        <li><a href="../controller/index.html" class="text-gray-400 hover:text-pink-400">Controller</a></li>
+                        <li><a href="../api/index.html" class="text-gray-400 hover:text-pink-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../pages/company/about.html" class="text-gray-400 hover:text-pink-400">About</a></li>
+                        <li><a href="../pages/company/blog.html" class="text-gray-400 hover:text-pink-400">Blog</a></li>
+                        <li><a href="../pages/company/careers.html" class="text-gray-400 hover:text-pink-400">Careers</a></li>
+                        <li><a href="../pages/company/contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../pages/support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="../docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="../pages/support/community.html" class="text-gray-400 hover:text-pink-400">Community</a></li>
+                        <li><a href="../pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="../pages/legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="../pages/legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="../pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize charts
+        const demographicsCtx = document.getElementById('demographicsChart').getContext('2d');
+        new Chart(demographicsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['18-30', '31-45', '46-60', '61+'],
+                datasets: [{
+                    data: [25, 35, 28, 12],
+                    backgroundColor: ['#ec4899', '#8b5cf6', '#3b82f6', '#10b981'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            }
+        });
+
+        const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+        new Chart(trendsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Diagnoses',
+                    data: [120, 135, 128, 142],
+                    borderColor: '#ec4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Treatments',
+                    data: [95, 108, 102, 115],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    }
+                }
+            }
+        });
+
+        const diseaseCtx = document.getElementById('diseaseChart').getContext('2d');
+        new Chart(diseaseCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Cardiovascular', 'Respiratory', 'Neurological', 'Oncology', 'Other'],
+                datasets: [{
+                    label: 'Cases',
+                    data: [45, 32, 28, 15, 25],
+                    backgroundColor: ['#ec4899', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    }
+                }
+            }
+        });
+
+        const outcomesCtx = document.getElementById('outcomesChart').getContext('2d');
+        new Chart(outcomesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Excellent', 'Good', 'Fair', 'Poor'],
+                datasets: [{
+                    label: 'Outcomes',
+                    data: [65, 25, 8, 2],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>

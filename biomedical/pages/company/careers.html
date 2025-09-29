@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - BIOMEDICAL Platform</title>
+    <meta name="description" content="Join BIOMEDICAL and help revolutionize healthcare through advanced AI and biomedical technology">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="text-2xl font-bold text-pink-400">BIOMEDICAL</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../../index.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="about.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="../product/pricing.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="../../dashboard/index.html" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                        <a href="../../../index.html" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-sm font-medium rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                            <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                            <span class="sm:hidden">M.Y Eng</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-slate-900 via-pink-900/20 to-purple-900/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6 gradient-text">Join Our Team</h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">Help us revolutionize healthcare through cutting-edge AI and biomedical technology</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Why Work at BIOMEDICAL?</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Be part of a mission-driven team that's transforming healthcare worldwide</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-pink-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Mission-Driven</h3>
+                    <p class="text-gray-300">Work on technology that directly improves patient outcomes and saves lives</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Cutting-Edge Tech</h3>
+                    <p class="text-gray-300">Work with the latest AI, machine learning, and biomedical technologies</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">World-Class Team</h3>
+                    <p class="text-gray-300">Collaborate with leading researchers, engineers, and healthcare professionals</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Learning & Growth</h3>
+                    <p class="text-gray-300">Continuous learning opportunities and professional development programs</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-balance-scale text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Work-Life Balance</h3>
+                    <p class="text-gray-300">Flexible work arrangements and comprehensive wellness programs</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-red-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Global Impact</h3>
+                    <p class="text-gray-300">Make a difference in healthcare systems around the world</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Comprehensive Benefits</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">We offer competitive compensation and comprehensive benefits</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Competitive Salary</h4>
+                            <p class="text-gray-400">Market-leading compensation packages with equity participation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Health & Wellness</h4>
+                            <p class="text-gray-400">Comprehensive health, dental, and vision coverage for you and your family</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Flexible Work</h4>
+                            <p class="text-gray-400">Remote work options and flexible hours to support work-life balance</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Professional Development</h4>
+                            <p class="text-gray-400">Learning budget, conference attendance, and mentorship programs</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Retirement Planning</h4>
+                            <p class="text-gray-400">401(k) matching and comprehensive retirement planning support</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Time Off</h4>
+                            <p class="text-gray-400">Generous PTO, paid holidays, and sabbatical opportunities</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Perks & Amenities</h4>
+                            <p class="text-gray-400">Gym membership, meal stipends, and modern office facilities</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-check text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-2">Family Support</h4>
+                            <p class="text-gray-400">Parental leave, childcare support, and family-friendly policies</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Positions -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Open Positions</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Join our team and help shape the future of healthcare</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Senior AI Research Scientist</h3>
+                            <div class="flex items-center space-x-4 text-gray-400">
+                                <span><i class="fas fa-map-marker-alt mr-1"></i>San Francisco, CA</span>
+                                <span><i class="fas fa-clock mr-1"></i>Full-time</span>
+                                <span><i class="fas fa-users mr-1"></i>Research</span>
+                            </div>
+                        </div>
+                        <div class="inline-block px-4 py-2 bg-pink-500/20 border border-pink-500/50 rounded-full text-pink-400 text-sm font-semibold">
+                            Remote OK
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Lead research in medical AI, develop novel algorithms for diagnostic imaging, and publish in top-tier journals.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Python</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">TensorFlow</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">PyTorch</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Medical Imaging</span>
+                        </div>
+                        <a href="#" class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors">
+                            Apply Now
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Biomedical Engineer</h3>
+                            <div class="flex items-center space-x-4 text-gray-400">
+                                <span><i class="fas fa-map-marker-alt mr-1"></i>Boston, MA</span>
+                                <span><i class="fas fa-clock mr-1"></i>Full-time</span>
+                                <span><i class="fas fa-users mr-1"></i>Engineering</span>
+                            </div>
+                        </div>
+                        <div class="inline-block px-4 py-2 bg-blue-500/20 border border-blue-500/50 rounded-full text-blue-400 text-sm font-semibold">
+                            On-site
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Design and develop biosensing devices, work on lab-on-chip technologies, and collaborate with clinical teams.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Microfluidics</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Biosensors</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Lab-on-Chip</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">MATLAB</span>
+                        </div>
+                        <a href="#" class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors">
+                            Apply Now
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Full-Stack Developer</h3>
+                            <div class="flex items-center space-x-4 text-gray-400">
+                                <span><i class="fas fa-map-marker-alt mr-1"></i>Remote</span>
+                                <span><i class="fas fa-clock mr-1"></i>Full-time</span>
+                                <span><i class="fas fa-users mr-1"></i>Engineering</span>
+                            </div>
+                        </div>
+                        <div class="inline-block px-4 py-2 bg-emerald-500/20 border border-emerald-500/50 rounded-full text-emerald-400 text-sm font-semibold">
+                            Remote
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Build scalable web applications for healthcare platforms, work with real-time data, and ensure HIPAA compliance.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">React</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Node.js</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">PostgreSQL</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Docker</span>
+                        </div>
+                        <a href="#" class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors">
+                            Apply Now
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Clinical Data Scientist</h3>
+                            <div class="flex items-center space-x-4 text-gray-400">
+                                <span><i class="fas fa-map-marker-alt mr-1"></i>New York, NY</span>
+                                <span><i class="fas fa-clock mr-1"></i>Full-time</span>
+                                <span><i class="fas fa-users mr-1"></i>Data Science</span>
+                            </div>
+                        </div>
+                        <div class="inline-block px-4 py-2 bg-purple-500/20 border border-purple-500/50 rounded-full text-purple-400 text-sm font-semibold">
+                            Hybrid
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">Analyze clinical data, develop predictive models, and work with healthcare professionals to improve patient outcomes.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">R</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Python</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">SQL</span>
+                            <span class="px-3 py-1 bg-slate-700 rounded-full text-gray-300 text-sm">Clinical Research</span>
+                        </div>
+                        <a href="#" class="px-6 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors">
+                            Apply Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Culture -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Our Culture</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">We foster an inclusive, innovative, and collaborative environment</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-pink-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Collaborative</h3>
+                    <p class="text-gray-400 text-sm">Cross-functional teams working together towards common goals</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Innovative</h3>
+                    <p class="text-gray-400 text-sm">Encouraging creative thinking and breakthrough solutions</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Inclusive</h3>
+                    <p class="text-gray-400 text-sm">Diverse perspectives and equal opportunities for all</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-trophy text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Excellence</h3>
+                    <p class="text-gray-400 text-sm">Striving for the highest standards in everything we do</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Advanced healthcare technology platform for modern medicine.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../../dashboard/index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                        <li><a href="../../analytics/index.html" class="text-gray-400 hover:text-pink-400">Analytics</a></li>
+                        <li><a href="../../controller/index.html" class="text-gray-400 hover:text-pink-400">Controller</a></li>
+                        <li><a href="../../api/index.html" class="text-gray-400 hover:text-pink-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-pink-400">About</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-pink-400">Blog</a></li>
+                        <li><a href="careers.html" class="text-gray-400 hover:text-pink-400">Careers</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="../../docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="../support/community.html" class="text-gray-400 hover:text-pink-400">Community</a></li>
+                        <li><a href="../legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="../legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="../legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="../legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>

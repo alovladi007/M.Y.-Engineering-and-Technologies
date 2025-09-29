@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - BIOMEDICAL Platform</title>
+    <meta name="description" content="Latest insights and updates from BIOMEDICAL on healthcare technology, AI, and biomedical innovation">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="text-2xl font-bold text-pink-400">BIOMEDICAL</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../../index.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="about.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="../product/pricing.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="../../dashboard/index.html" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                        <a href="../../../index.html" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-sm font-medium rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                            <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                            <span class="sm:hidden">M.Y Eng</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 bg-gradient-to-br from-slate-900 via-pink-900/20 to-purple-900/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold mb-6 gradient-text">BIOMEDICAL Blog</h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">Insights, research, and updates on the future of healthcare technology</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Article -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-effect rounded-2xl p-8 mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div class="inline-block px-4 py-2 bg-pink-500/20 border border-pink-500/50 rounded-full text-pink-400 text-sm font-semibold mb-4">
+                            Featured Article
+                        </div>
+                        <h2 class="text-3xl font-bold text-white mb-4">The Future of AI in Medical Diagnosis</h2>
+                        <p class="text-gray-300 mb-6">Exploring how artificial intelligence is revolutionizing medical diagnosis and treatment planning, with insights from our latest research on explainable AI in clinical settings.</p>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-semibold">Dr. Sarah Chen</p>
+                                <p class="text-gray-400 text-sm">Chief Medical Officer</p>
+                            </div>
+                        </div>
+                        <a href="#" class="inline-flex items-center px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors">
+                            Read Full Article <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-6">
+                        <div class="w-full h-64 bg-gradient-to-br from-pink-500 to-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-6xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Articles -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Latest Articles</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Stay updated with the latest developments in biomedical technology</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <article class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip text-white text-4xl"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-500/50 rounded-full text-blue-400 text-xs font-semibold mb-3">
+                        Biosensing
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Nano-biosensors: The Next Frontier in Health Monitoring</h3>
+                    <p class="text-gray-400 text-sm mb-4">Discover how nano-biosensor technology is enabling real-time health monitoring and early disease detection.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">Dr. Emily Watson</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">Dec 15, 2024</span>
+                    </div>
+                </article>
+                
+                <article class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="w-full h-48 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-4xl"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-emerald-500/20 border border-emerald-500/50 rounded-full text-emerald-400 text-xs font-semibold mb-3">
+                        Security
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">HIPAA Compliance in the AI Era</h3>
+                    <p class="text-gray-400 text-sm mb-4">Understanding the evolving landscape of healthcare data security and regulatory compliance.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">James Thompson</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">Dec 12, 2024</span>
+                    </div>
+                </article>
+                
+                <article class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="w-full h-48 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-baby text-white text-4xl"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-orange-500/20 border border-orange-500/50 rounded-full text-orange-400 text-xs font-semibold mb-3">
+                        Maternal Health
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">MYNX NatalCare™: Revolutionizing Prenatal Monitoring</h3>
+                    <p class="text-gray-400 text-sm mb-4">How our advanced maternal health platform is improving outcomes for mothers and babies.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">Dr. Robert Kim</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">Dec 10, 2024</span>
+                    </div>
+                </article>
+                
+                <article class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="w-full h-48 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-dna text-white text-4xl"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-purple-500/20 border border-purple-500/50 rounded-full text-purple-400 text-xs font-semibold mb-3">
+                        Research
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">BioTensor Labs: Signal Processing Breakthrough</h3>
+                    <p class="text-gray-400 text-sm mb-4">Our latest advances in real-time biomedical signal processing and AI inference.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">Dr. Michael Rodriguez</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">Dec 8, 2024</span>
+                    </div>
+                </article>
+                
+                <article class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="w-full h-48 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-x-ray text-white text-4xl"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-cyan-500/20 border border-cyan-500/50 rounded-full text-cyan-400 text-xs font-semibold mb-3">
+                        Medical Imaging
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Explainable AI in Radiology</h3>
+                    <p class="text-gray-400 text-sm mb-4">How Grad-CAM overlays are improving diagnostic confidence and clinical workflow.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">Dr. Sarah Chen</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">Dec 5, 2024</span>
+                    </div>
+                </article>
+                
+                <article class="glass-effect rounded-xl p-6 hover-lift">
+                    <div class="w-full h-48 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-white text-4xl"></i>
+                    </div>
+                    <div class="inline-block px-3 py-1 bg-green-500/20 border border-green-500/50 rounded-full text-green-400 text-xs font-semibold mb-3">
+                        Analytics
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Predictive Analytics in Healthcare</h3>
+                    <p class="text-gray-400 text-sm mb-4">Leveraging machine learning to predict patient outcomes and optimize treatment plans.</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white text-xs"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">Dr. Lisa Park</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">Dec 3, 2024</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-effect rounded-2xl p-8 text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">Stay Updated</h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for the latest insights on biomedical technology and healthcare innovation.</p>
+                
+                <div class="max-w-md mx-auto">
+                    <div class="flex space-x-4">
+                        <input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-pink-500">
+                        <button class="px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors">
+                            Subscribe
+                        </button>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-4">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Advanced healthcare technology platform for modern medicine.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../../dashboard/index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                        <li><a href="../../analytics/index.html" class="text-gray-400 hover:text-pink-400">Analytics</a></li>
+                        <li><a href="../../controller/index.html" class="text-gray-400 hover:text-pink-400">Controller</a></li>
+                        <li><a href="../../api/index.html" class="text-gray-400 hover:text-pink-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-pink-400">About</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-pink-400">Blog</a></li>
+                        <li><a href="careers.html" class="text-gray-400 hover:text-pink-400">Careers</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="../../docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="../support/community.html" class="text-gray-400 hover:text-pink-400">Community</a></li>
+                        <li><a href="../legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="../legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="../legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="../legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>

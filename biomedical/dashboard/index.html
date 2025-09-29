@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BIOMEDICAL Platform</title>
+    <meta name="description" content="BIOMEDICAL Dashboard - Real-time healthcare monitoring and AI-powered diagnostics">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #ec4899, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .status-active { background-color: #10b981; }
+        .status-warning { background-color: #f59e0b; }
+        .status-error { background-color: #ef4444; }
+        .status-idle { background-color: #6b7280; }
+        
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .data-stream {
+            background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.1), transparent);
+            animation: stream 2s linear infinite;
+        }
+        
+        @keyframes stream {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-pink-400">BIOMEDICAL</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="nav-link text-white">Dashboard</a>
+                        <a href="analytics/index.html" class="nav-link text-slate-300 hover:text-white">Analytics</a>
+                        <a href="controller/index.html" class="nav-link text-slate-300 hover:text-white">Controller</a>
+                        <a href="api/index.html" class="nav-link text-slate-300 hover:text-white">API</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-sm font-medium rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                        <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                        <span class="sm:hidden">M.Y Eng</span>
+                    </a>
+                    <div class="flex items-center space-x-2">
+                        <span class="status-indicator status-active"></span>
+                        <span class="text-sm text-slate-300">Live</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16">
+        <!-- Hero Section -->
+        <section class="py-12 bg-gradient-to-br from-slate-900 via-pink-900/20 to-purple-900/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl font-bold mb-4 gradient-text">BIOMEDICAL Dashboard</h1>
+                    <p class="text-xl text-gray-300">Real-time healthcare monitoring and AI-powered diagnostics</p>
+                </div>
+                
+                <!-- Key Metrics -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-pink-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heartbeat text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-pink-400 mb-2">2,847</div>
+                        <p class="text-gray-400">Active Patients</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-brain text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-purple-400 mb-2">99.7%</div>
+                        <p class="text-gray-400">AI Accuracy</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-blue-400 mb-2">24/7</div>
+                        <p class="text-gray-400">Monitoring</p>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                        <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="text-3xl font-bold text-emerald-400 mb-2">HIPAA</div>
+                        <p class="text-gray-400">Compliant</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real-time Monitoring -->
+        <section class="py-12 bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">Real-time Health Monitoring</h2>
+                    <p class="text-xl text-gray-400">Live patient data and AI-powered insights</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Live Patient Data -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Live Patient Data</h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-700 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Patient ID: P-001234</span>
+                                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <div class="text-2xl font-bold text-pink-400">72</div>
+                                        <div class="text-xs text-gray-400">BPM</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-purple-400">120/80</div>
+                                        <div class="text-xs text-gray-400">mmHg</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-blue-400">98%</div>
+                                        <div class="text-xs text-gray-400">SpO2</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-700 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Patient ID: P-001235</span>
+                                    <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <div class="text-2xl font-bold text-pink-400">85</div>
+                                        <div class="text-xs text-gray-400">BPM</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-purple-400">135/90</div>
+                                        <div class="text-xs text-gray-400">mmHg</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-blue-400">96%</div>
+                                        <div class="text-xs text-gray-400">SpO2</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-700 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Patient ID: P-001236</span>
+                                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <div class="text-2xl font-bold text-pink-400">68</div>
+                                        <div class="text-xs text-gray-400">BPM</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-purple-400">110/75</div>
+                                        <div class="text-xs text-gray-400">mmHg</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-blue-400">99%</div>
+                                        <div class="text-xs text-gray-400">SpO2</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Diagnostic Results -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">AI Diagnostic Results</h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-700 rounded-lg p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-white">Normal Health Status</h4>
+                                        <p class="text-gray-400 text-sm">Confidence: 94.7%</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Cardiovascular Health</span>
+                                        <span class="text-green-400">Excellent</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Respiratory Function</span>
+                                        <span class="text-green-400">Normal</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Metabolic Status</span>
+                                        <span class="text-yellow-400">Good</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-700 rounded-lg p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-white">Elevated Blood Pressure</h4>
+                                        <p class="text-gray-400 text-sm">Confidence: 87.3%</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Cardiovascular Risk</span>
+                                        <span class="text-yellow-400">Moderate</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Recommended Action</span>
+                                        <span class="text-blue-400">Monitor Closely</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Charts -->
+        <section class="py-12 bg-slate-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">Analytics Overview</h2>
+                    <p class="text-xl text-gray-400">Comprehensive health analytics and trends</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Health Trends Chart -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Health Trends (Last 7 Days)</h3>
+                        <div class="chart-container">
+                            <canvas id="healthTrendsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Diagnostic Accuracy Chart -->
+                    <div class="glass-effect rounded-xl p-8">
+                        <h3 class="text-2xl font-bold text-white mb-6">Diagnostic Accuracy</h3>
+                        <div class="chart-container">
+                            <canvas id="accuracyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="py-12 bg-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-white mb-4">Recent Activity</h2>
+                    <p class="text-xl text-gray-400">Latest system events and patient updates</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4 p-4 bg-slate-700 rounded-lg">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-check text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">New patient diagnosis completed</p>
+                                <p class="text-gray-400 text-sm">Patient P-001234 - Normal health status detected</p>
+                            </div>
+                            <span class="text-gray-400 text-sm">2 minutes ago</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4 p-4 bg-slate-700 rounded-lg">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-upload text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">Medical image uploaded</p>
+                                <p class="text-gray-400 text-sm">Chest X-ray processed and analyzed</p>
+                            </div>
+                            <span class="text-gray-400 text-sm">5 minutes ago</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4 p-4 bg-slate-700 rounded-lg">
+                            <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">Alert: Elevated vital signs</p>
+                                <p class="text-gray-400 text-sm">Patient P-001235 - Blood pressure above normal range</p>
+                            </div>
+                            <span class="text-gray-400 text-sm">8 minutes ago</span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4 p-4 bg-slate-700 rounded-lg">
+                            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-microchip text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-white font-semibold">Biosensor data received</p>
+                                <p class="text-gray-400 text-sm">Real-time monitoring data from wearable device</p>
+                            </div>
+                            <span class="text-gray-400 text-sm">12 minutes ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Advanced healthcare technology platform for modern medicine.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                        <li><a href="analytics/index.html" class="text-gray-400 hover:text-pink-400">Analytics</a></li>
+                        <li><a href="controller/index.html" class="text-gray-400 hover:text-pink-400">Controller</a></li>
+                        <li><a href="api/index.html" class="text-gray-400 hover:text-pink-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="pages/company/about.html" class="text-gray-400 hover:text-pink-400">About</a></li>
+                        <li><a href="pages/company/blog.html" class="text-gray-400 hover:text-pink-400">Blog</a></li>
+                        <li><a href="pages/company/careers.html" class="text-gray-400 hover:text-pink-400">Careers</a></li>
+                        <li><a href="pages/company/contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="pages/support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="pages/support/community.html" class="text-gray-400 hover:text-pink-400">Community</a></li>
+                        <li><a href="pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="pages/legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="pages/legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize charts
+        const healthTrendsCtx = document.getElementById('healthTrendsChart').getContext('2d');
+        new Chart(healthTrendsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Heart Rate (BPM)',
+                    data: [72, 75, 70, 78, 74, 76, 72],
+                    borderColor: '#ec4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Blood Pressure (Systolic)',
+                    data: [120, 125, 118, 130, 122, 128, 120],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#9ca3af'
+                        },
+                        grid: {
+                            color: '#374151'
+                        }
+                    }
+                }
+            }
+        });
+
+        const accuracyCtx = document.getElementById('accuracyChart').getContext('2d');
+        new Chart(accuracyCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Correct', 'Incorrect', 'Pending'],
+                datasets: [{
+                    data: [99.7, 0.2, 0.1],
+                    backgroundColor: ['#10b981', '#ef4444', '#6b7280'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIOMEDICAL: Advanced Healthcare Technology Platform</title>
+    <meta name="description" content="Comprehensive biomedical platform featuring AI-powered diagnostics, medical imaging, biosensing, and clinical intelligence solutions">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
+            to { box-shadow: 0 0 30px rgba(236, 72, 153, 0.6); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bio-gradient {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 25%, #3b82f6 50%, #06b6d4 75%, #10b981 100%);
+        }
+        
+        .medical-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 25%, #ec4899 50%, #8b5cf6 75%, #3b82f6 100%);
+        }
+        
+        .ai-gradient {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 25%, #8b5cf6 50%, #ec4899 75%, #f59e0b 100%);
+        }
+        
+        .dna-animation {
+            animation: dnaRotate 10s linear infinite;
+        }
+        
+        @keyframes dnaRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-pink-400">BIOMEDICAL</h1>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <div class="relative group">
+                            <button class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                Products <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="dashboard/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Dashboard</a>
+                                <a href="analytics/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Analytics</a>
+                                <a href="controller/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Controller</a>
+                                <a href="api/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">API</a>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <button class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                Company <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="pages/company/about.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">About</a>
+                                <a href="pages/company/blog.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Blog</a>
+                                <a href="pages/company/careers.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Careers</a>
+                                <a href="pages/company/contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Contact</a>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <button class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                Support <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="pages/support/help-center.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Help Center</a>
+                                <a href="docs/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Documentation</a>
+                                <a href="pages/support/community.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-pink-400 hover:bg-slate-700">Community</a>
+                            </div>
+                        </div>
+                        <a href="pages/product/pricing.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <a href="dashboard/index.html" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-800">
+                <a href="#home" class="text-white hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="pages/company/about.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="pages/company/blog.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="pages/company/careers.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Careers</a>
+                <a href="pages/company/contact.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <a href="pages/support/help-center.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Help Center</a>
+                <a href="pages/support/community.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-hero min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-pink-500/20 text-pink-400 text-sm font-medium mb-6">
+                        <i class="fas fa-heartbeat mr-2"></i>
+                        Advanced Healthcare Technology
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
+                        <span class="text-white">Biomedical</span><br>
+                        <span class="text-pink-400">Intelligence</span><br>
+                        <span class="text-purple-400">Platform</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Comprehensive biomedical platform featuring AI-powered diagnostics, medical imaging, biosensing, and clinical intelligence solutions for modern healthcare.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="dashboard/index.html" class="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 pulse-glow">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Launch Dashboard
+                        </a>
+                        <a href="pages/product/pricing.html" class="glass-effect text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            View Pricing
+                        </a>
+                        <a href="../index.html" class="inline-flex items-center px-6 py-4 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-lg font-semibold rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                            <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                            <span class="sm:hidden">M.Y Eng</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="relative">
+                        <div class="glass-effect rounded-2xl p-8 hover-lift">
+                            <div class="text-center mb-6">
+                                <div class="w-20 h-20 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 heartbeat">
+                                    <i class="fas fa-heartbeat text-white text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Real-time Health Monitoring</h3>
+                                <p class="text-gray-300">AI-powered diagnostics and predictive analytics</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-pink-400">99.7%</div>
+                                    <div class="text-sm text-gray-400">Diagnostic Accuracy</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-purple-400">24/7</div>
+                                    <div class="text-sm text-gray-400">Monitoring</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-blue-400">HIPAA</div>
+                                    <div class="text-sm text-gray-400">Compliant</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-emerald-400">FDA</div>
+                                    <div class="text-sm text-gray-400">Approved</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-800 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Live Patient Monitoring</span>
+                                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-pink-500 h-2 rounded-full" style="width: 87%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating DNA Animation -->
+                        <div class="absolute -top-4 -right-4 w-16 h-16 text-pink-400 opacity-20 dna-animation">
+                            <i class="fas fa-dna text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Statistics -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Transforming Healthcare Worldwide</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Our biomedical platform is revolutionizing healthcare delivery across the globe</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hospital text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-pink-400 mb-2">2,500+</div>
+                    <p class="text-gray-300">Healthcare Facilities</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-md text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-purple-400 mb-2">50,000+</div>
+                    <p class="text-gray-300">Healthcare Professionals</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-blue-400 mb-2">1M+</div>
+                    <p class="text-gray-300">Diagnoses Assisted</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-emerald-400 mb-2">99.9%</div>
+                    <p class="text-gray-300">Uptime Guarantee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Technologies -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Core Biomedical Technologies</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Cutting-edge technologies powering the future of healthcare</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-pink-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AI-Powered Diagnostics</h3>
+                    <p class="text-gray-300 mb-6">Advanced machine learning algorithms for accurate disease detection and personalized treatment recommendations.</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Medical imaging analysis</li>
+                        <li>• Predictive analytics</li>
+                        <li>• Clinical decision support</li>
+                        <li>• Drug discovery assistance</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-x-ray text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Medical Imaging AI</h3>
+                    <p class="text-gray-300 mb-6">Explainable AI with Grad-CAM overlays for radiology, pathology, and clinical diagnostics with FDA approval.</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Radiology triage queues</li>
+                        <li>• Automated reporting</li>
+                        <li>• DICOM integration</li>
+                        <li>• PACS compatibility</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Biosensing Technology</h3>
+                    <p class="text-gray-300 mb-6">Nano-biosensors and lab-on-chip technologies for real-time health monitoring and disease detection.</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Real-time monitoring</li>
+                        <li>• Lab-on-chip devices</li>
+                        <li>• Wearable sensors</li>
+                        <li>• Point-of-care testing</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">HIPAA Compliance</h3>
+                    <p class="text-gray-300 mb-6">Enterprise-grade security with BAA support, comprehensive audit trails, and regulatory compliance.</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• End-to-end encryption</li>
+                        <li>• Audit logging</li>
+                        <li>• BAA support</li>
+                        <li>• Regulatory compliance</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-dna text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">BioTensor Labs</h3>
+                    <p class="text-gray-300 mb-6">Machine learning research platform with real-time signal processing and TimescaleDB integration.</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Signal processing</li>
+                        <li>• Feature extraction</li>
+                        <li>• AI inference pipeline</li>
+                        <li>• Microservices architecture</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-red-500 rounded-lg flex items-center justify-center mb-6">
+                        <i class="fas fa-baby text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">MYNX NatalCare™</h3>
+                    <p class="text-gray-300 mb-6">Prenatal monitoring and maternal health platform with advanced analytics and real-time alerts.</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Prenatal monitoring</li>
+                        <li>• Maternal health tracking</li>
+                        <li>• Risk assessment</li>
+                        <li>• Clinical analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Workflow -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">How Our Biomedical Platform Works</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Our 5-step process ensures accurate diagnostics and optimal patient outcomes</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Data Collection</h3>
+                    <p class="text-gray-400 text-sm">Multi-modal health data from sensors, imaging, and clinical records</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">AI Analysis</h3>
+                    <p class="text-gray-400 text-sm">Advanced ML algorithms process and analyze complex biomedical data</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Diagnostic Insights</h3>
+                    <p class="text-gray-400 text-sm">Generate accurate diagnoses with explainable AI and confidence scores</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Clinical Decision</h3>
+                    <p class="text-gray-400 text-sm">Support healthcare professionals with evidence-based recommendations</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white font-bold text-xl">5</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Patient Care</h3>
+                    <p class="text-gray-400 text-sm">Deliver personalized treatment plans and continuous monitoring</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Interactive Biomedical Dashboard</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Experience our platform's capabilities with our live demo</p>
+            </div>
+            
+            <div class="glass-effect rounded-2xl p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-6">Real-time Health Monitoring</h3>
+                        <div class="space-y-4">
+                            <div class="bg-slate-800 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Heart Rate</span>
+                                    <span class="text-pink-400 font-semibold">72 BPM</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-pink-500 h-2 rounded-full" style="width: 72%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-800 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Blood Pressure</span>
+                                    <span class="text-purple-400 font-semibold">120/80</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-800 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Oxygen Saturation</span>
+                                    <span class="text-blue-400 font-semibold">98%</span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 98%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-6">AI Diagnostic Results</h3>
+                        <div class="bg-slate-800 rounded-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-check text-white"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-white">Normal Health Status</h4>
+                                    <p class="text-gray-400 text-sm">Confidence: 94.7%</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Cardiovascular Health</span>
+                                    <span class="text-green-400">Excellent</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Respiratory Function</span>
+                                    <span class="text-green-400">Normal</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Metabolic Status</span>
+                                    <span class="text-yellow-400">Good</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 pt-4 border-t border-slate-700">
+                                <h5 class="text-sm font-semibold text-white mb-2">Recommendations</h5>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Continue current exercise routine</li>
+                                    <li>• Monitor blood pressure weekly</li>
+                                    <li>• Schedule annual checkup</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Advanced healthcare technology platform for modern medicine.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="dashboard/index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                        <li><a href="analytics/index.html" class="text-gray-400 hover:text-pink-400">Analytics</a></li>
+                        <li><a href="controller/index.html" class="text-gray-400 hover:text-pink-400">Controller</a></li>
+                        <li><a href="api/index.html" class="text-gray-400 hover:text-pink-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="pages/company/about.html" class="text-gray-400 hover:text-pink-400">About</a></li>
+                        <li><a href="pages/company/blog.html" class="text-gray-400 hover:text-pink-400">Blog</a></li>
+                        <li><a href="pages/company/careers.html" class="text-gray-400 hover:text-pink-400">Careers</a></li>
+                        <li><a href="pages/company/contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="pages/support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="pages/support/community.html" class="text-gray-400 hover:text-pink-400">Community</a></li>
+                        <li><a href="pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="pages/legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="pages/legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>
