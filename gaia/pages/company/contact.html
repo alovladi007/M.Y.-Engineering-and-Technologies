@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Contact - Get in Touch</title>
+    <meta name="description" content="Contact GAIA for support, sales inquiries, or partnership opportunities. We're here to help with your energy optimization needs">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="text-2xl font-bold text-green-400">GAIA</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../../index.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="about.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="../product/pricing.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="../../dashboard/index.html" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-medium mb-6">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Contact Us
+                </div>
+                <h1 class="text-5xl font-bold text-white mb-6">Get in Touch</h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Ready to optimize your energy consumption? Have questions about GAIA? We're here to help.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Methods -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">How Can We Help?</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Choose the best way to reach us based on your needs</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Sales</h3>
+                    <p class="text-gray-300 mb-4">Interested in GAIA for your organization?</p>
+                    <a href="mailto:sales@gaia.energy" class="text-green-400 hover:text-green-300 font-semibold">sales@gaia.energy</a>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-life-ring text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Support</h3>
+                    <p class="text-gray-300 mb-4">Need help with your GAIA deployment?</p>
+                    <a href="mailto:support@gaia.energy" class="text-green-400 hover:text-green-300 font-semibold">support@gaia.energy</a>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Partnerships</h3>
+                    <p class="text-gray-300 mb-4">Want to partner with GAIA?</p>
+                    <a href="mailto:partnerships@gaia.energy" class="text-green-400 hover:text-green-300 font-semibold">partnerships@gaia.energy</a>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-newspaper text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Media</h3>
+                    <p class="text-gray-300 mb-4">Press inquiries and media requests</p>
+                    <a href="mailto:press@gaia.energy" class="text-green-400 hover:text-green-300 font-semibold">press@gaia.energy</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Send Us a Message</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Fill out the form below and we'll get back to you within 24 hours</p>
+            </div>
+            
+            <div class="glass-effect rounded-2xl p-8">
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="firstName" class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none" placeholder="John">
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none" placeholder="Doe">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none" placeholder="john@company.com">
+                    </div>
+                    
+                    <div>
+                        <label for="company" class="block text-sm font-medium text-gray-300 mb-2">Company</label>
+                        <input type="text" id="company" name="company" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none" placeholder="Acme Corp">
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                        <select id="subject" name="subject" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:border-green-500 focus:outline-none">
+                            <option value="">Select a subject</option>
+                            <option value="sales">Sales Inquiry</option>
+                            <option value="support">Technical Support</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="media">Media Inquiry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="6" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none" placeholder="Tell us about your energy optimization needs..."></textarea>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="newsletter" name="newsletter" class="w-4 h-4 text-green-600 bg-slate-700 border-slate-600 rounded focus:ring-green-500 focus:ring-2">
+                        <label for="newsletter" class="ml-2 text-sm text-gray-300">
+                            Subscribe to our newsletter for updates on green technology
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Office Locations -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Our Offices</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Visit us at our headquarters or connect with our global team</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-effect rounded-xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-building text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">San Francisco HQ</h3>
+                            <p class="text-gray-400">Headquarters</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-green-400 mr-3"></i>
+                            <span class="text-gray-300">123 Tech Street, San Francisco, CA 94105</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-green-400 mr-3"></i>
+                            <span class="text-gray-300">+1 (555) 123-4567</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-green-400 mr-3"></i>
+                            <span class="text-gray-300">sf@gaia.energy</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Mon-Fri 9AM-6PM PST</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-globe text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Remote Team</h3>
+                            <p class="text-gray-400">Global Workforce</p>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-users text-green-400 mr-3"></i>
+                            <span class="text-gray-300">50+ team members worldwide</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-green-400 mr-3"></i>
+                            <span class="text-gray-300">24/7 support coverage</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-language text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Multi-language support</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-video text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Virtual meetings available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Quick answers to common questions about GAIA</p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">How quickly can I see energy savings?</h3>
+                    <p class="text-gray-300">Most customers see immediate energy savings within 24 hours of deployment, with full optimization benefits realized within 2-4 weeks.</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">What's the typical ROI for GAIA?</h3>
+                    <p class="text-gray-300">Customers typically see ROI within 6-12 months, with average energy cost savings of 15-30% and payback periods of 8-18 months.</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">Do you offer on-premises deployment?</h3>
+                    <p class="text-gray-300">Yes, GAIA supports both cloud and on-premises deployments, with hybrid options available for organizations with specific compliance requirements.</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">What kind of support do you provide?</h3>
+                    <p class="text-gray-300">We offer 24/7 technical support, dedicated customer success managers, comprehensive documentation, and training programs for your team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-green-400 mb-4">GAIA</h3>
+                    <p class="text-gray-400 mb-4">Green Adaptive Infrastructure Automation for sustainable computing.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../../dashboard/index.html" class="text-gray-400 hover:text-green-400">Dashboard</a></li>
+                        <li><a href="../../analytics/index.html" class="text-gray-400 hover:text-green-400">Analytics</a></li>
+                        <li><a href="../../controller/index.html" class="text-gray-400 hover:text-green-400">Controller</a></li>
+                        <li><a href="../../api/index.html" class="text-gray-400 hover:text-green-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="about.html" class="text-gray-400 hover:text-green-400">About</a></li>
+                        <li><a href="blog.html" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="careers.html" class="text-gray-400 hover:text-green-400">Careers</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-green-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../support/help-center.html" class="text-gray-400 hover:text-green-400">Help Center</a></li>
+                        <li><a href="../../docs/index.html" class="text-gray-400 hover:text-green-400">Documentation</a></li>
+                        <li><a href="../support/community.html" class="text-gray-400 hover:text-green-400">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">© 2024 GAIA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

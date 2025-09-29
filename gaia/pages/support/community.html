@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIA Community - Connect with Green Technology Enthusiasts</title>
+    <meta name="description" content="Join the GAIA community of developers, engineers, and sustainability advocates working together to build a greener future">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="text-2xl font-bold text-green-400">GAIA</a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../../index.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="../company/about.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="../product/pricing.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="../../dashboard/index.html" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-medium mb-6">
+                    <i class="fas fa-users mr-2"></i>
+                    Community
+                </div>
+                <h1 class="text-5xl font-bold text-white mb-6">Join the Green Technology Revolution</h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Connect with developers, engineers, and sustainability advocates working together to build a more sustainable future through technology.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#discord" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
+                        <i class="fab fa-discord mr-2"></i>
+                        Join Discord
+                    </a>
+                    <a href="#github" class="bg-slate-700 hover:bg-slate-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
+                        <i class="fab fa-github mr-2"></i>
+                        GitHub Community
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Stats -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Our Growing Community</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Join thousands of developers and sustainability advocates</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="text-4xl font-bold text-green-400 mb-2">2,500+</div>
+                    <p class="text-gray-300">Active Members</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="text-4xl font-bold text-blue-400 mb-2">150+</div>
+                    <p class="text-gray-300">Contributors</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="text-4xl font-bold text-purple-400 mb-2">50+</div>
+                    <p class="text-gray-300">Open Source Projects</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="text-4xl font-bold text-emerald-400 mb-2">25+</div>
+                    <p class="text-gray-300">Countries</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Platforms -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Connect With Us</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Choose your preferred platform to engage with the community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Discord -->
+                <div id="discord" class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mb-6">
+                        <i class="fab fa-discord text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Discord Server</h3>
+                    <p class="text-gray-300 mb-6">Real-time chat with developers, get instant help, and participate in community events.</p>
+                    <ul class="text-gray-400 text-sm space-y-2 mb-6">
+                        <li>• #general - Community discussions</li>
+                        <li>• #help - Technical support</li>
+                        <li>• #showcase - Share your projects</li>
+                        <li>• #events - Community meetups</li>
+                    </ul>
+                    <a href="#" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-center block">
+                        Join Discord
+                    </a>
+                </div>
+                
+                <!-- GitHub -->
+                <div id="github" class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mb-6">
+                        <i class="fab fa-github text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">GitHub Community</h3>
+                    <p class="text-gray-300 mb-6">Contribute to open source projects, report issues, and collaborate on green technology solutions.</p>
+                    <ul class="text-gray-400 text-sm space-y-2 mb-6">
+                        <li>• Open source repositories</li>
+                        <li>• Issue tracking and discussions</li>
+                        <li>• Pull request collaboration</li>
+                        <li>• Documentation contributions</li>
+                    </ul>
+                    <a href="#" class="w-full bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-center block">
+                        Visit GitHub
+                    </a>
+                </div>
+                
+                <!-- Forum -->
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Community Forum</h3>
+                    <p class="text-gray-300 mb-6">In-depth discussions, tutorials, and knowledge sharing about sustainable computing practices.</p>
+                    <ul class="text-gray-400 text-sm space-y-2 mb-6">
+                        <li>• Best practices discussions</li>
+                        <li>• Tutorial and guides</li>
+                        <li>• Feature requests</li>
+                        <li>• Success stories</li>
+                    </ul>
+                    <a href="#" class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors text-center block">
+                        Visit Forum
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events & Meetups -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Community Events</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Join our virtual and in-person events to learn and network</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Upcoming Events -->
+                <div class="glass-effect rounded-xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-6">Upcoming Events</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-lg font-semibold text-white">Green Tech Hackathon</h4>
+                                <span class="text-sm text-gray-400">Jan 15, 2025</span>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-2">48-hour virtual hackathon focused on sustainable computing solutions</p>
+                            <a href="#" class="text-green-400 hover:text-green-300 text-sm font-semibold">Register →</a>
+                        </div>
+                        
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-lg font-semibold text-white">GAIA User Meetup</h4>
+                                <span class="text-sm text-gray-400">Jan 22, 2025</span>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-2">Monthly community meetup with product updates and user showcases</p>
+                            <a href="#" class="text-green-400 hover:text-green-300 text-sm font-semibold">Join →</a>
+                        </div>
+                        
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="text-lg font-semibold text-white">Sustainability Workshop</h4>
+                                <span class="text-sm text-gray-400">Feb 5, 2025</span>
+                            </div>
+                            <p class="text-gray-300 text-sm mb-2">Deep dive into carbon footprint measurement and reduction strategies</p>
+                            <a href="#" class="text-green-400 hover:text-green-300 text-sm font-semibold">Learn More →</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Highlights -->
+                <div class="glass-effect rounded-xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-6">Community Highlights</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-slate-700 rounded-lg p-4">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-trophy text-white text-sm"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white">Project of the Month</h4>
+                            </div>
+                            <p class="text-gray-300 text-sm">Energy-aware Kubernetes scheduler by @sarah_dev</p>
+                        </div>
+                        
+                        <div class="bg-slate-700 rounded-lg p-4">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-star text-white text-sm"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white">Top Contributor</h4>
+                            </div>
+                            <p class="text-gray-300 text-sm">@marcus_eng for 15 contributions this month</p>
+                        </div>
+                        
+                        <div class="bg-slate-700 rounded-lg p-4">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-heart text-white text-sm"></i>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white">Community Impact</h4>
+                            </div>
+                            <p class="text-gray-300 text-sm">Helped 50+ organizations reduce energy consumption</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Community Resources</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Everything you need to get started and contribute to the community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-book text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Getting Started Guide</h3>
+                    <p class="text-gray-300 mb-4">Complete guide to joining the community and contributing to projects</p>
+                    <a href="#" class="text-green-400 hover:text-green-300 font-semibold">Read Guide →</a>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-code text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Code of Conduct</h3>
+                    <p class="text-gray-300 mb-4">Our community guidelines and expectations for respectful collaboration</p>
+                    <a href="#" class="text-green-400 hover:text-green-300 font-semibold">View Guidelines →</a>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Learning Resources</h3>
+                    <p class="text-gray-300 mb-4">Tutorials, workshops, and educational content for all skill levels</p>
+                    <a href="#" class="text-green-400 hover:text-green-300 font-semibold">Explore →</a>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Mentorship Program</h3>
+                    <p class="text-gray-300 mb-4">Connect with experienced developers for guidance and career advice</p>
+                    <a href="#" class="text-green-400 hover:text-green-300 font-semibold">Find Mentor →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold text-white mb-4">Stay Connected</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+                    Subscribe to our community newsletter for updates, events, and the latest in green technology
+                </p>
+                
+                <div class="max-w-md mx-auto">
+                    <div class="flex">
+                        <input type="email" placeholder="Enter your email" class="flex-1 bg-slate-700 border border-slate-600 rounded-l-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-500 focus:outline-none">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-r-lg font-semibold transition-colors">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-green-400 mb-4">GAIA</h3>
+                    <p class="text-gray-400 mb-4">Green Adaptive Infrastructure Automation for sustainable computing.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../../dashboard/index.html" class="text-gray-400 hover:text-green-400">Dashboard</a></li>
+                        <li><a href="../../analytics/index.html" class="text-gray-400 hover:text-green-400">Analytics</a></li>
+                        <li><a href="../../controller/index.html" class="text-gray-400 hover:text-green-400">Controller</a></li>
+                        <li><a href="../../api/index.html" class="text-gray-400 hover:text-green-400">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../company/about.html" class="text-gray-400 hover:text-green-400">About</a></li>
+                        <li><a href="../company/blog.html" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="../company/careers.html" class="text-gray-400 hover:text-green-400">Careers</a></li>
+                        <li><a href="../company/contact.html" class="text-gray-400 hover:text-green-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="help-center.html" class="text-gray-400 hover:text-green-400">Help Center</a></li>
+                        <li><a href="../../docs/index.html" class="text-gray-400 hover:text-green-400">Documentation</a></li>
+                        <li><a href="community.html" class="text-gray-400 hover:text-green-400">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">© 2024 GAIA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
