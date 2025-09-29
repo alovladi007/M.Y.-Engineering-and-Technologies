@@ -30,126 +30,111 @@
             font-family: 'Sora', sans-serif;
         }
         
-        /* Animated background gradient */
-        .animated-gradient {
-            background: linear-gradient(-45deg, #ff6b35, #f7931e, #ff4757, #ff3838);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
+        .gradient-text {
+            background: linear-gradient(135deg, #f97316, #dc2626, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* Power electronics circuit animation */
-        .circuit-animation {
-            position: relative;
-            overflow: hidden;
+        .hover-lift {
+            transition: all 0.3s ease;
         }
         
-        .circuit-animation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.3), transparent);
-            animation: circuit-flow 3s infinite;
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
-        @keyframes circuit-flow {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
         }
         
-        /* Glowing effect for power elements */
-        .power-glow {
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
-            animation: power-pulse 2s infinite;
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(249, 115, 22, 0.6);
+            }
         }
         
-        @keyframes power-pulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.5); }
-            50% { box-shadow: 0 0 30px rgba(255, 107, 53, 0.8); }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-black/90 backdrop-blur-lg z-50 border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent transform hover:scale-105 transition-transform cursor-pointer">
-                    <a href="index.html">M.Y. Engineering and Technologies</a>
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-2xl font-bold gradient-text">PowerFlow</h1>
                 </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="hover:text-orange-400 transition-colors">Features</a>
+                    <a href="#platform" class="hover:text-orange-400 transition-colors">Platform</a>
+                    <a href="#development" class="hover:text-orange-400 transition-colors">Development</a>
+                    <a href="mailto:powerflow@auroraborealisphonics.com" class="px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full hover:shadow-lg transition-all">Contact</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <button id="mobileMenuBtn" class="md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="index.html" class="hover:text-cyan-400 transition-colors font-medium">Home</a>
-                <a href="#projects" class="hover:text-cyan-400 transition-colors font-medium">Projects</a>
-                <a href="patents.html" class="hover:text-cyan-400 transition-colors font-medium">Patents</a>
-                <a href="cybersecurity.html" class="hover:text-cyan-400 transition-colors font-medium">Cybersecurity</a>
-                <a href="hardware.html" class="hover:text-cyan-400 transition-colors font-medium">Hardware</a>
-                <a href="biomedical-division.html" class="hover:text-cyan-400 transition-colors font-medium">Biomedical</a>
-                <a href="geospatial.html" class="hover:text-cyan-400 transition-colors font-medium">Geospatial</a>
-                <a href="orion.html" class="hover:text-cyan-400 transition-colors font-medium">O.R.I.O.N</a>
-                <a href="powerflow.html" class="text-orange-400 font-medium">PowerFlow</a>
-                <button class="px-4 py-2 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition-colors" onclick="openLouis()">AI Assistant</button>
-            </div>
-            <button class="md:hidden text-white" onclick="toggleMobileMenu()">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
         </div>
         
-        <!-- Mobile Menu -->
-        <div class="hidden bg-black/95 backdrop-blur-md" id="mobileMenu">
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-effect border-t border-white/10">
             <div class="px-6 py-4 space-y-4">
-                <a href="index.html" class="block hover:text-cyan-400 transition-colors font-medium">Home</a>
-                <a href="#projects" class="block hover:text-cyan-400 transition-colors font-medium">Projects</a>
-                <a href="patents.html" class="block hover:text-cyan-400 transition-colors font-medium">Patents</a>
-                <a href="cybersecurity.html" class="block hover:text-cyan-400 transition-colors font-medium">Cybersecurity</a>
-                <a href="hardware.html" class="block hover:text-cyan-400 transition-colors font-medium">Hardware</a>
-                <a href="biomedical-division.html" class="block hover:text-cyan-400 transition-colors font-medium">Biomedical</a>
-                <a href="geospatial.html" class="block hover:text-cyan-400 transition-colors font-medium">Geospatial</a>
-                <a href="orion.html" class="block hover:text-cyan-400 transition-colors font-medium">O.R.I.O.N</a>
-                <a href="powerflow.html" class="block text-orange-400 font-medium">PowerFlow</a>
-                <button class="w-full px-4 py-2 bg-cyan-400 text-black font-semibold rounded-full hover:bg-cyan-300 transition-colors" onclick="openLouis()">AI Assistant</button>
+                <a href="#features" class="block hover:text-orange-400 transition-colors">Features</a>
+                <a href="#platform" class="block hover:text-orange-400 transition-colors">Platform</a>
+                <a href="#development" class="block hover:text-orange-400 transition-colors">Development</a>
+                <a href="mailto:powerflow@auroraborealisphonics.com" class="block px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-center hover:shadow-lg transition-all">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- PowerFlow Hero Section -->
-    <section class="relative min-h-screen bg-gradient-to-br from-slate-900 via-orange-900 to-red-900 pt-20 overflow-hidden">
-        <!-- Animated Background -->
-        <div class="absolute inset-0 animated-gradient opacity-20"></div>
-        
-        <!-- Circuit Pattern Overlay -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="circuit-animation w-full h-full"></div>
-        </div>
-        
-        <div class="max-w-7xl mx-auto px-6 py-20 relative z-10">
-            <div class="text-center mb-16">
-                <div class="inline-block mb-6">
-                    <span class="text-6xl power-glow">⚡</span>
-                </div>
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                    PowerFlow
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    <span class="gradient-text">PowerFlow</span>
                 </h1>
-                <p class="text-xl text-orange-200 max-w-4xl mx-auto mb-8">
-                    Advanced Power Electronics Platform
-                </p>
-                <p class="text-lg text-gray-300 max-w-3xl mx-auto mb-12">
-                    Design, simulate, and optimize power electronics systems with native SST/DAB simulation, 
-                    real-time ZVS optimization, and integrated HIL testing. The only platform with industry-first 
-                    solid-state transformer modeling and wide-bandgap semiconductor optimization.
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
+                    Advanced Power Electronics Platform with native SST/DAB simulation, 
+                    real-time ZVS optimization, and integrated HIL testing
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="http://localhost:3000" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all">
+                    <a href="#platform" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all pulse-glow">
                         Launch Platform
                     </a>
                     <a href="#features" class="inline-block px-8 py-4 border border-orange-400 text-orange-400 font-semibold rounded-full hover:bg-orange-400 hover:text-black transition-all">
@@ -170,22 +155,22 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- SST/DAB Simulation -->
-                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
+                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative p-6">
                         <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">SST/DAB Simulation</h3>
                         <p class="text-gray-400 text-sm mb-4">Industry-first native solid-state transformer and dual-active bridge modeling with real-time optimization</p>
-                        <a href="http://localhost:3000" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Launch Platform →</a>
+                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Launch Platform →</a>
                     </div>
                 </div>
                 
                 <!-- SiC/GaN Models -->
-                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
+                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative p-6">
                         <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
@@ -195,27 +180,27 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">SiC/GaN Models</h3>
                         <p class="text-gray-400 text-sm mb-4">Accurate wide-bandgap semiconductor models validated with major vendors for precise simulation</p>
-                        <a href="http://localhost:3000" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">View Models →</a>
+                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">View Models →</a>
                     </div>
                 </div>
                 
                 <!-- HIL Testing -->
-                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
+                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative p-6">
                         <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">HIL Testing</h3>
                         <p class="text-gray-400 text-sm mb-4">Seamless hardware-in-the-loop integration with safety interlocks and real-time validation</p>
-                        <a href="http://localhost:3000" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Learn More →</a>
+                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Learn More →</a>
                     </div>
                 </div>
                 
                 <!-- Real-time Analytics -->
-                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
+                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative p-6">
                         <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
@@ -225,12 +210,12 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Real-time Analytics</h3>
                         <p class="text-gray-400 text-sm mb-4">Live ZVS mapping, efficiency optimization, and thermal analysis with predictive insights</p>
-                        <a href="http://localhost:3000" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">View Analytics →</a>
+                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">View Analytics →</a>
                     </div>
                 </div>
                 
-                <!-- Machine Learning -->
-                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
+                <!-- ML Optimization -->
+                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative p-6">
                         <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
@@ -240,101 +225,38 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">ML Optimization</h3>
                         <p class="text-gray-400 text-sm mb-4">AI-powered parameter optimization and anomaly detection for enhanced system performance</p>
-                        <a href="http://localhost:3000" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Explore ML →</a>
+                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Explore ML →</a>
                     </div>
                 </div>
                 
-                <!-- Cloud Deployment -->
-                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
+                <!-- Cloud Platform -->
+                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="relative p-6">
                         <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
                             </svg>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Cloud Platform</h3>
                         <p class="text-gray-400 text-sm mb-4">Scalable cloud deployment with Docker containers and Kubernetes orchestration</p>
-                        <a href="http://localhost:3000" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Deploy Now →</a>
+                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Deploy Now →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Technology Stack -->
-    <section class="py-20 px-6 bg-gray-900/50">
+    <!-- Interactive Platform Demo -->
+    <section id="platform" class="py-20 px-6 bg-gradient-to-br from-gray-900 via-black to-gray-900">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Technology Stack</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Modern, scalable architecture built for power electronics professionals</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Interactive Platform</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Experience the power of advanced power electronics simulation</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Frontend -->
-                <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold mb-4 text-orange-400">Frontend</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>• Next.js 14 with App Router</li>
-                        <li>• TypeScript for type safety</li>
-                        <li>• Tailwind CSS styling</li>
-                        <li>• Radix UI components</li>
-                        <li>• Chart.js visualization</li>
-                        <li>• Socket.io real-time</li>
-                    </ul>
-                </div>
-                
-                <!-- Backend -->
-                <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold mb-4 text-orange-400">Backend</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>• NestJS API gateway</li>
-                        <li>• PostgreSQL database</li>
-                        <li>• Redis caching</li>
-                        <li>• TypeORM ORM</li>
-                        <li>• JWT authentication</li>
-                        <li>• WebSocket support</li>
-                    </ul>
-                </div>
-                
-                <!-- Simulation -->
-                <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold mb-4 text-orange-400">Simulation</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>• Python FastAPI services</li>
-                        <li>• NumPy/SciPy computation</li>
-                        <li>• Real-time simulation</li>
-                        <li>• SST/DAB modeling</li>
-                        <li>• SiC/GaN device models</li>
-                        <li>• HIL integration</li>
-                    </ul>
-                </div>
-                
-                <!-- DevOps -->
-                <div class="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                    <h3 class="text-xl font-bold mb-4 text-orange-400">DevOps</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li>• Docker containerization</li>
-                        <li>• Kubernetes orchestration</li>
-                        <li>• pnpm package management</li>
-                        <li>• Turbo monorepo</li>
-                        <li>• CI/CD pipelines</li>
-                        <li>• Grafana monitoring</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Start -->
-    <section class="py-20 px-6 bg-black">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Quick Start</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Get up and running with PowerFlow in minutes</p>
-            </div>
-            
-            <div class="bg-gradient-to-r from-orange-600/20 to-red-600/20 backdrop-blur-lg rounded-3xl p-8 mb-16 border border-orange-500/30">
+            <!-- Platform Demo -->
+            <div class="glass-effect rounded-3xl p-8 mb-16">
                 <div class="text-center mb-8">
                     <h3 class="text-3xl font-bold mb-4">🚀 Launch PowerFlow Platform</h3>
                     <p class="text-xl text-orange-200 mb-6">
@@ -344,7 +266,7 @@
                         Start designing SST/DAB converters, optimize SiC/GaN devices, and run real-time simulations 
                         with our comprehensive platform. No installation required - everything runs in your browser.
                     </p>
-                    <a href="http://localhost:3000" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all">
+                    <a href="https://alovladi007.github.io/Power-Flow/" target="_blank" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all pulse-glow">
                         <span class="mr-2">⚡</span>
                         Launch PowerFlow Platform
                     </a>
@@ -352,7 +274,7 @@
             </div>
             
             <!-- Development Setup -->
-            <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 mb-16 border border-white/20">
+            <div class="glass-effect rounded-3xl p-8 mb-16">
                 <h3 class="text-3xl font-bold mb-8 text-center">🛠️ Development Setup</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-orange-500/20 p-6 rounded-xl">
@@ -360,8 +282,8 @@
                         <div class="bg-black/50 p-4 rounded-lg font-mono text-sm">
                             <div class="text-green-400"># Clone and setup</div>
                             <div class="text-white">cd powerflow</div>
-                            <div class="text-white">pnpm install</div>
-                            <div class="text-white">pnpm dev</div>
+                            <div class="text-white">npm install</div>
+                            <div class="text-white">npm run dev</div>
                         </div>
                     </div>
                     <div class="bg-orange-500/20 p-6 rounded-xl">
@@ -398,10 +320,43 @@
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
         }
-
-        function openLouis() {
-            window.location.href = "ai-security-assistant/demo.html";
-        }
+        
+        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // GSAP animations
+        gsap.from('.fade-in', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: 'power2.out'
+        });
+        
+        gsap.from('.hover-lift', {
+            duration: 0.8,
+            y: 30,
+            opacity: 0,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.hover-lift',
+                start: 'top 80%'
+            }
+        });
     </script>
 </body>
 </html>
