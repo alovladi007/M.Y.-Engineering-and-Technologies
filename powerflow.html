@@ -3,326 +3,549 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerFlow - Advanced Power Electronics Platform | M.Y. Engineering and Technologies</title>
+    <title>PowerFlow - Power Electronics Control Platform | M.Y. Engineering and Technologies</title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="PowerFlow - Advanced power electronics platform with native SST/DAB simulation, real-time ZVS optimization, and integrated HIL testing.">
-    <meta name="keywords" content="power electronics, SST simulation, DAB converter, SiC GaN, HIL testing, power flow, electronics design">
+    <meta name="description" content="PowerFlow - Advanced power electronics control and simulation platform with real-time monitoring, hardware management, and analytics.">
+    <meta name="keywords" content="power electronics, control platform, simulation, hardware management, analytics, DC-DC converter, MPPT">
     <meta name="author" content="Aurora Borealis Photonics">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="PowerFlow - Advanced Power Electronics Platform">
-    <meta property="og:description" content="Design, simulate, and optimize power electronics systems with native SST/DAB simulation, real-time ZVS optimization, and integrated HIL testing.">
+    <meta property="og:title" content="PowerFlow - Power Electronics Control Platform">
+    <meta property="og:description" content="Advanced power electronics control and simulation platform">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://auroraborealisphonics.com/powerflow">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- GSAP for animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
     <!-- Custom Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         body {
-            font-family: 'Sora', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
-        .gradient-text {
-            background: linear-gradient(135deg, #f97316, #dc2626, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .glass-effect {
+        .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .hover-lift {
-            transition: all 0.3s ease;
+        .simulation-chart {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        .simulation-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(59, 130, 246, 0.3) 25%, 
+                rgba(59, 130, 246, 0.6) 50%, 
+                rgba(59, 130, 246, 0.3) 75%, 
+                transparent 100%);
+            animation: wave 2s ease-in-out infinite;
         }
         
-        .pulse-glow {
-            animation: pulseGlow 2s ease-in-out infinite alternate;
+        @keyframes wave {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
         }
         
-        @keyframes pulseGlow {
-            from {
-                box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
-            }
-            to {
-                box-shadow: 0 0 40px rgba(249, 115, 22, 0.6);
-            }
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
         }
         
-        .fade-in {
-            animation: fadeIn 0.8s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .status-connected { background-color: #10b981; }
+        .status-disconnected { background-color: #ef4444; }
+        .status-active { background-color: #3b82f6; }
+        .status-idle { background-color: #6b7280; }
     </style>
 </head>
 <body class="bg-black text-white overflow-x-hidden">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-effect">
-        <div class="max-w-7xl mx-auto px-6 py-4">
+    <!-- PowerFlow Navigation -->
+    <header class="border-b bg-white/5 backdrop-blur-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h1 class="text-2xl font-bold gradient-text">PowerFlow</h1>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="hover:text-orange-400 transition-colors">Features</a>
-                    <a href="#platform" class="hover:text-orange-400 transition-colors">Platform</a>
-                    <a href="#development" class="hover:text-orange-400 transition-colors">Development</a>
-                    <a href="mailto:powerflow@auroraborealisphonics.com" class="px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full hover:shadow-lg transition-all">Contact</a>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <button id="mobileMenuBtn" class="md:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    <svg class="h-8 w-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div id="mobileMenu" class="hidden md:hidden glass-effect border-t border-white/10">
-            <div class="px-6 py-4 space-y-4">
-                <a href="#features" class="block hover:text-orange-400 transition-colors">Features</a>
-                <a href="#platform" class="block hover:text-orange-400 transition-colors">Platform</a>
-                <a href="#development" class="block hover:text-orange-400 transition-colors">Development</a>
-                <a href="mailto:powerflow@auroraborealisphonics.com" class="block px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full text-center hover:shadow-lg transition-all">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="pt-32 pb-20 px-6 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="fade-in">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">
-                    <span class="gradient-text">PowerFlow</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto">
-                    Advanced Power Electronics Platform with native SST/DAB simulation, 
-                    real-time ZVS optimization, and integrated HIL testing
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#platform" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all pulse-glow">
-                        Launch Platform
+                    <h1 class="text-2xl font-bold">PowerFlow</h1>
+                </div>
+                <nav class="flex items-center space-x-6">
+                    <a href="#dashboard" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">Dashboard</a>
+                    <a href="#simulations" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">Simulations</a>
+                    <a href="#hardware" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">Hardware</a>
+                    <a href="#analytics" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">Analytics</a>
+                    <a href="#sst" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">SST</a>
+                    <a href="#billing" class="px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">Billing</a>
+                    <a href="#settings" class="px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 transition-colors">
+                        <svg class="h-4 w-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Settings
                     </a>
-                    <a href="#features" class="inline-block px-8 py-4 border border-orange-400 text-orange-400 font-semibold rounded-full hover:bg-orange-400 hover:text-black transition-all">
-                        Explore Features
-                    </a>
-                </div>
+                </nav>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- Platform Features -->
-    <section id="features" class="py-20 px-6 bg-black">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Platform Features</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Revolutionary power electronics design and simulation capabilities</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- SST/DAB Simulation -->
-                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative p-6">
-                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">SST/DAB Simulation</h3>
-                        <p class="text-gray-400 text-sm mb-4">Industry-first native solid-state transformer and dual-active bridge modeling with real-time optimization</p>
-                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Launch Platform →</a>
-                    </div>
-                </div>
-                
-                <!-- SiC/GaN Models -->
-                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative p-6">
-                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">SiC/GaN Models</h3>
-                        <p class="text-gray-400 text-sm mb-4">Accurate wide-bandgap semiconductor models validated with major vendors for precise simulation</p>
-                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">View Models →</a>
-                    </div>
-                </div>
-                
-                <!-- HIL Testing -->
-                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative p-6">
-                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-2">HIL Testing</h3>
-                        <p class="text-gray-400 text-sm mb-4">Seamless hardware-in-the-loop integration with safety interlocks and real-time validation</p>
-                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Learn More →</a>
-                    </div>
-                </div>
-                
-                <!-- Real-time Analytics -->
-                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative p-6">
-                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Main Content -->
+    <div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+        <main class="container mx-auto px-4 py-8">
+
+            <!-- Dashboard Section -->
+            <section id="dashboard">
+                <!-- Status Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">System Status</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Real-time Analytics</h3>
-                        <p class="text-gray-400 text-sm mb-4">Live ZVS mapping, efficiency optimization, and thermal analysis with predictive insights</p>
-                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">View Analytics →</a>
+                        <div class="text-2xl font-bold">Active</div>
+                        <p class="text-xs text-gray-400">All systems operational</p>
                     </div>
-                </div>
-                
-                <!-- ML Optimization -->
-                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative p-6">
-                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Simulation Status</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">ML Optimization</h3>
-                        <p class="text-gray-400 text-sm mb-4">AI-powered parameter optimization and anomaly detection for enhanced system performance</p>
-                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Explore ML →</a>
+                        <div class="text-2xl font-bold" id="simulation-status">Idle</div>
+                        <p class="text-xs text-gray-400" id="simulation-desc">Ready to simulate</p>
                     </div>
-                </div>
-                
-                <!-- Cloud Platform -->
-                <div class="group relative overflow-hidden rounded-xl glass-effect hover:border-orange-400/50 transition-all duration-500 hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="relative p-6">
-                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Hardware Devices</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">Cloud Platform</h3>
-                        <p class="text-gray-400 text-sm mb-4">Scalable cloud deployment with Docker containers and Kubernetes orchestration</p>
-                        <a href="#platform" class="text-orange-400 text-sm font-medium hover:text-orange-300 transition-colors">Deploy Now →</a>
+                        <div class="text-2xl font-bold">3 Connected</div>
+                        <p class="text-xs text-gray-400">2 STM32, 1 Raspberry Pi</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Interactive Platform Demo -->
-    <section id="platform" class="py-20 px-6 bg-gradient-to-br from-gray-900 via-black to-gray-900">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Interactive Platform</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Experience the power of advanced power electronics simulation</p>
-            </div>
-            
-            <!-- Platform Demo -->
-            <div class="glass-effect rounded-3xl p-8 mb-16">
-                <div class="text-center mb-8">
-                    <h3 class="text-3xl font-bold mb-4">🚀 Launch PowerFlow Platform</h3>
-                    <p class="text-xl text-orange-200 mb-6">
-                        Access the complete power electronics design and simulation platform
-                    </p>
-                    <p class="text-gray-300 mb-8 max-w-3xl mx-auto">
-                        Start designing SST/DAB converters, optimize SiC/GaN devices, and run real-time simulations 
-                        with our comprehensive platform. No installation required - everything runs in your browser.
-                    </p>
-                    <a href="https://alovladi007.github.io/Power-Flow/" target="_blank" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all pulse-glow">
-                        <span class="mr-2">⚡</span>
-                        Launch PowerFlow Platform
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Development Setup -->
-            <div class="glass-effect rounded-3xl p-8 mb-16">
-                <h3 class="text-3xl font-bold mb-8 text-center">🛠️ Development Setup</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-orange-500/20 p-6 rounded-xl">
-                        <h4 class="text-xl font-semibold mb-3">Local Development</h4>
-                        <div class="bg-black/50 p-4 rounded-lg font-mono text-sm">
-                            <div class="text-green-400"># Clone and setup</div>
-                            <div class="text-white">cd powerflow</div>
-                            <div class="text-white">npm install</div>
-                            <div class="text-white">npm run dev</div>
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Power Output</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
                         </div>
+                        <div class="text-2xl font-bold">1.2 kW</div>
+                        <p class="text-xs text-gray-400">+12% from baseline</p>
                     </div>
-                    <div class="bg-orange-500/20 p-6 rounded-xl">
-                        <h4 class="text-xl font-semibold mb-3">Docker Deployment</h4>
-                        <div class="bg-black/50 p-4 rounded-lg font-mono text-sm">
-                            <div class="text-green-400"># Docker setup</div>
-                            <div class="text-white">docker-compose up</div>
-                            <div class="text-white"># Access at localhost:3000</div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-2">Quick Simulation</h3>
+                        <p class="text-sm text-gray-400 mb-4">Start a quick power electronics simulation</p>
+                        <button id="simulation-btn" onclick="toggleSimulation()" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <span id="simulation-text">Start Simulation</span>
+                        </button>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-2">Live Data Preview</h3>
+                        <p class="text-sm text-gray-400 mb-4">Real-time data from connected devices</p>
+                        <div class="h-[100px] simulation-chart">
+                            <div class="simulation-wave"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- CTA -->
-            <div class="text-center">
-                <a href="mailto:powerflow@auroraborealisphonics.com" class="inline-block px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:shadow-lg transform hover:scale-105 transition-all">
-                    Contact PowerFlow Team
-                </a>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-black py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-gray-400">© 2024 Aurora Borealis Photonics. All rights reserved.</p>
-        </div>
-    </footer>
+                <!-- Recent Activity -->
+                <div class="card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+                    <p class="text-sm text-gray-400 mb-4">Latest system events and notifications</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="status-indicator status-connected"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">Simulation completed successfully</p>
+                                <p class="text-xs text-gray-400">2 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="status-indicator status-active"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">Hardware device STM32-01 connected</p>
+                                <p class="text-xs text-gray-400">5 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="status-indicator status-idle"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">System parameters updated</p>
+                                <p class="text-xs text-gray-400">10 minutes ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    <!-- Scripts -->
+            <!-- Simulations Section -->
+            <section id="simulations" class="mt-16">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Simulations</h1>
+                    <p class="text-gray-400">Power electronics simulation and control</p>
+                </div>
+
+                <div class="card rounded-xl p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold">Power Electronics Simulation</h3>
+                            <p class="text-sm text-gray-400">Real-time simulation of DC-DC converter with MPPT control</p>
+                        </div>
+                        <button id="main-simulation-btn" onclick="toggleMainSimulation()" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <span id="main-simulation-text">Start Simulation</span>
+                        </button>
+                    </div>
+                    <div class="h-[400px] simulation-chart">
+                        <div class="simulation-wave"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">Simulation Parameters</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Input Voltage</span>
+                                <span class="text-sm">48V DC</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Output Voltage</span>
+                                <span class="text-sm">12V DC</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Switching Frequency</span>
+                                <span class="text-sm">100 kHz</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Control Method</span>
+                                <span class="text-sm">MPPT (P&O)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">Performance Metrics</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Efficiency</span>
+                                <span class="text-sm text-green-400">94.5%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">THD</span>
+                                <span class="text-sm text-yellow-400">2.3%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Ripple Voltage</span>
+                                <span class="text-sm">120 mV</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Temperature</span>
+                                <span class="text-sm">45°C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hardware Section -->
+            <section id="hardware" class="mt-16">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Hardware Devices</h1>
+                    <p class="text-gray-400">Manage and monitor connected hardware devices</p>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Total Devices</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold">4</div>
+                        <p class="text-xs text-gray-400">Hardware devices registered</p>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Connected</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold text-green-400">3</div>
+                        <p class="text-xs text-gray-400">Active connections</p>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Offline</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold text-red-400">1</div>
+                        <p class="text-xs text-gray-400">Disconnected devices</p>
+                    </div>
+                </div>
+
+                <!-- Device List -->
+                <div class="card rounded-xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Device Manager</h3>
+                    <p class="text-sm text-gray-400 mb-6">Monitor and control your hardware devices</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border border-white/10 rounded-lg">
+                            <div class="flex items-center space-x-4">
+                                <div class="status-indicator status-connected"></div>
+                                <div>
+                                    <h4 class="font-semibold">STM32F4 Discovery</h4>
+                                    <p class="text-sm text-gray-400">Microcontroller</p>
+                                    <p class="text-xs text-gray-400">IP: 192.168.1.101</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-right">
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">connected</span>
+                                    <p class="text-xs text-gray-400 mt-1">Last seen: 2 seconds ago</p>
+                                </div>
+                                <button class="px-3 py-1 border border-white/20 rounded hover:bg-white/10 transition-colors">Settings</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border border-white/10 rounded-lg">
+                            <div class="flex items-center space-x-4">
+                                <div class="status-indicator status-connected"></div>
+                                <div>
+                                    <h4 class="font-semibold">STM32H7 Nucleo</h4>
+                                    <p class="text-sm text-gray-400">Microcontroller</p>
+                                    <p class="text-xs text-gray-400">IP: 192.168.1.102</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-right">
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">connected</span>
+                                    <p class="text-xs text-gray-400 mt-1">Last seen: 5 seconds ago</p>
+                                </div>
+                                <button class="px-3 py-1 border border-white/20 rounded hover:bg-white/10 transition-colors">Settings</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border border-white/10 rounded-lg">
+                            <div class="flex items-center space-x-4">
+                                <div class="status-indicator status-connected"></div>
+                                <div>
+                                    <h4 class="font-semibold">Raspberry Pi 4</h4>
+                                    <p class="text-sm text-gray-400">Single Board Computer</p>
+                                    <p class="text-xs text-gray-400">IP: 192.168.1.103</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-right">
+                                    <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-xs">connected</span>
+                                    <p class="text-xs text-gray-400 mt-1">Last seen: 1 second ago</p>
+                                </div>
+                                <button class="px-3 py-1 border border-white/20 rounded hover:bg-white/10 transition-colors">Settings</button>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 border border-white/10 rounded-lg">
+                            <div class="flex items-center space-x-4">
+                                <div class="status-indicator status-disconnected"></div>
+                                <div>
+                                    <h4 class="font-semibold">Arduino Uno</h4>
+                                    <p class="text-sm text-gray-400">Microcontroller</p>
+                                    <p class="text-xs text-gray-400">IP: Not connected</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="text-right">
+                                    <span class="px-2 py-1 bg-red-500/20 text-red-400 rounded-full text-xs">disconnected</span>
+                                    <p class="text-xs text-gray-400 mt-1">Last seen: 2 hours ago</p>
+                                </div>
+                                <button class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="mt-16">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold">Analytics</h1>
+                    <p class="text-gray-400">System performance metrics and insights</p>
+                </div>
+
+                <!-- Analytics Overview -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Average Efficiency</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold">94.2%</div>
+                        <p class="text-xs text-gray-400">+2.1% from last week</p>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Total Simulations</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold">2,847</div>
+                        <p class="text-xs text-gray-400">+180 this week</p>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Uptime</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold">99.8%</div>
+                        <p class="text-xs text-gray-400">Last 30 days</p>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-medium text-gray-400">Avg Power Output</h3>
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                        </div>
+                        <div class="text-2xl font-bold">1.34 kW</div>
+                        <p class="text-xs text-gray-400">+8% improvement</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">System Performance Trends</h3>
+                        <p class="text-sm text-gray-400 mb-4">Power output and efficiency over time</p>
+                        <div class="h-[300px] simulation-chart">
+                            <div class="simulation-wave"></div>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">Key Performance Indicators</h3>
+                        <p class="text-sm text-gray-400 mb-4">Current system metrics</p>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">Efficiency Rating</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 94%"></div>
+                                    </div>
+                                    <span class="text-sm">94%</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">Power Quality</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 97%"></div>
+                                    </div>
+                                    <span class="text-sm">97%</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">Thermal Management</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                    <span class="text-sm">85%</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium">System Stability</span>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 99%"></div>
+                                    </div>
+                                    <span class="text-sm">99%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JavaScript -->
     <script>
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+        let isSimulating = false;
+        let isMainSimulating = false;
+
+        function toggleSimulation() {
+            isSimulating = !isSimulating;
+            const statusEl = document.getElementById('simulation-status');
+            const descEl = document.getElementById('simulation-desc');
+            const btnEl = document.getElementById('simulation-btn');
+            const textEl = document.getElementById('simulation-text');
+            
+            if (isSimulating) {
+                statusEl.textContent = 'Running';
+                descEl.textContent = 'Processing simulation...';
+                btnEl.className = 'w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors';
+                textEl.textContent = 'Stop Simulation';
+            } else {
+                statusEl.textContent = 'Idle';
+                descEl.textContent = 'Ready to simulate';
+                btnEl.className = 'w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors';
+                textEl.textContent = 'Start Simulation';
+            }
         }
-        
-        document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
-        
+
+        function toggleMainSimulation() {
+            isMainSimulating = !isMainSimulating;
+            const btnEl = document.getElementById('main-simulation-btn');
+            const textEl = document.getElementById('main-simulation-text');
+            
+            if (isMainSimulating) {
+                btnEl.className = 'px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors';
+                textEl.textContent = 'Stop Simulation';
+            } else {
+                btnEl.className = 'px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors';
+                textEl.textContent = 'Start Simulation';
+            }
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -335,27 +558,6 @@
                     });
                 }
             });
-        });
-        
-        // GSAP animations
-        gsap.from('.fade-in', {
-            duration: 1,
-            y: 50,
-            opacity: 0,
-            stagger: 0.2,
-            ease: 'power2.out'
-        });
-        
-        gsap.from('.hover-lift', {
-            duration: 0.8,
-            y: 30,
-            opacity: 0,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: '.hover-lift',
-                start: 'top 80%'
-            }
         });
     </script>
 </body>
