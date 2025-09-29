@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genomics Innovation - BIOMEDICAL</title>
+    <meta name="description" content="Revolutionary genomic analysis technologies for precision medicine and personalized healthcare">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            to { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-pink-400">BIOMEDICAL</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../index.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="../products/ai-diagnostics.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">AI Diagnostics</a>
+                        <a href="../products/medical-imaging.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Medical Imaging</a>
+                        <a href="genomics.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Genomics</a>
+                        <a href="../pages/product/pricing.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <a href="../dashboard/index.html" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-800">
+                <a href="../index.html" class="text-white hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="../products/ai-diagnostics.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">AI Diagnostics</a>
+                <a href="../products/medical-imaging.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Medical Imaging</a>
+                <a href="genomics.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Genomics</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-purple-500/20 text-purple-400 text-sm font-medium mb-6">
+                        <i class="fas fa-dna mr-2"></i>
+                        Genomics Innovation
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
+                        <span class="text-white">Revolutionary</span><br>
+                        <span class="text-purple-400">Genomic</span><br>
+                        <span class="text-blue-400">Analysis</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Pioneering genomic technologies for precision medicine, including novel sequencing methods, variant interpretation, and pharmacogenomic applications.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="../dashboard/index.html" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 pulse-glow">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Learn More
+                        </a>
+                        <a href="../pages/product/pricing.html" class="glass-effect text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            View Pricing
+                        </a>
+                        <a href="../../index.html" class="inline-flex items-center px-6 py-4 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-lg font-semibold rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                            <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                            <span class="sm:hidden">M.Y Eng</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="relative">
+                        <div class="glass-effect rounded-2xl p-8 hover-lift">
+                            <div class="text-center mb-6">
+                                <div class="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-dna text-white text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Genomics Engine</h3>
+                                <p class="text-gray-300">Next-generation sequencing analysis</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-purple-400">Next-Gen</div>
+                                    <div class="text-sm text-gray-400">Sequencing</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-blue-400">Variant</div>
+                                    <div class="text-sm text-gray-400">Analysis</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-emerald-400">Pharmacogenomics</div>
+                                    <div class="text-sm text-gray-400">Optimized</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-orange-400">Precision</div>
+                                    <div class="text-sm text-gray-400">Medicine</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-800 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Analysis Status</span>
+                                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 97%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Genomics Features -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Genomics Innovation Features</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Cutting-edge genomic technologies for precision medicine</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-microscope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Next-Gen Sequencing</h3>
+                    <p class="text-gray-300 mb-6">Advanced sequencing technologies for comprehensive genomic analysis</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Whole genome sequencing</li>
+                        <li>• Exome sequencing</li>
+                        <li>• RNA sequencing</li>
+                        <li>• Single-cell analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-search text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Variant Analysis</h3>
+                    <p class="text-gray-300 mb-6">Comprehensive variant interpretation and pathogenicity assessment</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• SNV detection</li>
+                        <li>• CNV analysis</li>
+                        <li>• Structural variants</li>
+                        <li>• Pathogenicity scoring</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-pills text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Pharmacogenomics</h3>
+                    <p class="text-gray-300 mb-6">Personalized medicine through drug response prediction and optimization</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Drug metabolism</li>
+                        <li>• Response prediction</li>
+                        <li>• Dosage optimization</li>
+                        <li>• Adverse reactions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Applications -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Research Applications</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Advanced genomic research applications and methodologies</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-dna text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Population Genomics</h3>
+                    <p class="text-gray-300 mb-6">Large-scale population studies and genetic diversity analysis</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">GWAS</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Population Studies</span>
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm">Diversity</span>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-vial text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Cancer Genomics</h3>
+                    <p class="text-gray-300 mb-6">Comprehensive cancer genomic analysis and biomarker discovery</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Tumor Analysis</span>
+                        <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm">Biomarkers</span>
+                        <span class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm">Therapy</span>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Rare Disease Genomics</h3>
+                    <p class="text-gray-300 mb-6">Diagnosis and research for rare genetic diseases and conditions</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm">Diagnosis</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Rare Diseases</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Research</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Metrics -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Genomics Metrics</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Proven results from our genomics innovation platform</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-dna text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-purple-400 mb-2">99.9%</div>
+                    <p class="text-gray-300">Sequencing Accuracy</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-blue-400 mb-2">24h</div>
+                    <p class="text-gray-300">Analysis Time</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-database text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-emerald-400 mb-2">10K+</div>
+                    <p class="text-gray-300">Genomes Analyzed</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-orange-400 mb-2">100%</div>
+                    <p class="text-gray-300">HIPAA Compliant</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Revolutionary genomics innovation platform for precision medicine.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../products/ai-diagnostics.html" class="text-gray-400 hover:text-pink-400">AI Diagnostics</a></li>
+                        <li><a href="../products/medical-imaging.html" class="text-gray-400 hover:text-pink-400">Medical Imaging</a></li>
+                        <li><a href="../products/biosensing.html" class="text-gray-400 hover:text-pink-400">Biosensing</a></li>
+                        <li><a href="../dashboard/index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Research</h4>
+                    <ul class="space-y-2">
+                        <li><a href="genomics.html" class="text-gray-400 hover:text-pink-400">Genomics</a></li>
+                        <li><a href="biosensor.html" class="text-gray-400 hover:text-pink-400">Biosensor</a></li>
+                        <li><a href="medical-imaging.html" class="text-gray-400 hover:text-pink-400">Medical Imaging</a></li>
+                        <li><a href="ai-research.html" class="text-gray-400 hover:text-pink-400">AI Research</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../pages/support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="../docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="../pages/company/contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                        <li><a href="../pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="../pages/legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="../pages/legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="../pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>

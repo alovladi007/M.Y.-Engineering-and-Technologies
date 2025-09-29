@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security & Compliance - BIOMEDICAL</title>
+    <meta name="description" content="HIPAA-aligned controls with encryption and audit trails for enterprise healthcare security">
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+            to { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-pink-400">BIOMEDICAL</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../index.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="../products/ai-diagnostics.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">AI Diagnostics</a>
+                        <a href="../products/medical-imaging.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Medical Imaging</a>
+                        <a href="security.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Security</a>
+                        <a href="../pages/product/pricing.html" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <a href="../dashboard/index.html" class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-pink-400 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-800">
+                <a href="../index.html" class="text-white hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="../products/ai-diagnostics.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">AI Diagnostics</a>
+                <a href="../products/medical-imaging.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Medical Imaging</a>
+                <a href="security.html" class="text-gray-300 hover:text-pink-400 block px-3 py-2 rounded-md text-base font-medium">Security</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-medium mb-6">
+                        <i class="fas fa-shield-alt mr-2"></i>
+                        Security & Compliance
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
+                        <span class="text-white">Enterprise</span><br>
+                        <span class="text-emerald-400">Healthcare</span><br>
+                        <span class="text-blue-400">Security</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                        Comprehensive security and compliance platform with HIPAA-aligned controls, end-to-end encryption, audit trails, and regulatory compliance for healthcare organizations.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="../dashboard/index.html" class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105 pulse-glow">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Launch Security Platform
+                        </a>
+                        <a href="../pages/product/pricing.html" class="glass-effect text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-chart-line mr-2"></i>
+                            View Pricing
+                        </a>
+                        <a href="../../index.html" class="inline-flex items-center px-6 py-4 bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 text-white text-lg font-semibold rounded-lg border border-slate-500 hover:border-slate-400 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl">
+                            <span class="hidden sm:inline">Back to M.Y Engineering</span>
+                            <span class="sm:hidden">M.Y Eng</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="relative">
+                        <div class="glass-effect rounded-2xl p-8 hover-lift">
+                            <div class="text-center mb-6">
+                                <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">Security Engine</h3>
+                                <p class="text-gray-300">HIPAA-compliant security platform</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-emerald-400">HIPAA</div>
+                                    <div class="text-sm text-gray-400">Compliant</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-blue-400">AES-256</div>
+                                    <div class="text-sm text-gray-400">Encryption</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-purple-400">Zero-Trust</div>
+                                    <div class="text-sm text-gray-400">Architecture</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl font-bold text-orange-400">SOC 2</div>
+                                    <div class="text-sm text-gray-400">Certified</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-slate-800 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm text-gray-400">Security Status</span>
+                                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                                </div>
+                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Features -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Security & Compliance Features</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Comprehensive security controls for healthcare data protection</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-lock text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">End-to-End Encryption</h3>
+                    <p class="text-gray-300 mb-6">AES-256 encryption for data at rest and in transit with key management</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• AES-256 encryption</li>
+                        <li>• TLS 1.3 protocols</li>
+                        <li>• Key management</li>
+                        <li>• Data integrity</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-clipboard-list text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Audit Logging</h3>
+                    <p class="text-gray-300 mb-6">Comprehensive audit trails with immutable logging and compliance reporting</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• Immutable logs</li>
+                        <li>• Compliance reporting</li>
+                        <li>• Real-time monitoring</li>
+                        <li>• Forensic analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">BAA Support</h3>
+                    <p class="text-gray-300 mb-6">Business Associate Agreement support with HIPAA compliance documentation</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• BAA templates</li>
+                        <li>• Compliance documentation</li>
+                        <li>• Legal support</li>
+                        <li>• Risk assessment</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-gavel text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Regulatory Compliance</h3>
+                    <p class="text-gray-300 mb-6">Comprehensive compliance with healthcare regulations and standards</p>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li>• HIPAA compliance</li>
+                        <li>• SOC 2 certification</li>
+                        <li>• GDPR compliance</li>
+                        <li>• FDA regulations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance Standards -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Compliance Standards</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Certified compliance with healthcare and security standards</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-certificate text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">HIPAA Compliance</h3>
+                    <p class="text-gray-300 mb-6">Full compliance with Health Insurance Portability and Accountability Act</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm">Administrative</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Physical</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Technical</span>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">SOC 2 Certification</h3>
+                    <p class="text-gray-300 mb-6">Service Organization Control 2 certification for security and availability</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Security</span>
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm">Availability</span>
+                        <span class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm">Confidentiality</span>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-8 hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">GDPR Compliance</h3>
+                    <p class="text-gray-300 mb-6">General Data Protection Regulation compliance for international operations</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">Data Protection</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Privacy Rights</span>
+                        <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-sm">Consent</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Metrics -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Security Metrics</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Proven security performance and compliance metrics</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-emerald-400 mb-2">100%</div>
+                    <p class="text-gray-300">HIPAA Compliant</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-lock text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-blue-400 mb-2">AES-256</div>
+                    <p class="text-gray-300">Encryption Standard</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-purple-400 mb-2">24/7</div>
+                    <p class="text-gray-300">Security Monitoring</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6 text-center hover-lift">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-certificate text-white text-2xl"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-orange-400 mb-2">SOC 2</div>
+                    <p class="text-gray-300">Certified</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-pink-400 mb-4">BIOMEDICAL</h3>
+                    <p class="text-gray-400 mb-4">Enterprise-grade security and compliance platform for healthcare.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../products/ai-diagnostics.html" class="text-gray-400 hover:text-pink-400">AI Diagnostics</a></li>
+                        <li><a href="../products/medical-imaging.html" class="text-gray-400 hover:text-pink-400">Medical Imaging</a></li>
+                        <li><a href="../products/biosensing.html" class="text-gray-400 hover:text-pink-400">Biosensing</a></li>
+                        <li><a href="../dashboard/index.html" class="text-gray-400 hover:text-pink-400">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Solutions</h4>
+                    <ul class="space-y-2">
+                        <li><a href="radiology.html" class="text-gray-400 hover:text-pink-400">Radiology</a></li>
+                        <li><a href="security.html" class="text-gray-400 hover:text-pink-400">Security</a></li>
+                        <li><a href="analytics.html" class="text-gray-400 hover:text-pink-400">Analytics</a></li>
+                        <li><a href="integration.html" class="text-gray-400 hover:text-pink-400">Integration</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../pages/support/help-center.html" class="text-gray-400 hover:text-pink-400">Help Center</a></li>
+                        <li><a href="../docs/index.html" class="text-gray-400 hover:text-pink-400">Documentation</a></li>
+                        <li><a href="../pages/company/contact.html" class="text-gray-400 hover:text-pink-400">Contact</a></li>
+                        <li><a href="../pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2024 BIOMEDICAL. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 md:mt-0">
+                        <a href="../pages/legal/privacy.html" class="text-gray-400 hover:text-pink-400 text-sm">Privacy Policy</a>
+                        <a href="../pages/legal/terms.html" class="text-gray-400 hover:text-pink-400 text-sm">Terms of Service</a>
+                        <a href="../pages/legal/compliance.html" class="text-gray-400 hover:text-pink-400 text-sm">Compliance</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-slate-900/95');
+            } else {
+                nav.classList.remove('bg-slate-900/95');
+            }
+        });
+    </script>
+</body>
+</html>
