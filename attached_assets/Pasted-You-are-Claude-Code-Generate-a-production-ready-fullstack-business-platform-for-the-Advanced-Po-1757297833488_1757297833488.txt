@@ -1,0 +1,215 @@
+You are Claude Code. Generate a production‑ready **fullstack business platform** for the Advanced Power Electronics suite (SIM + HIL + SST + CCS + Data‑Center Energy), covering **client/user portal** and **administrator/backoffice**, plus **billing, quotas, SSO, support, and compliance**. Produce actual source files (no placeholders). Keep all prior technical features (simulation kernels, HIL, SST, CANopen, CCS/OCPP, dc‑energy collectors) and wrap them in a multi‑tenant SaaS with enterprise controls.
+
+\================================
+GLOBAL REQUIREMENTS & MONOREPO
+==============================
+
+* **Monorepo**: pnpm + turbo. Workspaces:
+
+  * apps/
+
+    * **web** — client portal (Next.js 14 App Router, TS, Tailwind, shadcn/ui, TanStack Query, Zustand, socket.io‑client)
+    * **admin** — administrator & support console (Next.js 14, same stack)
+    * **marketing** — public site (Next.js static; MDX docs/blog via Contentlayer)
+    * **api** — NestJS 10 gateway (REST + WS), RBAC, quotas, rate‑limits, audit
+    * **docs** — Docusaurus with architecture & compliance guides
+  * services/
+
+    * **sim** (FastAPI) — physics kernels (boost, LLC, 3‑phase SVPWM/FOC, PV MPPT, NPC3L, DAB/MFT, grid‑forming/following)
+    * **ml** (FastAPI) — predictive maintenance, anomaly, MPC/RL, SST optimizer
+    * **hil-agent** (FastAPI asyncio) — Pi MQTT↔SocketCAN bridge with CANopen mode
+    * **ccs** (FastAPI) — ISO 15118/DIN 70121/IEC 61851 state machines, EVSE controller
+    * **ocpp** (Python WS) — OCPP 1.6J/2.0.1 minimal backend
+    * **dc-energy** (FastAPI) — NVML/DCGM, RAPL, IPMI/Redfish, PMBus collectors + forecaster + MPC power‑caps
+    * **stream** (Node) — MQTT↔WS bridge, (optional) Kafka producer
+  * infra/
+
+    * docker‑compose.yml (local dev), docker‑compose.hil.yml (adds hil‑agent), k8s/ (Helm charts for prod)
+    * init‑sql/ (Postgres/Timescale schema, RLS policies, cAggs)
+    * terraform/ (cloud infra for prod: k8s, DB, object storage, Redis, MQTT, secrets)
+  * packages/
+
+    * **ui** (shared components), **schemas** (zod & pydantic), **eslint‑config**, **tsconfig**
+  * firmware/
+
+    * **control‑fw** (STM32G4; PWM/ADC/FOC/DC‑DC; CAN FD; CiA‑402 glue; safety)
+  * shared/
+
+    * **can/** (bench.dbc + bench.eds), **assets/** (logos), **legal/** (ToS/Privacy/BAA templates)
+
+* **Core Infra**: Postgres 16 + TimescaleDB; Redis; Mosquitto (MQTT); optional Kafka; object storage (S3); OpenTelemetry; mTLS.
+
+* **Coding Standards**: strict TS/pyproject; unit+property tests; Playwright e2e; CI via GitHub Actions; SBOMs; container signing (cosign).
+
+\====================
+MULTI‑TENANCY & AUTH
+====================
+
+* **Auth**: next‑auth (email + Google), **Admin SSO**: SAML/OIDC; API tokens (service accounts).
+* **Tenants**: `orgs` table; **RLS** enforced by `org_id` on all data tables including Timescale hypertables.
+* **RBAC**: roles {`org_admin`,`engineer`,`viewer`,`billing_admin`,`support`}; platform roles {`platform_admin`,`support_agent`,`auditor`} in admin app.
+* **Audit**: append‑only audit\_log with actor, resource, diff hash; signed with org key.
+
+\============
+BILLING & SKUs
+==============
+
+* **Stripe** integration (test keys in .env.example):
+
+  * Plans: `SIM-Cloud`, `HIL-Kit` (device fee), `Charging-Stack`, `DataCenter-OS`, `Enterprise` add‑ons (SAML/SCIM, VPC peering, priority support)
+  * **Usage metering**: per‑run sim minutes, telemetry ingress GB, bench device‑hours, racks monitored, CCS sessions. Export usage to Stripe Metered billing nightly.
+  * Webhooks: upgrade/downgrade, proration, dunning; seat management; invoices.
+* **Quotas & Rate Limits**: per plan; enforced at gateway with Redis‑backed counters; surfaced in UI.
+
+\====================
+SUPPORT & WORKFLOWS
+===================
+
+* **Ticketing**: lightweight built‑in (Postgres) + email piping OR optional Zendesk integration. Tickets linked to runs/devices.
+* **KBase**: marketing/docs MDX surfaced in app search; semantic search (simple BM25 + hybrid vector optional).
+* **In‑app Guides**: onboarding checklists, safety attestations (HIL), CCS sandbox flows.
+
+\====================
+SECURITY & COMPLIANCE
+=====================
+
+* SOC 2 / ISO 27001 readiness: logging, access reviews, backups, disaster recovery docs, vulnerability scans.
+* **Device Security**: Pi enrollment with mTLS client certs; signed firmware; OTA updates; command allow‑list.
+* **Data Governance**: retention policies per data class; tenant data export/delete; PII minimization.
+
+\===============================
+DATABASE SCHEMA (EXCERPT, SQL)
+==============================
+
+* orgs(id, name, plan, created\_at)
+* users(id, email, name)
+* org\_users(org\_id, user\_id, role)
+* projects(id, org\_id, name, domain, notes)
+* designs(id, project\_id, topology, parameters jsonb, controller jsonb, created\_by)
+* runs(id, org\_id, project\_id, design\_id, mode, status, started\_at, finished\_at, summary jsonb)
+* telemetry(time timestamptz, org\_id, run\_id, signal text, value double precision)  -- Timescale hypertable
+* bench\_devices(id, org\_id, label, mode, can\_profile, if\_name, last\_seen\_at)
+* bench\_can(time timestamptz, org\_id, device\_id, can\_id int, dlc int, data bytea, ts\_hw bigint) -- hypertable
+* bench\_signals(time timestamptz, org\_id, device\_id, signal text, value double precision) -- hypertable
+* invoices(id, org\_id, stripe\_invoice\_id, amount\_cents, period\_start, period\_end, status)
+* usage\_counters(org\_id, day, metric, value)
+* tickets(id, org\_id, subject, status, priority, created\_by, assigned\_to, run\_id, device\_id)
+* audits(id, org\_id, actor\_id, action, resource, resource\_id, diff jsonb, hash, ts)
+
+Apply **RLS**: `USING (org_id = current_setting('app.org_id')::uuid)`; set via JWT claims at gateway per request.
+
+\======================
+API GATEWAY (NestJS)
+====================
+
+* Modules: auth, orgs, users, billing, projects, designs, runs, telemetry, bench, sst, ccs, ocpp, dc‑energy, tickets, audits.
+* Global interceptors: org context injector (RLS), rate‑limit, quota metering, audit writer.
+* REST + WS routes (representative):
+
+  * `POST /v1/projects` (create) | `GET /v1/projects/:id`
+  * `POST /v1/sim/run` (dispatch to services/sim)
+  * `WS /v1/runs/:id/stream` (waveforms)
+  * `POST /v1/bench/:device/arm|run|stop` | `POST /v1/bench/:device/sp`
+  * `POST /v1/ml/optimize/sst` | `POST /v1/ml/train`
+  * `POST /v1/ccs/session/start` | `WS /v1/ccs/session/:id`
+  * `GET /v1/billing/usage` | `POST /v1/billing/checkout`
+  * `POST /v1/support/tickets`
+
+\=========================
+CLIENT WEB APP (Next.js)
+========================
+
+* **Areas**:
+
+  * **Dashboard**: project cards (EV traction, OBC, DCFC, PV/Storage, SST, Data‑Center). Usage & quota widgets.
+  * **Design Studio**: calculators (inductor ripple, LLC tank, LCL), device chooser (SiC/GaN curves), MFT designer.
+  * **Simulation Runner**: param forms, live charts (Recharts), CSV/PDF exports.
+  * **Bench**: HIL control (ARM/RUN/STOP), setpoints, fault logs, live scopes; safety checklist modal.
+  * **Charging**: ISO/DIN sandbox; handshake timeline; DC setpoints; OCPP link.
+  * **Data‑Center**: PUE/ITUE, rack explorer, node detail (NVML/DCGM), power‑cap MPC.
+  * **Billing**: plan selector, usage charts (Timescale cAggs), invoices.
+  * **Support**: tickets + knowledge base search.
+* **AuthZ**: UI hides actions by role; per‑org theme/branding.
+
+\=============================
+ADMIN APP (Next.js Backoffice)
+==============================
+
+* **Tenant Ops**: org search, impersonate (with audit), plan changes, feature flags.
+* **Device Fleet**: enrollment approvals, firmware versions, online status, last heartbeat.
+* **Compliance**: artifact vault (SBOMs, pentest reports), access logs, data retention jobs.
+* **Billing Ops**: invoice reconciliation, usage anomalies, dunning queue.
+* **Support**: ticket triage, run/device drill‑down, canned responses.
+* **Protocol Labs**: CCS/OCPP conformance runs, CANopen EDS generator, DBC/OD diff viewer.
+
+\====================
+BILLING IMPLEMENTATION
+======================
+
+* Stripe Checkout/Portal components in client app; webhooks in api.
+* Usage metering jobs:
+
+  * every 5 min: increment counters from runs/telemetry/racks
+  * nightly: push to Stripe metered usage
+* Over‑quota behavior: degrade non‑critical features; show upgrade callouts.
+
+\===================
+QUOTAS (EXAMPLES)
+=================
+
+* Free: 200 sim minutes/mo, 1 device, 1 project, 5 GB telemetry, no CCS/OCPP.
+* Pro: 5,000 sim min, 5 devices, 20 projects, 200 GB, CCS sandbox, data‑center basic.
+* Enterprise: custom; SAML/SCIM, VPC, priority support, CCS/OCPP conformance runner.
+
+\=====================
+OBSERVABILITY & SRE
+===================
+
+* OpenTelemetry SDKs wired; exporters to Tempo/Prometheus/Grafana. SLOs: API 99.9%, ingest loss <1% p95.
+* Backups: nightly DB + object storage; restore drills; disaster runbook.
+
+\=================
+TESTING STRATEGY
+================
+
+* **Unit**: kernels, controllers, parsers (ISO, CANopen, PMBus).
+* **Property**: numerical stability; ZVS map invariants; VRM transient bounds.
+* **E2E**: Playwright flows (sign‑up→project→sim→report; HIL smoke via vcan0; CCS sandbox).
+* **Contract**: api↔services OpenAPI diff checks; admin impersonation guard tests.
+
+\=====================
+SEED & DEMO CONTENT
+===================
+
+* Demo org with: traction inverter project; SST DCFC project; PV+Storage microgrid; Data‑center rack set.
+* Pre‑baked runs with charts; CCS sessions (DIN + ISO) traces; CANopen OD/EDS.
+* Sample invoices & usage.
+
+\========================
+DEPLOYMENT & SECRETS
+====================
+
+* Local: `docker compose up --build` (web+admin+api+services+db+redis+mosquitto)
+* Prod: Helm charts; secrets via SOPS or HashiCorp Vault; signed images.
+* `.env.example` for each app/service including STRIPE keys, OAUTH, DB URIs, MQTT, NVML toggles.
+
+\=====================
+DELIVERABLES
+============
+
+1. Full monorepo code implementing **client**, **admin**, **marketing**, **gateway**, and all services.
+2. Database migrations with **RLS** and cAggs.
+3. Stripe integration with metered usage.
+4. Seed scripts + demo tours.
+5. CI pipeline with tests passing.
+6. Docs: admin runbook, SOC2 starter controls, safety manual, charging & fieldbus guides.
+
+\=====================
+FINAL INSTRUCTIONS
+==================
+
+* Generate all files with real, runnable code.
+* Keep comments concise but include equations near control kernels.
+* Make defaults safe (LV when HIL).
+* Provide `Makefile` for `dev`, `test`, `seed`, `fmt`, `migrate`.
+* Ensure one‑command startup works and both **client** and **admin** portals are reachable with seeded users.
