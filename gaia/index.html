@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAIA: Green Adaptive Infrastructure Automation</title>
-    <meta name="description" content="Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration and carbon-aware scheduling">
+    <meta name="description" content="Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling">
     
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,6 +48,114 @@
             transform: translateY(-8px); 
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
         }
+        
+        .fade-in { animation: fadeIn 0.8s ease-in; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+            to { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+        }
+        
+        .energy-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 25%, #047857 50%, #065f46 75%, #064e3b 100%);
+        }
+        
+        .carbon-gradient {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 25%, #15803d 50%, #166534 75%, #14532d 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-green-400">GAIA</h1>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <div class="relative group">
+                            <button class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                Products <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="dashboard/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Dashboard</a>
+                                <a href="analytics/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Analytics</a>
+                                <a href="controller/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Controller</a>
+                                <a href="api/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">API</a>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <button class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                Company <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="pages/company/about.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">About</a>
+                                <a href="pages/company/blog.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Blog</a>
+                                <a href="pages/company/careers.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Careers</a>
+                                <a href="pages/company/contact.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Contact</a>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <button class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                                Support <i class="fas fa-chevron-down ml-1"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                <a href="pages/support/help-center.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Help Center</a>
+                                <a href="docs/index.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Documentation</a>
+                                <a href="pages/support/community.html" class="block px-4 py-2 text-sm text-gray-300 hover:text-green-400 hover:bg-slate-700">Community</a>
+                            </div>
+                        </div>
+                        <a href="pages/product/pricing.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <a href="dashboard/index.html" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                        Launch Dashboard
+                    </a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white hover:text-green-400 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-slate-800">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="text-white hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="dashboard/index.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+                <a href="analytics/index.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Analytics</a>
+                <a href="controller/index.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Controller</a>
+                <a href="api/index.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">API</a>
+                <a href="pages/company/about.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="pages/company/blog.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="pages/company/careers.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Careers</a>
+                <a href="pages/company/contact.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <a href="pages/support/help-center.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Help Center</a>
+                <a href="docs/index.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Documentation</a>
+                <a href="pages/support/community.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Community</a>
+                <a href="pages/product/pricing.html" class="text-gray-300 hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+            </div>
+        </div>
+    </nav>
         
         .pulse-animation {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;

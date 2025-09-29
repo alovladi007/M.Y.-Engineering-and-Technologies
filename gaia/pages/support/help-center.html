@@ -3,117 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAIA Help Center - Green Adaptive Infrastructure Automation</title>
+    <title>GAIA Help Center - Support & Documentation</title>
+    <meta name="description" content="Get help with GAIA's energy optimization platform. Find documentation, tutorials, and support resources">
+    
+    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <style>
-        .energy-gradient { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
-        .glass-effect { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        
+        .gradient-hero { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .search-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-white">
     <!-- Navigation -->
-    <nav class="glass-effect border-b border-slate-700 sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-8">
-                    <a href="../../index.html" class="text-2xl font-bold energy-gradient bg-clip-text text-transparent">
-                        GAIA
-                    </a>
-                    <div class="hidden md:flex space-x-6">
-                        <a href="../../index.html" class="text-slate-300 hover:text-white">Home</a>
-                        <a href="../product/features.html" class="text-slate-300 hover:text-white">Features</a>
-                        <a href="../product/pricing.html" class="text-slate-300 hover:text-white">Pricing</a>
-                        <a href="../product/api.html" class="text-slate-300 hover:text-white">API</a>
-                        <a href="../../docs/index.html" class="text-slate-300 hover:text-white">Documentation</a>
-                    </div>
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="text-2xl font-bold text-green-400">GAIA</a>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a href="../../../index.html" class="text-slate-300 hover:text-white">
-                        ← Back to M.Y
-                    </a>
-                    <a href="../product/pricing.html" class="px-6 py-2 energy-gradient text-white font-semibold rounded-lg hover:opacity-90 transition-all">
-                        Get Started
-                    </a>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="../../index.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="../company/about.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="../product/pricing.html" class="text-white hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="../../dashboard/index.html" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">Dashboard</a>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6" data-aos="fade-up">
-                Help
-                <span class="energy-gradient bg-clip-text text-transparent">Center</span>
-            </h1>
-            <p class="text-xl text-slate-400 max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="200">
-                Find answers to common questions and get the support you need to optimize your energy consumption.
-            </p>
-            
-            <!-- Search Bar -->
-            <div class="max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="400">
-                <div class="glass-effect rounded-2xl p-4 flex items-center space-x-4">
-                    <i class="fas fa-search text-slate-400"></i>
-                    <input type="text" placeholder="Search for help articles..." class="flex-1 bg-transparent text-white placeholder-slate-400 focus:outline-none">
-                    <button class="px-6 py-2 energy-gradient text-white rounded-lg hover:opacity-90 transition-all">
-                        Search
-                    </button>
+    <section class="gradient-hero pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold text-white mb-6">Help Center</h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Find answers, documentation, and support resources for GAIA's energy optimization platform
+                </p>
+                
+                <!-- Search Box -->
+                <div class="max-w-2xl mx-auto">
+                    <div class="search-box rounded-lg p-4 flex items-center">
+                        <i class="fas fa-search text-gray-400 mr-3"></i>
+                        <input type="text" placeholder="Search documentation, tutorials, and FAQs..." class="bg-transparent text-white placeholder-gray-400 flex-1 focus:outline-none">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-semibold transition-colors">
+                            Search
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Quick Help -->
-    <section class="py-20 bg-slate-900">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-6">Quick Help</h2>
-                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
-                    Get started quickly with these popular topics
-                </p>
+    <!-- Quick Links -->
+    <section class="py-16 bg-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Quick Links</h2>
+                <p class="text-gray-400">Get started quickly with these popular resources</p>
             </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-rocket text-2xl text-white"></i>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="../../docs/index.html" class="glass-effect rounded-xl p-6 hover-lift text-center">
+                    <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-book text-white text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Getting Started</h3>
-                    <p class="text-slate-400 mb-6">Learn how to deploy and configure GAIA for your infrastructure.</p>
-                    <a href="../../docs/index.html#getting-started" class="text-blue-400 hover:text-blue-300 transition-colors">Read Guide →</a>
+                    <h3 class="text-lg font-semibold text-white mb-2">Documentation</h3>
+                    <p class="text-gray-400 text-sm">Complete API reference and guides</p>
+                </a>
+                
+                <a href="#getting-started" class="glass-effect rounded-xl p-6 hover-lift text-center">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-rocket text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Getting Started</h3>
+                    <p class="text-gray-400 text-sm">Quick setup and first steps</p>
+                </a>
+                
+                <a href="#tutorials" class="glass-effect rounded-xl p-6 hover-lift text-center">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-play text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Tutorials</h3>
+                    <p class="text-gray-400 text-sm">Step-by-step video guides</p>
+                </a>
+                
+                <a href="#api-reference" class="glass-effect rounded-xl p-6 hover-lift text-center">
+                    <div class="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-code text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">API Reference</h3>
+                    <p class="text-gray-400 text-sm">Developer documentation</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="getting-started" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Getting Started with GAIA</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Follow these steps to set up GAIA in your environment</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="glass-effect rounded-xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="text-white font-bold text-sm">1</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-2">Install GAIA Controller</h3>
+                                <p class="text-gray-300 mb-4">Deploy the GAIA controller in your Kubernetes cluster using Helm or kubectl.</p>
+                                <div class="bg-slate-800 rounded-lg p-4">
+                                    <code class="text-green-400 text-sm">helm install gaia gaia/gaia --namespace gaia-system</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="text-white font-bold text-sm">2</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-2">Configure Energy Monitoring</h3>
+                                <p class="text-gray-300 mb-4">Set up energy monitoring for your nodes and workloads.</p>
+                                <div class="bg-slate-800 rounded-lg p-4">
+                                    <code class="text-green-400 text-sm">kubectl apply -f energy-monitoring.yaml</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-effect rounded-xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                                <span class="text-white font-bold text-sm">3</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-2">Access Dashboard</h3>
+                                <p class="text-gray-300 mb-4">Launch the GAIA dashboard to monitor and control your energy optimization.</p>
+                                <a href="../../dashboard/index.html" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                                    Launch Dashboard
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-cogs text-2xl text-white"></i>
+                
+                <div class="glass-effect rounded-xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-6">Prerequisites</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Kubernetes cluster (v1.20+)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Helm 3.x installed</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">kubectl configured</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Node energy monitoring enabled</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">Minimum 2 CPU cores per node</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check text-green-400 mr-3"></i>
+                            <span class="text-gray-300">4GB RAM per node</span>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Configuration</h3>
-                    <p class="text-slate-400 mb-6">Configure optimization policies and energy targets for your workloads.</p>
-                    <a href="../../docs/index.html#configuration" class="text-blue-400 hover:text-blue-300 transition-colors">Read Guide →</a>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-chart-line text-2xl text-white"></i>
+                    
+                    <div class="mt-8 p-4 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+                        <div class="flex items-start">
+                            <i class="fas fa-info-circle text-blue-400 mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="text-blue-400 font-semibold mb-2">Need Help?</h4>
+                                <p class="text-gray-300 text-sm">Our support team is available 24/7 to help you get started. Contact us for personalized assistance.</p>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Monitoring</h3>
-                    <p class="text-slate-400 mb-6">Set up monitoring and access energy consumption dashboards.</p>
-                    <a href="../../docs/index.html#monitoring" class="text-blue-400 hover:text-blue-300 transition-colors">Read Guide →</a>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-tools text-2xl text-white"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-4">Troubleshooting</h3>
-                    <p class="text-slate-400 mb-6">Common issues and how to resolve them quickly.</p>
-                    <a href="../../docs/index.html#troubleshooting" class="text-blue-400 hover:text-blue-300 transition-colors">Read Guide →</a>
                 </div>
             </div>
         </div>
@@ -121,53 +231,41 @@
 
     <!-- FAQ Section -->
     <section class="py-20 bg-slate-800">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-6">Frequently Asked Questions</h2>
-                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
-                    Find answers to the most common questions about GAIA
-                </p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Find answers to common questions about GAIA</p>
             </div>
-
-            <div class="max-w-4xl mx-auto space-y-6">
-                <div class="glass-effect rounded-2xl p-8" data-aos="fade-up">
-                    <h3 class="text-xl font-bold mb-4">How much energy savings can I expect with GAIA?</h3>
-                    <p class="text-slate-400">
-                        Most organizations see 15-30% energy reduction within the first month of deployment. 
-                        The exact savings depend on your workload patterns and current optimization level.
-                    </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">How much energy can GAIA save?</h3>
+                    <p class="text-gray-300">GAIA typically reduces energy consumption by 15-30% depending on your workload patterns and infrastructure configuration. Most customers see savings of 20-25%.</p>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-xl font-bold mb-4">Will GAIA affect my application performance?</h3>
-                    <p class="text-slate-400">
-                        GAIA is designed to maintain your SLAs while optimizing energy consumption. 
-                        Our PID controllers ensure latency impact is typically less than 5%.
-                    </p>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">Does GAIA affect application performance?</h3>
+                    <p class="text-gray-300">No, GAIA is designed to optimize energy consumption without impacting application performance. Our algorithms prioritize maintaining SLA requirements.</p>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-xl font-bold mb-4">What Kubernetes versions are supported?</h3>
-                    <p class="text-slate-400">
-                        GAIA supports Kubernetes 1.24 and above. We test with the latest stable releases 
-                        and provide compatibility updates for new versions.
-                    </p>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">What Kubernetes versions are supported?</h3>
+                    <p class="text-gray-300">GAIA supports Kubernetes versions 1.20 and above. We test extensively with the latest stable releases and provide compatibility updates.</p>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-xl font-bold mb-4">How does the green window scheduling work?</h3>
-                    <p class="text-slate-400">
-                        Green windows automatically adjust power caps and batch sizes during low-carbon 
-                        energy periods (typically overnight) to maximize efficiency while maintaining performance.
-                    </p>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">Can I use GAIA with cloud providers?</h3>
+                    <p class="text-gray-300">Yes, GAIA works with all major cloud providers including AWS, GCP, Azure, and on-premise Kubernetes distributions.</p>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="text-xl font-bold mb-4">Can I customize optimization policies?</h3>
-                    <p class="text-slate-400">
-                        Yes! GAIA provides flexible EnergyPolicy CRDs that allow you to set custom 
-                        power caps, latency targets, and optimization parameters for different workloads.
-                    </p>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">How does carbon-aware scheduling work?</h3>
+                    <p class="text-gray-300">GAIA integrates with renewable energy APIs to schedule workloads during periods of high renewable energy availability, reducing your carbon footprint.</p>
+                </div>
+                
+                <div class="glass-effect rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-3">Is there a free trial available?</h3>
+                    <p class="text-gray-300">Yes, we offer a 14-day free trial for the Professional plan. No credit card required to get started.</p>
                 </div>
             </div>
         </div>
@@ -175,118 +273,92 @@
 
     <!-- Contact Support -->
     <section class="py-20 bg-slate-900">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-bold mb-6">Still Need Help?</h2>
-                <p class="text-xl text-slate-400 max-w-3xl mx-auto">
-                    Our support team is here to help you succeed with GAIA
-                </p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-white mb-4">Still Need Help?</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Our support team is here to help you succeed with GAIA</p>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-envelope text-2xl text-white"></i>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Email Support</h3>
-                    <p class="text-slate-400 mb-6">Get help via email with detailed responses within 24 hours.</p>
-                    <a href="mailto:support@gaia.energy" class="text-blue-400 hover:text-blue-300 transition-colors">support@gaia.energy</a>
+                    <h3 class="text-xl font-bold text-white mb-4">Email Support</h3>
+                    <p class="text-gray-300 mb-6">Get help via email within 24 hours</p>
+                    <a href="mailto:support@gaia.energy" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Contact Support
+                    </a>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-comments text-2xl text-white"></i>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-comments text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Community</h3>
-                    <p class="text-slate-400 mb-6">Join our community forum to connect with other users and experts.</p>
-                    <a href="community.html" class="text-blue-400 hover:text-blue-300 transition-colors">Join Community →</a>
+                    <h3 class="text-xl font-bold text-white mb-4">Live Chat</h3>
+                    <p class="text-gray-300 mb-6">Chat with our support team in real-time</p>
+                    <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Start Chat
+                    </button>
                 </div>
-
-                <div class="glass-effect rounded-2xl p-8 text-center hover-lift" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-16 h-16 energy-gradient rounded-xl flex items-center justify-center mx-auto mb-6">
-                        <i class="fas fa-phone text-2xl text-white"></i>
+                
+                <div class="glass-effect rounded-xl p-8 text-center hover-lift">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-calendar text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Priority Support</h3>
-                    <p class="text-slate-400 mb-6">Enterprise customers get dedicated support with SLA guarantees.</p>
-                    <a href="../company/contact.html" class="text-blue-400 hover:text-blue-300 transition-colors">Contact Sales →</a>
+                    <h3 class="text-xl font-bold text-white mb-4">Schedule Call</h3>
+                    <p class="text-gray-300 mb-6">Book a 1-on-1 session with our experts</p>
+                    <button class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Book Call
+                    </button>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-slate-900 to-slate-800">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold mb-6" data-aos="fade-up">
-                Ready to Get Started?
-            </h2>
-            <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-                Start optimizing your energy consumption today with GAIA's comprehensive platform.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center" data-aos="fade-up" data-aos-delay="400">
-                <a href="../product/pricing.html" class="px-8 py-4 energy-gradient text-white font-bold rounded-xl hover:opacity-90 transition-all transform hover:scale-105 inline-block">
-                    <i class="fas fa-play mr-2"></i>Start Free Trial
-                </a>
-                <a href="../../docs/index.html" class="px-8 py-4 border border-slate-600 text-slate-300 font-semibold rounded-xl hover:bg-slate-800 transition-all inline-block">
-                    <i class="fas fa-book mr-2"></i>View Documentation
-                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 border-t border-slate-700 py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8">
+    <footer class="bg-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-2xl font-bold energy-gradient bg-clip-text text-transparent mb-4">GAIA</h3>
-                    <p class="text-slate-400 mb-6">
-                        Green Adaptive Infrastructure Automation - Optimizing energy consumption for a sustainable future.
-                    </p>
+                    <h3 class="text-2xl font-bold text-green-400 mb-4">GAIA</h3>
+                    <p class="text-gray-400 mb-4">Green Adaptive Infrastructure Automation for sustainable computing.</p>
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Product</h3>
-                    <ul class="space-y-2 text-slate-400">
-                        <li><a href="../product/features.html" class="hover:text-white transition-colors">Features</a></li>
-                        <li><a href="../product/pricing.html" class="hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="../product/api.html" class="hover:text-white transition-colors">API</a></li>
-                        <li><a href="../../docs/index.html" class="hover:text-white transition-colors">Documentation</a></li>
+                    <h4 class="text-white font-semibold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../../dashboard/index.html" class="text-gray-400 hover:text-green-400">Dashboard</a></li>
+                        <li><a href="../../analytics/index.html" class="text-gray-400 hover:text-green-400">Analytics</a></li>
+                        <li><a href="../../controller/index.html" class="text-gray-400 hover:text-green-400">Controller</a></li>
+                        <li><a href="../../api/index.html" class="text-gray-400 hover:text-green-400">API</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Company</h3>
-                    <ul class="space-y-2 text-slate-400">
-                        <li><a href="../company/about.html" class="hover:text-white transition-colors">About</a></li>
-                        <li><a href="../company/careers.html" class="hover:text-white transition-colors">Careers</a></li>
-                        <li><a href="../company/contact.html" class="hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="../company/blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                    <h4 class="text-white font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../company/about.html" class="text-gray-400 hover:text-green-400">About</a></li>
+                        <li><a href="../company/blog.html" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="../company/careers.html" class="text-gray-400 hover:text-green-400">Careers</a></li>
+                        <li><a href="../company/contact.html" class="text-gray-400 hover:text-green-400">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Support</h3>
-                    <ul class="space-y-2 text-slate-400">
-                        <li><a href="help-center.html" class="hover:text-white transition-colors">Help Center</a></li>
-                        <li><a href="community.html" class="hover:text-white transition-colors">Community</a></li>
-                        <li><a href="status.html" class="hover:text-white transition-colors">Status</a></li>
-                        <li><a href="security.html" class="hover:text-white transition-colors">Security</a></li>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="help-center.html" class="text-gray-400 hover:text-green-400">Help Center</a></li>
+                        <li><a href="../../docs/index.html" class="text-gray-400 hover:text-green-400">Documentation</a></li>
+                        <li><a href="community.html" class="text-gray-400 hover:text-green-400">Community</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
-                <p>&copy; 2024 M.Y. Engineering and Technologies. All rights reserved.</p>
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">© 2024 GAIA. All rights reserved.</p>
             </div>
         </div>
     </footer>
-
-    <script>
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
-    </script>
 </body>
 </html>
