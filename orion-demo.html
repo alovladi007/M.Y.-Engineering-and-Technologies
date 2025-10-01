@@ -1513,23 +1513,26 @@ E`;
 
         // Initialize View
         function initializeView(view) {
-            switch(view) {
-                case 'dashboard':
-                    initDashboard();
-                    break;
-                case 'designer':
-                    init3DViewer();
-                    break;
-                case 'simulator':
-                    initSimulator();
-                    break;
-                case 'analyzer':
-                    initAnalyzer();
-                    break;
-                case 'ai-lab':
-                    initAILab();
-                    break;
-            }
+            // Initialize view-specific features after DOM update
+            setTimeout(() => {
+                switch(view) {
+                    case 'dashboard':
+                        initDashboard();
+                        break;
+                    case 'designer':
+                        init3DViewer();
+                        break;
+                    case 'simulator':
+                        initSimulator();
+                        break;
+                    case 'analyzer':
+                        initAnalyzer();
+                        break;
+                    case 'ai-lab':
+                        initAILab();
+                        break;
+                }
+            }, 100);
         }
 
         // Dashboard Initialization
@@ -1769,57 +1772,235 @@ E`;
 
         // Initialize Analyzer
         function initAnalyzer() {
-            // Initialize all charts
-            const charts = ['iv-chart', 'band-chart', 'sparams-chart', 'yield-chart', 'variation-chart'];
-            charts.forEach(id => {
-                const ctx = document.getElementById(id)?.getContext('2d');
-                if (ctx) {
-                    new Chart(ctx, {
-                        type: id.includes('yield') ? 'doughnut' : 'line',
-                        data: generateChartData(id),
-                        options: getChartOptions(id)
-                    });
-                }
-            });
-        }
+            console.log('Initializing analyzer charts...');
+            
+            // I-V Characteristics Chart
+            const ivCtx = document.getElementById('iv-chart')?.getContext('2d');
+            if (ivCtx) {
+                new Chart(ivCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 41}, (_, i) => i * 0.5),
+                        datasets: [{
+                            label: 'Vgs = 0V',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(i * 0.5 / 10) * 850),
+                            borderColor: '#00ff00',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }, {
+                            label: 'Vgs = -1V',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(i * 0.5 / 10) * 650),
+                            borderColor: '#00d4ff',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }, {
+                            label: 'Vgs = -2V',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(i * 0.5 / 10) * 400),
+                            borderColor: '#ff00ff',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } },
+                            title: { display: true, text: 'I-V Characteristics', color: '#fff' }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Vds (V)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            },
+                            y: { 
+                                title: { display: true, text: 'Id (mA/mm)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
 
-        function generateChartData(chartId) {
-            if (chartId.includes('yield')) {
-                return {
-                    labels: ['Pass', 'Fail'],
-                    datasets: [{
-                        data: [94.7, 5.3],
-                        backgroundColor: ['#00ff00', '#ff0000']
-                    }]
-                };
+            // Band Diagram Chart
+            const bandCtx = document.getElementById('band-chart')?.getContext('2d');
+            if (bandCtx) {
+                new Chart(bandCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 50}, (_, i) => i),
+                        datasets: [{
+                            label: 'Conduction Band',
+                            data: Array.from({length: 50}, (_, i) => {
+                                if (i < 20) return -2 + (i / 20) * 1.5;
+                                if (i < 30) return -0.5;
+                                return -0.5 + ((i - 30) / 20) * 2;
+                            }),
+                            borderColor: '#ff0000',
+                            borderWidth: 2,
+                            fill: false
+                        }, {
+                            label: 'Valence Band',
+                            data: Array.from({length: 50}, (_, i) => {
+                                if (i < 20) return -5.4 + (i / 20) * 1.5;
+                                if (i < 30) return -3.9;
+                                return -3.9 + ((i - 30) / 20) * 2;
+                            }),
+                            borderColor: '#0000ff',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } },
+                            title: { display: true, text: 'Energy Band Diagram', color: '#fff' }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Position (nm)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            },
+                            y: { 
+                                title: { display: true, text: 'Energy (eV)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
+
+            // S-Parameters Chart
+            const sparamsCtx = document.getElementById('sparams-chart')?.getContext('2d');
+            if (sparamsCtx) {
+                new Chart(sparamsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 20}, (_, i) => (i + 1) * 5),
+                        datasets: [{
+                            label: 'H21',
+                            data: Array.from({length: 20}, (_, i) => 30 - i * 1.5),
+                            borderColor: '#00ff00',
+                            borderWidth: 2
+                        }, {
+                            label: 'MSG/MAG',
+                            data: Array.from({length: 20}, (_, i) => 35 - i * 1.2),
+                            borderColor: '#ff00ff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } },
+                            title: { display: true, text: 'RF Performance', color: '#fff' }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Frequency (GHz)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            },
+                            y: { 
+                                title: { display: true, text: 'Gain (dB)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Yield Chart
+            const yieldCtx = document.getElementById('yield-chart')?.getContext('2d');
+            if (yieldCtx) {
+                new Chart(yieldCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pass', 'Fail'],
+                        datasets: [{
+                            data: [94.7, 5.3],
+                            backgroundColor: ['#00ff00', '#ff0000']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        }
+                    }
+                });
+            }
+
+            // Variation Chart
+            const varCtx = document.getElementById('variation-chart')?.getContext('2d');
+            if (varCtx) {
+                new Chart(varCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Vth', 'Idmax', 'gm', 'Ron', 'BV'],
+                        datasets: [{
+                            label: 'Variation (%)',
+                            data: [5.4, 4.9, 6.2, 8.1, 3.7],
+                            backgroundColor: '#00d4ff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#fff' }, grid: { color: '#333' } },
+                            y: { 
+                                title: { display: true, text: 'Variation (%)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
             }
             
-            return {
-                labels: Array.from({length: 11}, (_, i) => i * 2),
-                datasets: [{
-                    label: 'Data',
-                    data: Array.from({length: 11}, () => Math.random() * 100),
-                    borderColor: '#00d4ff',
-                    tension: 0.4
-                }]
-            };
+            console.log('Analyzer charts initialized successfully');
         }
 
-        function getChartOptions(chartId) {
-            return {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { 
-                        display: !chartId.includes('yield'),
-                        labels: { color: '#fff' } 
-                    }
-                },
-                scales: chartId.includes('yield') ? {} : {
-                    x: { ticks: { color: '#fff' }, grid: { color: '#333' } },
-                    y: { ticks: { color: '#fff' }, grid: { color: '#333' } }
-                }
-            };
+        // Analyzer helper functions
+        function loadData() {
+            alert('Data loading functionality would connect to database');
+        }
+
+        function exportResults() {
+            alert('Results would be exported as CSV/JSON');
+        }
+
+        function analyzeIV() {
+            alert('I-V curve analysis: Extracting Vth, Idmax, gm parameters');
+        }
+
+        function fitModel() {
+            alert('Fitting device model to measured data');
+        }
+
+        function extractParams() {
+            alert('Extracting device parameters from I-V characteristics');
+        }
+
+        function calculate2DEG() {
+            alert('Calculating 2DEG density from band diagram');
+        }
+
+        function showStrain() {
+            alert('Displaying strain distribution analysis');
         }
 
         // Initialize
