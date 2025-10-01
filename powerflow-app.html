@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerFlow - Power Electronics Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50" x-data="app()">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">PowerFlow</span>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <button @click="currentView = 'dashboard'" :class="currentView === 'dashboard' ? 'text-purple-600 font-semibold' : 'text-gray-600'" class="hover:text-purple-600 transition">
+                        Dashboard
+                    </button>
+                    <button @click="currentView = 'projects'" :class="currentView === 'projects' ? 'text-purple-600 font-semibold' : 'text-gray-600'" class="hover:text-purple-600 transition">
+                        Projects
+                    </button>
+                    <button @click="currentView = 'simulation'" :class="currentView === 'simulation' ? 'text-purple-600 font-semibold' : 'text-gray-600'" class="hover:text-purple-600 transition">
+                        Simulation
+                    </button>
+                    <button @click="currentView = 'analytics'" :class="currentView === 'analytics' ? 'text-purple-600 font-semibold' : 'text-gray-600'" class="hover:text-purple-600 transition">
+                        Analytics
+                    </button>
+                    <a href="powerflow.html" class="text-gray-600 hover:text-purple-600 transition">
+                        ← Exit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Dashboard View -->
+        <div x-show="currentView === 'dashboard'" class="space-y-6 slide-in">
+            <h1 class="text-3xl font-bold">Welcome to PowerFlow</h1>
+            
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600">Active Projects</span>
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold" x-text="stats.projects"></div>
+                    <div class="text-xs text-green-600">+12% from last month</div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600">Simulations Run</span>
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold" x-text="stats.simulations"></div>
+                    <div class="text-xs text-green-600">+24% from last month</div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600">Avg Efficiency</span>
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold" x-text="stats.efficiency + '%'"></div>
+                    <div class="text-xs text-green-600">+2.1% improvement</div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 shadow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-600">Cost Savings</span>
+                        <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold">$<span x-text="stats.savings"></span>K</div>
+                    <div class="text-xs text-green-600">This quarter</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-bold mb-4">Recent Activity</h2>
+                <div class="space-y-4">
+                    <template x-for="activity in recentActivity" :key="activity.id">
+                        <div class="flex items-center justify-between py-3 border-b">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center" :class="activity.type === 'simulation' ? 'bg-blue-100' : activity.type === 'optimization' ? 'bg-green-100' : 'bg-purple-100'">
+                                    <svg class="w-5 h-5" :class="activity.type === 'simulation' ? 'text-blue-600' : activity.type === 'optimization' ? 'text-green-600' : 'text-purple-600'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-medium" x-text="activity.title"></div>
+                                    <div class="text-sm text-gray-600" x-text="activity.description"></div>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-500" x-text="activity.time"></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects View -->
+        <div x-show="currentView === 'projects'" class="space-y-6 slide-in">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold">Projects</h1>
+                <button @click="createProject()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg hover:shadow-lg transition">
+                    + New Project
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <template x-for="project in projects" :key="project.id">
+                    <div class="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer" @click="selectProject(project)">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="px-2 py-1 text-xs rounded-full" :class="project.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'" x-text="project.status"></span>
+                                <span class="text-sm text-gray-500" x-text="project.type"></span>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2" x-text="project.name"></h3>
+                            <p class="text-sm text-gray-600 mb-4" x-text="project.description"></p>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">Efficiency</span>
+                                <span class="font-semibold" x-text="project.efficiency + '%'"></span>
+                            </div>
+                            <div class="mt-2 bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-purple-600 to-blue-500 h-2 rounded-full" :style="'width: ' + project.progress + '%'"></div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Simulation View -->
+        <div x-show="currentView === 'simulation'" class="space-y-6 slide-in">
+            <h1 class="text-3xl font-bold">SST Simulation</h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Configuration Panel -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold mb-4">Configuration</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Topology Chain</label>
+                            <select x-model="simulation.topology" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="sst">SST (NPC → DAB → INV)</option>
+                                <option value="dcdc">DC-DC Converter</option>
+                                <option value="inverter">Grid Inverter</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Power Rating (kW)</label>
+                            <input type="number" x-model="simulation.power" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Primary Voltage (V)</label>
+                            <input type="number" x-model="simulation.v1" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Secondary Voltage (V)</label>
+                            <input type="number" x-model="simulation.v2" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Switching Frequency (kHz)</label>
+                            <input type="range" x-model="simulation.fsw" min="20" max="100" class="w-full">
+                            <div class="text-center text-sm text-gray-600" x-text="simulation.fsw + ' kHz'"></div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phase Shift (degrees)</label>
+                            <input type="range" x-model="simulation.phaseShift" min="0" max="90" class="w-full">
+                            <div class="text-center text-sm text-gray-600" x-text="simulation.phaseShift + '°'"></div>
+                        </div>
+                        
+                        <button @click="runSimulation()" class="w-full py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg hover:shadow-lg transition font-semibold">
+                            Run Simulation
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Panel -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Live Metrics -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="bg-white rounded-lg shadow p-4">
+                            <div class="text-sm text-gray-600 mb-1">Overall Efficiency</div>
+                            <div class="text-2xl font-bold" :class="simResults.efficiency > 95 ? 'text-green-600' : 'text-orange-600'" x-text="simResults.efficiency + '%'"></div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4">
+                            <div class="text-sm text-gray-600 mb-1">ZVS Status</div>
+                            <div class="text-2xl font-bold" :class="simResults.zvs ? 'text-green-600' : 'text-red-600'" x-text="simResults.zvs ? 'Active' : 'Lost'"></div>
+                        </div>
+                        <div class="bg-white rounded-lg shadow p-4">
+                            <div class="text-sm text-gray-600 mb-1">THD</div>
+                            <div class="text-2xl font-bold" :class="simResults.thd < 3 ? 'text-green-600' : 'text-orange-600'" x-text="simResults.thd + '%'"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Waveform Chart -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-bold mb-4">Output Waveforms</h3>
+                        <canvas id="waveformChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <!-- ZVS Map -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-bold mb-4">ZVS Operating Region</h3>
+                        <div class="relative h-64 bg-gradient-to-br from-red-500 via-yellow-500 to-green-500 rounded-lg">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-white text-center">
+                                    <div class="text-2xl font-bold">ZVS Map</div>
+                                    <div class="text-sm">Phase Shift vs Load</div>
+                                </div>
+                            </div>
+                            <div class="absolute w-4 h-4 bg-white rounded-full shadow-lg pulse" :style="`left: ${simulation.phaseShift}%; top: ${100 - simulation.power}%`"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics View -->
+        <div x-show="currentView === 'analytics'" class="space-y-6 slide-in">
+            <h1 class="text-3xl font-bold">Analytics & Optimization</h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Efficiency Trends -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-bold mb-4">Efficiency Trends</h3>
+                    <canvas id="efficiencyChart" width="400" height="200"></canvas>
+                </div>
+                
+                <!-- Loss Breakdown -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-bold mb-4">Loss Breakdown</h3>
+                    <canvas id="lossChart" width="400" height="200"></canvas>
+                </div>
+                
+                <!-- Device Comparison -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-bold mb-4">SiC vs GaN Comparison</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">SiC C3M0030090K</span>
+                                <span class="text-sm text-gray-600">97.8%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 97.8%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium">GaN GS66516T</span>
+                                <span class="text-sm text-gray-600">98.5%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 98.5%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Optimization Results -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-bold mb-4">ML Optimization Results</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between py-2 border-b">
+                            <span class="text-sm text-gray-600">Optimal Frequency</span>
+                            <span class="font-semibold">50 kHz</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b">
+                            <span class="text-sm text-gray-600">Optimal Phase Shift</span>
+                            <span class="font-semibold">35°</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b">
+                            <span class="text-sm text-gray-600">Device Selection</span>
+                            <span class="font-semibold">GaN Primary</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-sm text-gray-600">Predicted Efficiency</span>
+                            <span class="font-semibold text-green-600">98.5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function app() {
+            return {
+                currentView: 'dashboard',
+                stats: {
+                    projects: 12,
+                    simulations: 247,
+                    efficiency: 97.2,
+                    savings: 285
+                },
+                projects: [
+                    {
+                        id: 1,
+                        name: 'EV Charger SST',
+                        description: '350kW DC fast charger with bidirectional capability',
+                        type: 'SST',
+                        status: 'active',
+                        efficiency: 98.2,
+                        progress: 75
+                    },
+                    {
+                        id: 2,
+                        name: 'Solar Inverter',
+                        description: '100kW grid-tie inverter with MPPT',
+                        type: 'Inverter',
+                        status: 'active',
+                        efficiency: 97.5,
+                        progress: 60
+                    },
+                    {
+                        id: 3,
+                        name: 'Motor Drive',
+                        description: 'High-performance PMSM controller',
+                        type: 'Motor',
+                        status: 'active',
+                        efficiency: 96.8,
+                        progress: 90
+                    }
+                ],
+                recentActivity: [
+                    {
+                        id: 1,
+                        type: 'simulation',
+                        title: 'SST Simulation Completed',
+                        description: 'EV Charger SST - 98.2% efficiency achieved',
+                        time: '5 min ago'
+                    },
+                    {
+                        id: 2,
+                        type: 'optimization',
+                        title: 'ML Optimization Done',
+                        description: 'Found optimal switching frequency: 50kHz',
+                        time: '1 hour ago'
+                    },
+                    {
+                        id: 3,
+                        type: 'project',
+                        title: 'New Project Created',
+                        description: 'Data Center PSU Design',
+                        time: '3 hours ago'
+                    }
+                ],
+                simulation: {
+                    topology: 'sst',
+                    power: 50,
+                    v1: 800,
+                    v2: 400,
+                    fsw: 50,
+                    phaseShift: 30
+                },
+                simResults: {
+                    efficiency: 97.5,
+                    zvs: true,
+                    thd: 2.1
+                },
+                
+                init() {
+                    this.initCharts();
+                },
+                
+                createProject() {
+                    alert('Create New Project - This would open a project creation form');
+                },
+                
+                selectProject(project) {
+                    this.currentView = 'simulation';
+                },
+                
+                runSimulation() {
+                    // Simulate running
+                    this.simResults.efficiency = (95 + Math.random() * 4).toFixed(1);
+                    this.simResults.zvs = this.simulation.phaseShift > 15 && this.simulation.phaseShift < 75;
+                    this.simResults.thd = (1.5 + Math.random() * 2).toFixed(1);
+                    
+                    // Update waveform chart
+                    this.updateWaveformChart();
+                    
+                    alert('Simulation Running... Results updated!');
+                },
+                
+                initCharts() {
+                    // Initialize charts when view changes
+                    this.$watch('currentView', (value) => {
+                        if (value === 'simulation') {
+                            setTimeout(() => this.initWaveformChart(), 100);
+                        }
+                        if (value === 'analytics') {
+                            setTimeout(() => {
+                                this.initEfficiencyChart();
+                                this.initLossChart();
+                            }, 100);
+                        }
+                    });
+                },
+                
+                initWaveformChart() {
+                    const ctx = document.getElementById('waveformChart');
+                    if (!ctx) return;
+                    
+                    const data = [];
+                    const labels = [];
+                    for (let i = 0; i < 100; i++) {
+                        labels.push(i);
+                        data.push(Math.sin(i * 0.1) * 400);
+                    }
+                    
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Output Voltage',
+                                data: data,
+                                borderColor: 'rgb(147, 51, 234)',
+                                tension: 0.4,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    display: true
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: false
+                                }
+                            }
+                        }
+                    });
+                },
+                
+                updateWaveformChart() {
+                    const ctx = document.getElementById('waveformChart');
+                    if (!ctx) return;
+                    
+                    const chart = Chart.getChart(ctx);
+                    if (chart) {
+                        const data = [];
+                        for (let i = 0; i < 100; i++) {
+                            data.push(Math.sin(i * 0.1 + Math.random() * 0.5) * this.simulation.v2);
+                        }
+                        chart.data.datasets[0].data = data;
+                        chart.update();
+                    }
+                },
+                
+                initEfficiencyChart() {
+                    const ctx = document.getElementById('efficiencyChart');
+                    if (!ctx) return;
+                    
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            datasets: [{
+                                label: 'Efficiency %',
+                                data: [95.2, 95.8, 96.3, 96.9, 97.2, 97.5],
+                                borderColor: 'rgb(34, 197, 94)',
+                                backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: false,
+                                    min: 94,
+                                    max: 98
+                                }
+                            }
+                        }
+                    });
+                },
+                
+                initLossChart() {
+                    const ctx = document.getElementById('lossChart');
+                    if (!ctx) return;
+                    
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Switching', 'Conduction', 'Core', 'Copper', 'Other'],
+                            datasets: [{
+                                data: [30, 25, 20, 15, 10],
+                                backgroundColor: [
+                                    'rgb(239, 68, 68)',
+                                    'rgb(245, 158, 11)',
+                                    'rgb(59, 130, 246)',
+                                    'rgb(147, 51, 234)',
+                                    'rgb(107, 114, 128)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
