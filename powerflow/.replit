@@ -1,0 +1,32 @@
+run = "pnpm install && pnpm dev"
+entrypoint = "apps/web/app/page.tsx"
+modules = ["nodejs-20", "python-3.11"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["sh", "-c", "pnpm build && pnpm start"]
+deploymentTarget = "cloudrun"
+
+[env]
+DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/powerflow"
+REDIS_URL = "redis://localhost:6379"
+NEXT_PUBLIC_API_URL = "http://localhost:4000"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[[ports]]
+localPort = 4000
+externalPort = 4000
+
+[[ports]]
+localPort = 8001
+externalPort = 8001
+
+[[ports]]
+localPort = 8002
+externalPort = 8002
+

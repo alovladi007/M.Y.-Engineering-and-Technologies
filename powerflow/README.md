@@ -1,192 +1,89 @@
-# PowerFlow - Power Electronics Control Platform
+# PowerFlow - Advanced Power Electronics Platform
 
-A modern, full-stack platform for power electronics control, simulation, and hardware-in-the-loop testing.
+## 🚀 Replit Deployment Guide
 
-## 🚀 Quick Start
+This is a complete full-stack power electronics simulation and control platform.
 
-### Prerequisites
+## Quick Start on Replit
 
-- Node.js 20+ and pnpm
-- Docker and Docker Compose (optional)
-- Git
-
-### Installation
-
-1. Clone the repository:
-```bash
-cd /workspace/powerflow
-```
-
-2. Install dependencies:
+1. **Install Dependencies**
 ```bash
 pnpm install
 ```
 
-3. Start the application:
-
-**Option 1: Quick Start (Recommended)**
+2. **Start Development**
 ```bash
-./start.sh
-```
-
-**Option 2: Using pnpm commands**
-```bash
-# Terminal 1 - Start API
-cd apps/api
-pnpm dev
-
-# Terminal 2 - Start Frontend
-cd apps/web
 pnpm dev
 ```
 
-**Option 3: Using Docker**
-```bash
-docker-compose up
-```
+3. **Access Services**
+- Frontend: Port 3000 (main Replit URL)
+- API Gateway: Port 4000
+- Simulation Service: Port 8001
+- ML Service: Port 8002
 
-## 📍 Access Points
-
-Once running, you can access:
-
-- **Frontend**: http://localhost:3000
-- **API Gateway**: http://localhost:4000
-- **API Documentation**: http://localhost:4000/api/docs
-- **Database**: localhost:5432 (when using Docker)
-- **Redis**: localhost:6379 (when using Docker)
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 powerflow/
 ├── apps/
-│   ├── web/                 # Next.js 14 frontend
-│   ├── api/                 # NestJS API gateway
-│   └── docs/                # Documentation site
+│   ├── web/          # Next.js 14 Frontend
+│   └── api/          # NestJS API Gateway
 ├── services/
-│   ├── sim/                 # Python simulation service
-│   ├── ml/                  # Python ML service
-│   ├── hil-agent/          # Hardware-in-loop agent
-│   └── stream/             # Real-time streaming service
+│   ├── sim/          # Python Simulation Service
+│   └── ml/           # Python ML Service
 ├── packages/
-│   ├── shared/             # Shared TypeScript code
-│   ├── ui/                 # Shared UI components
-│   └── database/           # Database schemas
-├── firmware/
-│   └── control-fw/         # STM32 firmware
-└── infra/
-    ├── docker/
-    ├── kubernetes/
-    └── terraform/
+│   ├── shared/       # Shared TypeScript Types
+│   └── ui/           # UI Components
+└── infra/            # Docker & Config
 ```
 
-## 🎯 Features
+## Features
 
-### Current Features
-- ✅ Real-time power electronics simulation
-- ✅ Interactive dashboard with live data visualization
-- ✅ Hardware device management
-- ✅ WebSocket real-time communication
-- ✅ RESTful API with Swagger documentation
-- ✅ Modern, responsive UI with dark mode support
+- **SST/DAB Simulation** - Solid-state transformer modeling
+- **SiC/GaN Models** - Wide-bandgap semiconductor simulation
+- **Real-time HIL** - Hardware-in-the-loop testing
+- **Analytics Dashboard** - Live performance monitoring
+- **ZVS Optimization** - Zero-voltage switching analysis
 
-### Planned Features
-- 🔄 Machine learning predictions
-- 🔄 Hardware-in-the-loop testing
-- 🔄 Advanced control algorithms (MPPT, Grid-tie)
-- 🔄 Multi-user collaboration
-- 🔄 Cloud deployment
+## Development Commands
 
-## 🛠️ Technology Stack
-
-### Frontend
-- **Next.js 14** - React framework with App Router
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Radix UI** - Headless UI components
-- **React Query** - Data fetching
-- **Chart.js** - Data visualization
-- **Socket.io Client** - Real-time communication
-
-### Backend
-- **NestJS** - Node.js framework
-- **TypeScript** - Type safety
-- **Socket.io** - WebSocket server
-- **PostgreSQL** - Primary database
-- **Redis** - Caching and pub/sub
-- **TypeORM** - Database ORM
-
-### DevOps
-- **Docker** - Containerization
-- **pnpm** - Package management
-- **Turbo** - Monorepo build system
-
-## 📝 Development
-
-### Running Tests
 ```bash
-pnpm test
-```
+# Install dependencies
+pnpm install
 
-### Building for Production
-```bash
+# Start all services
+pnpm dev
+
+# Build for production
 pnpm build
-```
 
-### Linting
-```bash
+# Run tests
+pnpm test
+
+# Lint code
 pnpm lint
 ```
 
-## 🔧 Configuration
+## Environment Variables
 
-### Environment Variables
-
-Create `.env.local` files in each app:
-
-**apps/web/.env.local**
-```env
-NEXT_PUBLIC_API_URL=http://localhost:4000
+Create a `.env` file:
 ```
-
-**apps/api/.env**
-```env
-PORT=4000
-DATABASE_URL=postgresql://powerflow:powerflow123@localhost:5432/powerflow
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/powerflow
 REDIS_URL=redis://localhost:6379
-JWT_SECRET=your-secret-key-change-in-production
+NEXT_PUBLIC_API_URL=http://localhost:4000
+JWT_SECRET=your-secret-key-here
 ```
 
-## 📊 API Documentation
+## Tech Stack
 
-The API documentation is automatically generated and available at:
-http://localhost:4000/api/docs
+- **Frontend**: Next.js 14, React 18, Tailwind CSS
+- **Backend**: NestJS, TypeORM, PostgreSQL
+- **Simulation**: Python, FastAPI, NumPy, SciPy
+- **ML**: Scikit-learn, TensorFlow
+- **Real-time**: WebSocket, Socket.io
+- **Deployment**: Docker, Replit
 
-### Main Endpoints
+## License
 
-- `GET /api/simulations` - List all simulations
-- `POST /api/simulations` - Create new simulation
-- `POST /api/simulations/:id/start` - Start simulation
-- `POST /api/simulations/:id/stop` - Stop simulation
-- `GET /api/hardware/devices` - List connected devices
-- `GET /api/hardware/devices/:id/data` - Get device real-time data
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support, please open an issue in the GitHub repository.
-
----
-
-Built with ❤️ for the power electronics community
+MIT License - M.Y. Engineering and Technologies
