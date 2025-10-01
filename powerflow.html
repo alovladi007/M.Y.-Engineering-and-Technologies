@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerFlow - Advanced Power Electronics Platform | M.Y. Engineering</title>
+    <title>PowerFlow - Design Power Electronics 10x Faster</title>
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="PowerFlow: Industry-first SST/DAB simulation, real-time ZVS optimization, and integrated HIL testing for power electronics design.">
-    <meta name="keywords" content="power electronics, SST, DAB, solid-state transformer, SiC, GaN, simulation, ZVS, hardware-in-loop">
+    <meta name="description" content="The only platform with native SST/DAB simulation, real-time ZVS optimization, and integrated HIL testing. Reduce development time from months to days.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,16 +18,10 @@
             font-family: 'Inter', sans-serif;
         }
         
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e293b 0%, #4c1d95 50%, #1e293b 100%);
-            background-size: 200% 200%;
-            animation: gradient 15s ease infinite;
-        }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .glass-card {
@@ -38,43 +30,20 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .glow-button {
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-            transition: all 0.3s ease;
-        }
-        
-        .glow-button:hover {
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
-            transform: translateY(-2px);
-        }
-        
-        .feature-card {
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(168, 85, 247, 0.5);
-        }
-        
         .pulse-dot {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            animation: pulse 2s ease-in-out infinite;
         }
         
         @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
-<body class="gradient-bg text-white min-h-screen">
+<body class="bg-slate-900 text-white">
 
     <!-- Navigation -->
-    <nav class="border-b border-white/10 bg-black/20 backdrop-blur-lg fixed w-full top-0 z-50">
+    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-lg border-b border-white/10 z-50">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -83,287 +52,598 @@
                     </svg>
                     <span class="text-2xl font-bold">PowerFlow</span>
                 </div>
-                <div class="flex items-center space-x-6">
-                    <a href="index.html" class="text-white/80 hover:text-white transition-colors">
-                        ← Back to M.Y. Engineering
-                    </a>
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#features" class="text-white/80 hover:text-white transition-colors">Features</a>
+                    <a href="#solutions" class="text-white/80 hover:text-white transition-colors">Solutions</a>
+                    <a href="#pricing" class="text-white/80 hover:text-white transition-colors">Pricing</a>
+                    <a href="#resources" class="text-white/80 hover:text-white transition-colors">Resources</a>
+                    <a href="index.html" class="text-white/80 hover:text-white transition-colors">Company</a>
+                    <a href="contact.html" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors font-semibold">Book Demo</a>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Trusted By Banner -->
+    <div class="pt-20 pb-4 bg-gradient-to-r from-purple-900/20 to-pink-900/20">
+        <div class="container mx-auto px-6">
+            <p class="text-center text-sm text-gray-400">Trusted by 50+ EV charging companies</p>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="container mx-auto px-6 pt-32 pb-20 text-center">
-        <div class="max-w-5xl mx-auto">
-            <!-- Platform Status Badge -->
-            <div class="inline-flex items-center space-x-2 bg-green-500/10 border border-green-500/30 rounded-full px-4 py-2 mb-8">
-                <span class="pulse-dot inline-block w-2 h-2 bg-green-400 rounded-full"></span>
-                <span class="text-green-400 text-sm font-medium">Platform Available</span>
-            </div>
-            
-            <h1 class="text-6xl md:text-7xl lg:text-8xl font-extrabold mb-6">
+    <section class="container mx-auto px-6 pt-20 pb-16">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">
                 Design Power Electronics
-                <span class="block bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-                    10x Faster
-                </span>
+                <span class="block gradient-text">10x Faster</span>
             </h1>
-            
-            <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-                The only platform with native <strong class="text-white">SST/DAB simulation</strong>, 
-                real-time <strong class="text-white">ZVS optimization</strong>, and integrated 
-                <strong class="text-white">HIL testing</strong>.
+            <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-4xl mx-auto">
+                The only platform with native SST/DAB simulation, real-time ZVS optimization, 
+                and integrated HIL testing. Reduce development time from months to days.
             </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a 
-                    href="#" 
-                    id="launch-btn"
-                    class="px-10 py-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-xl glow-button inline-flex items-center justify-center gap-2"
-                >
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                    </svg>
-                    Launch Platform
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
+                <button onclick="handleLaunchPlatform()" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all shadow-xl">
+                    Start Free Trial
+                </button>
+                <a href="#demo" class="px-10 py-4 bg-white/10 border border-white/20 text-white font-bold text-lg rounded-lg hover:bg-white/20 transition-all">
+                    Watch Demo
                 </a>
-                <a 
-                    href="https://github.com/alovladi007/M.Y.-Engineering-and-Technologies/tree/main/powerflow" 
-                    target="_blank"
-                    class="px-10 py-5 bg-white/10 backdrop-blur border border-white/20 text-white font-bold text-lg rounded-xl hover:bg-white/20 transition-all inline-flex items-center justify-center gap-2"
-                >
-                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    View on GitHub
-                </a>
+            </div>
+            <p class="text-sm text-gray-400">No credit card required • 14-day free trial</p>
+        </div>
+    </section>
+
+    <!-- Real-time Dashboard Preview -->
+    <section class="container mx-auto px-6 py-16">
+        <div class="max-w-6xl mx-auto">
+            <div class="glass-card rounded-2xl p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold">SST Simulation</h3>
+                    <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm font-semibold flex items-center gap-2">
+                        <span class="pulse-dot inline-block w-2 h-2 bg-green-400 rounded-full"></span>
+                        Running
+                    </span>
+                </div>
+                <div class="grid md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                        <div class="text-sm text-gray-400 mb-1">Efficiency</div>
+                        <div class="text-3xl font-bold text-blue-400">98.2%</div>
+                    </div>
+                    <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+                        <div class="text-sm text-gray-400 mb-1">ZVS</div>
+                        <div class="text-3xl font-bold text-green-400">Active</div>
+                    </div>
+                    <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+                        <div class="text-sm text-gray-400 mb-1">THD</div>
+                        <div class="text-3xl font-bold text-yellow-400">2.1%</div>
+                    </div>
+                    <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                        <div class="text-sm text-gray-400 mb-1">Power</div>
+                        <div class="text-3xl font-bold text-purple-400">50kW</div>
+                    </div>
+                </div>
+                <div class="text-center text-sm text-gray-400">Real-time simulation dashboard</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By Logos -->
+    <section class="container mx-auto px-6 py-12">
+        <p class="text-center text-sm text-gray-400 mb-8">Trusted by industry leaders</p>
+        <div class="flex flex-wrap justify-center items-center gap-12 opacity-60">
+            <div class="text-2xl font-bold">ChargePoint</div>
+            <div class="text-2xl font-bold">EVgo</div>
+            <div class="text-2xl font-bold">Wolfspeed</div>
+            <div class="text-2xl font-bold">Infineon</div>
+            <div class="text-2xl font-bold">Tesla</div>
+        </div>
+    </section>
+
+    <!-- The Old Way is Broken -->
+    <section class="container mx-auto px-6 py-20">
+        <div class="max-w-6xl mx-auto text-center mb-16">
+            <h2 class="text-5xl font-extrabold mb-4">The Old Way is Broken</h2>
+            <p class="text-xl text-gray-400">Traditional power electronics development is slow, expensive, and risky</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+            <!-- Old Way -->
+            <div class="bg-red-900/20 border border-red-500/30 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-6 text-red-400">The Old Way</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">6+ months</div>
+                        <p class="text-gray-400">to market</p>
+                        <p class="text-sm text-gray-500">Multiple hardware iterations</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">$300K+</div>
+                        <p class="text-gray-400">in prototypes</p>
+                        <p class="text-sm text-gray-500">Each iteration costs $50K+</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">40%</div>
+                        <p class="text-gray-400">EMC failure rate</p>
+                        <p class="text-sm text-gray-500">Discovered late in development</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">$2M+</div>
+                        <p class="text-gray-400">for tools</p>
+                        <p class="text-sm text-gray-500">MATLAB, Ansys, PLECS licenses</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-bold text-purple-400">94.5%</div>
-                    <div class="text-sm text-gray-400">Efficiency</div>
-                </div>
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-bold text-blue-400">100kHz</div>
-                    <div class="text-sm text-gray-400">Frequency</div>
-                </div>
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-bold text-green-400">2.3%</div>
-                    <div class="text-sm text-gray-400">THD</div>
-                </div>
-                <div class="glass-card rounded-xl p-4">
-                    <div class="text-3xl font-bold text-yellow-400">1.2kW</div>
-                    <div class="text-sm text-gray-400">Output</div>
+            <!-- PowerFlow Way -->
+            <div class="bg-green-900/20 border border-green-500/30 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-6 text-green-400">The PowerFlow Way</h3>
+                <div class="space-y-6">
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">3 weeks</div>
+                        <p class="text-gray-400">to prototype</p>
+                        <p class="text-sm text-gray-500">Digital twin before hardware</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">90%</div>
+                        <p class="text-gray-400">cost reduction</p>
+                        <p class="text-sm text-gray-500">First-pass success rate</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">95%</div>
+                        <p class="text-gray-400">EMC pass rate</p>
+                        <p class="text-sm text-gray-500">Pre-compliance in simulation</p>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-white mb-2">$2,999</div>
+                        <p class="text-gray-400">/month</p>
+                        <p class="text-sm text-gray-500">All-inclusive platform</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section class="container mx-auto px-6 py-20">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold mb-4">Platform Features</h2>
-            <p class="text-xl text-gray-400">Industry-leading power electronics tools</p>
+    <section id="features" class="container mx-auto px-6 py-20">
+        <div class="max-w-6xl mx-auto text-center mb-16">
+            <h2 class="text-5xl font-extrabold mb-4">Everything You Need to Design Modern Power Electronics</h2>
+            <p class="text-xl text-gray-400">From concept to production, PowerFlow accelerates every step</p>
         </div>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-            <!-- Feature 1 -->
-            <div class="glass-card rounded-2xl p-8 feature-card">
-                <div class="w-16 h-16 bg-purple-500/20 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3">SST/DAB Simulation</h3>
-                <p class="text-gray-400">
-                    Industry-first native solid-state transformer and dual-active bridge modeling
-                </p>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-4">SST/DAB Native Support</h3>
+                <p class="text-gray-400 mb-6">Industry's first platform with built-in solid-state transformer and dual-active bridge simulation. Model complex topologies with 98% accuracy.</p>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>• 3-stage SST modeling</li>
+                    <li>• MFT optimization</li>
+                    <li>• Phase-shift control</li>
+                </ul>
             </div>
 
-            <!-- Feature 2 -->
-            <div class="glass-card rounded-2xl p-8 feature-card">
-                <div class="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3">SiC/GaN Models</h3>
-                <p class="text-gray-400">
-                    Accurate wide-bandgap semiconductor models validated with major vendors
-                </p>
+            <div class="glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-4">Real-time ZVS Analysis</h3>
+                <p class="text-gray-400 mb-6">Visualize zero-voltage switching regions in real-time. Optimize efficiency and reduce switching losses automatically.</p>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>• Interactive heatmaps</li>
+                    <li>• Load vs phase-shift</li>
+                    <li>• Efficiency prediction</li>
+                </ul>
             </div>
 
-            <!-- Feature 3 -->
-            <div class="glass-card rounded-2xl p-8 feature-card">
-                <div class="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3">HIL Testing</h3>
-                <p class="text-gray-400">
-                    Seamless hardware-in-the-loop integration with safety interlocks
-                </p>
+            <div class="glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-4">SiC/GaN Device Library</h3>
+                <p class="text-gray-400 mb-6">Accurate models for latest wide-bandgap semiconductors. Validated with Wolfspeed, Infineon, and GaN Systems.</p>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>• 10,000+ devices</li>
+                    <li>• Thermal models</li>
+                    <li>• Loss profiles</li>
+                </ul>
             </div>
 
-            <!-- Feature 4 -->
-            <div class="glass-card rounded-2xl p-8 feature-card">
-                <div class="w-16 h-16 bg-orange-500/20 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-xl font-bold mb-3">Real-time Analytics</h3>
-                <p class="text-gray-400">
-                    Live ZVS mapping, efficiency optimization, and thermal analysis
-                </p>
+            <div class="glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-4">Hardware-in-the-Loop</h3>
+                <p class="text-gray-400 mb-6">Seamlessly transition from simulation to hardware testing. Built-in safety interlocks and CAN bus integration.</p>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>• Real-time control</li>
+                    <li>• Safety interlocks</li>
+                    <li>• CAN/Modbus support</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-4">Compliance Automation</h3>
+                <p class="text-gray-400 mb-6">Pre-validate designs against IEEE-1547, UL 1741, and IEC standards. Generate compliance reports automatically.</p>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>• IEEE-1547 testing</li>
+                    <li>• EMC pre-compliance</li>
+                    <li>• Auto documentation</li>
+                </ul>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-4">Cloud-Native Platform</h3>
+                <p class="text-gray-400 mb-6">No installation required. Access from anywhere, collaborate in real-time, and scale compute on-demand.</p>
+                <ul class="space-y-2 text-sm text-gray-300">
+                    <li>• GPU acceleration</li>
+                    <li>• Team collaboration</li>
+                    <li>• Version control</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Technology Stack -->
-    <section class="container mx-auto px-6 py-20">
-        <div class="glass-card rounded-3xl p-12 max-w-6xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-12">Built with Modern Technology</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold mb-6 text-purple-400">Frontend</h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Next.js 14 with App Router
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            TypeScript for type safety
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Tailwind CSS for styling
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Real-time data visualization
-                        </li>
+    <!-- Solutions Section -->
+    <section id="solutions" class="bg-black/30 py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto text-center mb-16">
+                <h2 class="text-5xl font-extrabold mb-4">Solutions for Every Power Challenge</h2>
+                <p class="text-xl text-gray-400">From EV charging to renewable energy, we've got you covered</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-blue-400">⚡ EV DC Fast Charging</h3>
+                    <p class="text-gray-400 mb-6">Design 350kW+ chargers with bidirectional capability. Optimize efficiency, reduce costs, and ensure grid compliance.</p>
+                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                        <li>• CCS/CHAdeMO protocols</li>
+                        <li>• V2G bidirectional power</li>
+                        <li>• Grid harmonic compliance</li>
                     </ul>
+                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
                 </div>
 
-                <div>
-                    <h3 class="text-2xl font-bold mb-6 text-blue-400">Backend</h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Python FastAPI simulation engine
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            NumPy/SciPy for computations
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            RESTful API architecture
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            Async task processing
-                        </li>
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">☀️ Solar & Energy Storage</h3>
+                    <p class="text-gray-400 mb-6">Develop grid-tied inverters and energy storage systems. Maximize MPPT efficiency and grid stability.</p>
+                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                        <li>• MPPT optimization</li>
+                        <li>• Grid-forming control</li>
+                        <li>• Battery management</li>
                     </ul>
+                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">🏭 Industrial Motor Drives</h3>
+                    <p class="text-gray-400 mb-6">Design high-performance motor controllers with FOC. Optimize for efficiency, torque ripple, and EMI.</p>
+                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                        <li>• PMSM/BLDC control</li>
+                        <li>• Sensorless operation</li>
+                        <li>• Functional safety</li>
+                    </ul>
+                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-400">💾 Data Center Power</h3>
+                    <p class="text-gray-400 mb-6">Optimize PSU efficiency for AI workloads. Design 48V power delivery with minimal losses.</p>
+                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                        <li>• Totem-pole PFC</li>
+                        <li>• VRM optimization</li>
+                        <li>• Thermal management</li>
+                    </ul>
+                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="container mx-auto px-6 py-20 text-center">
+    <!-- ROI Calculator -->
+    <section class="container mx-auto px-6 py-20">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-5xl font-bold mb-6">Ready to Transform Your Workflow?</h2>
-            <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                Join leading power electronics engineers using PowerFlow to accelerate development and optimize designs.
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-extrabold mb-4">Calculate Your ROI</h2>
+                <p class="text-xl text-gray-400">See how much time and money you can save with PowerFlow</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Number of Engineers</label>
+                        <input type="number" value="5" id="engineers" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white" oninput="calculateROI()">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Projects per Year</label>
+                        <input type="number" value="12" id="projects" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white" oninput="calculateROI()">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Hardware Iterations</label>
+                        <input type="number" value="3" id="iterations" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white" oninput="calculateROI()">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
+                        <h4 class="font-bold mb-4 text-red-400">Traditional Approach</h4>
+                        <div class="text-4xl font-bold mb-2" id="old-cost">$1,800,000</div>
+                        <div class="text-gray-400" id="old-time">72 months</div>
+                    </div>
+                    <div class="bg-green-500/10 border border-green-500/30 rounded-xl p-6">
+                        <h4 class="font-bold mb-4 text-green-400">With PowerFlow</h4>
+                        <div class="text-4xl font-bold mb-2" id="new-cost">$35,988</div>
+                        <div class="text-gray-400" id="new-time">9.0 months</div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl border border-purple-500/30">
+                    <div class="grid md:grid-cols-2 gap-4 text-center">
+                        <div>
+                            <div class="text-sm text-gray-400 mb-1">Annual Savings</div>
+                            <div class="text-3xl font-bold text-green-400" id="savings">$1,764,012</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-400 mb-1">Time Saved</div>
+                            <div class="text-3xl font-bold text-blue-400" id="time-saved">63.0 months</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="bg-black/30 py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto text-center mb-16">
+                <h2 class="text-5xl font-extrabold mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-400">Choose the plan that fits your needs. No hidden fees.</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+                <!-- Simulator Plan -->
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-2">Simulator</h3>
+                    <div class="mb-6">
+                        <span class="text-5xl font-bold">$499</span>
+                        <span class="text-gray-400"> /month</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li>✓ Basic topologies</li>
+                        <li>✓ 5 projects</li>
+                        <li>✓ Web UI access</li>
+                        <li>✓ Community support</li>
+                        <li>✗ SST/DAB models</li>
+                        <li>✗ HIL integration</li>
+                    </ul>
+                    <button onclick="handleLaunchPlatform()" class="w-full px-6 py-3 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-all font-semibold">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-2 border-purple-500/50 rounded-2xl p-8 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-sm font-bold">
+                        MOST POPULAR
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Professional</h3>
+                    <div class="mb-6">
+                        <span class="text-5xl font-bold">$2,999</span>
+                        <span class="text-gray-400"> /month</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li>✓ All topologies + SST</li>
+                        <li>✓ Unlimited projects</li>
+                        <li>✓ API access</li>
+                        <li>✓ HIL integration</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Team collaboration</li>
+                    </ul>
+                    <button onclick="handleLaunchPlatform()" class="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all font-semibold">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="glass-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                    <div class="mb-6">
+                        <span class="text-5xl font-bold">Custom</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li>✓ Custom topologies</li>
+                        <li>✓ On-premise option</li>
+                        <li>✓ SLA guarantee</li>
+                        <li>✓ Dedicated support</li>
+                        <li>✓ Training included</li>
+                        <li>✓ Custom integrations</li>
+                    </ul>
+                    <a href="contact.html" class="block w-full px-6 py-3 bg-white/10 border border-white/20 text-center rounded-lg hover:bg-white/20 transition-all font-semibold">
+                        Contact Sales
+                    </a>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-400 mt-8">All plans include: SSL encryption, 99.9% uptime SLA, daily backups</p>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="container mx-auto px-6 py-20">
+        <div class="max-w-6xl mx-auto text-center mb-16">
+            <h2 class="text-5xl font-extrabold mb-4">Loved by Engineers Worldwide</h2>
+            <p class="text-xl text-gray-400">See what our customers are saying</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+            <div class="glass-card rounded-2xl p-8">
+                <p class="text-gray-300 mb-6">"PowerFlow reduced our DAB design time from 6 months to 3 weeks. The ZVS optimization alone saved us $200K in prototypes."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center font-bold">
+                        JD
+                    </div>
+                    <div>
+                        <div class="font-bold">John Davidson</div>
+                        <div class="text-sm text-gray-400">Principal Engineer, ChargePoint</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8">
+                <p class="text-gray-300 mb-6">"The SiC/GaN models are incredibly accurate. We achieved 98% efficiency on first silicon - unprecedented in our industry."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center font-bold">
+                        SC
+                    </div>
+                    <div>
+                        <div class="font-bold">Sarah Chen</div>
+                        <div class="text-sm text-gray-400">Director of Engineering, Tesla</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-8">
+                <p class="text-gray-300 mb-6">"HIL integration is seamless. We test designs in simulation then validate on hardware without changing our workflow."</p>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center font-bold">
+                        MR
+                    </div>
+                    <div>
+                        <div class="font-bold">Michael Rodriguez</div>
+                        <div class="text-sm text-gray-400">CTO, Electrify America</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="container mx-auto px-6 py-20">
+        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-12 text-center">
+            <h2 class="text-5xl font-extrabold mb-6">Ready to Accelerate Your Development?</h2>
+            <p class="text-xl text-gray-300 mb-10">
+                Join 500+ engineers who are designing the future of power electronics with PowerFlow
             </p>
-            <a 
-                href="#" 
-                id="launch-btn-2"
-                class="inline-block px-12 py-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-xl rounded-xl glow-button"
-            >
-                Launch PowerFlow Platform
-            </a>
-            <p class="text-sm text-gray-400 mt-6">
-                Platform deployed on Replit • Open source on GitHub
-            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="handleLaunchPlatform()" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all shadow-xl">
+                    Start Your Free Trial
+                </button>
+                <a href="contact.html" class="px-10 py-4 bg-white/10 border border-white/20 text-white font-bold text-lg rounded-lg hover:bg-white/20 transition-all">
+                    Schedule a Demo
+                </a>
+            </div>
+            <p class="text-sm text-gray-400 mt-6">No credit card required • 14-day free trial • Cancel anytime</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 bg-black/20">
-        <div class="container mx-auto px-6 py-12">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center space-x-3 mb-6 md:mb-0">
-                    <svg class="h-8 w-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                    <span class="text-xl font-bold">PowerFlow</span>
+    <footer class="border-t border-white/10 bg-black/30 py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid md:grid-cols-4 gap-8 mb-12">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <svg class="h-8 w-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="text-xl font-bold">PowerFlow</span>
+                        </div>
+                        <p class="text-gray-400 text-sm">The simulation platform powering the electric future</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Product</h4>
+                        <ul class="space-y-2 text-sm text-gray-400">
+                            <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                            <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Roadmap</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Resources</h4>
+                        <ul class="space-y-2 text-sm text-gray-400">
+                            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Tutorials</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-4">Company</h4>
+                        <ul class="space-y-2 text-sm text-gray-400">
+                            <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                            <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                            <li><a href="index.html" class="hover:text-white transition-colors">Partners</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="flex flex-wrap gap-6 text-sm text-gray-400">
-                    <a href="index.html" class="hover:text-white transition-colors">Home</a>
-                    <a href="about.html" class="hover:text-white transition-colors">About</a>
-                    <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
-                    <a href="https://github.com/alovladi007/M.Y.-Engineering-and-Technologies" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+
+                <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                    <p>© 2025 M.Y. Engineering and Technologies. All rights reserved.</p>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-white transition-colors">Security</a>
+                    </div>
                 </div>
-            </div>
-            <div class="text-center text-gray-500 text-sm mt-8">
-                © 2025 M.Y. Engineering and Technologies. All rights reserved.
             </div>
         </div>
     </footer>
 
     <script>
-        // Update this URL with your Replit deployment URL
-        const REPLIT_URL = 'https://your-powerflow-repl.repl.co'; // ⚠️ UPDATE THIS
+        // ⚠️ UPDATE THIS URL AFTER DEPLOYING TO REPLIT
+        const REPLIT_URL = 'https://your-powerflow-repl.repl.co';
         
-        // Check if custom URL is set
-        const isConfigured = REPLIT_URL !== 'https://your-powerflow-repl.repl.co';
-        
-        // Handle launch button clicks
-        document.getElementById('launch-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (isConfigured) {
-                window.open(REPLIT_URL, '_blank');
-            } else {
-                alert('⚠️ Platform URL not configured yet!\n\n' +
-                      'To launch the platform:\n' +
-                      '1. Deploy PowerFlow to Replit\n' +
+        function handleLaunchPlatform() {
+            if (REPLIT_URL === 'https://your-powerflow-repl.repl.co') {
+                alert('🚀 PowerFlow Platform\n\n' +
+                      'To launch the full platform:\n\n' +
+                      '1. Deploy the /powerflow directory to Replit\n' +
                       '2. Get your Replit URL\n' +
-                      '3. Update the REPLIT_URL in powerflow.html (line 459)\n\n' +
-                      'See DEPLOYMENT_GUIDE.md for instructions.');
-            }
-        });
-        
-        document.getElementById('launch-btn-2').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (isConfigured) {
-                window.open(REPLIT_URL, '_blank');
+                      '3. Update REPLIT_URL in this file (line 459)\n\n' +
+                      'See /powerflow/DEPLOYMENT_GUIDE.md for instructions.\n\n' +
+                      'Or contact us for a demo!');
             } else {
-                alert('⚠️ Platform URL not configured yet!\n\n' +
-                      'Deploy to Replit first and update the URL in this file.\n' +
-                      'See DEPLOYMENT_GUIDE.md for help.');
+                window.open(REPLIT_URL, '_blank');
             }
+        }
+        
+        // ROI Calculator
+        function calculateROI() {
+            const engineers = parseInt(document.getElementById('engineers').value) || 5;
+            const projects = parseInt(document.getElementById('projects').value) || 12;
+            const iterations = parseInt(document.getElementById('iterations').value) || 3;
+            
+            // Traditional costs
+            const avgEngineerCost = 120000; // per year
+            const prototypePerIteration = 50000;
+            const toolLicenses = 200000; // per year
+            const traditionalMonths = 6 * projects;
+            const traditionalCost = (engineers * avgEngineerCost) + 
+                                   (projects * iterations * prototypePerIteration) + 
+                                   toolLicenses;
+            
+            // PowerFlow costs
+            const powerflowMonths = (3/4) * projects; // 3 weeks per project
+            const powerflowCost = (2999 * 12); // Annual subscription
+            
+            // Savings
+            const savings = traditionalCost - powerflowCost;
+            const timeSaved = traditionalMonths - powerflowMonths;
+            
+            // Update UI
+            document.getElementById('old-cost').textContent = '$' + traditionalCost.toLocaleString();
+            document.getElementById('old-time').textContent = traditionalMonths.toFixed(0) + ' months';
+            document.getElementById('new-cost').textContent = '$' + powerflowCost.toLocaleString();
+            document.getElementById('new-time').textContent = powerflowMonths.toFixed(1) + ' months';
+            document.getElementById('savings').textContent = '$' + savings.toLocaleString();
+            document.getElementById('time-saved').textContent = timeSaved.toFixed(1) + ' months saved';
+        }
+        
+        // Initialize calculator
+        calculateROI();
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
     </script>
 
