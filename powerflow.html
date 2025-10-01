@@ -19,15 +19,19 @@
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .glass-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(124, 58, 237, 0.1), 0 10px 10px -5px rgba(124, 58, 237, 0.04);
         }
         
         .pulse-dot {
@@ -40,45 +44,45 @@
         }
     </style>
 </head>
-<body class="bg-slate-900 text-white">
+<body class="bg-white text-gray-900">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-slate-900/90 backdrop-blur-lg border-b border-white/10 z-50">
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-lg border-b border-gray-200 z-50">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <svg class="h-8 w-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
-                    <span class="text-2xl font-bold">PowerFlow</span>
+                    <span class="text-2xl font-bold text-gray-900">PowerFlow</span>
                 </div>
                 <div class="hidden lg:flex items-center space-x-8">
-                    <a href="#features" class="text-white/80 hover:text-white transition-colors">Features</a>
-                    <a href="#solutions" class="text-white/80 hover:text-white transition-colors">Solutions</a>
-                    <a href="#pricing" class="text-white/80 hover:text-white transition-colors">Pricing</a>
-                    <a href="#resources" class="text-white/80 hover:text-white transition-colors">Resources</a>
-                    <a href="index.html" class="text-white/80 hover:text-white transition-colors">Company</a>
-                    <a href="contact.html" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors font-semibold">Book Demo</a>
+                    <a href="#features" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Features</a>
+                    <a href="#solutions" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Solutions</a>
+                    <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Pricing</a>
+                    <a href="#resources" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Resources</a>
+                    <a href="index.html" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Company</a>
+                    <a href="contact.html" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-semibold">Book Demo</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Trusted By Banner -->
-    <div class="pt-20 pb-4 bg-gradient-to-r from-purple-900/20 to-pink-900/20">
+    <div class="pt-20 pb-4 bg-purple-50">
         <div class="container mx-auto px-6">
-            <p class="text-center text-sm text-gray-400">Trusted by 50+ EV charging companies</p>
+            <p class="text-center text-sm text-gray-600">Trusted by 50+ EV charging companies</p>
         </div>
     </div>
 
     <!-- Hero Section -->
-    <section class="container mx-auto px-6 pt-20 pb-16">
+    <section class="container mx-auto px-6 pt-20 pb-16 bg-gradient-to-br from-purple-50 to-pink-50">
         <div class="max-w-5xl mx-auto text-center">
-            <h1 class="text-6xl md:text-7xl font-extrabold mb-6 leading-tight">
+            <h1 class="text-6xl md:text-7xl font-extrabold mb-6 leading-tight text-gray-900">
                 Design Power Electronics
                 <span class="block gradient-text">10x Faster</span>
             </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-4xl mx-auto">
+            <p class="text-xl md:text-2xl text-gray-700 mb-10 max-w-4xl mx-auto">
                 The only platform with native SST/DAB simulation, real-time ZVS optimization, 
                 and integrated HIL testing. Reduce development time from months to days.
             </p>
@@ -86,118 +90,118 @@
                 <button onclick="handleLaunchPlatform()" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all shadow-xl">
                     Start Free Trial
                 </button>
-                <a href="#demo" class="px-10 py-4 bg-white/10 border border-white/20 text-white font-bold text-lg rounded-lg hover:bg-white/20 transition-all">
+                <a href="#demo" class="px-10 py-4 bg-white border-2 border-purple-600 text-purple-600 font-bold text-lg rounded-lg hover:bg-purple-50 transition-all">
                     Watch Demo
                 </a>
             </div>
-            <p class="text-sm text-gray-400">No credit card required • 14-day free trial</p>
+            <p class="text-sm text-gray-600">No credit card required • 14-day free trial</p>
         </div>
     </section>
 
     <!-- Real-time Dashboard Preview -->
-    <section class="container mx-auto px-6 py-16">
+    <section class="container mx-auto px-6 py-16 bg-gray-50">
         <div class="max-w-6xl mx-auto">
             <div class="glass-card rounded-2xl p-8">
                 <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-xl font-bold">SST Simulation</h3>
-                    <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg text-sm font-semibold flex items-center gap-2">
-                        <span class="pulse-dot inline-block w-2 h-2 bg-green-400 rounded-full"></span>
+                    <h3 class="text-xl font-bold text-gray-900">SST Simulation</h3>
+                    <span class="px-4 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-semibold flex items-center gap-2">
+                        <span class="pulse-dot inline-block w-2 h-2 bg-green-600 rounded-full"></span>
                         Running
                     </span>
                 </div>
                 <div class="grid md:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-                        <div class="text-sm text-gray-400 mb-1">Efficiency</div>
-                        <div class="text-3xl font-bold text-blue-400">98.2%</div>
+                    <div class="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
+                        <div class="text-sm text-gray-600 mb-1">Efficiency</div>
+                        <div class="text-3xl font-bold text-purple-600">98.2%</div>
                     </div>
-                    <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-                        <div class="text-sm text-gray-400 mb-1">ZVS</div>
-                        <div class="text-3xl font-bold text-green-400">Active</div>
+                    <div class="bg-green-50 border-2 border-green-200 rounded-lg p-4">
+                        <div class="text-sm text-gray-600 mb-1">ZVS</div>
+                        <div class="text-3xl font-bold text-green-600">Active</div>
                     </div>
-                    <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-                        <div class="text-sm text-gray-400 mb-1">THD</div>
-                        <div class="text-3xl font-bold text-yellow-400">2.1%</div>
+                    <div class="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4">
+                        <div class="text-sm text-gray-600 mb-1">THD</div>
+                        <div class="text-3xl font-bold text-yellow-600">2.1%</div>
                     </div>
-                    <div class="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-                        <div class="text-sm text-gray-400 mb-1">Power</div>
-                        <div class="text-3xl font-bold text-purple-400">50kW</div>
+                    <div class="bg-pink-50 border-2 border-pink-200 rounded-lg p-4">
+                        <div class="text-sm text-gray-600 mb-1">Power</div>
+                        <div class="text-3xl font-bold text-pink-600">50kW</div>
                     </div>
                 </div>
-                <div class="text-center text-sm text-gray-400">Real-time simulation dashboard</div>
+                <div class="text-center text-sm text-gray-600">Real-time simulation dashboard</div>
             </div>
         </div>
     </section>
 
     <!-- Trusted By Logos -->
-    <section class="container mx-auto px-6 py-12">
-        <p class="text-center text-sm text-gray-400 mb-8">Trusted by industry leaders</p>
-        <div class="flex flex-wrap justify-center items-center gap-12 opacity-60">
-            <div class="text-2xl font-bold">ChargePoint</div>
-            <div class="text-2xl font-bold">EVgo</div>
-            <div class="text-2xl font-bold">Wolfspeed</div>
-            <div class="text-2xl font-bold">Infineon</div>
-            <div class="text-2xl font-bold">Tesla</div>
+    <section class="container mx-auto px-6 py-12 bg-white">
+        <p class="text-center text-sm text-gray-600 mb-8">Trusted by industry leaders</p>
+        <div class="flex flex-wrap justify-center items-center gap-12">
+            <div class="text-2xl font-bold text-gray-400 hover:text-purple-600 transition-colors">ChargePoint</div>
+            <div class="text-2xl font-bold text-gray-400 hover:text-purple-600 transition-colors">EVgo</div>
+            <div class="text-2xl font-bold text-gray-400 hover:text-purple-600 transition-colors">Wolfspeed</div>
+            <div class="text-2xl font-bold text-gray-400 hover:text-purple-600 transition-colors">Infineon</div>
+            <div class="text-2xl font-bold text-gray-400 hover:text-purple-600 transition-colors">Tesla</div>
         </div>
     </section>
 
     <!-- The Old Way is Broken -->
-    <section class="container mx-auto px-6 py-20">
+    <section class="container mx-auto px-6 py-20 bg-gray-50">
         <div class="max-w-6xl mx-auto text-center mb-16">
-            <h2 class="text-5xl font-extrabold mb-4">The Old Way is Broken</h2>
-            <p class="text-xl text-gray-400">Traditional power electronics development is slow, expensive, and risky</p>
+            <h2 class="text-5xl font-extrabold mb-4 text-gray-900">The Old Way is Broken</h2>
+            <p class="text-xl text-gray-600">Traditional power electronics development is slow, expensive, and risky</p>
         </div>
 
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
             <!-- Old Way -->
-            <div class="bg-red-900/20 border border-red-500/30 rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-6 text-red-400">The Old Way</h3>
+            <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-6 text-red-600">The Old Way</h3>
                 <div class="space-y-6">
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">6+ months</div>
-                        <p class="text-gray-400">to market</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">6+ months</div>
+                        <p class="text-gray-700">to market</p>
                         <p class="text-sm text-gray-500">Multiple hardware iterations</p>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">$300K+</div>
-                        <p class="text-gray-400">in prototypes</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">$300K+</div>
+                        <p class="text-gray-700">in prototypes</p>
                         <p class="text-sm text-gray-500">Each iteration costs $50K+</p>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">40%</div>
-                        <p class="text-gray-400">EMC failure rate</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">40%</div>
+                        <p class="text-gray-700">EMC failure rate</p>
                         <p class="text-sm text-gray-500">Discovered late in development</p>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">$2M+</div>
-                        <p class="text-gray-400">for tools</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">$2M+</div>
+                        <p class="text-gray-700">for tools</p>
                         <p class="text-sm text-gray-500">MATLAB, Ansys, PLECS licenses</p>
                     </div>
                 </div>
             </div>
 
             <!-- PowerFlow Way -->
-            <div class="bg-green-900/20 border border-green-500/30 rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-6 text-green-400">The PowerFlow Way</h3>
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-300 rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-6 text-purple-600">The PowerFlow Way</h3>
                 <div class="space-y-6">
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">3 weeks</div>
-                        <p class="text-gray-400">to prototype</p>
-                        <p class="text-sm text-gray-500">Digital twin before hardware</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">3 weeks</div>
+                        <p class="text-gray-700">to prototype</p>
+                        <p class="text-sm text-gray-600">Digital twin before hardware</p>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">90%</div>
-                        <p class="text-gray-400">cost reduction</p>
-                        <p class="text-sm text-gray-500">First-pass success rate</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">90%</div>
+                        <p class="text-gray-700">cost reduction</p>
+                        <p class="text-sm text-gray-600">First-pass success rate</p>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">95%</div>
-                        <p class="text-gray-400">EMC pass rate</p>
-                        <p class="text-sm text-gray-500">Pre-compliance in simulation</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">95%</div>
+                        <p class="text-gray-700">EMC pass rate</p>
+                        <p class="text-sm text-gray-600">Pre-compliance in simulation</p>
                     </div>
                     <div>
-                        <div class="text-3xl font-bold text-white mb-2">$2,999</div>
-                        <p class="text-gray-400">/month</p>
-                        <p class="text-sm text-gray-500">All-inclusive platform</p>
+                        <div class="text-3xl font-bold text-gray-900 mb-2">$2,999</div>
+                        <p class="text-gray-700">/month</p>
+                        <p class="text-sm text-gray-600">All-inclusive platform</p>
                     </div>
                 </div>
             </div>
@@ -205,67 +209,67 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="container mx-auto px-6 py-20">
+    <section id="features" class="container mx-auto px-6 py-20 bg-white">
         <div class="max-w-6xl mx-auto text-center mb-16">
-            <h2 class="text-5xl font-extrabold mb-4">Everything You Need to Design Modern Power Electronics</h2>
-            <p class="text-xl text-gray-400">From concept to production, PowerFlow accelerates every step</p>
+            <h2 class="text-5xl font-extrabold mb-4 text-gray-900">Everything You Need to Design Modern Power Electronics</h2>
+            <p class="text-xl text-gray-600">From concept to production, PowerFlow accelerates every step</p>
         </div>
 
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="glass-card rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-4">SST/DAB Native Support</h3>
-                <p class="text-gray-400 mb-6">Industry's first platform with built-in solid-state transformer and dual-active bridge simulation. Model complex topologies with 98% accuracy.</p>
-                <ul class="space-y-2 text-sm text-gray-300">
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">SST/DAB Native Support</h3>
+                <p class="text-gray-600 mb-6">Industry's first platform with built-in solid-state transformer and dual-active bridge simulation. Model complex topologies with 98% accuracy.</p>
+                <ul class="space-y-2 text-sm text-gray-700">
                     <li>• 3-stage SST modeling</li>
                     <li>• MFT optimization</li>
                     <li>• Phase-shift control</li>
                 </ul>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-4">Real-time ZVS Analysis</h3>
-                <p class="text-gray-400 mb-6">Visualize zero-voltage switching regions in real-time. Optimize efficiency and reduce switching losses automatically.</p>
-                <ul class="space-y-2 text-sm text-gray-300">
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">Real-time ZVS Analysis</h3>
+                <p class="text-gray-600 mb-6">Visualize zero-voltage switching regions in real-time. Optimize efficiency and reduce switching losses automatically.</p>
+                <ul class="space-y-2 text-sm text-gray-700">
                     <li>• Interactive heatmaps</li>
                     <li>• Load vs phase-shift</li>
                     <li>• Efficiency prediction</li>
                 </ul>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-4">SiC/GaN Device Library</h3>
-                <p class="text-gray-400 mb-6">Accurate models for latest wide-bandgap semiconductors. Validated with Wolfspeed, Infineon, and GaN Systems.</p>
-                <ul class="space-y-2 text-sm text-gray-300">
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">SiC/GaN Device Library</h3>
+                <p class="text-gray-600 mb-6">Accurate models for latest wide-bandgap semiconductors. Validated with Wolfspeed, Infineon, and GaN Systems.</p>
+                <ul class="space-y-2 text-sm text-gray-700">
                     <li>• 10,000+ devices</li>
                     <li>• Thermal models</li>
                     <li>• Loss profiles</li>
                 </ul>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-4">Hardware-in-the-Loop</h3>
-                <p class="text-gray-400 mb-6">Seamlessly transition from simulation to hardware testing. Built-in safety interlocks and CAN bus integration.</p>
-                <ul class="space-y-2 text-sm text-gray-300">
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">Hardware-in-the-Loop</h3>
+                <p class="text-gray-600 mb-6">Seamlessly transition from simulation to hardware testing. Built-in safety interlocks and CAN bus integration.</p>
+                <ul class="space-y-2 text-sm text-gray-700">
                     <li>• Real-time control</li>
                     <li>• Safety interlocks</li>
                     <li>• CAN/Modbus support</li>
                 </ul>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-4">Compliance Automation</h3>
-                <p class="text-gray-400 mb-6">Pre-validate designs against IEEE-1547, UL 1741, and IEC standards. Generate compliance reports automatically.</p>
-                <ul class="space-y-2 text-sm text-gray-300">
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">Compliance Automation</h3>
+                <p class="text-gray-600 mb-6">Pre-validate designs against IEEE-1547, UL 1741, and IEC standards. Generate compliance reports automatically.</p>
+                <ul class="space-y-2 text-sm text-gray-700">
                     <li>• IEEE-1547 testing</li>
                     <li>• EMC pre-compliance</li>
                     <li>• Auto documentation</li>
                 </ul>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <h3 class="text-2xl font-bold mb-4">Cloud-Native Platform</h3>
-                <p class="text-gray-400 mb-6">No installation required. Access from anywhere, collaborate in real-time, and scale compute on-demand.</p>
-                <ul class="space-y-2 text-sm text-gray-300">
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <h3 class="text-2xl font-bold mb-4 text-purple-600">Cloud-Native Platform</h3>
+                <p class="text-gray-600 mb-6">No installation required. Access from anywhere, collaborate in real-time, and scale compute on-demand.</p>
+                <ul class="space-y-2 text-sm text-gray-700">
                     <li>• GPU acceleration</li>
                     <li>• Team collaboration</li>
                     <li>• Version control</li>
@@ -275,107 +279,107 @@
     </section>
 
     <!-- Solutions Section -->
-    <section id="solutions" class="bg-black/30 py-20">
+    <section id="solutions" class="bg-purple-50 py-20">
         <div class="container mx-auto px-6">
             <div class="max-w-6xl mx-auto text-center mb-16">
-                <h2 class="text-5xl font-extrabold mb-4">Solutions for Every Power Challenge</h2>
-                <p class="text-xl text-gray-400">From EV charging to renewable energy, we've got you covered</p>
+                <h2 class="text-5xl font-extrabold mb-4 text-gray-900">Solutions for Every Power Challenge</h2>
+                <p class="text-xl text-gray-600">From EV charging to renewable energy, we've got you covered</p>
             </div>
 
             <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
-                <div class="glass-card rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-blue-400">⚡ EV DC Fast Charging</h3>
-                    <p class="text-gray-400 mb-6">Design 350kW+ chargers with bidirectional capability. Optimize efficiency, reduce costs, and ensure grid compliance.</p>
-                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                <div class="glass-card rounded-2xl p-8 hover:border-purple-300 transition-all">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-600">⚡ EV DC Fast Charging</h3>
+                    <p class="text-gray-600 mb-6">Design 350kW+ chargers with bidirectional capability. Optimize efficiency, reduce costs, and ensure grid compliance.</p>
+                    <ul class="space-y-2 text-sm text-gray-700 mb-6">
                         <li>• CCS/CHAdeMO protocols</li>
                         <li>• V2G bidirectional power</li>
                         <li>• Grid harmonic compliance</li>
                     </ul>
-                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-semibold">Learn More →</a>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">☀️ Solar & Energy Storage</h3>
-                    <p class="text-gray-400 mb-6">Develop grid-tied inverters and energy storage systems. Maximize MPPT efficiency and grid stability.</p>
-                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                <div class="glass-card rounded-2xl p-8 hover:border-purple-300 transition-all">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-600">☀️ Solar & Energy Storage</h3>
+                    <p class="text-gray-600 mb-6">Develop grid-tied inverters and energy storage systems. Maximize MPPT efficiency and grid stability.</p>
+                    <ul class="space-y-2 text-sm text-gray-700 mb-6">
                         <li>• MPPT optimization</li>
                         <li>• Grid-forming control</li>
                         <li>• Battery management</li>
                     </ul>
-                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-semibold">Learn More →</a>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-green-400">🏭 Industrial Motor Drives</h3>
-                    <p class="text-gray-400 mb-6">Design high-performance motor controllers with FOC. Optimize for efficiency, torque ripple, and EMI.</p>
-                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                <div class="glass-card rounded-2xl p-8 hover:border-purple-300 transition-all">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-600">🏭 Industrial Motor Drives</h3>
+                    <p class="text-gray-600 mb-6">Design high-performance motor controllers with FOC. Optimize for efficiency, torque ripple, and EMI.</p>
+                    <ul class="space-y-2 text-sm text-gray-700 mb-6">
                         <li>• PMSM/BLDC control</li>
                         <li>• Sensorless operation</li>
                         <li>• Functional safety</li>
                     </ul>
-                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-semibold">Learn More →</a>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-4 text-purple-400">💾 Data Center Power</h3>
-                    <p class="text-gray-400 mb-6">Optimize PSU efficiency for AI workloads. Design 48V power delivery with minimal losses.</p>
-                    <ul class="space-y-2 text-sm text-gray-300 mb-6">
+                <div class="glass-card rounded-2xl p-8 hover:border-purple-300 transition-all">
+                    <h3 class="text-2xl font-bold mb-4 text-purple-600">💾 Data Center Power</h3>
+                    <p class="text-gray-600 mb-6">Optimize PSU efficiency for AI workloads. Design 48V power delivery with minimal losses.</p>
+                    <ul class="space-y-2 text-sm text-gray-700 mb-6">
                         <li>• Totem-pole PFC</li>
                         <li>• VRM optimization</li>
                         <li>• Thermal management</li>
                     </ul>
-                    <a href="#" class="text-purple-400 hover:text-purple-300 font-semibold">Learn More →</a>
+                    <a href="#" class="text-purple-600 hover:text-purple-700 font-semibold">Learn More →</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ROI Calculator -->
-    <section class="container mx-auto px-6 py-20">
+    <section class="container mx-auto px-6 py-20 bg-white">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="text-5xl font-extrabold mb-4">Calculate Your ROI</h2>
-                <p class="text-xl text-gray-400">See how much time and money you can save with PowerFlow</p>
+                <h2 class="text-5xl font-extrabold mb-4 text-gray-900">Calculate Your ROI</h2>
+                <p class="text-xl text-gray-600">See how much time and money you can save with PowerFlow</p>
             </div>
 
             <div class="glass-card rounded-2xl p-8 mb-8">
                 <div class="grid md:grid-cols-3 gap-6 mb-8">
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Number of Engineers</label>
-                        <input type="number" value="5" id="engineers" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white" oninput="calculateROI()">
+                        <label class="block text-sm text-gray-600 mb-2 font-medium">Number of Engineers</label>
+                        <input type="number" value="5" id="engineers" class="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-900 focus:border-purple-500 focus:outline-none" oninput="calculateROI()">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Projects per Year</label>
-                        <input type="number" value="12" id="projects" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white" oninput="calculateROI()">
+                        <label class="block text-sm text-gray-600 mb-2 font-medium">Projects per Year</label>
+                        <input type="number" value="12" id="projects" class="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-900 focus:border-purple-500 focus:outline-none" oninput="calculateROI()">
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Hardware Iterations</label>
-                        <input type="number" value="3" id="iterations" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white" oninput="calculateROI()">
+                        <label class="block text-sm text-gray-600 mb-2 font-medium">Hardware Iterations</label>
+                        <input type="number" value="3" id="iterations" class="w-full px-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-900 focus:border-purple-500 focus:outline-none" oninput="calculateROI()">
                     </div>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
-                        <h4 class="font-bold mb-4 text-red-400">Traditional Approach</h4>
-                        <div class="text-4xl font-bold mb-2" id="old-cost">$1,800,000</div>
-                        <div class="text-gray-400" id="old-time">72 months</div>
+                    <div class="bg-red-50 border-2 border-red-200 rounded-xl p-6">
+                        <h4 class="font-bold mb-4 text-red-600">Traditional Approach</h4>
+                        <div class="text-4xl font-bold mb-2 text-gray-900" id="old-cost">$1,800,000</div>
+                        <div class="text-gray-600" id="old-time">72 months</div>
                     </div>
-                    <div class="bg-green-500/10 border border-green-500/30 rounded-xl p-6">
-                        <h4 class="font-bold mb-4 text-green-400">With PowerFlow</h4>
-                        <div class="text-4xl font-bold mb-2" id="new-cost">$35,988</div>
-                        <div class="text-gray-400" id="new-time">9.0 months</div>
+                    <div class="bg-purple-50 border-2 border-purple-200 rounded-xl p-6">
+                        <h4 class="font-bold mb-4 text-purple-600">With PowerFlow</h4>
+                        <div class="text-4xl font-bold mb-2 text-gray-900" id="new-cost">$35,988</div>
+                        <div class="text-gray-600" id="new-time">9.0 months</div>
                     </div>
                 </div>
 
-                <div class="mt-8 p-6 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl border border-purple-500/30">
+                <div class="mt-8 p-6 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl border-2 border-purple-200">
                     <div class="grid md:grid-cols-2 gap-4 text-center">
                         <div>
-                            <div class="text-sm text-gray-400 mb-1">Annual Savings</div>
-                            <div class="text-3xl font-bold text-green-400" id="savings">$1,764,012</div>
+                            <div class="text-sm text-gray-700 mb-1 font-medium">Annual Savings</div>
+                            <div class="text-3xl font-bold text-purple-600" id="savings">$1,764,012</div>
                         </div>
                         <div>
-                            <div class="text-sm text-gray-400 mb-1">Time Saved</div>
-                            <div class="text-3xl font-bold text-blue-400" id="time-saved">63.0 months</div>
+                            <div class="text-sm text-gray-700 mb-1 font-medium">Time Saved</div>
+                            <div class="text-3xl font-bold text-purple-600" id="time-saved">63.0 months</div>
                         </div>
                     </div>
                 </div>
@@ -384,124 +388,124 @@
     </section>
 
     <!-- Pricing -->
-    <section id="pricing" class="bg-black/30 py-20">
+    <section id="pricing" class="bg-gray-50 py-20">
         <div class="container mx-auto px-6">
             <div class="max-w-6xl mx-auto text-center mb-16">
-                <h2 class="text-5xl font-extrabold mb-4">Simple, Transparent Pricing</h2>
-                <p class="text-xl text-gray-400">Choose the plan that fits your needs. No hidden fees.</p>
+                <h2 class="text-5xl font-extrabold mb-4 text-gray-900">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600">Choose the plan that fits your needs. No hidden fees.</p>
             </div>
 
             <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
                 <!-- Simulator Plan -->
                 <div class="glass-card rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-2">Simulator</h3>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Simulator</h3>
                     <div class="mb-6">
-                        <span class="text-5xl font-bold">$499</span>
-                        <span class="text-gray-400"> /month</span>
+                        <span class="text-5xl font-bold text-gray-900">$499</span>
+                        <span class="text-gray-600"> /month</span>
                     </div>
-                    <ul class="space-y-3 text-gray-300 mb-8">
-                        <li>✓ Basic topologies</li>
-                        <li>✓ 5 projects</li>
-                        <li>✓ Web UI access</li>
-                        <li>✓ Community support</li>
-                        <li>✗ SST/DAB models</li>
-                        <li>✗ HIL integration</li>
+                    <ul class="space-y-3 text-gray-700 mb-8">
+                        <li class="text-green-600">✓ Basic topologies</li>
+                        <li class="text-green-600">✓ 5 projects</li>
+                        <li class="text-green-600">✓ Web UI access</li>
+                        <li class="text-green-600">✓ Community support</li>
+                        <li class="text-gray-400">✗ SST/DAB models</li>
+                        <li class="text-gray-400">✗ HIL integration</li>
                     </ul>
-                    <button onclick="handleLaunchPlatform()" class="w-full px-6 py-3 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-all font-semibold">
+                    <button onclick="handleLaunchPlatform()" class="w-full px-6 py-3 bg-white border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition-all font-semibold">
                         Start Free Trial
                     </button>
                 </div>
 
                 <!-- Professional Plan -->
-                <div class="bg-gradient-to-br from-purple-600/20 to-pink-600/20 border-2 border-purple-500/50 rounded-2xl p-8 relative">
-                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-sm font-bold">
+                <div class="bg-gradient-to-br from-purple-100 to-pink-100 border-2 border-purple-400 rounded-2xl p-8 relative shadow-xl">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full text-sm font-bold">
                         MOST POPULAR
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Professional</h3>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Professional</h3>
                     <div class="mb-6">
-                        <span class="text-5xl font-bold">$2,999</span>
-                        <span class="text-gray-400"> /month</span>
+                        <span class="text-5xl font-bold text-gray-900">$2,999</span>
+                        <span class="text-gray-600"> /month</span>
                     </div>
-                    <ul class="space-y-3 text-gray-300 mb-8">
-                        <li>✓ All topologies + SST</li>
-                        <li>✓ Unlimited projects</li>
-                        <li>✓ API access</li>
-                        <li>✓ HIL integration</li>
-                        <li>✓ Priority support</li>
-                        <li>✓ Team collaboration</li>
+                    <ul class="space-y-3 text-gray-700 mb-8">
+                        <li class="text-purple-600 font-medium">✓ All topologies + SST</li>
+                        <li class="text-purple-600 font-medium">✓ Unlimited projects</li>
+                        <li class="text-purple-600 font-medium">✓ API access</li>
+                        <li class="text-purple-600 font-medium">✓ HIL integration</li>
+                        <li class="text-purple-600 font-medium">✓ Priority support</li>
+                        <li class="text-purple-600 font-medium">✓ Team collaboration</li>
                     </ul>
-                    <button onclick="handleLaunchPlatform()" class="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all font-semibold">
+                    <button onclick="handleLaunchPlatform()" class="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all font-semibold shadow-lg">
                         Start Free Trial
                     </button>
                 </div>
 
                 <!-- Enterprise Plan -->
                 <div class="glass-card rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                    <h3 class="text-2xl font-bold mb-2 text-gray-900">Enterprise</h3>
                     <div class="mb-6">
-                        <span class="text-5xl font-bold">Custom</span>
+                        <span class="text-5xl font-bold text-gray-900">Custom</span>
                     </div>
-                    <ul class="space-y-3 text-gray-300 mb-8">
-                        <li>✓ Custom topologies</li>
-                        <li>✓ On-premise option</li>
-                        <li>✓ SLA guarantee</li>
-                        <li>✓ Dedicated support</li>
-                        <li>✓ Training included</li>
-                        <li>✓ Custom integrations</li>
+                    <ul class="space-y-3 text-gray-700 mb-8">
+                        <li class="text-green-600">✓ Custom topologies</li>
+                        <li class="text-green-600">✓ On-premise option</li>
+                        <li class="text-green-600">✓ SLA guarantee</li>
+                        <li class="text-green-600">✓ Dedicated support</li>
+                        <li class="text-green-600">✓ Training included</li>
+                        <li class="text-green-600">✓ Custom integrations</li>
                     </ul>
-                    <a href="contact.html" class="block w-full px-6 py-3 bg-white/10 border border-white/20 text-center rounded-lg hover:bg-white/20 transition-all font-semibold">
+                    <a href="contact.html" class="block w-full px-6 py-3 bg-white border-2 border-gray-300 text-gray-900 text-center rounded-lg hover:bg-gray-50 transition-all font-semibold">
                         Contact Sales
                     </a>
                 </div>
             </div>
 
-            <p class="text-center text-gray-400 mt-8">All plans include: SSL encryption, 99.9% uptime SLA, daily backups</p>
+            <p class="text-center text-gray-600 mt-8">All plans include: SSL encryption, 99.9% uptime SLA, daily backups</p>
         </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="container mx-auto px-6 py-20">
+    <section class="container mx-auto px-6 py-20 bg-white">
         <div class="max-w-6xl mx-auto text-center mb-16">
-            <h2 class="text-5xl font-extrabold mb-4">Loved by Engineers Worldwide</h2>
-            <p class="text-xl text-gray-400">See what our customers are saying</p>
+            <h2 class="text-5xl font-extrabold mb-4 text-gray-900">Loved by Engineers Worldwide</h2>
+            <p class="text-xl text-gray-600">See what our customers are saying</p>
         </div>
 
         <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-            <div class="glass-card rounded-2xl p-8">
-                <p class="text-gray-300 mb-6">"PowerFlow reduced our DAB design time from 6 months to 3 weeks. The ZVS optimization alone saved us $200K in prototypes."</p>
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <p class="text-gray-700 mb-6 italic">"PowerFlow reduced our DAB design time from 6 months to 3 weeks. The ZVS optimization alone saved us $200K in prototypes."</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center font-bold">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center font-bold text-white">
                         JD
                     </div>
                     <div>
-                        <div class="font-bold">John Davidson</div>
-                        <div class="text-sm text-gray-400">Principal Engineer, ChargePoint</div>
+                        <div class="font-bold text-gray-900">John Davidson</div>
+                        <div class="text-sm text-gray-600">Principal Engineer, ChargePoint</div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <p class="text-gray-300 mb-6">"The SiC/GaN models are incredibly accurate. We achieved 98% efficiency on first silicon - unprecedented in our industry."</p>
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <p class="text-gray-700 mb-6 italic">"The SiC/GaN models are incredibly accurate. We achieved 98% efficiency on first silicon - unprecedented in our industry."</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center font-bold">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center font-bold text-white">
                         SC
                     </div>
                     <div>
-                        <div class="font-bold">Sarah Chen</div>
-                        <div class="text-sm text-gray-400">Director of Engineering, Tesla</div>
+                        <div class="font-bold text-gray-900">Sarah Chen</div>
+                        <div class="text-sm text-gray-600">Director of Engineering, Tesla</div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card rounded-2xl p-8">
-                <p class="text-gray-300 mb-6">"HIL integration is seamless. We test designs in simulation then validate on hardware without changing our workflow."</p>
+            <div class="glass-card rounded-2xl p-8 hover:shadow-purple-200">
+                <p class="text-gray-700 mb-6 italic">"HIL integration is seamless. We test designs in simulation then validate on hardware without changing our workflow."</p>
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center font-bold">
+                    <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center font-bold text-white">
                         MR
                     </div>
                     <div>
-                        <div class="font-bold">Michael Rodriguez</div>
-                        <div class="text-sm text-gray-400">CTO, Electrify America</div>
+                        <div class="font-bold text-gray-900">Michael Rodriguez</div>
+                        <div class="text-sm text-gray-600">CTO, Electrify America</div>
                     </div>
                 </div>
             </div>
@@ -509,73 +513,73 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="container mx-auto px-6 py-20">
-        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-12 text-center">
-            <h2 class="text-5xl font-extrabold mb-6">Ready to Accelerate Your Development?</h2>
-            <p class="text-xl text-gray-300 mb-10">
+    <section class="container mx-auto px-6 py-20 bg-gradient-to-br from-purple-100 to-pink-100">
+        <div class="max-w-4xl mx-auto bg-white rounded-3xl p-12 text-center shadow-2xl">
+            <h2 class="text-5xl font-extrabold mb-6 text-gray-900">Ready to Accelerate Your Development?</h2>
+            <p class="text-xl text-gray-700 mb-10">
                 Join 500+ engineers who are designing the future of power electronics with PowerFlow
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="handleLaunchPlatform()" class="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all shadow-xl">
                     Start Your Free Trial
                 </button>
-                <a href="contact.html" class="px-10 py-4 bg-white/10 border border-white/20 text-white font-bold text-lg rounded-lg hover:bg-white/20 transition-all">
+                <a href="contact.html" class="px-10 py-4 bg-white border-2 border-purple-600 text-purple-600 font-bold text-lg rounded-lg hover:bg-purple-50 transition-all">
                     Schedule a Demo
                 </a>
             </div>
-            <p class="text-sm text-gray-400 mt-6">No credit card required • 14-day free trial • Cancel anytime</p>
+            <p class="text-sm text-gray-600 mt-6">No credit card required • 14-day free trial • Cancel anytime</p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/10 bg-black/30 py-12">
+    <footer class="border-t border-gray-200 bg-white py-12">
         <div class="container mx-auto px-6">
             <div class="max-w-6xl mx-auto">
                 <div class="grid md:grid-cols-4 gap-8 mb-12">
                     <div>
                         <div class="flex items-center space-x-2 mb-4">
-                            <svg class="h-8 w-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
-                            <span class="text-xl font-bold">PowerFlow</span>
+                            <span class="text-xl font-bold text-gray-900">PowerFlow</span>
                         </div>
-                        <p class="text-gray-400 text-sm">The simulation platform powering the electric future</p>
+                        <p class="text-gray-600 text-sm">The simulation platform powering the electric future</p>
                     </div>
                     <div>
-                        <h4 class="font-bold mb-4">Product</h4>
-                        <ul class="space-y-2 text-sm text-gray-400">
-                            <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
-                            <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Roadmap</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
+                        <h4 class="font-bold mb-4 text-gray-900">Product</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li><a href="#features" class="hover:text-purple-600 transition-colors">Features</a></li>
+                            <li><a href="#pricing" class="hover:text-purple-600 transition-colors">Pricing</a></li>
+                            <li><a href="#" class="hover:text-purple-600 transition-colors">Roadmap</a></li>
+                            <li><a href="#" class="hover:text-purple-600 transition-colors">Changelog</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold mb-4">Resources</h4>
-                        <ul class="space-y-2 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Tutorials</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                        <h4 class="font-bold mb-4 text-gray-900">Resources</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li><a href="#" class="hover:text-purple-600 transition-colors">Documentation</a></li>
+                            <li><a href="#" class="hover:text-purple-600 transition-colors">Tutorials</a></li>
+                            <li><a href="#" class="hover:text-purple-600 transition-colors">Blog</a></li>
+                            <li><a href="#" class="hover:text-purple-600 transition-colors">Community</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-bold mb-4">Company</h4>
-                        <ul class="space-y-2 text-sm text-gray-400">
-                            <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-                            <li><a href="careers.html" class="hover:text-white transition-colors">Careers</a></li>
-                            <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
-                            <li><a href="index.html" class="hover:text-white transition-colors">Partners</a></li>
+                        <h4 class="font-bold mb-4 text-gray-900">Company</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li><a href="about.html" class="hover:text-purple-600 transition-colors">About</a></li>
+                            <li><a href="careers.html" class="hover:text-purple-600 transition-colors">Careers</a></li>
+                            <li><a href="contact.html" class="hover:text-purple-600 transition-colors">Contact</a></li>
+                            <li><a href="index.html" class="hover:text-purple-600 transition-colors">Partners</a></li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+                <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
                     <p>© 2025 M.Y. Engineering and Technologies. All rights reserved.</p>
                     <div class="flex gap-6 mt-4 md:mt-0">
-                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" class="hover:text-white transition-colors">Security</a>
+                        <a href="#" class="hover:text-purple-600 transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-purple-600 transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-purple-600 transition-colors">Security</a>
                     </div>
                 </div>
             </div>
