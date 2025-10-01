@@ -1109,7 +1109,9 @@ E`;
                         <!-- I-V Characteristics -->
                         <div class="glass-panel p-6">
                             <h3 class="text-lg font-semibold mb-4">I-V Characteristics</h3>
-                            <canvas id="iv-chart" width="400" height="300"></canvas>
+                            <div class="h-64">
+                                <canvas id="iv-chart"></canvas>
+                            </div>
                             <div class="mt-4 flex space-x-2">
                                 <button onclick="analyzeIV()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">Analyze</button>
                                 <button onclick="fitModel()" class="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm">Fit Model</button>
@@ -1120,7 +1122,9 @@ E`;
                         <!-- Band Diagram -->
                         <div class="glass-panel p-6">
                             <h3 class="text-lg font-semibold mb-4">Band Diagram</h3>
-                            <canvas id="band-chart" width="400" height="300"></canvas>
+                            <div class="h-64">
+                                <canvas id="band-chart"></canvas>
+                            </div>
                             <div class="mt-4 flex space-x-2">
                                 <button onclick="calculate2DEG()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">2DEG Density</button>
                                 <button onclick="showStrain()" class="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm">Strain Analysis</button>
@@ -1130,7 +1134,9 @@ E`;
                         <!-- S-Parameters -->
                         <div class="glass-panel p-6">
                             <h3 class="text-lg font-semibold mb-4">S-Parameters</h3>
-                            <canvas id="sparams-chart" width="400" height="300"></canvas>
+                            <div class="h-64">
+                                <canvas id="sparams-chart"></canvas>
+                            </div>
                             <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
                                 <div class="bg-gray-900/50 p-2 rounded">
                                     <span class="text-gray-400">fT:</span>
@@ -1191,11 +1197,15 @@ E`;
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div>
                                 <h4 class="text-sm font-medium mb-2">Yield Analysis</h4>
-                                <canvas id="yield-chart" width="200" height="200"></canvas>
+                                <div class="h-48">
+                                    <canvas id="yield-chart"></canvas>
+                                </div>
                             </div>
                             <div>
                                 <h4 class="text-sm font-medium mb-2">Process Variation</h4>
-                                <canvas id="variation-chart" width="200" height="200"></canvas>
+                                <div class="h-48">
+                                    <canvas id="variation-chart"></canvas>
+                                </div>
                             </div>
                             <div>
                                 <h4 class="text-sm font-medium mb-2">Monte Carlo Results</h4>
@@ -1211,6 +1221,14 @@ E`;
                                     <div class="flex justify-between">
                                         <span class="text-gray-400">Yield:</span>
                                         <span class="text-green-400">94.7%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Samples:</span>
+                                        <span>10,000</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">σ/μ:</span>
+                                        <span>5.4%</span>
                                     </div>
                                 </div>
                             </div>
@@ -1803,7 +1821,8 @@ E`;
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
                         plugins: {
                             legend: { labels: { color: '#fff' } },
                             title: { display: true, text: 'I-V Characteristics', color: '#fff' }
@@ -1855,7 +1874,8 @@ E`;
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
                         plugins: {
                             legend: { labels: { color: '#fff' } },
                             title: { display: true, text: 'Energy Band Diagram', color: '#fff' }
@@ -1897,7 +1917,8 @@ E`;
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
                         plugins: {
                             legend: { labels: { color: '#fff' } },
                             title: { display: true, text: 'RF Performance', color: '#fff' }
@@ -1932,7 +1953,8 @@ E`;
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
                         plugins: {
                             legend: { labels: { color: '#fff' } }
                         }
@@ -1955,7 +1977,8 @@ E`;
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
                         plugins: {
                             legend: { display: false }
                         },
