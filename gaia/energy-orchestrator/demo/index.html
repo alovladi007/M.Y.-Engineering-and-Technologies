@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Orchestrator Demo - GAIA Platform</title>
+    
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- AlpineJS -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hover-lift { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+            to { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white" x-data="energyDemo()">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center space-x-2">
+                        <i class="fas fa-arrow-left text-green-400 text-xl"></i>
+                        <span class="text-xl font-bold text-green-400">Back to Energy Orchestrator</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button @click="toggleOptimization()" class="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 pulse-glow">
+                        <i class="fas fa-play mr-2" x-show="!optimizationRunning"></i>
+                        <i class="fas fa-pause mr-2" x-show="optimizationRunning"></i>
+                        <span x-text="optimizationRunning ? 'Stop Optimization' : 'Start Optimization'"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold mb-4">Energy Orchestrator Interactive Demo</h1>
+                <p class="text-xl text-gray-300">Real-time energy optimization simulation</p>
+            </div>
+            
+            <!-- Control Panel -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Optimization Controls -->
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <h3 class="text-xl font-bold mb-4">Optimization Controls</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Strategy</label>
+                            <select x-model="strategy" class="w-full bg-slate-700 border border-gray-600 rounded-lg px-4 py-2 text-white">
+                                <option value="balanced">Balanced</option>
+                                <option value="aggressive">Aggressive</option>
+                                <option value="conservative">Conservative</option>
+                                <option value="ml_driven">ML-Driven</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Power Cap: <span x-text="powerCap + 'W'"></span></label>
+                            <input type="range" x-model="powerCap" min="120" max="300" class="w-full">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Batch Size: <span x-text="batchSize"></span></label>
+                            <input type="range" x-model="batchSize" min="1" max="8" class="w-full">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Replicas: <span x-text="replicas"></span></label>
+                            <input type="range" x-model="replicas" min="1" max="10" class="w-full">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Current Metrics -->
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <h3 class="text-xl font-bold mb-4">Current Metrics</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Power Consumption</span>
+                            <span class="text-2xl font-bold text-green-400" x-text="currentPower + 'W'"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">GPU Utilization</span>
+                            <span class="text-2xl font-bold text-blue-400" x-text="gpuUtilization + '%'"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Efficiency</span>
+                            <span class="text-2xl font-bold text-purple-400" x-text="efficiency + '%'"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Joules/Request</span>
+                            <span class="text-2xl font-bold text-orange-400" x-text="joulesPerRequest"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Optimization Results -->
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <h3 class="text-xl font-bold mb-4">Optimization Results</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Energy Saved</span>
+                            <span class="text-2xl font-bold text-green-400" x-text="energySaved + '%'"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Carbon Reduced</span>
+                            <span class="text-2xl font-bold text-emerald-400" x-text="carbonReduced + 't'"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Cost Savings</span>
+                            <span class="text-2xl font-bold text-yellow-400" x-text="'$' + costSavings"></span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-300">Confidence</span>
+                            <span class="text-2xl font-bold text-cyan-400" x-text="confidence + '%'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Power Consumption Chart -->
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <h3 class="text-xl font-bold mb-4">Power Consumption Over Time</h3>
+                    <canvas id="powerChart" width="400" height="300"></canvas>
+                </div>
+                
+                <!-- Efficiency Chart -->
+                <div class="glass-effect rounded-xl p-6 hover-lift">
+                    <h3 class="text-xl font-bold mb-4">Efficiency Metrics</h3>
+                    <canvas id="efficiencyChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+            
+            <!-- GPU Metrics -->
+            <div class="glass-effect rounded-xl p-6 hover-lift mb-8">
+                <h3 class="text-xl font-bold mb-4">GPU Metrics</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-green-400" x-text="gpuPower + 'W'"></div>
+                        <div class="text-sm text-gray-400">GPU Power</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-blue-400" x-text="gpuTemp + '°C'"></div>
+                        <div class="text-sm text-gray-400">Temperature</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-purple-400" x-text="gpuMemUsed + '%'"></div>
+                        <div class="text-sm text-gray-400">Memory Used</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-orange-400" x-text="tensorActivity + '%'"></div>
+                        <div class="text-sm text-gray-400">Tensor Activity</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ML Model Performance -->
+            <div class="glass-effect rounded-xl p-6 hover-lift">
+                <h3 class="text-xl font-bold mb-4">ML Model Performance</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-green-400" x-text="modelAccuracy + '%'"></div>
+                        <div class="text-sm text-gray-400">Model Accuracy</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-blue-400" x-text="predictionLatency + 'ms'"></div>
+                        <div class="text-sm text-gray-400">Prediction Latency</div>
+                    </div>
+                    <div class="bg-slate-700 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-purple-400" x-text="trainingLoss"></div>
+                        <div class="text-sm text-gray-400">Training Loss</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function energyDemo() {
+            return {
+                // State
+                optimizationRunning: false,
+                strategy: 'balanced',
+                powerCap: 250,
+                batchSize: 4,
+                replicas: 3,
+                
+                // Metrics
+                currentPower: 1247,
+                gpuUtilization: 78,
+                efficiency: 94.2,
+                joulesPerRequest: 156,
+                
+                // Results
+                energySaved: 28.5,
+                carbonReduced: 2.1,
+                costSavings: 47200,
+                confidence: 87,
+                
+                // GPU Metrics
+                gpuPower: 245,
+                gpuTemp: 72,
+                gpuMemUsed: 68,
+                tensorActivity: 85,
+                
+                // ML Metrics
+                modelAccuracy: 94.2,
+                predictionLatency: 12,
+                trainingLoss: 0.0234,
+                
+                // Charts
+                powerChart: null,
+                efficiencyChart: null,
+                
+                init() {
+                    this.initializeCharts();
+                    this.startMetricsUpdate();
+                },
+                
+                toggleOptimization() {
+                    this.optimizationRunning = !this.optimizationRunning;
+                    if (this.optimizationRunning) {
+                        this.startOptimization();
+                    } else {
+                        this.stopOptimization();
+                    }
+                },
+                
+                startOptimization() {
+                    // Simulate optimization process
+                    this.optimizeMetrics();
+                },
+                
+                stopOptimization() {
+                    // Stop optimization
+                },
+                
+                optimizeMetrics() {
+                    if (!this.optimizationRunning) return;
+                    
+                    // Apply optimization based on strategy
+                    switch(this.strategy) {
+                        case 'aggressive':
+                            this.currentPower = Math.max(800, this.currentPower - 50);
+                            this.efficiency = Math.min(98, this.efficiency + 1);
+                            this.energySaved = Math.min(45, this.energySaved + 2);
+                            break;
+                        case 'conservative':
+                            this.currentPower = Math.max(1000, this.currentPower - 20);
+                            this.efficiency = Math.min(96, this.efficiency + 0.5);
+                            this.energySaved = Math.min(20, this.energySaved + 1);
+                            break;
+                        case 'ml_driven':
+                            // ML-driven optimization
+                            const mlFactor = 0.8 + Math.random() * 0.4;
+                            this.currentPower = Math.floor(this.currentPower * mlFactor);
+                            this.efficiency = Math.min(97, this.efficiency + Math.random() * 2);
+                            this.energySaved = Math.min(40, this.energySaved + Math.random() * 3);
+                            break;
+                        default: // balanced
+                            this.currentPower = Math.max(900, this.currentPower - 30);
+                            this.efficiency = Math.min(96, this.efficiency + 0.8);
+                            this.energySaved = Math.min(35, this.energySaved + 1.5);
+                    }
+                    
+                    // Update related metrics
+                    this.joulesPerRequest = Math.floor(this.currentPower / this.gpuUtilization * 0.8);
+                    this.carbonReduced = Math.floor(this.energySaved * 0.08 * 100) / 100;
+                    this.costSavings = Math.floor(this.energySaved * 1650);
+                    this.confidence = Math.min(95, this.confidence + Math.random() * 2);
+                    
+                    // Update charts
+                    this.updateCharts();
+                    
+                    // Continue optimization
+                    setTimeout(() => this.optimizeMetrics(), 2000);
+                },
+                
+                initializeCharts() {
+                    // Power Chart
+                    const powerCtx = document.getElementById('powerChart').getContext('2d');
+                    this.powerChart = new Chart(powerCtx, {
+                        type: 'line',
+                        data: {
+                            labels: Array.from({length: 20}, (_, i) => `${i * 5}s`),
+                            datasets: [{
+                                label: 'Power (W)',
+                                data: Array.from({length: 20}, () => Math.floor(Math.random() * 200 + 1000)),
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    labels: { color: '#9ca3af' }
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: { color: '#9ca3af' },
+                                    grid: { color: '#374151' }
+                                },
+                                y: {
+                                    ticks: { color: '#9ca3af' },
+                                    grid: { color: '#374151' }
+                                }
+                            }
+                        }
+                    });
+                    
+                    // Efficiency Chart
+                    const efficiencyCtx = document.getElementById('efficiencyChart').getContext('2d');
+                    this.efficiencyChart = new Chart(efficiencyCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Efficient', 'Inefficient'],
+                            datasets: [{
+                                data: [this.efficiency, 100 - this.efficiency],
+                                backgroundColor: ['#10b981', '#374151'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    labels: { color: '#9ca3af' }
+                                }
+                            }
+                        }
+                    });
+                },
+                
+                updateCharts() {
+                    // Update power chart
+                    const newPowerData = Array.from({length: 20}, () => Math.floor(Math.random() * 200 + this.currentPower - 100));
+                    this.powerChart.data.datasets[0].data = newPowerData;
+                    this.powerChart.update('none');
+                    
+                    // Update efficiency chart
+                    this.efficiencyChart.data.datasets[0].data = [this.efficiency, 100 - this.efficiency];
+                    this.efficiencyChart.update('none');
+                },
+                
+                startMetricsUpdate() {
+                    setInterval(() => {
+                        if (!this.optimizationRunning) {
+                            // Random fluctuations when not optimizing
+                            this.currentPower += Math.floor(Math.random() * 20 - 10);
+                            this.gpuUtilization += Math.floor(Math.random() * 6 - 3);
+                            this.gpuTemp += Math.floor(Math.random() * 4 - 2);
+                            this.gpuMemUsed += Math.floor(Math.random() * 4 - 2);
+                            this.tensorActivity += Math.floor(Math.random() * 6 - 3);
+                            
+                            // Keep values in reasonable ranges
+                            this.currentPower = Math.max(800, Math.min(1500, this.currentPower));
+                            this.gpuUtilization = Math.max(20, Math.min(95, this.gpuUtilization));
+                            this.gpuTemp = Math.max(40, Math.min(85, this.gpuTemp));
+                            this.gpuMemUsed = Math.max(10, Math.min(90, this.gpuMemUsed));
+                            this.tensorActivity = Math.max(10, Math.min(95, this.tensorActivity));
+                            
+                            this.updateCharts();
+                        }
+                    }, 1000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
