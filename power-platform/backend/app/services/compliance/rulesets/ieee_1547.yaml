@@ -1,0 +1,107 @@
+name: "IEEE 1547-2018 Interconnection Standard"
+version: "2018"
+standard: "IEEE 1547-2018"
+description: "Standard for Interconnection and Interoperability of Distributed Energy Resources"
+
+rules:
+  - id: "IEEE1547_VOLTAGE_1"
+    name: "Normal Voltage Range"
+    category: "voltage"
+    severity: "critical"
+    metric: "results.steady_state.vout"
+    limit_type: "range"
+    min: 106  # 88% of 120V
+    max: 132  # 110% of 120V
+    citation: "IEEE 1547-2018 Table 13"
+    description: "Output voltage must remain within normal operating range"
+
+  - id: "IEEE1547_FREQ_1"
+    name: "Frequency Operating Range"
+    category: "frequency"
+    severity: "critical"
+    metric: "results.steady_state.frequency"
+    limit_type: "range"
+    min: 59.3
+    max: 60.5
+    citation: "IEEE 1547-2018 Table 10"
+    description: "Frequency must remain within continuous operation range"
+
+  - id: "IEEE1547_THD_1"
+    name: "Current THD Limit"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.thd_current"
+    limit_type: "max"
+    limit: 5.0
+    citation: "IEEE 1547-2018 Section 5.1.1"
+    description: "Total harmonic distortion of current must not exceed 5%"
+
+  - id: "IEEE1547_PF_1"
+    name: "Power Factor"
+    category: "power_quality"
+    severity: "warning"
+    metric: "results.metrics.power_factor"
+    limit_type: "min"
+    limit: 0.85
+    citation: "IEEE 1547-2018 Section 5.2"
+    description: "Power factor should be greater than 0.85"
+
+  - id: "IEEE1547_VOLTAGE_2"
+    name: "Voltage Unbalance"
+    category: "voltage"
+    severity: "warning"
+    metric: "results.steady_state.voltage_unbalance"
+    limit_type: "max"
+    limit: 3.0
+    citation: "IEEE 1547-2018 Table 13"
+    description: "Voltage unbalance should not exceed 3%"
+
+  - id: "IEEE1547_DC_1"
+    name: "DC Injection Limit"
+    category: "dc_injection"
+    severity: "critical"
+    metric: "results.steady_state.dc_component"
+    limit_type: "max"
+    limit: 0.5
+    citation: "IEEE 1547-2018 Section 5.1.2"
+    description: "DC current injection must not exceed 0.5% of rated current"
+
+  - id: "IEEE1547_HARM_3"
+    name: "3rd Harmonic Limit"
+    category: "harmonics"
+    severity: "warning"
+    metric: "results.metrics.current_harmonics.3"
+    limit_type: "max"
+    limit: 4.0
+    citation: "IEEE 1547-2018 Table 16"
+    description: "3rd harmonic current limit"
+
+  - id: "IEEE1547_HARM_5"
+    name: "5th Harmonic Limit"
+    category: "harmonics"
+    severity: "warning"
+    metric: "results.metrics.current_harmonics.5"
+    limit_type: "max"
+    limit: 4.0
+    citation: "IEEE 1547-2018 Table 16"
+    description: "5th harmonic current limit"
+
+  - id: "IEEE1547_HARM_7"
+    name: "7th Harmonic Limit"
+    category: "harmonics"
+    severity: "warning"
+    metric: "results.metrics.current_harmonics.7"
+    limit_type: "max"
+    limit: 4.0
+    citation: "IEEE 1547-2018 Table 16"
+    description: "7th harmonic current limit"
+
+  - id: "IEEE1547_EFF_1"
+    name: "Minimum Efficiency"
+    category: "efficiency"
+    severity: "info"
+    metric: "results.efficiency"
+    limit_type: "min"
+    limit: 90.0
+    citation: "IEEE 1547-2018 Informative"
+    description: "Recommended minimum efficiency for grid-connected converters"

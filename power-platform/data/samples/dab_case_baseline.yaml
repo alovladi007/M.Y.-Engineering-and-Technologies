@@ -1,0 +1,71 @@
+# Baseline DAB Simulation Case
+# Electric Vehicle DC-DC Converter: 400V Battery to 800V High-Voltage Bus
+# Power: 20kW, Switching Frequency: 100kHz
+
+metadata:
+  name: "EV Charger Baseline"
+  description: "20kW bidirectional DAB for 400V→800V electric vehicle charging"
+  author: "Power Platform Demo"
+  date: "2024-10-12"
+  version: "1.0"
+
+topology: "dab_single"
+
+parameters:
+  # Electrical specs
+  vin: 400.0  # Input voltage (V) - LV battery pack
+  vout: 800.0  # Output voltage (V) - HV DC bus
+  power: 20000.0  # Rated power (W)
+
+  # Transformer
+  n: 2.0  # Turns ratio (primary:secondary = 1:2)
+  llk: 10.0e-6  # Leakage inductance (H) = 10 µH
+
+  # Switching
+  fsw: 100000.0  # Switching frequency (Hz) = 100 kHz
+  phi: 0.25  # Phase shift (0-0.5) = 90° electrical
+  deadtime: 200.0e-9  # Deadtime (s) = 200 ns
+
+  # DC Link Capacitors
+  cdc_in: 100.0e-6  # Input cap (F) = 100 µF
+  cdc_out: 100.0e-6  # Output cap (F) = 100 µF
+
+  # Thermal
+  t_ambient: 25.0  # Ambient temperature (°C)
+
+# Device selection
+device:
+  name: "C2M0080120D"
+  manufacturer: "Wolfspeed"
+  technology: "SiC"
+  vds_max: 1200
+  id_max: 36
+  rds_on_25c: 0.080
+  tj_max: 150
+
+# Expected results (for validation)
+expected:
+  efficiency_min: 97.5  # %
+  thd_max: 5.0  # %
+  zvs_achieved: true
+  tj_max: 120.0  # °C
+
+# Compliance targets
+compliance:
+  - "ieee_1547"
+  - "ul_1741"
+  - "iec_61000"
+
+# Notes
+notes: |
+  This baseline case represents a typical 20kW bidirectional DAB for EV charging.
+  Key design goals:
+  - Efficiency > 97.5% at rated load
+  - Full ZVS operation across load range
+  - Junction temperature < 120°C at 25°C ambient
+  - Meet IEEE 1547 THD limits (<5%)
+
+  Design trade-offs:
+  - Higher Llk improves ZVS but increases conduction loss
+  - Higher fsw reduces magnetics size but increases switching loss
+  - Phase shift φ=0.25 (90°) provides good balance for 1:2 turns ratio

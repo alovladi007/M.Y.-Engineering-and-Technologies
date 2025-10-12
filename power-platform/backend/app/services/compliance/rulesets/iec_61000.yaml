@@ -1,0 +1,115 @@
+name: "IEC 61000 Electromagnetic Compatibility"
+version: "IEC 61000-3-2:2018"
+standard: "IEC 61000-3-2 and 61000-3-12"
+description: "Limits for harmonic current emissions and voltage fluctuations"
+
+rules:
+  - id: "IEC61000_HARM_3"
+    name: "3rd Harmonic Current Limit"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.current_harmonics.3"
+    limit_type: "max"
+    limit: 2.3
+    citation: "IEC 61000-3-2 Table 1"
+    description: "3rd harmonic limit for Class A equipment"
+
+  - id: "IEC61000_HARM_5"
+    name: "5th Harmonic Current Limit"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.current_harmonics.5"
+    limit_type: "max"
+    limit: 1.14
+    citation: "IEC 61000-3-2 Table 1"
+    description: "5th harmonic limit for Class A equipment"
+
+  - id: "IEC61000_HARM_7"
+    name: "7th Harmonic Current Limit"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.current_harmonics.7"
+    limit_type: "max"
+    limit: 0.77
+    citation: "IEC 61000-3-2 Table 1"
+    description: "7th harmonic limit for Class A equipment"
+
+  - id: "IEC61000_HARM_9"
+    name: "9th Harmonic Current Limit"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.current_harmonics.9"
+    limit_type: "max"
+    limit: 0.40
+    citation: "IEC 61000-3-2 Table 1"
+    description: "9th harmonic limit for Class A equipment"
+
+  - id: "IEC61000_HARM_11"
+    name: "11th Harmonic Current Limit"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.current_harmonics.11"
+    limit_type: "max"
+    limit: 0.33
+    citation: "IEC 61000-3-2 Table 1"
+    description: "11th harmonic limit for Class A equipment"
+
+  - id: "IEC61000_HARM_13"
+    name: "13th Harmonic Current Limit"
+    category: "harmonics"
+    severity: "warning"
+    metric: "results.metrics.current_harmonics.13"
+    limit_type: "max"
+    limit: 0.21
+    citation: "IEC 61000-3-2 Table 1"
+    description: "13th harmonic limit for Class A equipment"
+
+  - id: "IEC61000_THD_1"
+    name: "Total Harmonic Distortion"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.thd_current"
+    limit_type: "max"
+    limit: 5.0
+    citation: "IEC 61000-3-12"
+    description: "THD limit for balanced three-phase equipment"
+
+  - id: "IEC61000_FLICKER_1"
+    name: "Voltage Flicker Pst"
+    category: "flicker"
+    severity: "warning"
+    metric: "results.flicker.pst"
+    limit_type: "max"
+    limit: 1.0
+    citation: "IEC 61000-3-3"
+    description: "Short-term flicker severity limit"
+
+  - id: "IEC61000_FLICKER_2"
+    name: "Voltage Flicker Plt"
+    category: "flicker"
+    severity: "warning"
+    metric: "results.flicker.plt"
+    limit_type: "max"
+    limit: 0.65
+    citation: "IEC 61000-3-3"
+    description: "Long-term flicker severity limit"
+
+  - id: "IEC61000_UNBALANCE_1"
+    name: "Voltage Unbalance"
+    category: "voltage"
+    severity: "warning"
+    metric: "results.steady_state.voltage_unbalance"
+    limit_type: "max"
+    limit: 2.0
+    citation: "IEC 61000-3-12"
+    description: "Voltage unbalance factor limit"
+
+  - id: "IEC61000_PF_1"
+    name: "Power Factor"
+    category: "power_quality"
+    severity: "info"
+    metric: "results.metrics.power_factor"
+    limit_type: "min"
+    limit: 0.90
+    citation: "IEC 61000 General"
+    description: "Recommended minimum power factor"

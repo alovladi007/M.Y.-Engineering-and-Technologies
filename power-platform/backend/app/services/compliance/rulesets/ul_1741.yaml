@@ -1,0 +1,105 @@
+name: "UL 1741 Inverters, Converters, Controllers"
+version: "SA-2019"
+standard: "UL 1741 SA"
+description: "Standard for Safety of Inverters, Converters, Controllers and Interconnection System Equipment"
+
+rules:
+  - id: "UL1741_VOLTAGE_1"
+    name: "Overvoltage Trip Level"
+    category: "protection"
+    severity: "critical"
+    metric: "results.steady_state.vout"
+    limit_type: "max"
+    limit: 132
+    citation: "UL 1741 SA Table 51.1"
+    description: "Inverter must trip if voltage exceeds 110% nominal"
+
+  - id: "UL1741_VOLTAGE_2"
+    name: "Undervoltage Trip Level"
+    category: "protection"
+    severity: "critical"
+    metric: "results.steady_state.vout"
+    limit_type: "min"
+    limit: 106
+    citation: "UL 1741 SA Table 51.1"
+    description: "Inverter must trip if voltage falls below 88% nominal"
+
+  - id: "UL1741_FREQ_1"
+    name: "Overfrequency Trip"
+    category: "protection"
+    severity: "critical"
+    metric: "results.steady_state.frequency"
+    limit_type: "max"
+    limit: 60.5
+    citation: "UL 1741 SA Table 51.2"
+    description: "Trip if frequency exceeds 60.5 Hz"
+
+  - id: "UL1741_FREQ_2"
+    name: "Underfrequency Trip"
+    category: "protection"
+    severity: "critical"
+    metric: "results.steady_state.frequency"
+    limit_type: "min"
+    limit: 59.3
+    citation: "UL 1741 SA Table 51.2"
+    description: "Trip if frequency falls below 59.3 Hz"
+
+  - id: "UL1741_THD_1"
+    name: "Total Harmonic Distortion"
+    category: "harmonics"
+    severity: "critical"
+    metric: "results.metrics.thd_current"
+    limit_type: "max"
+    limit: 5.0
+    citation: "UL 1741 SA Section 49"
+    description: "THD shall not exceed 5% at rated output"
+
+  - id: "UL1741_ISLAND_1"
+    name: "Anti-Islanding Test"
+    category: "anti_islanding"
+    severity: "critical"
+    metric: "results.islanding.trip_time"
+    limit_type: "max"
+    limit: 2.0
+    citation: "UL 1741 SA Section 44"
+    description: "Must cease to energize within 2 seconds of island formation"
+
+  - id: "UL1741_TEMP_1"
+    name: "Maximum Operating Temperature"
+    category: "thermal"
+    severity: "critical"
+    metric: "results.losses.junction_temp_pri"
+    limit_type: "max"
+    limit: 125
+    citation: "UL 1741 General Requirements"
+    description: "Junction temperature must stay within safe limits"
+
+  - id: "UL1741_GROUND_1"
+    name: "Ground Fault Detection"
+    category: "protection"
+    severity: "critical"
+    metric: "results.ground_fault.detect_time"
+    limit_type: "max"
+    limit: 1.0
+    citation: "UL 1741 SA Section 47"
+    description: "Ground fault detection within 1 second"
+
+  - id: "UL1741_DC_1"
+    name: "DC Injection Limit"
+    category: "dc_injection"
+    severity: "critical"
+    metric: "results.steady_state.dc_component"
+    limit_type: "max"
+    limit: 0.5
+    citation: "UL 1741 SA Section 49.3"
+    description: "DC injection must not exceed 0.5% of rated output current"
+
+  - id: "UL1741_EFF_1"
+    name: "CEC Weighted Efficiency"
+    category: "efficiency"
+    severity: "info"
+    metric: "results.efficiency"
+    limit_type: "min"
+    limit: 95.0
+    citation: "UL 1741 Informative"
+    description: "Typical CEC weighted efficiency requirement"

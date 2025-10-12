@@ -1,0 +1,240 @@
+# Mock HIL Test Profile
+# Simulates realistic converter telemetry for demonstration and testing
+
+metadata:
+  name: "Mock HIL Test Profile"
+  description: "Simulated converter telemetry with realistic noise and faults"
+  author: "Power Platform Demo"
+  date: "2024-10-12"
+  version: "1.0"
+
+adapter:
+  type: "mock"
+  config:
+    noise_level: 0.02  # 2% noise on all channels
+    update_rate: 1000  # Hz (1 ms update interval)
+    fault_probability: 0.001  # 0.1% chance of fault per sample
+
+channels:
+  # Input side measurements
+  - name: "Vin_measured"
+    type: "analog_in"
+    units: "V"
+    nominal_value: 400.0
+    variation: 10.0  # ±10V typical variation
+    scale: 1.0
+    offset: 0.0
+    safety_min: 300.0
+    safety_max: 500.0
+
+  - name: "Iin_measured"
+    type: "analog_in"
+    units: "A"
+    nominal_value: 50.0
+    variation: 5.0  # ±5A typical variation
+    scale: 1.0
+    offset: 0.0
+    safety_max: 75.0
+
+  # Output side measurements
+  - name: "Vout_measured"
+    type: "analog_in"
+    units: "V"
+    nominal_value: 800.0
+    variation: 20.0  # ±20V typical variation
+    scale: 1.0
+    offset: 0.0
+    safety_min: 600.0
+    safety_max: 1000.0
+
+  - name: "Iout_measured"
+    type: "analog_in"
+    units: "A"
+    nominal_value: 25.0
+    variation: 2.5  # ±2.5A typical variation
+    scale: 1.0
+    offset: 0.0
+    safety_max: 40.0
+
+  # Temperature measurements
+  - name: "Temp_primary"
+    type: "analog_in"
+    units: "°C"
+    nominal_value: 75.0
+    variation: 5.0  # ±5°C typical variation
+    scale: 1.0
+    offset: 0.0
+    safety_max: 125.0
+
+  - name: "Temp_secondary"
+    type: "analog_in"
+    units: "°C"
+    nominal_value: 70.0
+    variation: 5.0
+    scale: 1.0
+    offset: 0.0
+    safety_max: 125.0
+
+  - name: "Temp_transformer"
+    type: "analog_in"
+    units: "°C"
+    nominal_value: 65.0
+    variation: 3.0
+    scale: 1.0
+    offset: 0.0
+    safety_max: 150.0
+
+  # Control setpoints
+  - name: "Phi_setpoint"
+    type: "analog_out"
+    units: "rad"
+    initial_value: 0.25
+    min_value: 0.0
+    max_value: 0.5
+    scale: 1.0
+    offset: 0.0
+
+  - name: "Duty_setpoint"
+    type: "analog_out"
+    units: "fraction"
+    initial_value: 0.5
+    min_value: 0.3
+    max_value: 0.7
+    scale: 1.0
+    offset: 0.0
+
+  - name: "Frequency_setpoint"
+    type: "analog_out"
+    units: "Hz"
+    initial_value: 100000.0
+    min_value: 50000.0
+    max_value: 150000.0
+    scale: 1.0
+    offset: 0.0
+
+  # Digital control
+  - name: "Enable"
+    type: "digital_out"
+    initial_value: 1.0
+
+  - name: "Fault_reset"
+    type: "digital_out"
+    initial_value: 0.0
+
+  # Status indicators
+  - name: "ZVS_primary"
+    type: "digital_in"
+    simulated_value: 1.0  # Mock: ZVS achieved
+
+  - name: "ZVS_secondary"
+    type: "digital_in"
+    simulated_value: 1.0  # Mock: ZVS achieved
+
+  - name: "Fault_status"
+    type: "digital_in"
+    simulated_value: 0.0  # Mock: No fault
+
+# Fault injection scenarios
+fault_scenarios:
+  - name: "overvoltage"
+    trigger_condition: "random"  # or "after_time", "on_command"
+    probability: 0.0005  # 0.05% per sample
+    duration: 0.1  # seconds
+    effects:
+      - channel: "Vout_measured"
+        behavior: "spike"
+        magnitude: 1100.0  # V (exceeds safety_max)
+
+  - name: "overcurrent"
+    trigger_condition: "random"
+    probability: 0.0003
+    duration: 0.05
+    effects:
+      - channel: "Iout_measured"
+        behavior: "spike"
+        magnitude: 45.0  # A (exceeds safety_max)
+
+  - name: "overtemperature"
+    trigger_condition: "random"
+    probability: 0.0001
+    duration: 1.0
+    effects:
+      - channel: "Temp_primary"
+        behavior: "ramp"
+        target: 130.0  # °C (exceeds safety_max)
+
+# Realistic dynamics
+dynamics:
+  voltage_response_time: 0.01  # 10ms voltage settling
+  current_response_time: 0.001  # 1ms current settling
+  temperature_time_constant: 10.0  # 10s thermal time constant
+
+# Test sequences
+test_sequences:
+  - name: "startup"
+    duration: 1.0  # seconds
+    steps:
+      - time: 0.0
+        action: "set_digital"
+        channel: "Enable"
+        value: 0.0
+      - time: 0.1
+        action: "set_digital"
+        channel: "Enable"
+        value: 1.0
+      - time: 0.2
+        action: "set_analog"
+        channel: "Phi_setpoint"
+        value: 0.1
+      - time: 0.5
+        action: "set_analog"
+        channel: "Phi_setpoint"
+        value: 0.25
+
+  - name: "load_step"
+    duration: 2.0
+    steps:
+      - time: 0.0
+        action: "set_power_target"
+        value: 10000.0  # 10kW
+      - time: 1.0
+        action: "set_power_target"
+        value: 20000.0  # 20kW (step to rated)
+
+  - name: "frequency_sweep"
+    duration: 5.0
+    steps:
+      - time: 0.0
+        action: "set_analog"
+        channel: "Frequency_setpoint"
+        value: 80000.0
+      - time: 2.5
+        action: "set_analog"
+        channel: "Frequency_setpoint"
+        value: 120000.0
+
+# Notes
+notes: |
+  This mock HIL profile simulates a 20kW bidirectional DAB converter for testing
+  the Power Platform without real hardware.
+
+  Features:
+  - Realistic voltage/current/temperature telemetry
+  - 2% measurement noise
+  - Random fault injection (overvoltage, overcurrent, overtemperature)
+  - Dynamic response to setpoint changes
+  - Safety limit monitoring
+
+  Use cases:
+  - Platform demonstration
+  - Controller algorithm development
+  - UI/UX testing
+  - Automated CI/CD testing
+  - Training and onboarding
+
+  To use:
+  1. Select "Mock HIL" adapter in HIL page
+  2. Load this profile (or use default config)
+  3. Configure channels as specified
+  4. Start streaming
+  5. Adjust setpoints and observe realistic response
