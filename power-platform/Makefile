@@ -34,8 +34,8 @@ test:
 
 demo:
 	@echo "Seeding database with demo data..."
-	docker-compose -f deploy/docker-compose.yml exec api python -m app.db.seed
-	@echo "Demo data loaded! Access at http://localhost:3000"
+	docker exec power_platform_api python scripts/seed_demo.py
+	@echo "Demo data loaded! Access at http://localhost:3001"
 
 clean:
 	@echo "Stopping services and cleaning up..."

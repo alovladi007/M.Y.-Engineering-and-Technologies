@@ -1,5 +1,5 @@
 """Topology simulation API routes."""
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import Dict, Any, Optional
@@ -40,7 +40,6 @@ async def list_topologies():
 @router.post("/simulate", response_model=SimulationResponse)
 async def create_simulation(
     request: SimulationRequest,
-    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
     org: Org = Depends(get_current_org)
@@ -50,7 +49,6 @@ async def create_simulation(
 
     Args:
         request: Simulation parameters
-        background_tasks: FastAPI background tasks
         db: Database session
         user: Current user
         org: Current organization
@@ -85,9 +83,8 @@ async def create_simulation(
     db.commit()
     db.refresh(run)
 
-    # Queue simulation task
-    background_tasks.add_task(
-        run_simulation_task,
+    # Queue simulation task via Celery
+    task = run_simulation_task.delay(
         run_id=run.id,
         topology=request.topology,
         params=request.params,
@@ -98,7 +95,7 @@ async def create_simulation(
     return SimulationResponse(
         run_id=run.id,
         status="queued",
-        message="Simulation queued for execution"
+        message=f"Simulation queued for execution (task_id: {task.id})"
     )
 
 
