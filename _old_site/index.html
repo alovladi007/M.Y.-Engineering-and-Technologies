@@ -1,0 +1,1801 @@
+<!-- CACHE VERSION 3.0 - -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="version" content="4.0-">
+    <meta name="last-modified" content="2025-01-20T20:00:00Z">
+    <!-- PREMIUM DESIGN: Sophisticated Tech Platform - Version 4.0 -->
+    <title>M.Y. Engineering and Technologies - Next-Gen Technology Solutions</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="M.Y. Engineering and Technologies - Pioneering the future with cutting-edge technology solutions across 8 specialized divisions.">
+    <meta name="keywords" content="advanced technology, energy optimization, cybersecurity, AI, quantum computing, sustainable tech, innovation">
+    <meta name="author" content="M.Y. Engineering and Technologies">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="M.Y. Engineering and Technologies">
+    <meta property="og:description" content="Pioneering the future with cutting-edge technology solutions">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://myengineering.tech">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Framer Motion CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.css">
+    
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --secondary: #7c3aed;
+            --accent: #f59e0b;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.2);
+            --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.15s ease;
+            opacity: 0.3;
+        }
+
+        /* Premium Typography */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-glow {
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Advanced Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
+        }
+
+        @keyframes matrix-rain {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        @keyframes morphing {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            50% { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            75% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glass Morphism 2.0 */
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Hover Effects */
+        .hover-3d {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .hover-3d:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        .nav-blur {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradient-shift 20s ease infinite;
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: matrix-rain 8s infinite linear;
+        }
+
+        /* Division Cards */
+        .division-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .division-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .division-card:hover::before {
+            left: 100%;
+        }
+
+        .division-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Morphing Shapes */
+        .morphing-shape {
+            animation: morphing 8s ease-in-out infinite;
+            background: var(--gradient-1);
+            opacity: 0.1;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Button Styles */
+        .btn-premium {
+            position: relative;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-premium:hover::before {
+            left: 100%;
+        }
+
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--secondary), var(--primary));
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Matrix Effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100vh;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--primary);
+            animation: matrix-rain 3s infinite linear;
+        }
+        
+        /* Custom gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Animated background gradient */
+        .animated-gradient {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Ensure hero slider has relative positioning */
+        .hero-slider {
+            position: relative;
+        }
+
+        /* Pagination container */
+        .swiper-pagination {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .hero-slider .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px solid rgba(255, 255, 255, 0.8); /* Added for visibility */
+        }
+
+        .hero-slider .swiper-pagination-bullet-active {
+            background: #00CFFF;
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        /* Hero slide backgrounds */
+        .bg-microchips {
+            background-image: url('Microchip Fabrication.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        
+        .bg-fpga {
+            background-image: url('FPGA.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        .bg-cybersecurity {
+            background-image: url('Cybersecurity.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        .bg-bioinformatics {
+            background-image: url('DNA.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        
+        .bg-geospatial {
+            background-image: url('sunrise.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+        .bg-orion {
+            background-image: url('Nanotechnology.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        
+
+        
+        /* Navigation styles */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            color: #00CFFF;
+            transform: scale(1.1);
+        }
+        
+        /* Ensure slider elements are visible */
+        .hero-slider,
+        .hero-slider .swiper-wrapper,
+        .hero-slider .swiper-slide {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        /* Animation classes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+    <!-- Cache Buster Script v2.1 -->
+    <script>
+        const CURRENT_VERSION = "2.1";
+        const versionKey = "site-version";
+        const lastVersion = localStorage.getItem(versionKey);
+        if (lastVersion !== CURRENT_VERSION) {
+            localStorage.setItem(versionKey, CURRENT_VERSION);
+            if (lastVersion) location.reload(true);
+        }
+    </script>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full nav-blur z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="text-2xl font-bold text-gradient hover-glow cursor-pointer transition-all duration-300">
+                    M.Y. Engineering
+            </div>
+            </div>
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Home</a>
+                <a href="#projects" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Research</a>
+                <a href="cybersecurity.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Cybersecurity</a>
+                <a href="hardware.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Hardware</a>
+                <a href="biomedical/index.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Biomedical</a>
+                <a href="geospatial.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">Geospatial</a>
+                <a href="orion.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">O.R.I.O.N</a>
+                <a href="powerflow.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">PowerFlow</a>
+                <a href="luma-ip/index.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">LUMA IP</a>
+                <a href="gaia/index.html" class="text-white/80 hover:text-gradient transition-all duration-300 font-medium">GAIA</a>
+                <button class="btn-premium hover-glow" onclick="openLouis()">
+                    AI Assistant
+                </button>
+            </div>
+            <button class="lg:hidden text-white hover-glow" id="mobileMenuBtn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="hidden glass-premium mx-4 mt-2 rounded-2xl" id="mobileMenu">
+            <div class="px-6 py-4 space-y-4">
+                <a href="index.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Home</a>
+                <a href="#projects" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Research</a>
+                <a href="cybersecurity.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Cybersecurity</a>
+                <a href="hardware.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Hardware</a>
+                <a href="biomedical/index.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Biomedical</a>
+                <a href="geospatial.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">Geospatial</a>
+                <a href="orion.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">O.R.I.O.N</a>
+                <a href="powerflow.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">PowerFlow</a>
+                <a href="luma-ip/index.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">LUMA IP</a>
+                <a href="gaia/index.html" class="block text-white/80 hover:text-gradient transition-all duration-300 font-medium">GAIA</a>
+                <button class="btn-premium w-full" onclick="openLouis()">
+                    AI Assistant
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page-content active">
+        <!-- Hero Section with Slider -->
+        <section class="relative h-screen overflow-hidden">
+            <div class="hero-slider swiper h-full">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1: PowerFlow -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900"></div>
+                        <div class="absolute inset-0 bg-[#001933]/30"></div>
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                            <div class="max-w-xl space-y-6">
+                                <p class="text-blue-400 uppercase tracking-wider">Power Electronics</p>
+                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
+                                    PowerFlow
+                                </h1>
+                                <p class="text-gray-300">Advanced power electronics control and simulation platform for DC-DC converters, inverters, and solid-state transformers.</p>
+                                <div class="inline-block bg-blue-400 text-slate-900 font-semibold px-6 py-3 rounded-md">
+                                    Energy Technology
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2: LUMA IP -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900"></div>
+                        <div class="absolute inset-0 bg-[#001933]/30"></div>
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                            <div class="max-w-xl space-y-6">
+                                <p class="text-purple-400 uppercase tracking-wider">Intellectual Property</p>
+                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
+                                    LUMA IP
+                                </h1>
+                                <p class="text-gray-300">Patent portfolio management and intellectual property strategy for protecting and commercializing innovative technologies.</p>
+                                <div class="inline-block bg-purple-400 text-white font-semibold px-6 py-3 rounded-md">
+                                    IP Management
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3: GAIA -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-900 via-emerald-900 to-teal-900"></div>
+                        <div class="absolute inset-0 bg-[#001933]/30"></div>
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                            <div class="max-w-xl space-y-6">
+                                <p class="text-green-400 uppercase tracking-wider">Sustainable Computing</p>
+                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
+                                    GAIA
+                                </h1>
+                                <p class="text-gray-300">Green Adaptive Infrastructure Automation - Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration, adaptive control loops, and carbon-aware scheduling.</p>
+                                <div class="inline-block bg-green-500 text-white font-semibold px-6 py-3 rounded-md">
+                                    Green Technology
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4: Geospatial -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-geospatial"></div>
+                        <div class="absolute inset-0 bg-[#001933]/20"></div>
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                            <div class="max-w-xl space-y-6">
+                                <p class="text-cyan-400 uppercase tracking-wider">Satellite Analytics</p>
+                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
+                                    GALILEO
+                                </h1>
+                                <p class="text-gray-300">Geospatial Analysis Language for Intelligent Learning of the Environment and Observations - Advanced satellite imagery analysis and environmental monitoring.</p>
+                                <div class="inline-block bg-cyan-400 text-slate-900 font-semibold px-6 py-3 rounded-md">
+                                    Spatial Intelligence
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 5: Hardware Engineering -->
+                    <div class="swiper-slide relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-800 to-zinc-900"></div>
+                        <div class="absolute inset-0 bg-[#001933]/30"></div>
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                            <div class="max-w-xl space-y-6">
+                                <p class="text-gray-400 uppercase tracking-wider">Hardware Engineering</p>
+                                <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight uppercase">
+                                    Advanced Hardware
+                                </h1>
+                                <p class="text-gray-300">Cutting-edge hardware development including FPGA design, microchips, processors, and custom electronics for industrial applications.</p>
+                                <div class="inline-block bg-gray-600 text-white font-semibold px-6 py-3 rounded-md">
+                                    Hardware Solutions
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <!-- Research Projects Section -->
+
+        <!-- Technology Showcase -->
+        <section class="py-20 px-6 bg-black">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Our Core Technologies</h2>
+                    <p class="text-xl text-gray-400 max-w-3xl mx-auto">Cutting-edge solutions at the intersection of photonics, computing, and biotechnology</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Microchips Card -->
+                    <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-cyan-400/50 transition-all duration-500 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative p-6">
+                            <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Silicon Photonics</h3>
+                            <p class="text-gray-400 text-sm mb-4">Next-gen microchips with integrated optical components for quantum computing</p>
+                            <a href="hardware.html" class="text-cyan-400 text-sm font-medium hover:text-cyan-300 transition-colors">Learn more →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- FPGA Card -->
+                    <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-purple-400/50 transition-all duration-500 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative p-6">
+                            <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">FPGA Solutions</h3>
+                            <p class="text-gray-400 text-sm mb-4">Custom programmable logic for high-performance computing and embedded systems</p>
+                            <a href="hardware.html" class="text-purple-400 text-sm font-medium hover:text-purple-300 transition-colors">Learn more →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Cybersecurity Card -->
+                    <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-green-400/50 transition-all duration-500 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative p-6">
+                            <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-green-500 to-teal-500 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Quantum Security</h3>
+                            <p class="text-gray-400 text-sm mb-4">AI-powered quantum-safe encryption and advanced threat detection systems</p>
+                            <a href="cybersecurity.html" class="text-green-400 text-sm font-medium hover:text-green-300 transition-colors">Learn more →</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Bioinformatics Card -->
+                    <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-pink-400/50 transition-all duration-500 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative p-6">
+                            <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Photonic Genomics</h3>
+                            <p class="text-gray-400 text-sm mb-4">Revolutionary optical technologies for rapid DNA analysis and personalized medicine</p>
+                            <a href="biomedical/index.html" class="text-pink-400 text-sm font-medium hover:text-pink-300 transition-colors">Learn more →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- PowerFlow Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-blue-400 uppercase tracking-wider text-lg font-medium">Power Electronics</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                PowerFlow
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Advanced Power Electronics Platform</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Comprehensive control and simulation platform for power electronics systems including DC-DC converters, inverters, and solid-state transformers with real-time monitoring and optimization.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="powerflow.html" class="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LUMA IP Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-indigo-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-purple-400 uppercase tracking-wider text-lg font-medium">Intellectual Property</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                LUMA IP
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Patent Portfolio Management</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Comprehensive intellectual property solutions with patent analytics, portfolio optimization, and strategic IP consulting for technology companies.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="luma-ip/index.html" class="inline-block bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAIA Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-green-400 uppercase tracking-wider text-lg font-medium">Sustainable Computing</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                GAIA
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Green Adaptive Infrastructure Automation</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Kubernetes-native platform reducing data center energy consumption by 15-30% through intelligent orchestration and carbon-aware scheduling.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="gaia/index.html" class="inline-block bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-green-600 hover:to-emerald-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cybersecurity Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-red-400 uppercase tracking-wider text-lg font-medium">Security Technology</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Cybersecurity
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Advanced Threat Protection</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Comprehensive cybersecurity solutions with AI-powered threat detection, zero-trust architecture, and real-time incident response capabilities.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="cybersecurity.html" class="inline-block bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-red-600 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch Security Platform
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hardware Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-500/5 to-slate-500/5"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-gray-400 uppercase tracking-wider text-lg font-medium">Hardware Engineering</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Hardware
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Advanced Hardware Solutions</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Cutting-edge hardware development including FPGA design, microchips, processors, and custom electronics for industrial applications.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="hardware.html" class="inline-block bg-gradient-to-r from-gray-600 to-slate-600 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-gray-700 hover:to-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Explore Hardware
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                        </div>
+        </section>
+
+        <!-- Biomedical Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden" style="background-image: url('Biomedical Lab.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-rose-500/5"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                        <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-pink-400 uppercase tracking-wider text-lg font-medium">Medical Technology</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Biomedical
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Healthcare Innovation</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Advanced biomedical solutions including medical imaging AI, diagnostic tools, and healthcare analytics for improved patient outcomes.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="biomedical/index.html" class="inline-block bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-pink-600 hover:to-rose-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Explore Solutions
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Geospatial Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden" style="background-image: url('Satellite for Geospatial.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-blue-500/5"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-indigo-400 uppercase tracking-wider text-lg font-medium">Spatial Intelligence</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                Geospatial
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">GALILEO Platform</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Advanced geospatial analytics and mapping solutions with real-time satellite data processing, environmental monitoring, and location intelligence.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="geospatial.html" class="inline-block bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:from-indigo-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Launch GALILEO
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+        </section>
+
+        <!-- O.R.I.O.N Division -->
+        <section class="py-32 px-6 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-yellow-500/5"></div>
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="relative min-h-[80vh] flex items-center">
+                    <div class="relative z-10 flex items-center h-full px-6 md:px-20">
+                        <div class="max-w-4xl space-y-8">
+                            <p class="text-amber-400 uppercase tracking-wider text-lg font-medium">Advanced Materials</p>
+                            <h1 class="text-white text-6xl md:text-8xl font-extrabold leading-tight uppercase">
+                                O.R.I.O.N
+                            </h1>
+                            <p class="text-gray-300 text-2xl font-semibold mb-4">Power Electronics Innovation</p>
+                            <p class="text-gray-300 text-xl leading-relaxed mb-8">Revolutionary power electronics and advanced materials research for next-generation energy systems, semiconductors, and electronic components.</p>
+                            <div class="flex flex-wrap gap-6">
+                                <a href="orion.html" class="inline-block bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-semibold px-8 py-4 rounded-lg text-lg hover:from-amber-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    Explore O.R.I.O.N
+                                </a>
+                                <button class="inline-block bg-gray-800 text-white font-semibold px-8 py-4 rounded-lg text-lg hover:bg-gray-700 transition-all duration-300 border border-gray-600 hover:border-gray-500">
+                                    Learn More
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                            </div>
+        </section>
+
+                        </div>
+
+    <!-- Research Groups Section -->
+    <section id="projects" class="py-20 px-6 bg-gray-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Research Groups</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Pioneering research initiatives pushing the boundaries of technology</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Neuromorphic Computing Research Card -->
+                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-amber-400/50 transition-all duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative p-8">
+                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                                </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">
+                            <a href="neuromorphic-computing.html" class="hover:text-amber-400 transition-colors">Neuromorphic Computing Research</a>
+                        </h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">Investigation of memristor-based neuromorphic computing architectures for AI applications.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-sm">Python</span>
+                            <span class="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-sm">TensorFlow</span>
+                            <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm">SPICE</span>
+                            </div>
+                        <a href="neuromorphic-computing.html" class="inline-flex items-center text-amber-400 font-medium hover:text-amber-300 transition-colors group">
+                            <span>View Project</span>
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                                </div>
+                            </div>
+                
+                <!-- MediMetrics Enterprise Card -->
+                <div class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 hover:border-blue-400/50 transition-all duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="relative p-8">
+                        <div class="w-16 h-16 mb-4 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                                </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">
+                            <a href="medimetrics.html" class="hover:text-blue-400 transition-colors">MediMetrics Enterprise</a>
+                        </h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">HIPAA-compliant medical image analysis platform with AI-powered diagnostics for healthcare organizations.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm">Healthcare AI</span>
+                            <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">HIPAA</span>
+                            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm">Medical Imaging</span>
+                            </div>
+                        <a href="medimetrics.html" class="inline-flex items-center text-blue-400 font-medium hover:text-blue-300 transition-colors group">
+                            <span>Explore Platform</span>
+                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                    </a>
+                </div>
+            </div>
+    </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2024 Aurora Borealis Photonics. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Initialize Swiper -->
+    <script>
+        // Force manual slider immediately - skip Swiper entirely for now
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const slides = document.querySelectorAll('.hero-slider .swiper-slide');
+                if (slides.length === 0) {
+                    return;
+                }
+                
+                let currentSlide = 0;
+                
+                // Hide all slides first
+                slides.forEach((slide, index) => {
+                    slide.style.position = 'absolute';
+                    slide.style.width = '100%';
+                    slide.style.height = '100%';
+                    slide.style.top = '0';
+                    slide.style.left = '0';
+                    slide.style.opacity = '0';
+                    slide.style.transition = 'opacity 1s ease-in-out';
+                    slide.style.zIndex = '1';
+                    slide.style.display = 'block';
+                });
+                
+                // Show first slide
+                slides[0].style.opacity = '1';
+                slides[0].style.zIndex = '2';
+                
+                // Create pagination dots
+                const pagination = document.querySelector('.swiper-pagination');
+                if (pagination) {
+                    pagination.innerHTML = '';
+                    slides.forEach((_, index) => {
+                        const dot = document.createElement('span');
+                        dot.className = 'swiper-pagination-bullet' + (index === 0 ? ' swiper-pagination-bullet-active' : '');
+                        dot.addEventListener('click', function() {
+                            goToSlide(index);
+                        });
+                        pagination.appendChild(dot);
+                    });
+                }
+                
+                // Function to go to specific slide
+                function goToSlide(index) {
+                    slides[currentSlide].style.opacity = '0';
+                    slides[currentSlide].style.zIndex = '1';
+                    if (pagination) {
+                        pagination.children[currentSlide].classList.remove('swiper-pagination-bullet-active');
+                    }
+                    
+                    currentSlide = index;
+                    
+                    slides[currentSlide].style.opacity = '1';
+                    slides[currentSlide].style.zIndex = '2';
+                    if (pagination) {
+                        pagination.children[currentSlide].classList.add('swiper-pagination-bullet-active');
+                    }
+                }
+                
+                // Change slides every 6 seconds
+                setInterval(function() {
+                    const nextSlide = (currentSlide + 1) % slides.length;
+                    goToSlide(nextSlide);
+                }, 6000);
+                
+                // Add manual navigation
+                const nextBtn = document.querySelector('.swiper-button-next');
+                const prevBtn = document.querySelector('.swiper-button-prev');
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', function() {
+                        const nextSlide = (currentSlide + 1) % slides.length;
+                        goToSlide(nextSlide);
+                    });
+                }
+                
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', function() {
+                        const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+                        goToSlide(prevSlide);
+                    });
+                }
+            }, 500);
+        });
+    </script>
+
+    <!-- Other Scripts -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openLouis() {
+            window.open("http://127.0.0.1:5005", "_blank");
+        }
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Advanced JavaScript -->
+    <script>
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            gsap.to('#loadingScreen', {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }
+            });
+        });
+
+
+
+        // Scroll Animations
+        function initScrollAnimations() {
+            gsap.utils.toArray('.fade-in').forEach((element) => {
+                gsap.fromTo(element, 
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.slide-in-left').forEach((element) => {
+                gsap.fromTo(element,
+                    { opacity: 0, x: -100 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.slide-in-right').forEach((element) => {
+                gsap.fromTo(element,
+                    { opacity: 0, x: 100 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            end: "bottom 20%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+        }
+
+        // Parallax Effects
+        function initParallax() {
+            gsap.utils.toArray('.morphing-shape').forEach((shape) => {
+                gsap.to(shape, {
+                    y: -100,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: shape,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                });
+            });
+        }
+
+        // Text Animations
+        function initTextAnimations() {
+            gsap.utils.toArray('.text-gradient').forEach((text) => {
+                gsap.fromTo(text,
+                    { backgroundPosition: '0% 50%' },
+                    {
+                        backgroundPosition: '100% 50%',
+                        duration: 2,
+                        ease: "power2.inOut",
+                        repeat: -1,
+                        yoyo: true
+                    }
+                );
+            });
+        }
+
+        // Division Card Hover Effects
+        function initDivisionCards() {
+            gsap.utils.toArray('.division-card').forEach((card) => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        scale: 1.05,
+                        y: -20,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        scale: 1,
+                        y: 0,
+                        duration: 0.4,
+                        ease: "power2.out"
+                    });
+                });
+            });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const isHidden = mobileMenu.classList.contains('hidden');
+            
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                gsap.fromTo(mobileMenu, 
+                    { opacity: 0, y: -20 },
+                    { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
+                );
+            } else {
+                gsap.to(mobileMenu, {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => mobileMenu.classList.add('hidden')
+                });
+            }
+        }
+
+        // Navbar Scroll Effect
+        function initNavbarScroll() {
+            const navbar = document.getElementById('navbar');
+            
+            ScrollTrigger.create({
+                start: "top -80",
+                end: 99999,
+                toggleClass: {className: "bg-black/95", targets: navbar}
+            });
+        }
+
+        // Particle System
+        function createParticles() {
+            const heroSection = document.querySelector('.hero-bg');
+            if (!heroSection) return;
+
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heroSection.appendChild(particle);
+            }
+        }
+
+        // Initialize Swiper
+        function initSwiper() {
+            const heroSwiper = new Swiper('.hero-slider', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                speed: 1000,
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initSwiper();
+            initScrollAnimations();
+            initParallax();
+            initTextAnimations();
+            initDivisionCards();
+            initNavbarScroll();
+            createParticles();
+
+            // Mobile menu event listener
+            document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        gsap.to(window, {
+                            duration: 1,
+                            scrollTo: { y: target, offsetY: 80 },
+                            ease: "power2.inOut"
+                        });
+                    }
+            });
+        });
+        });
+
+        // AI Assistant function
+        function openLouis() {
+            window.open('http://127.0.0.1:5005', '_blank');
+        }
+
+        // Performance optimization
+        window.addEventListener('scroll', gsap.throttle(() => {
+            // Throttled scroll events
+        }, 16));
+    </script>
+
+    <!-- Enhanced Professional Footer -->
+    <footer class="relative bg-gradient-to-br from-slate-900 via-gray-900 to-black text-white overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 20px 20px;"></div>
+        </div>
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-6 py-20">
+            <!-- Top Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+                <!-- Company Branding -->
+                <div class="lg:col-span-1 space-y-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                            </div>
+                            <div class="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur opacity-30"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">M.Y. Engineering</h3>
+                            <p class="text-gray-400 font-medium">Advanced Technology Solutions</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 leading-relaxed text-lg">
+                        Pioneering the future of engineering excellence across eight specialized divisions. 
+                        From power electronics to nanotechnology, we deliver cutting-edge solutions that transform industries.
+                    </p>
+                    
+                    <!-- Social Media -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-semibold text-cyan-400 uppercase tracking-wider">Follow Our Journey</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="group w-12 h-12 bg-gray-800/50 backdrop-blur-sm rounded-xl flex items-center justify-center hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                                <svg class="w-5 h-5 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="group w-12 h-12 bg-gray-800/50 backdrop-blur-sm rounded-xl flex items-center justify-center hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                                <svg class="w-5 h-5 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="group w-12 h-12 bg-gray-800/50 backdrop-blur-sm rounded-xl flex items-center justify-center hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                                <svg class="w-5 h-5 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="group w-12 h-12 bg-gray-800/50 backdrop-blur-sm rounded-xl flex items-center justify-center hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg">
+                                <svg class="w-5 h-5 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divisions -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="text-center lg:text-left">
+                        <h3 class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">Technology Divisions</h3>
+                        <p class="text-gray-400">Specialized engineering solutions across multiple industries</p>
+                    </div>
+                    
+                    <!-- Divisions Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- LUMA IP -->
+                        <a href="luma-ip/index.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">LUMA IP</h4>
+                                    <p class="text-xs text-gray-400">Legal Utility for Machine Assisted IP Analysis</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- PowerFlow -->
+                        <a href="powerflow.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">PowerFlow</h4>
+                                    <p class="text-xs text-gray-400">Advanced Power Electronics Platform</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- Cybersecurity -->
+                        <a href="cybersecurity.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">Cybersecurity</h4>
+                                    <p class="text-xs text-gray-400">Advanced Security Solutions</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- Hardware -->
+                        <a href="hardware.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">Hardware</h4>
+                                    <p class="text-xs text-gray-400">FPGA, Microchips & Electronics</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- Biomedical -->
+                        <a href="biomedical/index.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">Biomedical</h4>
+                                    <p class="text-xs text-gray-400">Medical Imaging & AI</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- Geospatial -->
+                        <a href="geospatial.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-teal-500 to-blue-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">Geospatial</h4>
+                                    <p class="text-xs text-gray-400">Satellite & Earth Observation</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- O.R.I.O.N -->
+                        <a href="orion.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">O.R.I.O.N</h4>
+                                    <p class="text-xs text-gray-400">AI-Powered Materials Research Platform</p>
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <!-- GAIA -->
+                <a href="gaia/index.html" class="group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-gray-800/50">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-white group-hover:text-cyan-400 transition-colors">GAIA</h4>
+                            <p class="text-xs text-gray-400">Green Adaptive Infrastructure Automation</p>
+                        </div>
+                    </div>
+                </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Middle Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Products & Services -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-semibold text-cyan-400 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                        Products & Services
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-300 mb-3">Hardware Solutions</h4>
+                            <div class="space-y-2 text-sm">
+                                <a href="microchips-products.html" class="block hover:text-cyan-400 transition-colors">Microchips & Processors</a>
+                                <a href="fpga-products.html" class="block hover:text-cyan-400 transition-colors">FPGA Solutions</a>
+                                <a href="security-hardware-products.html" class="block hover:text-cyan-400 transition-colors">Security Hardware</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-300 mb-3">Optical Systems</h4>
+                            <div class="space-y-2 text-sm">
+                                <a href="laser-systems-products.html" class="block hover:text-cyan-400 transition-colors">Laser Systems</a>
+                                <a href="lenses-mirrors-products.html" class="block hover:text-cyan-400 transition-colors">Lenses & Mirrors</a>
+                                <a href="polarizers-products.html" class="block hover:text-cyan-400 transition-colors">Polarizers</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-semibold text-cyan-400 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Professional Services
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-300 mb-3">Consulting</h4>
+                            <div class="space-y-2 text-sm">
+                                <a href="technical-consulting.html" class="block hover:text-cyan-400 transition-colors">Technical Consulting</a>
+                                <a href="prototyping-fabrication.html" class="block hover:text-cyan-400 transition-colors">Prototyping & Fabrication</a>
+                                <a href="custom-design.html" class="block hover:text-cyan-400 transition-colors">Custom Design Solutions</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-300 mb-3">Support</h4>
+                            <div class="space-y-2 text-sm">
+                                <a href="technical-support.html" class="block hover:text-cyan-400 transition-colors">Technical Support</a>
+                                <a href="training.html" class="block hover:text-cyan-400 transition-colors">Training & Education</a>
+                                <a href="maintenance.html" class="block hover:text-cyan-400 transition-colors">Maintenance Services</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-semibold text-cyan-400 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                        Company
+                    </h3>
+                    <div class="space-y-3">
+                        <a href="about.html" class="block hover:text-cyan-400 transition-colors">About Us</a>
+                        <a href="careers.html" class="block hover:text-cyan-400 transition-colors">Careers</a>
+                        <a href="news.html" class="block hover:text-cyan-400 transition-colors">News & Press</a>
+                        <a href="partners.html" class="block hover:text-cyan-400 transition-colors">Partners</a>
+                        <a href="investors.html" class="block hover:text-cyan-400 transition-colors">Investors</a>
+                    </div>
+                </div>
+
+                <!-- Contact & Support -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-semibold text-cyan-400 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        Contact & Support
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center text-sm">
+                                <svg class="w-4 h-4 mr-3 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-gray-300">info@myengineering.com</span>
+                            </div>
+                            <div class="flex items-center text-sm">
+                                <svg class="w-4 h-4 mr-3 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                                <span class="text-gray-300">+1 (555) 123-4567</span>
+                            </div>
+                            <div class="flex items-start text-sm">
+                                <svg class="w-4 h-4 mr-3 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span class="text-gray-300">123 Innovation Drive<br>Tech Valley, CA 94043</span>
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                            <a href="contact.html" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-medium rounded-lg hover:from-cyan-400 hover:to-blue-400 transition-all transform hover:scale-105">
+                                Get in Touch
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="bg-gradient-to-r from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-3xl p-8 mb-16 border border-gray-700/50">
+                <div class="max-w-4xl mx-auto text-center">
+                    <div class="flex items-center justify-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Stay Ahead of Innovation</h3>
+                    <p class="text-gray-400 mb-8 text-lg max-w-2xl mx-auto">
+                        Subscribe to our newsletter for exclusive insights, technology breakthroughs, product launches, and industry trends delivered directly to your inbox.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                        <input type="email" placeholder="Enter your email address" 
+                               class="flex-1 px-6 py-4 bg-gray-800/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-white placeholder-gray-400 backdrop-blur-sm">
+                        <button class="px-8 py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-xl hover:from-cyan-300 hover:to-blue-400 transition-all transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25">
+                            Subscribe Now
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-700/50 pt-8">
+                <div class="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+                    <!-- Copyright -->
+                    <div class="text-center lg:text-left">
+                        <div class="text-sm text-gray-400 mb-2">
+                            © 2024 M.Y. Engineering and Technologies. All rights reserved.
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            Proudly serving industries worldwide with cutting-edge technology solutions.
+                        </div>
+                    </div>
+                    
+                    <!-- Legal Links -->
+                    <div class="flex flex-wrap justify-center lg:justify-end gap-6 text-sm">
+                        <a href="privacy.html" class="hover:text-cyan-400 transition-colors">Privacy Policy</a>
+                        <a href="terms.html" class="hover:text-cyan-400 transition-colors">Terms of Service</a>
+                        <a href="cookies.html" class="hover:text-cyan-400 transition-colors">Cookie Policy</a>
+                        <a href="compliance.html" class="hover:text-cyan-400 transition-colors">Compliance</a>
+                        <a href="accessibility.html" class="hover:text-cyan-400 transition-colors">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
