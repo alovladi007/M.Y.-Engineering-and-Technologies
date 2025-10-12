@@ -4,10 +4,18 @@ from pathlib import Path
 from datetime import datetime
 import json
 from jinja2 import Template
-from weasyprint import HTML
 import matplotlib.pyplot as plt
 import io
 import base64
+
+# Optional WeasyPrint import (requires system libraries on Mac)
+try:
+    from weasyprint import HTML
+    WEASYPRINT_AVAILABLE = True
+except OSError:
+    HTML = None
+    WEASYPRINT_AVAILABLE = False
+    print("⚠️  WeasyPrint not available - PDF generation will be disabled")
 
 
 class ReportGenerator:
