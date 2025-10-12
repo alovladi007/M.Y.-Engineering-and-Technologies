@@ -48,11 +48,11 @@ export default function NewRun() {
       const params = {
         vin: parseFloat(formData.vin),
         vout: parseFloat(formData.vout),
-        power: parseFloat(formData.power),
+        pout: parseFloat(formData.power),  // API expects 'pout' not 'power'
         fsw: parseFloat(formData.fsw),
         llk: parseFloat(formData.llk),
         n: parseFloat(formData.n),
-        phi: parseFloat(formData.phi),
+        phi_deg: parseFloat(formData.phi),  // API expects 'phi_deg' not 'phi'
         cdc_in: parseFloat(formData.cdc_in),
         cdc_out: parseFloat(formData.cdc_out),
         deadtime: parseFloat(formData.deadtime),
@@ -65,9 +65,10 @@ export default function NewRun() {
       })
 
       navigate(`/run/${data.run_id}`)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Simulation failed:', error)
-      alert('Simulation failed. Please check your inputs.')
+      const errorMsg = error?.response?.data?.detail || 'Simulation failed. Please check your inputs.'
+      alert(errorMsg)
     } finally {
       setLoading(false)
     }
