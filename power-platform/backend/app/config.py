@@ -10,8 +10,8 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=False)
 
-    # Database
-    database_url: str = "postgresql://poweruser:powerpass@localhost:5432/powerdb"
+    # Database (SQLite for local dev, override with DATABASE_URL env var for production)
+    database_url: str = "sqlite:///./power_platform.db"
     database_host: str = "localhost"
     database_port: int = 5432
     database_name: str = "powerdb"
