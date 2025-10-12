@@ -39,7 +39,7 @@ services:
       - ../backend:/app
       - shared_storage:/app/static/exports
     ports:
-      - "8080:8000"
+      - "0.0.0.0:8080:8000"
     environment:
       - DATABASE_URL=postgresql://poweruser:powerpass@postgres:5432/powerdb
       - REDIS_URL=redis://redis:6379/0
@@ -90,7 +90,7 @@ services:
       - ../frontend:/app
       - /app/node_modules
     ports:
-      - "3001:3000"
+      - "0.0.0.0:3001:3000"
     environment:
       - VITE_API_URL=http://localhost:8080
       - VITE_WS_URL=ws://localhost:8080
