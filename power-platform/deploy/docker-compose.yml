@@ -39,7 +39,7 @@ services:
       - ../backend:/app
       - shared_storage:/app/static/exports
     ports:
-      - "8000:8000"
+      - "8080:8000"
     environment:
       - DATABASE_URL=postgresql://poweruser:powerpass@postgres:5432/powerdb
       - REDIS_URL=redis://redis:6379/0
@@ -49,6 +49,7 @@ services:
       - STORAGE_PATH=/app/static/exports
       - ENVIRONMENT=${ENVIRONMENT:-development}
       - DEBUG=${DEBUG:-true}
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:5173
     depends_on:
       postgres:
         condition: service_healthy
@@ -89,10 +90,10 @@ services:
       - ../frontend:/app
       - /app/node_modules
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
-      - VITE_API_URL=http://localhost:8000
-      - VITE_WS_URL=ws://localhost:8000
+      - VITE_API_URL=http://localhost:8080
+      - VITE_WS_URL=ws://localhost:8080
     depends_on:
       - api
 
