@@ -9,7 +9,7 @@ export default function NewRun() {
   const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
-    project_id: '',
+    project_id: '1',
     topology: 'dab_single',
     vin: '400',
     vout: '400',
@@ -97,10 +97,9 @@ export default function NewRun() {
               name="project_id"
               value={formData.project_id}
               onChange={handleChange}
-              required
               className="input"
             >
-              <option value="">Select a project</option>
+              <option value="1">Power Platform Demo Project</option>
               {projectsList.map((proj) => (
                 <option key={proj.id} value={proj.id}>
                   {proj.name}

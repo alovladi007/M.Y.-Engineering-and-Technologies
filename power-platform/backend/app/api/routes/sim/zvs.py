@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.db.models import User, Run, Project
 from app.deps import get_current_user, get_current_org
-from app.services.sim.zvs.zvs_solver import check_zvs_condition, find_zvs_boundary
-from app.services.sim.zvs.zvs_maps import generate_zvs_map, optimize_for_zvs
+from app.services.sim.zvs.zvs_solver import check_zvs_condition, calculate_zvs_boundary
+from app.services.sim.zvs.zvs_maps import generate_zvs_heatmap, recommend_operating_points
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/zvs", tags=["zvs"])
@@ -90,7 +90,7 @@ async def calculate_boundary(
 ):
     """Calculate ZVS boundary conditions."""
     try:
-        min_current = find_zvs_boundary(
+        min_current = calculate_zvs_boundary(
             vin=request.vin,
             vout=request.vout,
             n=request.n,
@@ -120,7 +120,7 @@ async def generate_map(
 ):
     """Generate ZVS feasibility map over power and phase shift."""
     try:
-        zvs_map = generate_zvs_map(
+        zvs_map = generate_zvs_heatmap(
             vin=request.vin,
             vout=request.vout,
             n=request.n,
@@ -165,7 +165,7 @@ async def optimize_zvs(
         recommendations = []
 
         for power_level in request.load_points:
-            result = optimize_for_zvs(
+            result = recommend_operating_points(
                 vin=request.vin,
                 vout=request.vout,
                 n=request.n,

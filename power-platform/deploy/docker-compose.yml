@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U poweruser"]
+      test: ["CMD-SHELL", "pg_isready -U poweruser -d powerdb"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -84,7 +84,7 @@ services:
       context: ../frontend
       dockerfile: ../deploy/Dockerfile.frontend
     container_name: power_platform_frontend
-    command: npm run dev
+    command: npm run dev -- --host 0.0.0.0
     volumes:
       - ../frontend:/app
       - /app/node_modules

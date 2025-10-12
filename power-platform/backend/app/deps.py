@@ -1,6 +1,6 @@
 """FastAPI dependencies."""
 from typing import Optional
-from fastapi import Depends, HTTPException, status, Header
+from fastapi import Depends, HTTPException, status, Header, WebSocket
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
@@ -102,3 +102,24 @@ def require_role(*allowed_roles: str):
         return user
 
     return role_checker
+
+
+async def get_current_user_ws(
+    websocket: WebSocket,
+    token: Optional[str] = None,
+    db: Session = Depends(get_db)
+) -> Optional[User]:
+    """Get current authenticated user for WebSocket connections."""
+    if not token:
+        return None
+
+    try:
+        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
+        email: str = payload.get("sub")
+        if email is None:
+            return None
+    except JWTError:
+        return None
+
+    user = db.query(User).filter(User.email == email).first()
+    return user
