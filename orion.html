@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.R.I.O.N - Optimized Research & Innovation for Organized Nanomaterials | M.Y. Engineering</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="ORION: Autonomous AI agent platform revolutionizing materials science research with literature mining, intelligent candidate generation, automated simulations, and experimental design.">
+    <meta name="keywords" content="nanomaterials, materials science, AI research, simulation, DFT, molecular dynamics, knowledge graph, RAG system">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Sora', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .orion-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+        
+        .code-block {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            overflow-x: auto;
+        }
+        
+        .architecture-diagram {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 orion-gradient rounded-lg flex items-center justify-center">
+                        <i class="fas fa-atom text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold gradient-text">O.R.I.O.N</h1>
+                        <p class="text-xs text-gray-500">M.Y. Engineering</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#overview" class="nav-link text-gray-700 hover:text-purple-600">Overview</a>
+                    <a href="#features" class="nav-link text-gray-700 hover:text-purple-600">Features</a>
+                    <a href="#architecture" class="nav-link text-gray-700 hover:text-purple-600">Architecture</a>
+                    <a href="#demo" class="nav-link text-gray-700 hover:text-purple-600">Demo</a>
+                    <a href="#api" class="nav-link text-gray-700 hover:text-purple-600">API</a>
+                    <a href="index.html" class="px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all inline-flex items-center">
+                        <i class="fas fa-home mr-2"></i>
+                        M.Y. Engineering
+                    </a>
+                </div>
+                
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+            <div class="px-6 py-4 space-y-4">
+                <a href="#overview" class="block text-gray-700 hover:text-purple-600">Overview</a>
+                <a href="#features" class="block text-gray-700 hover:text-purple-600">Features</a>
+                <a href="#architecture" class="block text-gray-700 hover:text-purple-600">Architecture</a>
+                <a href="#demo" class="block text-gray-700 hover:text-purple-600">Demo</a>
+                <a href="#api" class="block text-gray-700 hover:text-purple-600">API</a>
+                <a href="index.html" class="block px-4 py-2 bg-gradient-to-r from-gray-700 to-gray-800 text-white rounded-lg text-center">
+                    <i class="fas fa-home mr-2"></i>M.Y. Engineering
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="mb-8">
+                <div class="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-atom text-white text-4xl"></i>
+                </div>
+                <h1 class="text-5xl font-bold mb-4">O.R.I.O.N</h1>
+                <p class="text-xl text-white/90 mb-2">Optimized Research & Innovation for Organized Nanomaterials</p>
+                <p class="text-lg text-white/80">Charting new frontiers in material science</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="orion-dashboard.html" class="px-8 py-3 bg-white text-purple-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
+                    <i class="fas fa-rocket mr-2"></i>Launch Dashboard
+                </a>
+                <button onclick="scrollToSection('demo')" class="px-8 py-3 bg-purple-700 text-white font-semibold rounded-lg hover:bg-purple-800 transition-colors">
+                    <i class="fas fa-play mr-2"></i>Try Demo
+                </button>
+                <a href="orion-metamaterials.html" class="px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-purple-600 transition-colors inline-flex items-center justify-center">
+                    <i class="fas fa-cube mr-2"></i>Metamaterial Platform
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Revolutionary Materials Science Platform</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    ORION is an autonomous AI agent platform that revolutionizes materials science research by integrating 
+                    cutting-edge literature mining, intelligent candidate generation, automated simulations, and experimental design.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-book text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Literature Mining & Knowledge Graph</h3>
+                    <p class="text-gray-600">Automatically ingests and processes scientific literature, patents, and experimental data to build comprehensive knowledge graphs.</p>
+                </div>
+                
+                <div class="feature-card bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-dna text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Intelligent Material Generation</h3>
+                    <p class="text-gray-600">Uses advanced LLMs to propose novel material candidates based on desired properties and constraints.</p>
+                </div>
+                
+                <div class="feature-card bg-gradient-to-br from-purple-50 to-violet-100 p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-microscope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Simulation Orchestration</h3>
+                    <p class="text-gray-600">Interfaces with DFT, molecular mechanics, and FEA tools for comprehensive in-silico validation.</p>
+                </div>
+                
+                <div class="feature-card bg-gradient-to-br from-orange-50 to-amber-100 p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-flask text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Automated Experimental Design</h3>
+                    <p class="text-gray-600">Generates detailed laboratory protocols and safety procedures for practical implementation.</p>
+                </div>
+                
+                <div class="feature-card bg-gradient-to-br from-red-50 to-pink-100 p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-red-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-sync-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Active Learning Loop</h3>
+                    <p class="text-gray-600">Continuously improves predictions based on experimental feedback and new data.</p>
+                </div>
+                
+                <div class="feature-card bg-gradient-to-br from-teal-50 to-cyan-100 p-8 rounded-2xl">
+                    <div class="w-16 h-16 bg-teal-500 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Natural Language Interface</h3>
+                    <p class="text-gray-600">Interact with the system using conversational queries and natural language commands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Advanced Features</h2>
+                <p class="text-xl text-gray-600">Comprehensive tools for materials science research and development</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Knowledge Graph -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-project-diagram text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Knowledge Graph</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Neo4j-based materials ontology</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Automated relationship extraction</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Property-structure-process mapping</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Real-time graph analytics</li>
+                    </ul>
+                </div>
+                
+                <!-- RAG System -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-robot text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">RAG System</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Hybrid sparse-dense retrieval</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Cross-encoder reranking</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Context-aware generation</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Citation tracking</li>
+                    </ul>
+                </div>
+                
+                <!-- Candidate Generation -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-crystal-ball text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Candidate Generation</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Formula prediction</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Structure optimization</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Property targeting</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Novelty scoring</li>
+                    </ul>
+                </div>
+                
+                <!-- Simulation Integration -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-bolt text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900">Simulation Integration</h3>
+                    </div>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>VASP/Quantum ESPRESSO support</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>LAMMPS molecular dynamics</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Queue management</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Result parsing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Interactive Demo</h2>
+                <p class="text-xl text-gray-600">Experience ORION's capabilities with our live demonstration</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Demo Interface -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Try ORION Now</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Chat Interface -->
+                            <div class="border-2 border-gray-200 rounded-lg p-4">
+                                <h4 class="font-semibold text-gray-900 mb-3">Chat with ORION</h4>
+                                <div class="bg-gray-50 rounded-lg p-4 mb-3 h-32 overflow-y-auto">
+                                    <div class="text-sm text-gray-600">
+                                        <p><strong>You:</strong> Design a self-healing polymer with Tg > 80°C</p>
+                                        <p><strong>ORION:</strong> I'll generate material candidates for a self-healing polymer with high glass transition temperature...</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <input type="text" placeholder="Ask about materials..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                                    <button class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div class="grid grid-cols-2 gap-4">
+                                <button class="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors text-left">
+                                    <i class="fas fa-search text-blue-500 mb-2"></i>
+                                    <p class="font-semibold text-gray-900">Material Search</p>
+                                    <p class="text-sm text-gray-600">Find materials by properties</p>
+                                </button>
+                                <button class="p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors text-left">
+                                    <i class="fas fa-crystal-ball text-green-500 mb-2"></i>
+                                    <p class="font-semibold text-gray-900">Generate Candidates</p>
+                                    <p class="text-sm text-gray-600">AI-powered material design</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Demo Results -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Sample Results</h3>
+                        
+                        <div class="space-y-4">
+                            <!-- Material Candidate -->
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg">
+                                <h4 class="font-semibold text-gray-900 mb-3">Generated Material Candidate</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Formula:</span>
+                                        <span class="font-mono font-semibold">Ti₀.₉Zr₀.₁O₂</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Bandgap:</span>
+                                        <span class="font-semibold">3.3 ± 0.1 eV</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Stability Score:</span>
+                                        <span class="font-semibold text-green-600">0.85</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Physics Valid:</span>
+                                        <span class="font-semibold text-green-600">✓</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Simulation Status -->
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-lg">
+                                <h4 class="font-semibold text-gray-900 mb-3">Simulation Status</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">DFT Calculation:</span>
+                                        <span class="font-semibold text-blue-600">Running</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-600">Progress:</span>
+                                        <span class="font-semibold">65%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 65%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Protocol Preview -->
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-lg">
+                                <h4 class="font-semibold text-gray-900 mb-3">Generated Protocol</h4>
+                                <div class="text-sm text-gray-600">
+                                    <p class="mb-2"><strong>Synthesis Method:</strong> Sol-gel</p>
+                                    <p class="mb-2"><strong>Temperature:</strong> 80°C</p>
+                                    <p class="mb-2"><strong>Duration:</strong> 2 hours</p>
+                                    <p class="text-xs text-gray-500">Full protocol available in PDF format</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
+                    <button onclick="openOrionDemo()" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-105">
+                        <i class="fas fa-external-link-alt mr-2"></i>Launch Full Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">API Examples</h2>
+                <p class="text-xl text-gray-600">Integrate ORION into your research workflow</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Python API -->
+                <div class="bg-gray-900 rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-6">Python API</h3>
+                    <div class="code-block">
+                        <pre class="text-green-400 text-sm"><code>import asyncio
+from orion import ORIONSystem
+
+async def main():
+    # Initialize ORION
+    orion = ORIONSystem()
+    await orion.initialize()
+    
+    # Generate a new material
+    response = await orion.process_query(
+        "Design a self-healing polymer with Tg > 80°C"
+    )
+    
+    # View candidates
+    for candidate in response["result"]["candidates"]:
+        print(f"Material: {candidate['formula']}")
+        print(f"Score: {candidate['score']}")
+    
+    await orion.shutdown()
+
+asyncio.run(main())</code></pre>
+                    </div>
+                </div>
+                
+                <!-- Command Line -->
+                <div class="bg-gray-900 rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-6">Command Line</h3>
+                    <div class="code-block">
+                        <pre class="text-green-400 text-sm"><code># Start the chat interface
+orion chat
+
+# Process a query
+orion query "Find materials with bandgap between 1.5 and 2.0 eV"
+
+# Ingest data
+orion ingest --source materials_project.json --type materials_project
+
+# Generate protocol
+orion protocol --material "TiO2" --method "sol_gel"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 orion-gradient rounded-lg flex items-center justify-center">
+                            <i class="fas fa-atom text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">O.R.I.O.N</h3>
+                            <p class="text-sm text-gray-400">M.Y. Engineering</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Optimized Research & Innovation for Organized Nanomaterials. 
+                        Charting new frontiers in material science.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#overview" class="hover:text-white transition-colors">Overview</a></li>
+                        <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#demo" class="hover:text-white transition-colors">Demo</a></li>
+                        <li><a href="#api" class="hover:text-white transition-colors">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://github.com/alovladi007/O.R.I.O.N-LLM-Research-Platform" target="_blank" class="hover:text-white transition-colors">GitHub Repository</a></li>
+                        <li><a href="http://127.0.0.1:8081/index.html" class="hover:text-white transition-colors">M.Y. Engineering</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 M.Y. Engineering and Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+        
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        function openOrionDemo() {
+            // Open the full ORION demo application
+            window.location.href = 'orion-demo.html';
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.R.I.O.N - Advanced Nanomaterials Engineering Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, #00ffff 2px, #00ffff 4px),
+                              repeating-linear-gradient(90deg, transparent, transparent 2px, #00ffff 2px, #00ffff 4px);
+            background-size: 100px 100px;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .neon-border {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(0, 255, 255, 0.1);
+            border-top: 3px solid #00ffff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+        }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .tab-active {
+            background: linear-gradient(90deg, #00ffff, #0099cc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 2px solid #00ffff;
+        }
+
+        .console-text {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .data-table th {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .data-table td {
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <!-- Main Application -->
+    <div id="app" class="min-h-screen flex flex-col">
+        
+        <!-- Top Navigation Bar -->
+        <nav class="glass-panel border-b border-cyan-800/30 px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center font-bold text-xl">O</div>
+                        <div>
+                            <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">O.R.I.O.N</h1>
+                            <p class="text-xs text-gray-500">Enterprise Platform v3.0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-6">
+                        <button onclick="navigateTo('dashboard')" class="hover:text-cyan-400 transition">Dashboard</button>
+                        <button onclick="navigateTo('designer')" class="hover:text-cyan-400 transition">Designer</button>
+                        <button onclick="navigateTo('simulator')" class="hover:text-cyan-400 transition">Simulator</button>
+                        <button onclick="navigateTo('analyzer')" class="hover:text-cyan-400 transition">Analyzer</button>
+                        <button onclick="navigateTo('database')" class="hover:text-cyan-400 transition">Database</button>
+                        <button onclick="navigateTo('ai-lab')" class="hover:text-cyan-400 transition">AI Lab</button>
+                        <button onclick="navigateTo('collaboration')" class="hover:text-cyan-400 transition">Teams</button>
+                        <a href="orion.html" class="hover:text-cyan-400 transition border-l border-cyan-800/30 pl-6">← Back to ORION</a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="pulse-dot"></div>
+                        <span class="text-xs text-gray-400">Cloud Sync Active</span>
+                    </div>
+                    <button onclick="showUserMenu()" class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full"></button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dynamic Content Area -->
+        <div id="content" class="flex-1 p-6">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+
+        <!-- Status Bar -->
+        <div class="glass-panel border-t border-cyan-800/30 px-6 py-2">
+            <div class="flex items-center justify-between text-xs text-gray-400">
+                <div class="flex items-center space-x-4">
+                    <span>Project: <span class="text-cyan-400" id="current-project">GaN_HEMT_v2.3</span></span>
+                    <span>|</span>
+                    <span>Compute: <span class="text-green-400">GPU Cluster Online</span></span>
+                    <span>|</span>
+                    <span>Memory: <span id="memory-usage">2.4 GB / 16 GB</span></span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="system-time"></span>
+                    <span>|</span>
+                    <span>Jobs: <span class="text-yellow-400" id="job-count">3 Running</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================== BACKEND SIMULATION ==================
+        
+        // Database Simulation
+        class Database {
+            constructor() {
+                this.materials = new Map();
+                this.projects = new Map();
+                this.simulations = new Map();
+                this.users = new Map();
+                this.initializeData();
+            }
+
+            initializeData() {
+                // Materials Database
+                this.materials.set('GaN', {
+                    id: 'mat_001',
+                    name: 'Gallium Nitride',
+                    formula: 'GaN',
+                    structure: 'Wurtzite',
+                    bandgap: 3.4,
+                    mobility: 1200,
+                    dielectric: 9.5,
+                    lattice: { a: 3.189, c: 5.185 },
+                    properties: {
+                        thermal_conductivity: 230,
+                        breakdown_field: 3.3e6,
+                        saturation_velocity: 2.5e7,
+                        density: 6.15
+                    }
+                });
+
+                this.materials.set('AlGaN', {
+                    id: 'mat_002',
+                    name: 'Aluminum Gallium Nitride',
+                    formula: 'AlxGa1-xN',
+                    structure: 'Wurtzite',
+                    bandgap: 'Variable (3.4-6.2 eV)',
+                    mobility: 300,
+                    dielectric: 9.0,
+                    lattice: { a: 3.112, c: 4.982 }
+                });
+
+                this.materials.set('InP', {
+                    id: 'mat_003',
+                    name: 'Indium Phosphide',
+                    formula: 'InP',
+                    structure: 'Zincblende',
+                    bandgap: 1.35,
+                    mobility: 4600,
+                    dielectric: 12.4,
+                    lattice: { a: 5.869 }
+                });
+
+                // Projects Database
+                this.projects.set('proj_001', {
+                    id: 'proj_001',
+                    name: 'GaN_HEMT_v2.3',
+                    type: 'HEMT',
+                    created: new Date('2024-01-15'),
+                    modified: new Date(),
+                    status: 'Active',
+                    layers: [],
+                    simulations: ['sim_001', 'sim_002']
+                });
+
+                // Simulations Database
+                this.simulations.set('sim_001', {
+                    id: 'sim_001',
+                    project: 'proj_001',
+                    type: 'DC Sweep',
+                    status: 'Completed',
+                    parameters: {
+                        vds_start: 0,
+                        vds_end: 20,
+                        vds_step: 0.5,
+                        vgs: [0, -1, -2, -3],
+                        temperature: 300
+                    },
+                    results: this.generateSimulationData()
+                });
+            }
+
+            generateSimulationData() {
+                const data = [];
+                for (let vds = 0; vds <= 20; vds += 0.5) {
+                    data.push({
+                        vds: vds,
+                        id: Math.tanh(vds / 10) * 850 * (1 + Math.random() * 0.1)
+                    });
+                }
+                return data;
+            }
+
+            query(collection, filter = {}) {
+                const coll = this[collection];
+                if (!coll) return [];
+                
+                let results = Array.from(coll.values());
+                
+                // Apply filters
+                Object.keys(filter).forEach(key => {
+                    results = results.filter(item => item[key] === filter[key]);
+                });
+                
+                return results;
+            }
+
+            save(collection, id, data) {
+                this[collection].set(id, { ...data, modified: new Date() });
+                this.syncToStorage();
+            }
+
+            syncToStorage() {
+                // Simulate cloud sync
+                localStorage.setItem('orion_db', JSON.stringify({
+                    materials: Array.from(this.materials.entries()),
+                    projects: Array.from(this.projects.entries()),
+                    simulations: Array.from(this.simulations.entries())
+                }));
+            }
+        }
+
+        // Simulation Engine
+        class SimulationEngine {
+            constructor() {
+                this.running = false;
+                this.progress = 0;
+                this.solver = null;
+            }
+
+            async runDriftDiffusion(params) {
+                this.running = true;
+                this.progress = 0;
+                
+                const results = {
+                    convergence: [],
+                    potential: [],
+                    carrier_density: [],
+                    current: []
+                };
+
+                // Poisson-Drift-Diffusion solver simulation
+                for (let iter = 0; iter < params.max_iterations; iter++) {
+                    if (!this.running) break;
+                    
+                    // Solve Poisson equation
+                    const potential = this.solvePoisson(params);
+                    
+                    // Solve continuity equations
+                    const carriers = this.solveContinuity(potential, params);
+                    
+                    // Calculate current
+                    const current = this.calculateCurrent(carriers, params);
+                    
+                    // Check convergence
+                    const error = Math.exp(-iter / 100) * (1 + Math.random() * 0.2);
+                    results.convergence.push(error);
+                    
+                    this.progress = (iter / params.max_iterations) * 100;
+                    
+                    // Simulate computation time
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+
+                this.running = false;
+                return results;
+            }
+
+            solvePoisson(params) {
+                // Simplified Poisson solver
+                const nx = params.mesh_points || 100;
+                const potential = new Array(nx);
+                
+                for (let i = 0; i < nx; i++) {
+                    const x = i / nx;
+                    potential[i] = params.vds * x + params.built_in_potential * Math.exp(-x * 10);
+                }
+                
+                return potential;
+            }
+
+            solveContinuity(potential, params) {
+                // Simplified carrier distribution
+                const nx = potential.length;
+                const electrons = new Array(nx);
+                const holes = new Array(nx);
+                
+                for (let i = 0; i < nx; i++) {
+                    electrons[i] = params.doping * Math.exp(-potential[i] / 0.026);
+                    holes[i] = params.doping * Math.exp(potential[i] / 0.026) * 1e-6;
+                }
+                
+                return { electrons, holes };
+            }
+
+            calculateCurrent(carriers, params) {
+                // Simplified current calculation
+                const { electrons } = carriers;
+                const mobility = params.mobility || 1200;
+                const area = params.area || 1e-8;
+                
+                let current = 0;
+                for (let i = 1; i < electrons.length; i++) {
+                    const field = (params.vds / electrons.length) * 1e5;
+                    const drift_velocity = mobility * field / (1 + field / 1e5);
+                    current += electrons[i] * drift_velocity * area * 1.6e-19;
+                }
+                
+                return current;
+            }
+
+            async runMonteCarlo(params) {
+                // Monte Carlo simulation for hot carrier effects
+                this.running = true;
+                const particles = this.initializeParticles(params.num_particles);
+                const results = [];
+
+                for (let step = 0; step < params.time_steps; step++) {
+                    if (!this.running) break;
+                    
+                    // Update particle positions and velocities
+                    this.updateParticles(particles, params);
+                    
+                    // Calculate statistics
+                    const stats = this.calculateStatistics(particles);
+                    results.push(stats);
+                    
+                    this.progress = (step / params.time_steps) * 100;
+                    await new Promise(resolve => setTimeout(resolve, 5));
+                }
+
+                this.running = false;
+                return results;
+            }
+
+            initializeParticles(num) {
+                const particles = [];
+                for (let i = 0; i < num; i++) {
+                    particles.push({
+                        x: Math.random(),
+                        y: Math.random(),
+                        z: Math.random(),
+                        vx: Math.random() * 1e7 - 5e6,
+                        vy: Math.random() * 1e7 - 5e6,
+                        vz: Math.random() * 1e7 - 5e6,
+                        energy: 0
+                    });
+                }
+                return particles;
+            }
+
+            updateParticles(particles, params) {
+                const dt = params.time_step || 1e-15;
+                const field = params.electric_field || 1e5;
+                
+                particles.forEach(p => {
+                    // Apply electric field
+                    p.vx += field * dt * 1.76e11;
+                    
+                    // Scattering events
+                    if (Math.random() < 0.1) {
+                        const angle = Math.random() * 2 * Math.PI;
+                        const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                        p.vx = speed * Math.cos(angle);
+                        p.vy = speed * Math.sin(angle);
+                    }
+                    
+                    // Update position
+                    p.x += p.vx * dt;
+                    p.y += p.vy * dt;
+                    
+                    // Periodic boundaries
+                    if (p.x < 0) p.x += 1;
+                    if (p.x > 1) p.x -= 1;
+                    
+                    // Calculate energy
+                    p.energy = 0.5 * 9.1e-31 * (p.vx * p.vx + p.vy * p.vy + p.vz * p.vz) / 1.6e-19;
+                });
+            }
+
+            calculateStatistics(particles) {
+                const energies = particles.map(p => p.energy);
+                const velocities = particles.map(p => Math.sqrt(p.vx * p.vx + p.vy * p.vy));
+                
+                return {
+                    avg_energy: energies.reduce((a, b) => a + b) / energies.length,
+                    avg_velocity: velocities.reduce((a, b) => a + b) / velocities.length,
+                    max_energy: Math.max(...energies),
+                    distribution: this.calculateDistribution(energies)
+                };
+            }
+
+            calculateDistribution(values) {
+                const bins = 50;
+                const min = Math.min(...values);
+                const max = Math.max(...values);
+                const binSize = (max - min) / bins;
+                const distribution = new Array(bins).fill(0);
+                
+                values.forEach(v => {
+                    const bin = Math.floor((v - min) / binSize);
+                    if (bin >= 0 && bin < bins) distribution[bin]++;
+                });
+                
+                return distribution;
+            }
+
+            stop() {
+                this.running = false;
+            }
+        }
+
+        // AI/LLM Engine
+        class AIEngine {
+            constructor() {
+                this.model = 'claude-sonnet-4-20250514';
+                this.context = [];
+            }
+
+            async processQuery(query, context = {}) {
+                // Simulate AI processing
+                this.context.push({ role: 'user', content: query });
+                
+                // Material optimization logic
+                if (query.toLowerCase().includes('optimize')) {
+                    return this.optimizationResponse(context);
+                }
+                
+                // Structure analysis
+                if (query.toLowerCase().includes('analyze')) {
+                    return this.analysisResponse(context);
+                }
+                
+                // General assistance
+                return this.generalResponse(query);
+            }
+
+            optimizationResponse(context) {
+                const suggestions = [
+                    "Based on drift-diffusion analysis, reducing AlGaN barrier thickness to 20nm will increase 2DEG density by 15%",
+                    "Implementing a graded AlGaN composition (x=0.15 to 0.25) can reduce interface traps by 40%",
+                    "Adding 1nm AlN interlayer will improve electron confinement and increase mobility to 1800 cm²/V·s",
+                    "For RF applications, T-gate structure with 0.15μm gate length achieves fT > 100 GHz"
+                ];
+                
+                return {
+                    response: suggestions[Math.floor(Math.random() * suggestions.length)],
+                    confidence: 0.85 + Math.random() * 0.15,
+                    references: ['DOI: 10.1109/TED.2024.123456', 'arXiv:2024.78901']
+                };
+            }
+
+            analysisResponse(context) {
+                return {
+                    response: `Structure analysis complete:
+                    - Lattice mismatch: 2.3% (acceptable)
+                    - Critical thickness exceeded: No
+                    - Strain relaxation risk: Low
+                    - Predicted breakdown voltage: 650V
+                    - Recommended passivation: SiN (100nm)`,
+                    confidence: 0.92,
+                    warnings: ['Consider thermal budget for ohmic contacts']
+                };
+            }
+
+            generalResponse(query) {
+                return {
+                    response: `Processing query: "${query}". 
+                    I can help with material selection, device optimization, simulation setup, and failure analysis. 
+                    Try asking about specific parameters or optimization goals.`,
+                    confidence: 0.75,
+                    suggestions: ['Run band structure calculation', 'Check thermal stability']
+                };
+            }
+
+            async generateCode(deviceType, language = 'spice') {
+                const templates = {
+                    spice: this.generateSPICE(deviceType),
+                    verilog: this.generateVerilog(deviceType),
+                    python: this.generatePython(deviceType)
+                };
+                
+                return templates[language] || 'Language not supported';
+            }
+
+            generateSPICE(deviceType) {
+                return `.title ${deviceType} Model
+.model ${deviceType}_model nmos (
++  vto = -2.8
++  lambda = 0.01
++  kp = 0.15
++  cgso = 1e-10
++  cgdo = 1e-10
++  cj = 1e-9
+)
+
+M1 drain gate source source ${deviceType}_model W=100u L=0.25u
+Vds drain 0 DC 10
+Vgs gate 0 DC 0
+.dc Vds 0 20 0.1 Vgs -4 0 1
+.probe
+.end`;
+            }
+
+            generateVerilog(deviceType) {
+                return `module ${deviceType}_model (
+    input wire gate,
+    input wire drain,
+    output wire source
+);
+    
+    parameter VTO = -2.8;
+    parameter KP = 0.15;
+    
+    real ids;
+    real vgs, vds;
+    
+    analog begin
+        vgs = V(gate, source);
+        vds = V(drain, source);
+        
+        if (vgs > VTO) begin
+            if (vds < (vgs - VTO))
+                ids = KP * ((vgs - VTO) * vds - 0.5 * vds * vds);
+            else
+                ids = 0.5 * KP * (vgs - VTO) * (vgs - VTO);
+        end
+        else
+            ids = 0;
+        
+        I(drain, source) <+ ids;
+    end
+endmodule`;
+            }
+
+            generatePython(deviceType) {
+                return `import numpy as np
+import matplotlib.pyplot as plt
+
+class ${deviceType}Model:
+    def __init__(self):
+        self.vto = -2.8  # Threshold voltage
+        self.kp = 0.15   # Transconductance parameter
+        self.lambda_ch = 0.01  # Channel length modulation
+        
+    def calculate_current(self, vgs, vds):
+        """Calculate drain current using square-law model"""
+        if vgs <= self.vto:
+            return 0
+        
+        vgs_eff = vgs - self.vto
+        
+        if vds < vgs_eff:  # Linear region
+            ids = self.kp * (vgs_eff * vds - 0.5 * vds**2)
+        else:  # Saturation region
+            ids = 0.5 * self.kp * vgs_eff**2 * (1 + self.lambda_ch * vds)
+        
+        return ids
+    
+    def plot_characteristics(self):
+        vds = np.linspace(0, 20, 100)
+        vgs_values = [0, -1, -2, -3]
+        
+        plt.figure(figsize=(10, 6))
+        for vgs in vgs_values:
+            ids = [self.calculate_current(vgs, v) for v in vds]
+            plt.plot(vds, ids, label=f'Vgs = {vgs}V')
+        
+        plt.xlabel('Vds (V)')
+        plt.ylabel('Id (A)')
+        plt.title('${deviceType} I-V Characteristics')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+
+# Usage
+model = ${deviceType}Model()
+model.plot_characteristics()`;
+            }
+        }
+
+        // File System Simulation
+        class FileSystem {
+            constructor() {
+                this.files = new Map();
+                this.currentProject = null;
+            }
+
+            saveProject(project) {
+                const id = 'proj_' + Date.now();
+                const projectData = {
+                    id,
+                    name: project.name,
+                    created: new Date(),
+                    modified: new Date(),
+                    data: project
+                };
+                
+                this.files.set(id, projectData);
+                localStorage.setItem(`orion_project_${id}`, JSON.stringify(projectData));
+                return id;
+            }
+
+            loadProject(id) {
+                const stored = localStorage.getItem(`orion_project_${id}`);
+                if (stored) {
+                    const project = JSON.parse(stored);
+                    this.currentProject = project;
+                    return project;
+                }
+                return null;
+            }
+
+            exportToFormat(data, format) {
+                const exporters = {
+                    'json': () => JSON.stringify(data, null, 2),
+                    'csv': () => this.convertToCSV(data),
+                    'gds': () => this.generateGDS(data),
+                    'cif': () => this.generateCIF(data),
+                    'spice': () => new AIEngine().generateSPICE(data.type)
+                };
+                
+                const content = exporters[format]?.() || 'Format not supported';
+                this.download(`export.${format}`, content);
+            }
+
+            convertToCSV(data) {
+                if (!data.results) return 'No data available';
+                
+                const headers = Object.keys(data.results[0]).join(',');
+                const rows = data.results.map(row => 
+                    Object.values(row).join(',')
+                ).join('\n');
+                
+                return `${headers}\n${rows}`;
+            }
+
+            generateGDS(data) {
+                // Simplified GDSII format
+                return `HEADER 600
+BGNLIB
+LIBNAME ${data.name || 'ORION_DESIGN'}
+UNITS 0.001 1e-9
+BGNSTR
+STRNAME ${data.type || 'DEVICE'}
+${data.layers?.map(layer => `
+BOUNDARY
+LAYER ${layer.number}
+DATATYPE 0
+XY ${layer.coordinates || '0,0,1000,0,1000,1000,0,1000,0,0'}
+ENDEL`).join('')}
+ENDSTR
+ENDLIB`;
+            }
+
+            generateCIF(data) {
+                return `(CIF file generated by ORION);
+DS 1 1 1;
+9 ${data.name || 'CELL'};
+${data.layers?.map((layer, i) => `
+L L${i};
+B ${layer.width || 1000} ${layer.height || 1000} ${layer.x || 0} ${layer.y || 0};`).join('')}
+DF;
+C 1;
+E`;
+            }
+
+            download(filename, content) {
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // ================== FRONTEND VIEWS ==================
+
+        const db = new Database();
+        const simEngine = new SimulationEngine();
+        const aiEngine = new AIEngine();
+        const fileSystem = new FileSystem();
+
+        // Navigation System
+        function navigateTo(view) {
+            const content = document.getElementById('content');
+            
+            const views = {
+                'dashboard': renderDashboard,
+                'designer': renderDesigner,
+                'simulator': renderSimulator,
+                'analyzer': renderAnalyzer,
+                'database': renderDatabase,
+                'ai-lab': renderAILab,
+                'collaboration': renderCollaboration
+            };
+            
+            if (views[view]) {
+                content.innerHTML = '<div class="flex items-center justify-center h-full"><div class="loading-spinner"></div></div>';
+                setTimeout(() => {
+                    content.innerHTML = views[view]();
+                    initializeView(view);
+                }, 300);
+            }
+        }
+
+        // Dashboard View
+        function renderDashboard() {
+            return `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="glass-panel p-6 neon-border">
+                        <h3 class="text-sm text-gray-400 mb-2">Active Projects</h3>
+                        <div class="text-3xl font-bold text-cyan-400">12</div>
+                        <div class="text-xs text-gray-500 mt-1">+3 this week</div>
+                    </div>
+                    <div class="glass-panel p-6 neon-border">
+                        <h3 class="text-sm text-gray-400 mb-2">Simulations Run</h3>
+                        <div class="text-3xl font-bold text-green-400">847</div>
+                        <div class="text-xs text-gray-500 mt-1">98.2% success rate</div>
+                    </div>
+                    <div class="glass-panel p-6 neon-border">
+                        <h3 class="text-sm text-gray-400 mb-2">Compute Hours</h3>
+                        <div class="text-3xl font-bold text-purple-400">2,451</div>
+                        <div class="text-xs text-gray-500 mt-1">$12,255 cost</div>
+                    </div>
+                    <div class="glass-panel p-6 neon-border">
+                        <h3 class="text-sm text-gray-400 mb-2">Team Members</h3>
+                        <div class="text-3xl font-bold text-orange-400">24</div>
+                        <div class="text-xs text-gray-500 mt-1">6 online now</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 glass-panel p-6">
+                        <h2 class="text-xl font-semibold mb-4">Recent Projects</h2>
+                        <div class="space-y-3">
+                            ${['GaN_HEMT_v2.3', 'InP_Laser_Array', 'SiC_PowerMOSFET', 'QD_Solar_Cell'].map(name => `
+                                <div class="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg hover:bg-gray-800/50 cursor-pointer transition">
+                                    <div>
+                                        <div class="font-medium">${name}</div>
+                                        <div class="text-xs text-gray-500">Modified ${Math.floor(Math.random() * 24)} hours ago</div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button onclick="loadProject('${name}')" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-700 rounded text-xs">Open</button>
+                                        <button class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs">Clone</button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6">
+                        <h2 class="text-xl font-semibold mb-4">System Status</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>CPU Usage</span>
+                                    <span class="text-cyan-400">42%</span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                    <div class="bg-cyan-500 h-2 rounded-full" style="width: 42%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>GPU Usage</span>
+                                    <span class="text-green-400">78%</span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Storage</span>
+                                    <span class="text-yellow-400">64%</span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                    <div class="bg-yellow-500 h-2 rounded-full" style="width: 64%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 p-3 bg-green-900/20 border border-green-500/30 rounded">
+                            <div class="flex items-center space-x-2">
+                                <div class="pulse-dot"></div>
+                                <span class="text-sm">All systems operational</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 glass-panel p-6">
+                    <h2 class="text-xl font-semibold mb-4">Performance Metrics</h2>
+                    <canvas id="performance-chart" width="400" height="200"></canvas>
+                </div>
+            `;
+        }
+
+        // Designer View
+        function renderDesigner() {
+            return `
+                <div class="flex h-full gap-6">
+                    <!-- Layer Stack Editor -->
+                    <div class="w-80 glass-panel p-4 overflow-y-auto">
+                        <h2 class="text-lg font-semibold mb-4">Layer Stack</h2>
+                        
+                        <div id="layer-stack" class="space-y-2">
+                            ${renderLayerStack()}
+                        </div>
+                        
+                        <button onclick="addLayer()" class="w-full mt-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded font-medium">
+                            + Add Layer
+                        </button>
+
+                        <div class="mt-6">
+                            <h3 class="text-sm font-semibold mb-2">Quick Templates</h3>
+                            <div class="space-y-1">
+                                <button onclick="loadTemplate('hemt')" class="w-full text-left px-2 py-1 hover:bg-gray-800 rounded text-sm">→ AlGaN/GaN HEMT</button>
+                                <button onclick="loadTemplate('led')" class="w-full text-left px-2 py-1 hover:bg-gray-800 rounded text-sm">→ InGaN LED</button>
+                                <button onclick="loadTemplate('vcsel')" class="w-full text-left px-2 py-1 hover:bg-gray-800 rounded text-sm">→ GaAs VCSEL</button>
+                                <button onclick="loadTemplate('solar')" class="w-full text-left px-2 py-1 hover:bg-gray-800 rounded text-sm">→ Perovskite Solar Cell</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Viewport -->
+                    <div class="flex-1 glass-panel p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-semibold">3D Structure View</h2>
+                            <div class="flex space-x-2">
+                                <button onclick="changeView('3d')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">3D</button>
+                                <button onclick="changeView('cross')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Cross Section</button>
+                                <button onclick="changeView('top')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Top View</button>
+                            </div>
+                        </div>
+                        
+                        <div id="viewport" class="bg-black rounded h-96 flex items-center justify-center">
+                            <canvas id="3d-canvas"></canvas>
+                        </div>
+
+                        <div class="mt-4 grid grid-cols-3 gap-4">
+                            <div>
+                                <label class="text-xs text-gray-400">Device Width (μm)</label>
+                                <input type="number" value="100" class="w-full mt-1 px-2 py-1 bg-gray-800 rounded border border-gray-700">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-400">Device Length (μm)</label>
+                                <input type="number" value="200" class="w-full mt-1 px-2 py-1 bg-gray-800 rounded border border-gray-700">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-400">Gate Length (nm)</label>
+                                <input type="number" value="250" class="w-full mt-1 px-2 py-1 bg-gray-800 rounded border border-gray-700">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Properties Panel -->
+                    <div class="w-80 glass-panel p-4 overflow-y-auto">
+                        <h2 class="text-lg font-semibold mb-4">Material Properties</h2>
+                        
+                        <div id="properties-panel" class="space-y-4">
+                            <div>
+                                <h3 class="text-sm font-medium mb-2">Selected: GaN</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Bandgap:</span>
+                                        <span>3.4 eV</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Mobility:</span>
+                                        <span>1200 cm²/V·s</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Permittivity:</span>
+                                        <span>9.5</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Lattice a:</span>
+                                        <span>3.189 Å</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-sm font-medium mb-2">Electrical Parameters</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <label class="text-xs text-gray-400">Doping Type</label>
+                                        <select class="w-full mt-1 px-2 py-1 bg-gray-800 rounded border border-gray-700 text-sm">
+                                            <option>n-type</option>
+                                            <option>p-type</option>
+                                            <option>Intrinsic</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="text-xs text-gray-400">Doping Conc. (cm⁻³)</label>
+                                        <input type="number" value="1e18" class="w-full mt-1 px-2 py-1 bg-gray-800 rounded border border-gray-700 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-gray-700">
+                                <button onclick="saveStructure()" class="w-full py-2 bg-green-600 hover:bg-green-700 rounded font-medium">
+                                    Save Structure
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Simulator View
+        function renderSimulator() {
+            return `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+                    <!-- Simulation Setup -->
+                    <div class="glass-panel p-6">
+                        <h2 class="text-xl font-semibold mb-4">Simulation Setup</h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-sm text-gray-400">Simulation Type</label>
+                                <select id="sim-type" class="w-full mt-1 px-3 py-2 bg-gray-800 rounded border border-gray-700">
+                                    <option value="dc">DC Analysis</option>
+                                    <option value="ac">AC Analysis</option>
+                                    <option value="transient">Transient</option>
+                                    <option value="monte-carlo">Monte Carlo</option>
+                                    <option value="quantum">Quantum Transport</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="text-sm text-gray-400">Temperature (K)</label>
+                                <input type="number" id="temperature" value="300" class="w-full mt-1 px-3 py-2 bg-gray-800 rounded border border-gray-700">
+                            </div>
+
+                            <div>
+                                <label class="text-sm text-gray-400">Mesh Density</label>
+                                <select id="mesh-density" class="w-full mt-1 px-3 py-2 bg-gray-800 rounded border border-gray-700">
+                                    <option>Coarse (Fast)</option>
+                                    <option selected>Medium</option>
+                                    <option>Fine</option>
+                                    <option>Ultra Fine (Slow)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="text-sm text-gray-400">Max Iterations</label>
+                                <input type="number" id="max-iter" value="1000" class="w-full mt-1 px-3 py-2 bg-gray-800 rounded border border-gray-700">
+                            </div>
+
+                            <div>
+                                <label class="text-sm text-gray-400">Convergence Criteria</label>
+                                <input type="number" id="convergence" value="1e-6" step="1e-7" class="w-full mt-1 px-3 py-2 bg-gray-800 rounded border border-gray-700">
+                            </div>
+
+                            <div class="pt-4 space-y-2">
+                                <button onclick="startSimulation()" class="w-full py-2 bg-green-600 hover:bg-green-700 rounded font-medium">
+                                    ▶ Start Simulation
+                                </button>
+                                <button onclick="stopSimulation()" class="w-full py-2 bg-red-600 hover:bg-red-700 rounded font-medium">
+                                    ■ Stop
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-3 bg-gray-800 rounded">
+                            <h3 class="text-sm font-medium mb-2">Quick Presets</h3>
+                            <div class="space-y-1">
+                                <button onclick="loadPreset('standard')" class="w-full text-left px-2 py-1 hover:bg-gray-700 rounded text-xs">Standard DC Sweep</button>
+                                <button onclick="loadPreset('rf')" class="w-full text-left px-2 py-1 hover:bg-gray-700 rounded text-xs">RF Characterization</button>
+                                <button onclick="loadPreset('breakdown')" class="w-full text-left px-2 py-1 hover:bg-gray-700 rounded text-xs">Breakdown Analysis</button>
+                                <button onclick="loadPreset('thermal')" class="w-full text-left px-2 py-1 hover:bg-gray-700 rounded text-xs">Thermal Study</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulation Monitor -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="glass-panel p-6">
+                            <h2 class="text-xl font-semibold mb-4">Simulation Progress</h2>
+                            
+                            <div class="mb-6">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Progress</span>
+                                    <span id="sim-progress-text">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-800 rounded-full h-3">
+                                    <div id="sim-progress-bar" class="bg-gradient-to-r from-cyan-500 to-blue-500 h-3 rounded-full transition-all" style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-gray-900/50 p-3 rounded">
+                                    <div class="text-xs text-gray-400">Status</div>
+                                    <div id="sim-status" class="text-lg font-medium text-yellow-400">Ready</div>
+                                </div>
+                                <div class="bg-gray-900/50 p-3 rounded">
+                                    <div class="text-xs text-gray-400">Iteration</div>
+                                    <div id="sim-iteration" class="text-lg font-medium">0 / 1000</div>
+                                </div>
+                                <div class="bg-gray-900/50 p-3 rounded">
+                                    <div class="text-xs text-gray-400">Convergence</div>
+                                    <div id="sim-convergence-value" class="text-lg font-medium">-</div>
+                                </div>
+                                <div class="bg-gray-900/50 p-3 rounded">
+                                    <div class="text-xs text-gray-400">Time Elapsed</div>
+                                    <div id="sim-time" class="text-lg font-medium">00:00:00</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-sm font-medium mb-2">Console Output</h3>
+                                <div id="sim-console" class="bg-black p-3 rounded h-48 overflow-y-auto console-text">
+                                    <div class="text-green-400">System initialized...</div>
+                                    <div class="text-gray-400">Waiting for simulation start...</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-6">
+                            <h2 class="text-xl font-semibold mb-4">Real-time Visualization</h2>
+                            <canvas id="realtime-chart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Analyzer View
+        function renderAnalyzer() {
+            return `
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">Data Analysis Suite</h2>
+                        <div class="flex space-x-2">
+                            <button onclick="loadData()" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Load Data</button>
+                            <button onclick="exportResults()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded">Export Results</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- I-V Characteristics -->
+                        <div class="glass-panel p-6">
+                            <h3 class="text-lg font-semibold mb-4">I-V Characteristics</h3>
+                            <div class="h-64">
+                                <canvas id="iv-chart"></canvas>
+                            </div>
+                            <div class="mt-4 flex space-x-2">
+                                <button onclick="analyzeIV()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">Analyze</button>
+                                <button onclick="fitModel()" class="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm">Fit Model</button>
+                                <button onclick="extractParams()" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-sm">Extract Parameters</button>
+                            </div>
+                        </div>
+
+                        <!-- Band Diagram -->
+                        <div class="glass-panel p-6">
+                            <h3 class="text-lg font-semibold mb-4">Band Diagram</h3>
+                            <div class="h-64">
+                                <canvas id="band-chart"></canvas>
+                            </div>
+                            <div class="mt-4 flex space-x-2">
+                                <button onclick="calculate2DEG()" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">2DEG Density</button>
+                                <button onclick="showStrain()" class="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm">Strain Analysis</button>
+                            </div>
+                        </div>
+
+                        <!-- S-Parameters -->
+                        <div class="glass-panel p-6">
+                            <h3 class="text-lg font-semibold mb-4">S-Parameters</h3>
+                            <div class="h-64">
+                                <canvas id="sparams-chart"></canvas>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-2 text-sm">
+                                <div class="bg-gray-900/50 p-2 rounded">
+                                    <span class="text-gray-400">fT:</span>
+                                    <span class="text-cyan-400 ml-2">45 GHz</span>
+                                </div>
+                                <div class="bg-gray-900/50 p-2 rounded">
+                                    <span class="text-gray-400">fmax:</span>
+                                    <span class="text-cyan-400 ml-2">120 GHz</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Metrics -->
+                        <div class="glass-panel p-6">
+                            <h3 class="text-lg font-semibold mb-4">Performance Metrics</h3>
+                            <table class="w-full data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs">Parameter</th>
+                                        <th class="px-4 py-2 text-left text-xs">Value</th>
+                                        <th class="px-4 py-2 text-left text-xs">Unit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">Vth</td>
+                                        <td class="px-4 py-2 text-sm text-cyan-400">-2.8</td>
+                                        <td class="px-4 py-2 text-sm">V</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">Idmax</td>
+                                        <td class="px-4 py-2 text-sm text-cyan-400">850</td>
+                                        <td class="px-4 py-2 text-sm">mA/mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">gm_max</td>
+                                        <td class="px-4 py-2 text-sm text-cyan-400">320</td>
+                                        <td class="px-4 py-2 text-sm">mS/mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">Ron</td>
+                                        <td class="px-4 py-2 text-sm text-cyan-400">1.2</td>
+                                        <td class="px-4 py-2 text-sm">Ω·mm</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-2 text-sm">BVds</td>
+                                        <td class="px-4 py-2 text-sm text-cyan-400">650</td>
+                                        <td class="px-4 py-2 text-sm">V</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Statistical Analysis -->
+                    <div class="glass-panel p-6">
+                        <h3 class="text-lg font-semibold mb-4">Statistical Analysis</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div>
+                                <h4 class="text-sm font-medium mb-2">Yield Analysis</h4>
+                                <div class="h-48">
+                                    <canvas id="yield-chart"></canvas>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium mb-2">Process Variation</h4>
+                                <div class="h-48">
+                                    <canvas id="variation-chart"></canvas>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium mb-2">Monte Carlo Results</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Mean Vth:</span>
+                                        <span>-2.8 ± 0.15 V</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">σ(Idmax):</span>
+                                        <span>42 mA/mm</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Yield:</span>
+                                        <span class="text-green-400">94.7%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Samples:</span>
+                                        <span>10,000</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">σ/μ:</span>
+                                        <span>5.4%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Database View
+        function renderDatabase() {
+            const materials = db.query('materials');
+            
+            return `
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-2xl font-bold">Materials Database</h2>
+                        <div class="flex space-x-2">
+                            <input type="text" placeholder="Search materials..." class="px-3 py-2 bg-gray-800 rounded border border-gray-700">
+                            <button onclick="addMaterial()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded">+ Add Material</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        ${materials.map(mat => `
+                            <div class="glass-panel p-6 hover:border-cyan-500/50 transition cursor-pointer" onclick="viewMaterial('${mat.id}')">
+                                <h3 class="text-lg font-semibold mb-2">${mat.name}</h3>
+                                <div class="text-sm text-gray-400 mb-4">${mat.formula}</div>
+                                
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">Structure:</span>
+                                        <span>${mat.structure}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">Bandgap:</span>
+                                        <span class="text-cyan-400">${mat.bandgap} eV</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">Mobility:</span>
+                                        <span>${mat.mobility} cm²/V·s</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500">εr:</span>
+                                        <span>${mat.dielectric}</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 pt-4 border-t border-gray-700">
+                                    <button onclick="event.stopPropagation(); useMaterial('${mat.id}')" class="w-full py-1 bg-purple-600 hover:bg-purple-700 rounded text-sm">
+                                        Use in Design
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="glass-panel p-6">
+                        <h3 class="text-xl font-semibold mb-4">Custom Alloys</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-sm font-medium mb-2">Ternary Alloys</h4>
+                                <div class="space-y-2">
+                                    <div class="flex items-center space-x-2">
+                                        <input type="text" placeholder="AlxGa1-xN" class="flex-1 px-2 py-1 bg-gray-800 rounded text-sm">
+                                        <input type="number" placeholder="x value" step="0.01" min="0" max="1" class="w-24 px-2 py-1 bg-gray-800 rounded text-sm">
+                                        <button onclick="calculateAlloy()" class="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm">Calculate</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-sm font-medium mb-2">Quaternary Alloys</h4>
+                                <div class="space-y-2">
+                                    <div class="flex items-center space-x-2">
+                                        <input type="text" placeholder="InxGayAl1-x-yN" class="flex-1 px-2 py-1 bg-gray-800 rounded text-sm">
+                                        <input type="number" placeholder="x" step="0.01" min="0" max="1" class="w-16 px-2 py-1 bg-gray-800 rounded text-sm">
+                                        <input type="number" placeholder="y" step="0.01" min="0" max="1" class="w-16 px-2 py-1 bg-gray-800 rounded text-sm">
+                                        <button onclick="calculateQuaternary()" class="px-3 py-1 bg-green-600 hover:bg-green-700 rounded text-sm">Calculate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // AI Lab View
+        function renderAILab() {
+            return `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- AI Assistant -->
+                    <div class="lg:col-span-2 glass-panel p-6">
+                        <h2 class="text-xl font-semibold mb-4">AI Design Assistant</h2>
+                        
+                        <div id="ai-chat" class="bg-black rounded p-4 h-96 overflow-y-auto mb-4 space-y-3">
+                            <div class="flex">
+                                <div class="bg-purple-900/30 rounded-lg p-3 max-w-3/4">
+                                    <div class="text-xs text-purple-400 mb-1">AI Assistant</div>
+                                    <div class="text-sm">Hello! I'm your AI assistant for nanomaterials design. I can help with optimization, analysis, and code generation. How can I assist you today?</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <input id="ai-input" type="text" placeholder="Ask about optimization, materials, or simulation setup..." 
+                                   class="flex-1 px-3 py-2 bg-gray-800 rounded border border-gray-700"
+                                   onkeypress="if(event.key==='Enter') sendAIQuery()">
+                            <button onclick="sendAIQuery()" class="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded font-medium">Send</button>
+                        </div>
+
+                        <div class="mt-4 flex space-x-2">
+                            <button onclick="aiSuggest('optimize')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Optimize Structure</button>
+                            <button onclick="aiSuggest('analyze')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Analyze Design</button>
+                            <button onclick="aiSuggest('compare')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Compare Materials</button>
+                            <button onclick="aiSuggest('generate')" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Generate Code</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Tools -->
+                    <div class="space-y-6">
+                        <div class="glass-panel p-6">
+                            <h3 class="text-lg font-semibold mb-4">ML Models</h3>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-gray-900/50 rounded">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium">Band Gap Predictor</span>
+                                        <span class="text-xs text-green-400">Active</span>
+                                    </div>
+                                    <button onclick="runMLModel('bandgap')" class="w-full py-1 bg-cyan-600 hover:bg-cyan-700 rounded text-sm">Run Prediction</button>
+                                </div>
+                                
+                                <div class="p-3 bg-gray-900/50 rounded">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium">Mobility Optimizer</span>
+                                        <span class="text-xs text-green-400">Active</span>
+                                    </div>
+                                    <button onclick="runMLModel('mobility')" class="w-full py-1 bg-cyan-600 hover:bg-cyan-700 rounded text-sm">Optimize</button>
+                                </div>
+                                
+                                <div class="p-3 bg-gray-900/50 rounded">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium">Defect Analyzer</span>
+                                        <span class="text-xs text-yellow-400">Training</span>
+                                    </div>
+                                    <div class="w-full bg-gray-800 rounded-full h-2 mt-2">
+                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 67%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-panel p-6">
+                            <h3 class="text-lg font-semibold mb-4">Code Generation</h3>
+                            <div class="space-y-2">
+                                <select id="code-format" class="w-full px-3 py-2 bg-gray-800 rounded border border-gray-700 text-sm">
+                                    <option value="spice">SPICE</option>
+                                    <option value="verilog">Verilog-A</option>
+                                    <option value="python">Python</option>
+                                    <option value="matlab">MATLAB</option>
+                                    <option value="tcad">Sentaurus</option>
+                                </select>
+                                <button onclick="generateCode()" class="w-full py-2 bg-green-600 hover:bg-green-700 rounded font-medium">
+                                    Generate Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generated Code Output -->
+                <div class="mt-6 glass-panel p-6">
+                    <h3 class="text-lg font-semibold mb-4">Generated Code</h3>
+                    <pre id="code-output" class="bg-black p-4 rounded overflow-x-auto console-text">
+// Code will appear here after generation
+                    </pre>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="copyCode()" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Copy</button>
+                        <button onclick="downloadCode()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 rounded">Download</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Collaboration View
+        function renderCollaboration() {
+            return `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Active Projects -->
+                        <div class="glass-panel p-6">
+                            <h2 class="text-xl font-semibold mb-4">Shared Projects</h2>
+                            <div class="space-y-3">
+                                ${['GaN RF Amplifier', 'Quantum Dot LED Array', 'SiC Power Module'].map(name => `
+                                    <div class="flex items-center justify-between p-4 bg-gray-900/50 rounded-lg">
+                                        <div>
+                                            <div class="font-medium">${name}</div>
+                                            <div class="text-sm text-gray-500">3 collaborators • Last updated 2 hours ago</div>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="px-3 py-1 bg-cyan-600 hover:bg-cyan-700 rounded text-sm">Open</button>
+                                            <button class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm">Share</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Activity Feed -->
+                        <div class="glass-panel p-6">
+                            <h2 class="text-xl font-semibold mb-4">Recent Activity</h2>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full"></div>
+                                    <div class="flex-1">
+                                        <div class="text-sm"><span class="font-medium">Dr. Smith</span> updated simulation parameters</div>
+                                        <div class="text-xs text-gray-500">5 minutes ago</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-500 rounded-full"></div>
+                                    <div class="flex-1">
+                                        <div class="text-sm"><span class="font-medium">Prof. Chen</span> added new material to database</div>
+                                        <div class="text-xs text-gray-500">1 hour ago</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-full"></div>
+                                    <div class="flex-1">
+                                        <div class="text-sm"><span class="font-medium">Team Alpha</span> completed RF characterization</div>
+                                        <div class="text-xs text-gray-500">3 hours ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Members -->
+                    <div class="glass-panel p-6">
+                        <h3 class="text-lg font-semibold mb-4">Team Members</h3>
+                        <div class="space-y-3">
+                            ${['Dr. Smith', 'Prof. Chen', 'Dr. Kumar', 'Dr. Lee'].map(name => `
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full"></div>
+                                        <div>
+                                            <div class="text-sm font-medium">${name}</div>
+                                            <div class="text-xs text-gray-500">Online</div>
+                                        </div>
+                                    </div>
+                                    <button class="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs">Message</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-gray-700">
+                            <button class="w-full py-2 bg-purple-600 hover:bg-purple-700 rounded font-medium">
+                                + Invite Team Member
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper Functions
+        function renderLayerStack() {
+            const layers = [
+                { name: 'Contact', material: 'Ti/Al/Ni/Au', thickness: '200 nm', color: '#FFD700' },
+                { name: 'Cap', material: 'GaN', thickness: '2 nm', color: '#00CED1' },
+                { name: 'Barrier', material: 'Al₀.₂₅Ga₀.₇₅N', thickness: '25 nm', color: '#FF69B4' },
+                { name: 'Channel', material: 'GaN', thickness: '2000 nm', color: '#00FA9A' },
+                { name: 'Buffer', material: 'AlN', thickness: '100 nm', color: '#FF6347' },
+                { name: 'Substrate', material: 'Si (111)', thickness: '500 μm', color: '#708090' }
+            ];
+            
+            return layers.map((layer, index) => `
+                <div class="p-3 bg-gray-900/50 rounded border border-gray-700 hover:border-cyan-500/50 transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 rounded" style="background-color: ${layer.color}"></div>
+                            <span class="font-medium text-sm">${layer.name}</span>
+                        </div>
+                        <button onclick="removeLayer(${index})" class="text-red-500 hover:text-red-400 text-xs">Remove</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div>
+                            <span class="text-gray-500">Material:</span>
+                            <span class="text-cyan-400 ml-1">${layer.material}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Thickness:</span>
+                            <span class="text-cyan-400 ml-1">${layer.thickness}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize View
+        function initializeView(view) {
+            // Initialize view-specific features after DOM update
+            setTimeout(() => {
+                switch(view) {
+                    case 'dashboard':
+                        initDashboard();
+                        break;
+                    case 'designer':
+                        init3DViewer();
+                        break;
+                    case 'simulator':
+                        initSimulator();
+                        break;
+                    case 'analyzer':
+                        initAnalyzer();
+                        break;
+                    case 'ai-lab':
+                        initAILab();
+                        break;
+                }
+            }, 100);
+        }
+
+        // Dashboard Initialization
+        function initDashboard() {
+            const ctx = document.getElementById('performance-chart')?.getContext('2d');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Simulations',
+                            data: [120, 150, 180, 220, 280, 320],
+                            borderColor: '#00d4ff',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#fff' }, grid: { color: '#333' } },
+                            y: { ticks: { color: '#fff' }, grid: { color: '#333' } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // 3D Viewer Initialization
+        function init3DViewer() {
+            const canvas = document.getElementById('3d-canvas');
+            if (!canvas) return;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            renderer.setClearColor(0x000000);
+            
+            // Add layers
+            const layers = [
+                { height: 0.5, color: 0xFFD700, y: 2.5 },
+                { height: 0.2, color: 0x00CED1, y: 2.2 },
+                { height: 0.3, color: 0xFF69B4, y: 1.8 },
+                { height: 2, color: 0x00FA9A, y: 0 },
+                { height: 0.5, color: 0xFF6347, y: -1.5 },
+                { height: 1, color: 0x708090, y: -2.5 }
+            ];
+            
+            layers.forEach(layer => {
+                const geometry = new THREE.BoxGeometry(4, layer.height, 4);
+                const material = new THREE.MeshPhongMaterial({ color: layer.color });
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.y = layer.y;
+                scene.add(mesh);
+            });
+            
+            // Lighting
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0x404040));
+            
+            camera.position.set(5, 3, 5);
+            camera.lookAt(0, 0, 0);
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                scene.rotation.y += 0.005;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Simulator Functions
+        let simulationInterval;
+        
+        function startSimulation() {
+            const params = {
+                type: document.getElementById('sim-type').value,
+                temperature: parseFloat(document.getElementById('temperature').value),
+                max_iterations: parseInt(document.getElementById('max-iter').value),
+                convergence: parseFloat(document.getElementById('convergence').value),
+                vds: 20,
+                built_in_potential: 0.7,
+                doping: 1e18,
+                mobility: 1200,
+                area: 1e-8,
+                mesh_points: 100
+            };
+            
+            document.getElementById('sim-status').textContent = 'Running';
+            document.getElementById('sim-status').className = 'text-lg font-medium text-green-400';
+            
+            const console = document.getElementById('sim-console');
+            console.innerHTML += '<div class="text-cyan-400">Starting simulation...</div>';
+            console.innerHTML += '<div>Parameters loaded</div>';
+            console.innerHTML += '<div>Building mesh...</div>';
+            
+            let iteration = 0;
+            let startTime = Date.now();
+            
+            simulationInterval = setInterval(async () => {
+                iteration += 10;
+                const progress = (iteration / params.max_iterations) * 100;
+                
+                document.getElementById('sim-progress-bar').style.width = progress + '%';
+                document.getElementById('sim-progress-text').textContent = Math.round(progress) + '%';
+                document.getElementById('sim-iteration').textContent = `${iteration} / ${params.max_iterations}`;
+                
+                const error = Math.exp(-iteration / 100);
+                document.getElementById('sim-convergence-value').textContent = error.toExponential(2);
+                
+                const elapsed = Date.now() - startTime;
+                const seconds = Math.floor(elapsed / 1000) % 60;
+                const minutes = Math.floor(elapsed / 60000) % 60;
+                const hours = Math.floor(elapsed / 3600000);
+                document.getElementById('sim-time').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (iteration % 100 === 0) {
+                    console.innerHTML += `<div>Iteration ${iteration}: Residual = ${error.toExponential(2)}</div>`;
+                    console.scrollTop = console.scrollHeight;
+                }
+                
+                if (iteration >= params.max_iterations) {
+                    clearInterval(simulationInterval);
+                    document.getElementById('sim-status').textContent = 'Completed';
+                    console.innerHTML += '<div class="text-green-400">Simulation completed successfully!</div>';
+                }
+            }, 50);
+        }
+
+        function stopSimulation() {
+            if (simulationInterval) {
+                clearInterval(simulationInterval);
+                document.getElementById('sim-status').textContent = 'Stopped';
+                document.getElementById('sim-status').className = 'text-lg font-medium text-red-400';
+                document.getElementById('sim-console').innerHTML += '<div class="text-red-400">Simulation stopped by user</div>';
+            }
+        }
+
+        // AI Functions
+        async function sendAIQuery() {
+            const input = document.getElementById('ai-input');
+            const chat = document.getElementById('ai-chat');
+            const query = input.value;
+            
+            if (!query) return;
+            
+            // Add user message
+            chat.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-gray-800 rounded-lg p-3 max-w-3/4">
+                        <div class="text-xs text-gray-400 mb-1">You</div>
+                        <div class="text-sm">${query}</div>
+                    </div>
+                </div>
+            `;
+            
+            input.value = '';
+            
+            // Get AI response
+            const response = await aiEngine.processQuery(query);
+            
+            // Add AI response
+            chat.innerHTML += `
+                <div class="flex">
+                    <div class="bg-purple-900/30 rounded-lg p-3 max-w-3/4">
+                        <div class="text-xs text-purple-400 mb-1">AI Assistant</div>
+                        <div class="text-sm">${response.response}</div>
+                        ${response.confidence ? `<div class="text-xs text-gray-500 mt-2">Confidence: ${Math.round(response.confidence * 100)}%</div>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function aiSuggest(type) {
+            document.getElementById('ai-input').value = {
+                'optimize': 'How can I optimize this structure for high-frequency performance?',
+                'analyze': 'Analyze the current device structure for potential issues',
+                'compare': 'Compare GaN vs SiC for power electronics applications',
+                'generate': 'Generate SPICE model for the current device'
+            }[type];
+            sendAIQuery();
+        }
+
+        async function generateCode() {
+            const format = document.getElementById('code-format').value;
+            const code = await aiEngine.generateCode('HEMT', format);
+            document.getElementById('code-output').textContent = code;
+        }
+
+        // Layer Management
+        function addLayer() {
+            const layerStack = document.getElementById('layer-stack');
+            if (layerStack) {
+                layerStack.innerHTML = renderLayerStack() + `
+                    <div class="p-3 bg-gray-900/50 rounded border border-cyan-500 hover:border-cyan-400 transition">
+                        <input type="text" placeholder="New Layer Name" class="w-full mb-2 px-2 py-1 bg-gray-800 rounded text-sm">
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" placeholder="Material" class="px-2 py-1 bg-gray-800 rounded text-xs">
+                            <input type="text" placeholder="Thickness" class="px-2 py-1 bg-gray-800 rounded text-xs">
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Export Functions
+        function exportResults() {
+            const format = prompt('Export format (json/csv/gds/spice):') || 'json';
+            fileSystem.exportToFormat({ 
+                type: 'HEMT',
+                name: 'GaN_HEMT_v2.3',
+                results: db.simulations.get('sim_001').results
+            }, format);
+        }
+
+        function copyCode() {
+            const code = document.getElementById('code-output').textContent;
+            navigator.clipboard.writeText(code);
+            alert('Code copied to clipboard!');
+        }
+
+        function downloadCode() {
+            const code = document.getElementById('code-output').textContent;
+            fileSystem.download('model.sp', code);
+        }
+
+        // Initialize Analyzer
+        function initAnalyzer() {
+            console.log('Initializing analyzer charts...');
+            
+            // I-V Characteristics Chart
+            const ivCtx = document.getElementById('iv-chart')?.getContext('2d');
+            if (ivCtx) {
+                new Chart(ivCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 41}, (_, i) => i * 0.5),
+                        datasets: [{
+                            label: 'Vgs = 0V',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(i * 0.5 / 10) * 850),
+                            borderColor: '#00ff00',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }, {
+                            label: 'Vgs = -1V',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(i * 0.5 / 10) * 650),
+                            borderColor: '#00d4ff',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }, {
+                            label: 'Vgs = -2V',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(i * 0.5 / 10) * 400),
+                            borderColor: '#ff00ff',
+                            borderWidth: 2,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } },
+                            title: { display: true, text: 'I-V Characteristics', color: '#fff' }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Vds (V)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            },
+                            y: { 
+                                title: { display: true, text: 'Id (mA/mm)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Band Diagram Chart
+            const bandCtx = document.getElementById('band-chart')?.getContext('2d');
+            if (bandCtx) {
+                new Chart(bandCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 50}, (_, i) => i),
+                        datasets: [{
+                            label: 'Conduction Band',
+                            data: Array.from({length: 50}, (_, i) => {
+                                if (i < 20) return -2 + (i / 20) * 1.5;
+                                if (i < 30) return -0.5;
+                                return -0.5 + ((i - 30) / 20) * 2;
+                            }),
+                            borderColor: '#ff0000',
+                            borderWidth: 2,
+                            fill: false
+                        }, {
+                            label: 'Valence Band',
+                            data: Array.from({length: 50}, (_, i) => {
+                                if (i < 20) return -5.4 + (i / 20) * 1.5;
+                                if (i < 30) return -3.9;
+                                return -3.9 + ((i - 30) / 20) * 2;
+                            }),
+                            borderColor: '#0000ff',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } },
+                            title: { display: true, text: 'Energy Band Diagram', color: '#fff' }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Position (nm)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            },
+                            y: { 
+                                title: { display: true, text: 'Energy (eV)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
+
+            // S-Parameters Chart
+            const sparamsCtx = document.getElementById('sparams-chart')?.getContext('2d');
+            if (sparamsCtx) {
+                new Chart(sparamsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 20}, (_, i) => (i + 1) * 5),
+                        datasets: [{
+                            label: 'H21',
+                            data: Array.from({length: 20}, (_, i) => 30 - i * 1.5),
+                            borderColor: '#00ff00',
+                            borderWidth: 2
+                        }, {
+                            label: 'MSG/MAG',
+                            data: Array.from({length: 20}, (_, i) => 35 - i * 1.2),
+                            borderColor: '#ff00ff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1.5,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } },
+                            title: { display: true, text: 'RF Performance', color: '#fff' }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Frequency (GHz)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            },
+                            y: { 
+                                title: { display: true, text: 'Gain (dB)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Yield Chart
+            const yieldCtx = document.getElementById('yield-chart')?.getContext('2d');
+            if (yieldCtx) {
+                new Chart(yieldCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pass', 'Fail'],
+                        datasets: [{
+                            data: [94.7, 5.3],
+                            backgroundColor: ['#00ff00', '#ff0000']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        }
+                    }
+                });
+            }
+
+            // Variation Chart
+            const varCtx = document.getElementById('variation-chart')?.getContext('2d');
+            if (varCtx) {
+                new Chart(varCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Vth', 'Idmax', 'gm', 'Ron', 'BV'],
+                        datasets: [{
+                            label: 'Variation (%)',
+                            data: [5.4, 4.9, 6.2, 8.1, 3.7],
+                            backgroundColor: '#00d4ff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#fff' }, grid: { color: '#333' } },
+                            y: { 
+                                title: { display: true, text: 'Variation (%)', color: '#fff' },
+                                ticks: { color: '#fff' }, 
+                                grid: { color: '#333' } 
+                            }
+                        }
+                    }
+                });
+            }
+            
+            console.log('Analyzer charts initialized successfully');
+        }
+
+        // Analyzer helper functions
+        function loadData() {
+            alert('Data loading functionality would connect to database');
+        }
+
+        function exportResults() {
+            alert('Results would be exported as CSV/JSON');
+        }
+
+        function analyzeIV() {
+            alert('I-V curve analysis: Extracting Vth, Idmax, gm parameters');
+        }
+
+        function fitModel() {
+            alert('Fitting device model to measured data');
+        }
+
+        function extractParams() {
+            alert('Extracting device parameters from I-V characteristics');
+        }
+
+        function calculate2DEG() {
+            alert('Calculating 2DEG density from band diagram');
+        }
+
+        function showStrain() {
+            alert('Displaying strain distribution analysis');
+        }
+
+        // Initialize
+        window.onload = function() {
+            navigateTo('dashboard');
+            
+            // Update system time
+            setInterval(() => {
+                const now = new Date();
+                document.getElementById('system-time').textContent = now.toLocaleTimeString();
+            }, 1000);
+        };
+
+        // Additional helper functions
+        function loadProject(name) {
+            document.getElementById('current-project').textContent = name;
+            navigateTo('designer');
+        }
+
+        function loadTemplate(type) {
+            console.log(`Loading template: ${type}`);
+            // Template loading logic
+        }
+
+        function changeView(view) {
+            console.log(`Changing to view: ${view}`);
+            // View change logic
+        }
+
+        function showUserMenu() {
+            alert('User menu would appear here');
+        }
+
+        function initSimulator() {
+            // Simulator specific initialization
+        }
+
+        function initAILab() {
+            // AI Lab specific initialization
+        }
+    </script>
+</body>
+</html>

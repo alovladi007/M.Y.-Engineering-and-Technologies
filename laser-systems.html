@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Systems - Femtosecond to CW | ABP Photonics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1f0808 0%, #2d0a0a 50%, #1f0808 100%);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Laser Beam Animation */
+        .laser-beam {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ef4444, transparent);
+            animation: beam-shoot 2s linear infinite;
+        }
+        
+        @keyframes beam-shoot {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        /* Pulse Animation */
+        .pulse-laser {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse-emit 1s ease-out infinite;
+        }
+        
+        @keyframes pulse-emit {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* Spectrum Gradient */
+        .spectrum-gradient {
+            background: linear-gradient(90deg, 
+                #8b5cf6 0%,    /* UV */
+                #3b82f6 20%,   /* Blue */
+                #10b981 40%,   /* Green */
+                #f59e0b 60%,   /* Yellow */
+                #ef4444 80%,   /* Red */
+                #991b1b 100%   /* IR */
+            );
+        }
+        
+        /* Wavelength Bar */
+        .wavelength-indicator {
+            position: absolute;
+            width: 2px;
+            height: 30px;
+            background: white;
+            top: -5px;
+            transition: left 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2 text-gray-400 hover:text-white transition">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="hidden sm:inline">ABP Photonics</span>
+                    </a>
+                    <span class="text-gray-400">|</span>
+                    <a href="hardware.html" class="text-gray-400 hover:text-white transition">Hardware</a>
+                    <span class="text-gray-400">|</span>
+                    <span class="text-lg font-semibold gradient-text">Laser Systems</span>
+                </div>
+                <a href="#quote" class="px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition">
+                    Get Quote
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative hero-gradient pt-24 pb-16 overflow-hidden">
+        <div class="absolute inset-0 opacity-30">
+            <!-- Multiple laser beams -->
+            <div class="laser-beam" style="top: 20%; width: 60%;"></div>
+            <div class="laser-beam" style="top: 40%; width: 80%; animation-delay: 0.5s;"></div>
+            <div class="laser-beam" style="top: 60%; width: 70%; animation-delay: 1s;"></div>
+            <div class="laser-beam" style="top: 80%; width: 90%; animation-delay: 1.5s;"></div>
+            
+            <!-- Pulse points -->
+            <div class="pulse-laser" style="top: 30%; left: 20%;"></div>
+            <div class="pulse-laser" style="top: 50%; left: 70%; animation-delay: 0.5s;"></div>
+            <div class="pulse-laser" style="top: 70%; left: 40%; animation-delay: 1s;"></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    <span class="gradient-text">Advanced Laser Systems</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Femtosecond to continuous wave lasers spanning UV to IR spectrum. 
+                    Precision engineered for research, industrial, and medical applications.
+                </p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="#ultrafast" class="px-6 py-3 bg-red-600 rounded-lg hover:bg-red-700 transition">
+                        Ultrafast Lasers
+                    </a>
+                    <a href="#cw" class="px-6 py-3 border border-red-600 rounded-lg hover:bg-red-600/10 transition">
+                        CW Lasers
+                    </a>
+                    <a href="#applications" class="px-6 py-3 border border-red-600 rounded-lg hover:bg-red-600/10 transition">
+                        Applications
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Spectrum Coverage -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8">Full Spectrum Coverage</h2>
+            <div class="glass-effect p-8 rounded-2xl">
+                <div class="relative">
+                    <div class="spectrum-gradient h-20 rounded-lg mb-4"></div>
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>200nm<br/>UV</span>
+                        <span>400nm<br/>Visible</span>
+                        <span>700nm<br/>NIR</span>
+                        <span>1µm<br/>SWIR</span>
+                        <span>3µm<br/>MWIR</span>
+                        <span>10µm<br/>LWIR</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-purple-400">UV</div>
+                        <div class="text-gray-400">193-400nm</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-400">Visible</div>
+                        <div class="text-gray-400">400-700nm</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-400">NIR</div>
+                        <div class="text-gray-400">700-1400nm</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-orange-400">IR</div>
+                        <div class="text-gray-400">1.4-10µm</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ultrafast Lasers -->
+    <section id="ultrafast" class="py-16 px-4 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Ultrafast Laser Systems</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                <!-- Femtosecond Oscillators -->
+                <div class="glass-effect p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-6">Femtosecond Oscillators</h3>
+                    
+                    <!-- Pulse visualization -->
+                    <div class="bg-slate-800 rounded-lg p-6 mb-6">
+                        <svg viewBox="0 0 400 200" class="w-full h-auto">
+                            <!-- Pulse train -->
+                            <path d="M 0 100 L 50 100 L 60 50 L 70 150 L 80 100 L 130 100 L 140 50 L 150 150 L 160 100 L 210 100 L 220 50 L 230 150 L 240 100 L 290 100 L 300 50 L 310 150 L 320 100 L 400 100" 
+                                  stroke="#ef4444" stroke-width="2" fill="none"/>
+                            
+                            <!-- Time axis -->
+                            <line x1="0" y1="180" x2="400" y2="180" stroke="#666" stroke-width="1"/>
+                            <text x="200" y="195" fill="#888" text-anchor="middle" font-size="12">Time (fs)</text>
+                            
+                            <!-- Pulse width indicator -->
+                            <line x1="140" y1="50" x2="150" y2="50" stroke="#f59e0b" stroke-width="2"/>
+                            <text x="145" y="40" fill="#f59e0b" text-anchor="middle" font-size="10">< 20fs</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Pulse Duration</span>
+                            <span class="font-semibold">10-100 fs</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Rep Rate</span>
+                            <span class="font-semibold">80 MHz</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Average Power</span>
+                            <span class="font-semibold">0.5-5 W</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Wavelength</span>
+                            <span class="font-semibold">700-1100 nm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amplified Systems -->
+                <div class="glass-effect p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-6">Amplified Systems</h3>
+                    
+                    <!-- Energy diagram -->
+                    <div class="bg-slate-800 rounded-lg p-6 mb-6">
+                        <canvas id="energyChart" height="150"></canvas>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Pulse Energy</span>
+                            <span class="font-semibold">1-50 mJ</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Rep Rate</span>
+                            <span class="font-semibold">1-10 kHz</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Peak Power</span>
+                            <span class="font-semibold">> 10 GW</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Beam Quality</span>
+                            <span class="font-semibold">M² < 1.3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Cards -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/50 p-6 rounded-xl">
+                    <h4 class="text-lg font-bold mb-3 text-red-400">FemtoMax Pro</h4>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Industrial femtosecond laser for precision micromachining
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 500 fs @ 1030 nm</li>
+                        <li>• 100 W average power</li>
+                        <li>• Burst mode capable</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-slate-800/50 p-6 rounded-xl">
+                    <h4 class="text-lg font-bold mb-3 text-orange-400">UltraScience</h4>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Research-grade Ti:Sapphire oscillator
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li>• < 20 fs pulses</li>
+                        <li>• 680-1080 nm tunable</li>
+                        <li>• CEP stabilized</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-slate-800/50 p-6 rounded-xl">
+                    <h4 class="text-lg font-bold mb-3 text-yellow-400">PicoMed</h4>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Medical picosecond laser system
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li>• 10 ps @ 1064 nm</li>
+                        <li>• Q-switched Nd:YAG</li>
+                        <li>• FDA approved</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CW Lasers -->
+    <section id="cw" class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Continuous Wave Lasers</h2>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- DPSS Lasers -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <i class="fas fa-gem text-4xl text-green-400 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">DPSS Lasers</h3>
+                    <p class="text-gray-400 mb-4">
+                        Diode-pumped solid-state lasers with exceptional stability and beam quality
+                    </p>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-green-400">532nm Green</div>
+                            <div class="text-gray-400">1-50W, TEM00</div>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-blue-400">473nm Blue</div>
+                            <div class="text-gray-400">0.1-5W, Low noise</div>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-red-400">671nm Red</div>
+                            <div class="text-gray-400">0.5-10W, Single frequency</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fiber Lasers -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <i class="fas fa-network-wired text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Fiber Lasers</h3>
+                    <p class="text-gray-400 mb-4">
+                        High-power fiber lasers for industrial cutting, welding, and marking
+                    </p>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-yellow-400">1070nm Ytterbium</div>
+                            <div class="text-gray-400">100W-10kW, IPG technology</div>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-orange-400">1550nm Erbium</div>
+                            <div class="text-gray-400">Eye-safe, telecom band</div>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-red-400">2µm Thulium</div>
+                            <div class="text-gray-400">Medical & materials processing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diode Lasers -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <i class="fas fa-microchip text-4xl text-purple-400 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3">Diode Lasers</h3>
+                    <p class="text-gray-400 mb-4">
+                        Compact semiconductor lasers with direct modulation capability
+                    </p>
+                    <div class="space-y-3 text-sm">
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-purple-400">405nm Violet</div>
+                            <div class="text-gray-400">Blu-ray, fluorescence</div>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-red-400">635-690nm Red</div>
+                            <div class="text-gray-400">Alignment, medical therapy</div>
+                        </div>
+                        <div class="bg-slate-800/50 p-3 rounded">
+                            <div class="font-semibold text-gray-400">780-980nm NIR</div>
+                            <div class="text-gray-400">Pumping, sensing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications -->
+    <section id="applications" class="py-16 px-4 bg-slate-800/30">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Applications</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Materials Processing -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-industry text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">Materials Processing</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>• Precision cutting</li>
+                        <li>• Surface texturing</li>
+                        <li>• 3D micromachining</li>
+                        <li>• Glass processing</li>
+                    </ul>
+                </div>
+
+                <!-- Medical -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-heartbeat text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">Medical & Life Sciences</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>• Ophthalmology</li>
+                        <li>• Dermatology</li>
+                        <li>• Flow cytometry</li>
+                        <li>• DNA sequencing</li>
+                    </ul>
+                </div>
+
+                <!-- Research -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-atom text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">Scientific Research</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>• Spectroscopy</li>
+                        <li>• Microscopy</li>
+                        <li>• Quantum optics</li>
+                        <li>• Photochemistry</li>
+                    </ul>
+                </div>
+
+                <!-- Defense -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-satellite text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">Defense & Aerospace</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>• LIDAR systems</li>
+                        <li>• Rangefinding</li>
+                        <li>• Target designation</li>
+                        <li>• Countermeasures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 gradient-text">Technical Excellence</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Beam Quality -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-6">Beam Characteristics</h3>
+                    <div class="bg-slate-800 rounded-lg p-4">
+                        <canvas id="beamProfile" height="200"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+                        <div>
+                            <span class="text-gray-400">M² Factor:</span>
+                            <span class="font-semibold ml-2">< 1.1</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Divergence:</span>
+                            <span class="font-semibold ml-2">< 0.5 mrad</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Pointing:</span>
+                            <span class="font-semibold ml-2">< 10 μrad</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Polarization:</span>
+                            <span class="font-semibold ml-2">> 100:1</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stability -->
+                <div class="glass-effect p-6 rounded-xl">
+                    <h3 class="text-xl font-bold mb-6">Performance Stability</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-400">Power Stability</span>
+                                <span class="font-semibold">< 0.5% RMS</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-400">Wavelength Stability</span>
+                                <span class="font-semibold">< 1 pm</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full" style="width: 98%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-400">Beam Position</span>
+                                <span class="font-semibold">< 10 μm</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-purple-500 to-purple-400 h-2 rounded-full" style="width: 96%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-400">Noise (RIN)</span>
+                                <span class="font-semibold">< -140 dBc/Hz</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-red-500 to-red-400 h-2 rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="quote" class="py-16 px-4 bg-gradient-to-r from-red-900/20 to-orange-900/20">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">Precision Light for Every Application</h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Let our laser experts help you select the perfect system for your requirements
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html" class="px-8 py-3 bg-red-600 rounded-lg hover:bg-red-700 transition">
+                    Request Quote
+                </a>
+                <a href="#" class="px-8 py-3 border border-red-600 rounded-lg hover:bg-red-600/10 transition">
+                    Download Catalog
+                </a>
+                <a href="hardware.html" class="px-8 py-3 border border-red-600 rounded-lg hover:bg-red-600/10 transition">
+                    Back to Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>© 2024 Aurora Borealis Photonics. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Energy Chart
+        const energyCtx = document.getElementById('energyChart').getContext('2d');
+        new Chart(energyCtx, {
+            type: 'line',
+            data: {
+                labels: ['Seed', 'Pre-amp', 'Power Amp', 'Compressor', 'Output'],
+                datasets: [{
+                    label: 'Pulse Energy',
+                    data: [0.001, 0.1, 10, 8, 5],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4,
+                    pointBackgroundColor: '#ef4444',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'logarithmic',
+                        title: {
+                            display: true,
+                            text: 'Energy (mJ)',
+                            color: '#888'
+                        },
+                        ticks: {
+                            color: '#888'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#888'
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Beam Profile Chart
+        const beamCtx = document.getElementById('beamProfile').getContext('2d');
+        
+        // Generate Gaussian beam profile data
+        const xData = [];
+        const yData = [];
+        for (let i = -50; i <= 50; i++) {
+            xData.push(i);
+            yData.push(Math.exp(-(i * i) / (2 * 15 * 15)));
+        }
+        
+        new Chart(beamCtx, {
+            type: 'line',
+            data: {
+                labels: xData,
+                datasets: [{
+                    label: 'Intensity',
+                    data: yData,
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                    fill: true,
+                    pointRadius: 0,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'TEM00 Gaussian Beam Profile',
+                        color: '#fff'
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Normalized Intensity',
+                            color: '#888'
+                        },
+                        ticks: {
+                            color: '#888'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Position (μm)',
+                            color: '#888'
+                        },
+                        ticks: {
+                            color: '#888',
+                            maxTicksLimit: 10
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Operations Center Dashboard - Citadel InfoSec</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .dashboard-bg { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); }
+        .status-indicator { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .status-online { background-color: #10b981; }
+        .status-warning { background-color: #f59e0b; }
+        .status-critical { background-color: #ef4444; }
+    </style>
+</head>
+<body class="dashboard-bg text-white min-h-screen">
+    <nav class="bg-slate-800/90 backdrop-blur-sm border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl mr-2">🔒</span>
+                    <span class="text-xl font-bold text-blue-400">Citadel InfoSec SOC</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <span class="status-indicator status-online"></span>
+                        <span class="text-sm text-gray-300">SOC Online</span>
+                    </div>
+                    <a href="cybersecurity.html" class="px-3 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm">
+                        ← Back to Cybersecurity
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Systems Protected</p>
+                        <p class="text-3xl font-bold text-green-400">1,247</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-green-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Active Threats</p>
+                        <p class="text-3xl font-bold text-yellow-400">3</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-yellow-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Security Incidents</p>
+                        <p class="text-3xl font-bold text-red-400">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bug text-red-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-400">Security Score</p>
+                        <p class="text-3xl font-bold text-blue-400">98.7%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-blue-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-8">
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-xl font-semibold mb-6">Recent Security Events</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                                <div>
+                                    <p class="font-medium">Suspicious Login Attempt</p>
+                                    <p class="text-sm text-gray-400">IP: 192.168.1.100</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded text-xs">Blocked</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-2 h-2 bg-red-400 rounded-full"></div>
+                                <div>
+                                    <p class="font-medium">Malware Detection</p>
+                                    <p class="text-sm text-gray-400">File: document.pdf</p>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-red-500/20 text-red-300 rounded text-xs">Quarantined</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <h3 class="text-xl font-semibold mb-6">System Status</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="status-indicator status-online"></span>
+                                <span class="text-sm">Web Servers</span>
+                            </div>
+                            <span class="text-green-400 text-sm">Online</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="status-indicator status-online"></span>
+                                <span class="text-sm">Database Servers</span>
+                            </div>
+                            <span class="text-green-400 text-sm">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

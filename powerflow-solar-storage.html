@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar & Energy Storage Solutions - PowerFlow</title>
+    <meta name="description" content="Develop grid-tied inverters and energy storage systems with PowerFlow's MPPT optimization and grid-forming control.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm border-b border-gray-200">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="powerflow.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">PowerFlow</span>
+                    </a>
+                </div>
+                <a href="powerflow.html" class="px-6 py-2 text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-50 transition font-semibold">
+                    ← Back to PowerFlow
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-gradient-to-br from-green-50 to-teal-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block mb-6">
+                    <span class="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                        ☀️ SOLAR & STORAGE SOLUTION
+                    </span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+                    Solar & Energy Storage
+                </h1>
+                <p class="text-xl text-gray-700 mb-8">
+                    Develop grid-tied inverters and energy storage systems. Maximize MPPT efficiency and grid stability.
+                </p>
+                <button onclick="window.location.href='powerflow.html#pricing'" class="px-8 py-4 bg-gradient-to-r from-green-600 to-teal-500 text-white rounded-lg font-bold text-lg hover:shadow-xl transition">
+                    Start Free Trial
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12">Key Capabilities</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-green-300 transition">
+                        <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">MPPT Optimization</h3>
+                        <p class="text-gray-600">
+                            Advanced maximum power point tracking algorithms for solar PV systems with 99.9% efficiency.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-green-300 transition">
+                        <div class="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Grid-Forming Control</h3>
+                        <p class="text-gray-600">
+                            Grid-forming and grid-following inverter control with seamless mode transition and black-start capability.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-green-300 transition">
+                        <div class="w-14 h-14 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Battery Management</h3>
+                        <p class="text-gray-600">
+                            Integrated battery management with SOC estimation, cell balancing, and lifetime optimization.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-gradient-to-r from-green-600 to-teal-500">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Design Your Solar Solution?</h2>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Start optimizing your renewable energy system today
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="window.location.href='powerflow.html#pricing'" class="px-8 py-4 bg-white text-green-600 rounded-lg font-bold text-lg hover:shadow-xl transition">
+                    Start Free Trial
+                </button>
+                <a href="powerflow.html" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-green-600 transition">
+                    Back to PowerFlow
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 M.Y. Engineering and Technologies. All rights reserved.</p>
+            <p class="text-sm text-gray-500 mt-2">PowerFlow - Advanced Power Electronics Platform</p>
+        </div>
+    </footer>
+</body>
+</html>
+

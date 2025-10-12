@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>3D Material Turntable</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root { color-scheme: dark; }
+  html,body{margin:0;height:100%;background:#0d0f13;overflow:hidden;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;}
+  #ui{position:fixed;top:12px;left:12px;background:#1118;backdrop-filter:blur(6px);
+      border:1px solid #2a2f3a;border-radius:10px;padding:10px 12px;color:#dfe6f9}
+  label{font-size:13px;margin-right:6px}
+  select,button,input[type=range]{margin:4px 0;font-size:14px}
+  #credit{position:fixed;bottom:10px;right:12px;color:#9aa7bd;font-size:12px;opacity:0.8}
+</style>
+</head>
+<body>
+<div id="ui">
+  <div>
+    <label>Material:</label>
+    <select id="mat">
+      <option value="metal">Metal (PBR)</option>
+      <option value="glass">Glass (IOR 1.5)</option>
+      <option value="matte">Matte (Rough)</option>
+      <option value="clearcoat">Clearcoat Paint</option>
+    </select>
+  </div>
+  <div>
+    <label>Roughness</label>
+    <input id="rough" type="range" min="0" max="1" step="0.01" value="0.25" />
+  </div>
+  <div>
+    <label>Rotation Speed</label>
+    <input id="speed" type="range" min="-2" max="2" step="0.01" value="0.6" />
+  </div>
+  <div>
+    <button id="record">Record 5s WebM</button>
+  </div>
+</div>
+<div id="credit">Drag to orbit • Scroll to zoom • Shift+drag to pan</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/controls/OrbitControls.js"></script>
+<script>
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d0f13);
+
+// Renderer
+const renderer = new THREE.WebGLRenderer({antialias:true, preserveDrawingBuffer:true});
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.appendChild(renderer.domElement);
+
+// Camera + controls
+const camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.1, 100);
+camera.position.set(0, 0.6, 3.4);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+// Soft studio lighting
+const hemi = new THREE.HemisphereLight(0xffffff, 0x223344, 0.6);
+scene.add(hemi);
+const key = new THREE.DirectionalLight(0xffffff, 1.4); key.position.set(3, 5, 4);
+const rim = new THREE.DirectionalLight(0x88aaff, 0.7); rim.position.set(-4, 3, -5);
+scene.add(key, rim);
+
+// Ground plane for subtle bounce light
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(20,20),
+  new THREE.MeshStandardMaterial({color:0x101316, roughness:0.9, metalness:0.0})
+);
+ground.rotation.x = -Math.PI/2;
+ground.position.y = -1.05;
+scene.add(ground);
+
+// High-res sphere
+const geo = new THREE.SphereGeometry(1, 128, 128);
+
+// Materials (PBR)
+const mats = {
+  metal: new THREE.MeshStandardMaterial({color:0xC9CCD5, metalness:1.0, roughness:0.25}),
+  glass: new THREE.MeshPhysicalMaterial({
+    color:0xffffff, metalness:0, roughness:0.02, transmission:1, ior:1.5, thickness:0.25,
+    clearcoat:1, clearcoatRoughness:0.02
+  }),
+  matte: new THREE.MeshStandardMaterial({color:0xbec7d8, metalness:0.0, roughness:0.75}),
+  clearcoat: new THREE.MeshPhysicalMaterial({
+    color:0x8ea2c6, metalness:0.6, roughness:0.25, clearcoat:1.0, clearcoatRoughness:0.05
+  })
+};
+
+// Subtle micro-normal detail
+const normalTex = buildProceduralNormal(256);
+Object.values(mats).forEach(m=>{
+  m.normalMap = normalTex;
+  m.normalScale = new THREE.Vector2(0.3,0.3);
+});
+
+// Mesh
+const sphere = new THREE.Mesh(geo, mats.metal);
+sphere.position.y = 0;
+scene.add(sphere);
+
+// UI hooks
+const matSel = document.getElementById('mat');
+const rough = document.getElementById('rough');
+const speed = document.getElementById('speed');
+matSel.addEventListener('change', ()=>{ sphere.material = mats[matSel.value]; syncUI(); });
+rough.addEventListener('input', ()=>{ sphere.material.roughness = parseFloat(rough.value); });
+function syncUI(){ rough.value = sphere.material.roughness ?? 0.25; }
+syncUI();
+
+// Animation
+let tPrev = performance.now();
+function animate(now){
+  requestAnimationFrame(animate);
+  const dt = (now - tPrev) / 1000; tPrev = now;
+  sphere.rotation.y += parseFloat(speed.value) * dt * 0.5 * Math.PI; // ~5s default cycle
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+// Responsive
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// Canvas recorder (5s WebM)
+document.getElementById('record').onclick = async ()=>{
+  const stream = renderer.domElement.captureStream(60);
+  const rec = new MediaRecorder(stream, { mimeType:'video/webm;codecs=vp9' });
+  const chunks = [];
+  rec.ondataavailable = e=> chunks.push(e.data);
+  rec.onstop = ()=>{
+    const blob = new Blob(chunks, {type:'video/webm'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `material-turntable_${matSel.value}.webm`;
+    a.click();
+  };
+  rec.start();
+  setTimeout(()=> rec.stop(), 5000); // 5 seconds
+};
+
+// ---- helpers ----
+function buildProceduralNormal(size){
+  const canvas = document.createElement('canvas'); canvas.width = canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  // blue-ish noise for subtle brushed look
+  const img = ctx.createImageData(size, size);
+  for(let i=0;i<img.data.length;i+=4){
+    const n = Math.random()*255|0;
+    img.data[i] = 128 + (Math.random()*30-15);
+    img.data[i+1] = 128 + (Math.random()*30-15);
+    img.data[i+2] = 255; // Z up
+    img.data[i+3] = 255;
+  }
+  ctx.putImageData(img,0,0);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(3,3);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+</script>
+</body>
+</html>

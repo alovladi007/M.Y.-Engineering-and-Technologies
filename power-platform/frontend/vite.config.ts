@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/M.Y.-Engineering-and-Technologies/',
+  base: '/M.Y.-Engineering-and-Technologies/power-platform-app/',
   server: {
     port: 3000,
     host: true,

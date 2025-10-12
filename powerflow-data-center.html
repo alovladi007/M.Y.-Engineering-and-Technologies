@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Center Power Solutions - PowerFlow</title>
+    <meta name="description" content="Optimize PSU efficiency for AI workloads with PowerFlow's 48V power delivery solutions.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm border-b border-gray-200">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="powerflow.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <span class="text-2xl font-bold gradient-text">PowerFlow</span>
+                    </a>
+                </div>
+                <a href="powerflow.html" class="px-6 py-2 text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-50 transition font-semibold">
+                    ← Back to PowerFlow
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block mb-6">
+                    <span class="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold">
+                        💾 DATA CENTER SOLUTION
+                    </span>
+                </div>
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-6">
+                    Data Center Power
+                </h1>
+                <p class="text-xl text-gray-700 mb-8">
+                    Optimize PSU efficiency for AI workloads. Design 48V power delivery with minimal losses.
+                </p>
+                <button onclick="window.location.href='powerflow.html#pricing'" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-bold text-lg hover:shadow-xl transition">
+                    Start Free Trial
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12">Key Capabilities</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-purple-300 transition">
+                        <div class="w-14 h-14 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Totem-Pole PFC</h3>
+                        <p class="text-gray-600">
+                            Bridgeless totem-pole power factor correction with GaN devices for >99% efficiency at high power density.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-purple-300 transition">
+                        <div class="w-14 h-14 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">VRM Optimization</h3>
+                        <p class="text-gray-600">
+                            Voltage regulator module design for CPU/GPU power delivery with ultra-fast transient response.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-purple-300 transition">
+                        <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Thermal Management</h3>
+                        <p class="text-gray-600">
+                            Advanced thermal modeling and cooling optimization for high-density power conversion.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-gradient-to-r from-purple-600 to-pink-600">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">Ready to Optimize Your Data Center Power?</h2>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Start designing efficient power delivery systems today
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="window.location.href='powerflow.html#pricing'" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold text-lg hover:shadow-xl transition">
+                    Start Free Trial
+                </button>
+                <a href="powerflow.html" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:text-purple-600 transition">
+                    Back to PowerFlow
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 M.Y. Engineering and Technologies. All rights reserved.</p>
+            <p class="text-sm text-gray-500 mt-2">PowerFlow - Advanced Power Electronics Platform</p>
+        </div>
+    </footer>
+</body>
+</html>
+

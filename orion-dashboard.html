@@ -1,0 +1,2419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.R.I.O.N Dashboard - Optimized Research & Innovation for Organized Nanomaterials | M.Y. Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .tab-active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid #fff;
+        }
+        
+        #knowledgeGraph {
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', monospace;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .molecule-3d {
+            width: 100%;
+            height: 400px;
+            background: #000;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Python Backend Implementation -->
+    <script id="python-backend" type="text/python">
+"""
+Complete Python Backend Implementation
+This contains all the modules integrated and expanded
+"""
+
+import re
+import random
+import json
+from dataclasses import dataclass, field, asdict
+from typing import Dict, List, Optional, Union, Tuple, Iterable
+from datetime import datetime
+import hashlib
+import numpy as np
+
+# ================== INGESTION MODULE ==================
+
+_SENTENCE_SPLIT_REGEX = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
+
+@dataclass
+class TextIngestor:
+    """Enhanced ingestor with PDF and table parsing capabilities"""
+    raw_text: str
+    metadata: Dict[str, str] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        self.sentences = self._split_sentences(self.raw_text)
+        self.paragraphs = self._extract_paragraphs(self.raw_text)
+        self.tables = self._extract_tables(self.raw_text)
+    
+    @staticmethod
+    def _split_sentences(text: str) -> List[str]:
+        if not text:
+            return []
+        cleaned = " ".join(text.strip().split())
+        sentences = _SENTENCE_SPLIT_REGEX.split(cleaned)
+        return [s.strip() for s in sentences if s.strip()]
+    
+    def _extract_paragraphs(self, text: str) -> List[str]:
+        """Extract paragraphs from text"""
+        paragraphs = text.split('\n\n')
+        return [p.strip() for p in paragraphs if p.strip()]
+    
+    def _extract_tables(self, text: str) -> List[Dict]:
+        """Extract tabular data (simplified)"""
+        tables = []
+        # Simple table detection based on consistent delimiters
+        lines = text.split('\n')
+        table_data = []
+        in_table = False
+        
+        for line in lines:
+            if '\t' in line or '|' in line:
+                in_table = True
+                cells = re.split(r'[|\t]', line)
+                table_data.append([c.strip() for c in cells])
+            elif in_table and line.strip() == '':
+                if table_data:
+                    tables.append({'data': table_data})
+                table_data = []
+                in_table = False
+        
+        return tables
+
+# ================== EXTRACTION MODULE ==================
+
+@dataclass
+class MaterialEntity:
+    """Enhanced material entity with additional properties"""
+    name: str
+    composition: Optional[str] = None
+    structure: Optional[str] = None
+    properties: Dict[str, str] = field(default_factory=dict)
+    synthesis_method: Optional[str] = None
+    applications: List[str] = field(default_factory=list)
+    doi: Optional[str] = None
+    confidence: float = 1.0
+
+@dataclass
+class SynthesisStep:
+    """Enhanced synthesis step with detailed tracking"""
+    method: Optional[str] = None
+    reagents: List[str] = field(default_factory=list)
+    conditions: Dict[str, str] = field(default_factory=dict)
+    outcomes: Dict[str, str] = field(default_factory=dict)
+    duration: Optional[str] = None
+    yield_percentage: Optional[float] = None
+    equipment: List[str] = field(default_factory=list)
+    safety_notes: List[str] = field(default_factory=list)
+
+@dataclass
+class ExtractorResult:
+    materials: List[MaterialEntity] = field(default_factory=list)
+    steps: List[SynthesisStep] = field(default_factory=list)
+    relationships: List[Dict] = field(default_factory=list)
+
+class EntityExtractor:
+    """Advanced entity extractor with ML-inspired patterns"""
+    
+    _CHEM_PATTERN = re.compile(r"\b([A-Z][a-z]?[A-Z0-9]*[a-z]?\d*)\b")
+    _STRUCTURE_KEYWORDS = ["nanorod", "nanoparticle", "nanosphere", "nanocube", 
+                           "nanowire", "quantum dot", "2D material", "thin film",
+                           "nanosheet", "nanotube", "nanofiber", "nanoporous"]
+    _PROPERTY_PATTERN = re.compile(
+        r"\b(aspect\s+ratio|size|diameter|length|thickness|bandgap|mobility|"
+        r"conductivity|resistivity|permittivity|refractive\s+index|"
+        r"absorption|emission|LSPR|quantum\s+yield)\s*(?:was|is|:|=)\s*"
+        r"([0-9]+(?:\.[0-9]+)?(?:\s*[a-zA-Z]+)?)", re.IGNORECASE
+    )
+    _METHOD_KEYWORDS = ["seed-mediated", "sol-gel", "hydrothermal", "sonochemical",
+                       "solvothermal", "co-precipitation", "CVD", "PVD", "ALD",
+                       "electrodeposition", "spin-coating", "drop-casting"]
+    _EQUIPMENT_KEYWORDS = ["centrifuge", "sonicator", "autoclave", "furnace",
+                          "spin coater", "evaporator", "XRD", "SEM", "TEM", "AFM"]
+    
+    def __init__(self):
+        self.confidence_threshold = 0.7
+    
+    def extract(self, sentences: Iterable[str]) -> ExtractorResult:
+        """Enhanced extraction with relationship detection"""
+        result = ExtractorResult()
+        current_step = SynthesisStep()
+        material_map = {}
+        
+        for sent_idx, sent in enumerate(sentences):
+            low = sent.lower()
+            
+            # Detect structures
+            structures = [kw for kw in self._STRUCTURE_KEYWORDS if kw in low]
+            
+            # Detect chemicals
+            chemicals = self._CHEM_PATTERN.findall(sent)
+            
+            # Detect properties
+            properties = {}
+            for match in self._PROPERTY_PATTERN.finditer(sent):
+                prop_name = match.group(1).replace(" ", "_").lower()
+                prop_value = match.group(2)
+                properties[prop_name] = prop_value
+            
+            # Detect methods
+            methods = [kw for kw in self._METHOD_KEYWORDS if kw in low]
+            
+            # Detect equipment
+            equipment = [kw for kw in self._EQUIPMENT_KEYWORDS if kw in low]
+            
+            # Build material entities
+            if structures or chemicals:
+                for struct in structures:
+                    for chem in chemicals:
+                        material_name = f"{chem} {struct}"
+                        if material_name not in material_map:
+                            material = MaterialEntity(
+                                name=material_name,
+                                composition=chem,
+                                structure=struct,
+                                properties=properties.copy(),
+                                synthesis_method=methods[0] if methods else None,
+                                confidence=self._calculate_confidence(sent)
+                            )
+                            result.materials.append(material)
+                            material_map[material_name] = material
+                        else:
+                            material_map[material_name].properties.update(properties)
+            
+            # Build synthesis steps
+            if methods:
+                current_step.method = methods[0]
+            
+            if chemicals:
+                current_step.reagents.extend([c for c in chemicals if c not in current_step.reagents])
+            
+            if equipment:
+                current_step.equipment.extend([e for e in equipment if e not in current_step.equipment])
+            
+            # Extract conditions
+            temp_match = re.search(r"(\d+\.?\d*)\s*°?\s*C", sent)
+            if temp_match:
+                current_step.conditions["temperature_C"] = temp_match.group(1)
+            
+            ph_match = re.search(r"pH\s*([0-9]+\.?[0-9]*)", sent, re.IGNORECASE)
+            if ph_match:
+                current_step.conditions["pH"] = ph_match.group(1)
+            
+            time_match = re.search(r"(\d+\.?\d*)\s*(min|hour|h|day)", sent)
+            if time_match:
+                current_step.conditions[f"time_{time_match.group(2)}"] = time_match.group(1)
+            
+            # Extract yield
+            yield_match = re.search(r"yield[^\d]*(\d+\.?\d*)\s*%", sent, re.IGNORECASE)
+            if yield_match:
+                current_step.yield_percentage = float(yield_match.group(1))
+            
+            # Detect step completion
+            if any(word in low for word in ["yield", "obtained", "resulted", "produced"]):
+                if current_step.method or current_step.reagents:
+                    result.steps.append(current_step)
+                    # Create relationships
+                    for material in result.materials:
+                        if any(r in material.composition for r in current_step.reagents if r):
+                            result.relationships.append({
+                                "source": "synthesis_step",
+                                "target": material.name,
+                                "type": "produces"
+                            })
+                    current_step = SynthesisStep()
+        
+        # Append last step
+        if current_step.method or current_step.reagents:
+            result.steps.append(current_step)
+        
+        return result
+    
+    def _calculate_confidence(self, text: str) -> float:
+        """Calculate extraction confidence based on text features"""
+        confidence = 0.5
+        
+        # Increase confidence for specific patterns
+        if re.search(r"\d+\.?\d*\s*(nm|µm|mm)", text):
+            confidence += 0.2
+        if re.search(r"(synthesized|prepared|fabricated)", text, re.IGNORECASE):
+            confidence += 0.15
+        if re.search(r"(XRD|SEM|TEM|UV-Vis|FTIR)", text):
+            confidence += 0.15
+        
+        return min(confidence, 1.0)
+
+# ================== KNOWLEDGE GRAPH MODULE ==================
+
+NodeId = int
+
+@dataclass
+class Node:
+    id: NodeId
+    type: str
+    attrs: Dict[str, Union[str, float]] = field(default_factory=dict)
+    created_at: str = field(default_factory=lambda: datetime.now().isoformat())
+    embedding: Optional[List[float]] = None
+
+@dataclass
+class Edge:
+    src: NodeId
+    dst: NodeId
+    rel: str
+    attrs: Dict[str, Union[str, float]] = field(default_factory=dict)
+    weight: float = 1.0
+    created_at: str = field(default_factory=lambda: datetime.now().isoformat())
+
+class KnowledgeGraph:
+    """Enhanced knowledge graph with advanced querying"""
+    
+    def __init__(self):
+        self._next_id: NodeId = 1
+        self.nodes: Dict[NodeId, Node] = {}
+        self.edges: List[Edge] = []
+        self.node_index: Dict[str, List[NodeId]] = {}  # Type index
+        self.edge_index: Dict[NodeId, List[Edge]] = {}  # Adjacency list
+    
+    def add_node(self, type: str, attrs: Optional[Dict] = None, embedding: Optional[List[float]] = None) -> NodeId:
+        """Add node with indexing"""
+        node_id = self._next_id
+        self._next_id += 1
+        
+        node = Node(id=node_id, type=type, attrs=attrs or {}, embedding=embedding)
+        self.nodes[node_id] = node
+        
+        # Update indices
+        if type not in self.node_index:
+            self.node_index[type] = []
+        self.node_index[type].append(node_id)
+        
+        return node_id
+    
+    def add_edge(self, src: NodeId, dst: NodeId, rel: str, attrs: Optional[Dict] = None, weight: float = 1.0):
+        """Add edge with indexing"""
+        edge = Edge(src=src, dst=dst, rel=rel, attrs=attrs or {}, weight=weight)
+        self.edges.append(edge)
+        
+        # Update edge index
+        if src not in self.edge_index:
+            self.edge_index[src] = []
+        self.edge_index[src].append(edge)
+    
+    def find_nodes(self, type: Optional[str] = None, attr_name: Optional[str] = None, 
+                   attr_value: Optional[Union[str, float]] = None) -> List[NodeId]:
+        """Find nodes with enhanced filtering"""
+        if type and type in self.node_index:
+            candidates = self.node_index[type]
+        else:
+            candidates = list(self.nodes.keys())
+        
+        results = []
+        for node_id in candidates:
+            node = self.nodes[node_id]
+            if type and node.type != type:
+                continue
+            if attr_name and attr_name not in node.attrs:
+                continue
+            if attr_value is not None and node.attrs.get(attr_name) != attr_value:
+                continue
+            results.append(node_id)
+        
+        return results
+    
+    def neighbors(self, node_id: NodeId, rel: Optional[str] = None, 
+                  direction: str = "out") -> List[NodeId]:
+        """Get neighboring nodes"""
+        neighbors = []
+        
+        if direction in ("out", "both"):
+            for edge in self.edges:
+                if edge.src == node_id and (rel is None or edge.rel == rel):
+                    neighbors.append(edge.dst)
+        
+        if direction in ("in", "both"):
+            for edge in self.edges:
+                if edge.dst == node_id and (rel is None or edge.rel == rel):
+                    neighbors.append(edge.src)
+        
+        return list(set(neighbors))
+    
+    def shortest_path(self, src: NodeId, dst: NodeId) -> Optional[List[NodeId]]:
+        """Find shortest path between nodes using BFS"""
+        if src not in self.nodes or dst not in self.nodes:
+            return None
+        
+        visited = set()
+        queue = [(src, [src])]
+        
+        while queue:
+            current, path = queue.pop(0)
+            if current == dst:
+                return path
+            
+            if current in visited:
+                continue
+            
+            visited.add(current)
+            for neighbor in self.neighbors(current, direction="out"):
+                if neighbor not in visited:
+                    queue.append((neighbor, path + [neighbor]))
+        
+        return None
+    
+    def subgraph(self, node_ids: List[NodeId], include_edges: bool = True) -> 'KnowledgeGraph':
+        """Extract subgraph containing specified nodes"""
+        subgraph = KnowledgeGraph()
+        id_map = {}
+        
+        # Copy nodes
+        for old_id in node_ids:
+            if old_id in self.nodes:
+                node = self.nodes[old_id]
+                new_id = subgraph.add_node(node.type, node.attrs.copy(), node.embedding)
+                id_map[old_id] = new_id
+        
+        # Copy edges if requested
+        if include_edges:
+            for edge in self.edges:
+                if edge.src in id_map and edge.dst in id_map:
+                    subgraph.add_edge(
+                        id_map[edge.src], 
+                        id_map[edge.dst],
+                        edge.rel,
+                        edge.attrs.copy(),
+                        edge.weight
+                    )
+        
+        return subgraph
+    
+    def to_dict(self) -> Dict:
+        """Convert graph to dictionary for serialization"""
+        return {
+            'nodes': [asdict(node) for node in self.nodes.values()],
+            'edges': [asdict(edge) for edge in self.edges]
+        }
+
+# ================== RETRIEVAL MODULE ==================
+
+def keyword_search(graph: KnowledgeGraph, keywords: Iterable[str], 
+                  node_type: Optional[str] = None) -> List[NodeId]:
+    """Enhanced keyword search with scoring"""
+    norm_keywords = [kw.lower() for kw in keywords if kw]
+    results = []
+    
+    candidates = graph.find_nodes(type=node_type) if node_type else list(graph.nodes.keys())
+    
+    for node_id in candidates:
+        node = graph.nodes[node_id]
+        corpus = " ".join(str(v).lower() for v in node.attrs.values())
+        
+        # Calculate relevance score
+        score = sum(1 for kw in norm_keywords if kw in corpus)
+        if score > 0:
+            results.append((score, node_id))
+    
+    # Sort by relevance score
+    results.sort(reverse=True)
+    return [node_id for _, node_id in results]
+
+def semantic_search(graph: KnowledgeGraph, query_embedding: List[float], 
+                   top_k: int = 10) -> List[Tuple[NodeId, float]]:
+    """Semantic search using embeddings"""
+    results = []
+    
+    for node_id, node in graph.nodes.items():
+        if node.embedding:
+            # Cosine similarity
+            similarity = cosine_similarity(query_embedding, node.embedding)
+            results.append((node_id, similarity))
+    
+    results.sort(key=lambda x: x[1], reverse=True)
+    return results[:top_k]
+
+def cosine_similarity(vec1: List[float], vec2: List[float]) -> float:
+    """Calculate cosine similarity between vectors"""
+    dot_product = sum(a * b for a, b in zip(vec1, vec2))
+    norm1 = sum(a * a for a in vec1) ** 0.5
+    norm2 = sum(b * b for b in vec2) ** 0.5
+    
+    if norm1 == 0 or norm2 == 0:
+        return 0
+    
+    return dot_product / (norm1 * norm2)
+
+# ================== PREDICTION MODULE ==================
+
+class PropertyPredictor:
+    """Enhanced property predictor with multiple models"""
+    
+    def __init__(self, seed: Optional[int] = None):
+        self.random = random.Random(seed)
+        self.models = self._initialize_models()
+    
+    def _initialize_models(self) -> Dict:
+        """Initialize prediction models"""
+        return {
+            'shape': self._shape_model,
+            'aspect_ratio': self._aspect_ratio_model,
+            'bandgap': self._bandgap_model,
+            'conductivity': self._conductivity_model,
+            'stability': self._stability_model,
+            'toxicity': self._toxicity_model
+        }
+    
+    def predict(self, material: MaterialEntity, property_name: str) -> Dict[str, Union[str, float]]:
+        """Unified prediction interface"""
+        if property_name in self.models:
+            return self.models[property_name](material)
+        else:
+            return {"error": f"No model for property: {property_name}"}
+    
+    def _shape_model(self, material: MaterialEntity) -> Dict:
+        """Predict nanomaterial shape"""
+        desc = material.name.lower()
+        
+        shape_map = {
+            'rod': ('rod', 0.9),
+            'sphere': ('sphere', 0.85),
+            'cube': ('cube', 0.8),
+            'wire': ('wire', 0.85),
+            'sheet': ('sheet', 0.82),
+            'tube': ('tube', 0.83)
+        }
+        
+        for keyword, (shape, confidence) in shape_map.items():
+            if keyword in desc:
+                return {"shape": shape, "confidence": confidence}
+        
+        # Default prediction
+        shapes = list(shape_map.keys())
+        shape = self.random.choice(shapes)
+        confidence = self.random.uniform(0.5, 0.75)
+        
+        return {"shape": shape, "confidence": round(confidence, 2)}
+    
+    def _aspect_ratio_model(self, material: MaterialEntity) -> Dict:
+        """Predict aspect ratio"""
+        if 'aspect_ratio' in material.properties:
+            return {"aspect_ratio": float(material.properties['aspect_ratio']), 
+                   "confidence": 1.0}
+        
+        # Heuristic based on structure
+        if material.structure:
+            if 'rod' in material.structure or 'wire' in material.structure:
+                ar = self.random.uniform(3.0, 10.0)
+            elif 'sphere' in material.structure or 'cube' in material.structure:
+                ar = self.random.uniform(0.9, 1.1)
+            else:
+                ar = self.random.uniform(1.0, 5.0)
+        else:
+            ar = self.random.uniform(1.0, 5.0)
+        
+        return {"aspect_ratio": round(ar, 2), "confidence": 0.7}
+    
+    def _bandgap_model(self, material: MaterialEntity) -> Dict:
+        """Predict bandgap energy"""
+        # Simple composition-based prediction
+        composition_bandgaps = {
+            'Au': 0,  # Metal
+            'Ag': 0,  # Metal
+            'CdSe': 1.7,
+            'CdS': 2.4,
+            'ZnO': 3.3,
+            'TiO2': 3.2,
+            'Si': 1.1,
+            'GaN': 3.4
+        }
+        
+        if material.composition in composition_bandgaps:
+            bandgap = composition_bandgaps[material.composition]
+            # Add size-dependent correction for quantum dots
+            if 'quantum' in material.name.lower() or 'dot' in material.name.lower():
+                size_correction = self.random.uniform(0.1, 0.5)
+                bandgap += size_correction
+            
+            return {"bandgap_eV": round(bandgap, 2), "confidence": 0.85}
+        
+        # Default prediction
+        bandgap = self.random.uniform(0, 4.0)
+        return {"bandgap_eV": round(bandgap, 2), "confidence": 0.5}
+    
+    def _conductivity_model(self, material: MaterialEntity) -> Dict:
+        """Predict electrical conductivity"""
+        # Based on material type
+        if any(metal in material.composition for metal in ['Au', 'Ag', 'Cu', 'Al']):
+            conductivity = self.random.uniform(1e6, 1e8)  # S/m for metals
+            confidence = 0.8
+        elif any(semi in material.composition for semi in ['Si', 'GaN', 'CdSe']):
+            conductivity = self.random.uniform(1e-4, 1e2)  # S/m for semiconductors
+            confidence = 0.7
+        else:
+            conductivity = self.random.uniform(1e-10, 1e-6)  # S/m for insulators
+            confidence = 0.6
+        
+        return {"conductivity_S_per_m": f"{conductivity:.2e}", "confidence": confidence}
+    
+    def _stability_model(self, material: MaterialEntity) -> Dict:
+        """Predict material stability"""
+        stability_score = self.random.uniform(0.5, 1.0)
+        
+        # Adjust based on synthesis method
+        if material.synthesis_method:
+            if 'hydrothermal' in material.synthesis_method:
+                stability_score += 0.1
+            elif 'sol-gel' in material.synthesis_method:
+                stability_score -= 0.05
+        
+        stability_score = min(max(stability_score, 0), 1)
+        
+        categories = {
+            (0, 0.3): "unstable",
+            (0.3, 0.6): "moderately stable",
+            (0.6, 0.85): "stable",
+            (0.85, 1.0): "highly stable"
+        }
+        
+        category = next(cat for (low, high), cat in categories.items() 
+                       if low <= stability_score < high)
+        
+        return {"stability": category, "score": round(stability_score, 2), 
+               "confidence": 0.75}
+    
+    def _toxicity_model(self, material: MaterialEntity) -> Dict:
+        """Predict toxicity level"""
+        # Simple rule-based toxicity
+        toxic_elements = ['Cd', 'Pb', 'Hg', 'As']
+        
+        toxicity = "low"
+        confidence = 0.7
+        
+        if material.composition:
+            for element in toxic_elements:
+                if element in material.composition:
+                    toxicity = "high"
+                    confidence = 0.9
+                    break
+        
+        return {"toxicity": toxicity, "confidence": confidence}
+
+# ================== DESIGN MODULE ==================
+
+def propose_recipes(target_property: Dict[str, str], 
+                   constraints: Optional[Dict[str, Tuple[float, float]]] = None,
+                   num_recipes: int = 5) -> List[Dict[str, str]]:
+    """Generate optimized synthesis recipes"""
+    
+    recipes = []
+    
+    # Template-based recipe generation with variations
+    base_recipes = [
+        {
+            "method": "seed-mediated growth",
+            "reagents": "HAuCl4, CTAB, AgNO3, ascorbic acid, seed solution",
+            "conditions": "T=28°C, pH=2.5, stirring=300rpm, time=30min",
+            "expected_outcome": "Au nanorods with tunable aspect ratio"
+        },
+        {
+            "method": "hydrothermal synthesis",
+            "reagents": "Metal precursor, PVP, NaOH, ethylene glycol",
+            "conditions": "T=180°C, pressure=15bar, time=6h",
+            "expected_outcome": "Uniform nanoparticles with controlled size"
+        },
+        {
+            "method": "sol-gel process",
+            "reagents": "TEOS, ethanol, water, HCl catalyst",
+            "conditions": "T=60°C, pH=2.0, aging=24h, calcination=500°C",
+            "expected_outcome": "Porous metal oxide nanostructures"
+        },
+        {
+            "method": "electrochemical deposition",
+            "reagents": "Metal salt, electrolyte, stabilizer",
+            "conditions": "V=-0.8V vs Ag/AgCl, T=25°C, time=1h",
+            "expected_outcome": "Thin films with controlled thickness"
+        },
+        {
+            "method": "microwave-assisted synthesis",
+            "reagents": "Metal precursor, reducing agent, capping agent",
+            "conditions": "P=300W, T=150°C, time=10min",
+            "expected_outcome": "Rapid synthesis of monodisperse nanoparticles"
+        }
+    ]
+    
+    # Apply constraints and optimize for target property
+    for i, base_recipe in enumerate(base_recipes[:num_recipes]):
+        recipe = base_recipe.copy()
+        
+        # Modify based on target property
+        if "LSPR_nm" in target_property:
+            target_wavelength = float(target_property["LSPR_nm"])
+            if target_wavelength > 700:
+                recipe["conditions"] += ", high aspect ratio seeds"
+            elif target_wavelength < 600:
+                recipe["conditions"] += ", spherical seeds"
+        
+        # Apply constraints
+        if constraints:
+            conditions_list = []
+            for param, (min_val, max_val) in constraints.items():
+                if param == "temperature":
+                    temp = random.uniform(min_val, max_val)
+                    conditions_list.append(f"T={temp:.1f}°C")
+                elif param == "pH":
+                    ph = random.uniform(min_val, max_val)
+                    conditions_list.append(f"pH={ph:.1f}")
+                elif param == "time":
+                    time = random.uniform(min_val, max_val)
+                    conditions_list.append(f"time={time:.0f}min")
+            
+            if conditions_list:
+                recipe["conditions"] = ", ".join(conditions_list)
+        
+        recipe["recipe_id"] = f"RCP_{i+1:03d}"
+        recipe["confidence"] = round(random.uniform(0.7, 0.95), 2)
+        recipes.append(recipe)
+    
+    return recipes
+
+def propose_doe(parameters: Dict[str, Tuple[float, float]], 
+               runs: int = 12, 
+               design_type: str = "factorial") -> List[Dict[str, float]]:
+    """Generate DOE matrix with various design types"""
+    
+    param_names = list(parameters.keys())
+    doe_runs = []
+    
+    if design_type == "factorial":
+        # Full factorial design (simplified)
+        levels_per_param = max(2, int(runs ** (1 / len(param_names))))
+        
+        for i in range(runs):
+            run = {}
+            for j, name in enumerate(param_names):
+                low, high = parameters[name]
+                # Create levels
+                level = (i // (levels_per_param ** j)) % levels_per_param
+                value = low + (high - low) * level / (levels_per_param - 1)
+                run[name] = round(value, 2)
+            doe_runs.append(run)
+    
+    elif design_type == "central_composite":
+        # Central composite design
+        center_point = {name: round((low + high) / 2, 2) 
+                       for name, (low, high) in parameters.items()}
+        
+        # Add center points
+        for _ in range(max(1, runs // 4)):
+            doe_runs.append(center_point.copy())
+        
+        # Add factorial points
+        for i in range(min(2 ** len(param_names), runs - len(doe_runs))):
+            run = {}
+            for j, name in enumerate(param_names):
+                low, high = parameters[name]
+                level = (i >> j) & 1
+                value = low if level == 0 else high
+                run[name] = round(value, 2)
+            doe_runs.append(run)
+        
+        # Add axial points
+        for name in param_names:
+            if len(doe_runs) >= runs:
+                break
+            for level in [0, 1]:
+                run = center_point.copy()
+                low, high = parameters[name]
+                run[name] = round(low if level == 0 else high, 2)
+                doe_runs.append(run)
+                if len(doe_runs) >= runs:
+                    break
+    
+    elif design_type == "random":
+        # Random sampling
+        for _ in range(runs):
+            run = {}
+            for name, (low, high) in parameters.items():
+                run[name] = round(random.uniform(low, high), 2)
+            doe_runs.append(run)
+    
+    else:  # Latin hypercube sampling
+        for i in range(runs):
+            run = {}
+            for name, (low, high) in parameters.items():
+                # Stratified random sampling
+                segment = (high - low) / runs
+                value = low + segment * i + random.uniform(0, segment)
+                run[name] = round(value, 2)
+            doe_runs.append(run)
+        
+        # Shuffle to randomize
+        random.shuffle(doe_runs)
+    
+    return doe_runs[:runs]
+
+def optimize_synthesis(target_properties: Dict[str, float], 
+                      current_conditions: Dict[str, float],
+                      iteration: int = 0) -> Dict[str, float]:
+    """Iterative optimization of synthesis conditions"""
+    
+    optimized = current_conditions.copy()
+    
+    # Simple gradient-based optimization (mock)
+    for param, value in optimized.items():
+        # Random walk with decreasing step size
+        step_size = 0.1 * (0.9 ** iteration)
+        change = random.uniform(-step_size, step_size)
+        
+        if param == "temperature":
+            optimized[param] = max(20, min(300, value + change * 50))
+        elif param == "pH":
+            optimized[param] = max(1, min(14, value + change * 2))
+        elif param == "time":
+            optimized[param] = max(1, min(1440, value + change * 60))
+        else:
+            optimized[param] = value * (1 + change)
+    
+    # Round values
+    for key in optimized:
+        optimized[key] = round(optimized[key], 2)
+    
+    return optimized
+
+# ================== MAIN RUNNER MODULE ==================
+
+class NanomaterialPipeline:
+    """Complete nanomaterial design pipeline"""
+    
+    def __init__(self):
+        self.ingestor = None
+        self.extractor = EntityExtractor()
+        self.kg = KnowledgeGraph()
+        self.predictor = PropertyPredictor(seed=42)
+        self.history = []
+    
+    def process_text(self, text: str, metadata: Optional[Dict] = None) -> Dict:
+        """Process raw text through the entire pipeline"""
+        
+        # Ingestion
+        self.ingestor = TextIngestor(text, metadata or {})
+        
+        # Extraction
+        extraction_result = self.extractor.extract(self.ingestor.sentences)
+        
+        # Build knowledge graph
+        self._build_knowledge_graph(extraction_result)
+        
+        # Predictions
+        predictions = self._generate_predictions(extraction_result.materials)
+        
+        # Design suggestions
+        design_suggestions = self._generate_design_suggestions(extraction_result.materials)
+        
+        # Store in history
+        result = {
+            "timestamp": datetime.now().isoformat(),
+            "sentences": len(self.ingestor.sentences),
+            "materials": [asdict(m) for m in extraction_result.materials],
+            "synthesis_steps": [asdict(s) for s in extraction_result.steps],
+            "predictions": predictions,
+            "design_suggestions": design_suggestions,
+            "graph_stats": {
+                "nodes": len(self.kg.nodes),
+                "edges": len(self.kg.edges)
+            }
+        }
+        
+        self.history.append(result)
+        return result
+    
+    def _build_knowledge_graph(self, extraction_result):
+        """Populate knowledge graph from extraction results"""
+        
+        material_nodes = {}
+        
+        # Add material nodes
+        for material in extraction_result.materials:
+            node_id = self.kg.add_node(
+                "material",
+                attrs={
+                    "name": material.name,
+                    "composition": material.composition or "",
+                    "structure": material.structure or "",
+                    **material.properties
+                }
+            )
+            material_nodes[material.name] = node_id
+        
+        # Add synthesis step nodes
+        for step in extraction_result.steps:
+            step_id = self.kg.add_node(
+                "synthesis_step",
+                attrs={
+                    "method": step.method or "",
+                    **step.conditions,
+                    **step.outcomes
+                }
+            )
+            
+            # Add reagent nodes and connections
+            for reagent in step.reagents:
+                reagent_id = self.kg.add_node("reagent", attrs={"name": reagent})
+                self.kg.add_edge(reagent_id, step_id, "used_in")
+            
+            # Connect steps to materials
+            for mat_name, mat_id in material_nodes.items():
+                self.kg.add_edge(step_id, mat_id, "produces")
+            
+            # Add equipment nodes
+            for equipment in step.equipment:
+                equip_id = self.kg.add_node("equipment", attrs={"name": equipment})
+                self.kg.add_edge(equip_id, step_id, "used_for")
+    
+    def _generate_predictions(self, materials: List[MaterialEntity]) -> Dict:
+        """Generate predictions for all materials"""
+        
+        predictions = {}
+        
+        for material in materials:
+            material_predictions = {}
+            
+            # Predict various properties
+            for property_name in ['shape', 'aspect_ratio', 'bandgap', 
+                                 'conductivity', 'stability', 'toxicity']:
+                try:
+                    pred = self.predictor.predict(material, property_name)
+                    material_predictions[property_name] = pred
+                except Exception as e:
+                    material_predictions[property_name] = {"error": str(e)}
+            
+            predictions[material.name] = material_predictions
+        
+        return predictions
+    
+    def _generate_design_suggestions(self, materials: List[MaterialEntity]) -> Dict:
+        """Generate design suggestions based on materials"""
+        
+        suggestions = {}
+        
+        if materials:
+            # Use first material as target
+            target_material = materials[0]
+            
+            # Generate recipes
+            target_props = {"LSPR_nm": "800"}  # Example target
+            if 'lspr' in target_material.properties:
+                target_props["LSPR_nm"] = target_material.properties['lspr']
+            
+            recipes = propose_recipes(target_props, num_recipes=3)
+            
+            # Generate DOE
+            parameters = {
+                "temperature": (20.0, 200.0),
+                "pH": (2.0, 9.0),
+                "time": (10.0, 120.0)
+            }
+            
+            doe_factorial = propose_doe(parameters, runs=8, design_type="factorial")
+            doe_ccd = propose_doe(parameters, runs=9, design_type="central_composite")
+            
+            suggestions = {
+                "recipes": recipes,
+                "doe_designs": {
+                    "factorial": doe_factorial,
+                    "central_composite": doe_ccd
+                }
+            }
+        
+        return suggestions
+    
+    def search(self, query: str, search_type: str = "keyword") -> List:
+        """Search the knowledge graph"""
+        
+        if search_type == "keyword":
+            keywords = query.split()
+            node_ids = keyword_search(self.kg, keywords)
+            results = []
+            for node_id in node_ids[:10]:  # Limit to top 10
+                node = self.kg.nodes[node_id]
+                results.append({
+                    "id": node_id,
+                    "type": node.type,
+                    "attrs": node.attrs
+                })
+            return results
+        
+        return []
+    
+    def export_graph(self, format: str = "json") -> str:
+        """Export knowledge graph in various formats"""
+        
+        if format == "json":
+            return json.dumps(self.kg.to_dict(), indent=2)
+        elif format == "graphml":
+            # Simplified GraphML export
+            graphml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+            graphml += '<graphml xmlns="http://graphml.graphdrawing.org/xmlns">\n'
+            graphml += '  <graph id="G" edgedefault="directed">\n'
+            
+            for node in self.kg.nodes.values():
+                graphml += f'    <node id="{node.id}">\n'
+                for key, value in node.attrs.items():
+                    graphml += f'      <data key="{key}">{value}</data>\n'
+                graphml += '    </node>\n'
+            
+            for edge in self.kg.edges:
+                graphml += f'    <edge source="{edge.src}" target="{edge.dst}">\n'
+                graphml += f'      <data key="relation">{edge.rel}</data>\n'
+                graphml += '    </edge>\n'
+            
+            graphml += '  </graph>\n'
+            graphml += '</graphml>'
+            
+            return graphml
+        
+        return ""
+
+# ================== WEB API ==================
+
+pipeline = NanomaterialPipeline()
+
+def process_request(request_type, data):
+    """Handle API requests"""
+    
+    if request_type == "process_text":
+        return pipeline.process_text(data.get("text", ""))
+    
+    elif request_type == "search":
+        return pipeline.search(data.get("query", ""), data.get("type", "keyword"))
+    
+    elif request_type == "predict":
+        material = MaterialEntity(
+            name=data.get("name", "Unknown"),
+            composition=data.get("composition"),
+            structure=data.get("structure"),
+            properties=data.get("properties", {})
+        )
+        property_name = data.get("property", "shape")
+        return pipeline.predictor.predict(material, property_name)
+    
+    elif request_type == "design":
+        target = data.get("target", {"LSPR_nm": "800"})
+        constraints = data.get("constraints")
+        return {
+            "recipes": propose_recipes(target, constraints),
+            "doe": propose_doe(
+                data.get("parameters", {"temperature": (20, 200), "pH": (2, 9)}),
+                data.get("runs", 12),
+                data.get("design_type", "factorial")
+            )
+        }
+    
+    elif request_type == "export":
+        return pipeline.export_graph(data.get("format", "json"))
+    
+    elif request_type == "history":
+        return pipeline.history
+    
+    else:
+        return {"error": "Unknown request type"}
+    </script>
+
+    <!-- Main Application Container -->
+    <div class="min-h-screen p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="glass rounded-lg p-6 mb-6 flex items-center justify-between">
+                <div>
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-atom text-white text-2xl"></i>
+                        </div>
+                        <h1 class="text-4xl font-bold neon-text">O.R.I.O.N Dashboard</h1>
+                    </div>
+                    <p class="text-white/80">Optimized Research & Innovation for Organized Nanomaterials</p>
+                    <p class="text-white/60 text-sm mt-1">M.Y. Engineering and Technologies</p>
+                </div>
+                <a href="orion.html" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg border border-white/30 transition">
+                    ← Back to ORION Home
+                </a>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="flex space-x-4 mb-6 overflow-x-auto">
+                <button onclick="switchTab('ingestion')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition tab-active" id="tab-ingestion">
+                    📥 Ingestion
+                </button>
+                <button onclick="switchTab('extraction')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition" id="tab-extraction">
+                    🔍 Extraction
+                </button>
+                <button onclick="switchTab('knowledge')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition" id="tab-knowledge">
+                    🧠 Knowledge Graph
+                </button>
+                <button onclick="switchTab('prediction')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition" id="tab-prediction">
+                    📊 Prediction
+                </button>
+                <button onclick="switchTab('design')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition" id="tab-design">
+                    🔬 Design
+                </button>
+                <button onclick="switchTab('visualization')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition" id="tab-visualization">
+                    📈 Visualization
+                </button>
+                <button onclick="switchTab('api')" class="px-4 py-2 glass rounded-lg hover:bg-white/20 transition" id="tab-api">
+                    🔌 API
+                </button>
+            </div>
+
+            <!-- Content Panels -->
+            <!-- Ingestion Panel -->
+            <div id="panel-ingestion" class="glass rounded-lg p-6">
+                <h2 class="text-2xl font-semibold mb-4">Text Ingestion & Processing</h2>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Input Text (Paste scientific paper excerpt)</label>
+                    <textarea id="input-text" class="w-full p-3 bg-white/10 rounded-lg border border-white/20 text-white placeholder-white/50" 
+                              rows="8" placeholder="Example: Au nanorods were synthesized via a seed-mediated method at 28°C. CTAB was used as the surfactant with AgNO3 as the shape-directing agent. The aspect ratio was measured to be 3.8, resulting in an LSPR peak at 780 nm. The yield was approximately 85%."></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Upload PDF (Simulated)</label>
+                    <input type="file" accept=".pdf,.txt" class="w-full p-2 bg-white/10 rounded-lg border border-white/20">
+                </div>
+
+                <button onclick="processText()" class="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition">
+                    Process Text
+                </button>
+
+                <div id="ingestion-results" class="mt-6 hidden">
+                    <h3 class="text-lg font-semibold mb-2">Processing Results</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <div class="text-3xl font-bold text-cyan-400" id="sentence-count">0</div>
+                            <div class="text-sm text-white/60">Sentences</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <div class="text-3xl font-bold text-green-400" id="paragraph-count">0</div>
+                            <div class="text-sm text-white/60">Paragraphs</div>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <div class="text-3xl font-bold text-yellow-400" id="word-count">0</div>
+                            <div class="text-sm text-white/60">Words</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4 class="font-medium mb-2">Extracted Sentences:</h4>
+                        <div id="sentences-list" class="bg-white/5 rounded-lg p-3 max-h-40 overflow-y-auto text-sm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extraction Panel -->
+            <div id="panel-extraction" class="glass rounded-lg p-6 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Entity Extraction</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Materials Detected</h3>
+                        <div id="materials-list" class="space-y-2">
+                            <div class="bg-white/5 rounded-lg p-3 text-center text-white/50">
+                                No materials extracted yet
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Synthesis Steps</h3>
+                        <div id="synthesis-list" class="space-y-2">
+                            <div class="bg-white/5 rounded-lg p-3 text-center text-white/50">
+                                No synthesis steps extracted yet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">Extracted Properties</h3>
+                    <div id="properties-table" class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-white/20">
+                                    <th class="text-left py-2">Material</th>
+                                    <th class="text-left py-2">Property</th>
+                                    <th class="text-left py-2">Value</th>
+                                    <th class="text-left py-2">Confidence</th>
+                                </tr>
+                            </thead>
+                            <tbody id="properties-tbody">
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-white/50">No properties extracted yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Knowledge Graph Panel -->
+            <div id="panel-knowledge" class="glass rounded-lg p-6 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Knowledge Graph</h2>
+                
+                <div class="mb-4 flex space-x-4">
+                    <button onclick="refreshGraph()" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded-lg transition">
+                        Refresh Graph
+                    </button>
+                    <button onclick="exportGraph()" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg transition">
+                        Export Graph
+                    </button>
+                    <select id="graph-layout" onchange="changeGraphLayout()" class="px-4 py-2 bg-white/10 rounded-lg border border-white/20">
+                        <option value="physics">Physics Layout</option>
+                        <option value="hierarchical">Hierarchical</option>
+                        <option value="circular">Circular</option>
+                    </select>
+                </div>
+
+                <div id="knowledgeGraph"></div>
+                
+                <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="text-2xl font-bold text-cyan-400" id="node-count">0</div>
+                        <div class="text-sm text-white/60">Nodes</div>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="text-2xl font-bold text-green-400" id="edge-count">0</div>
+                        <div class="text-sm text-white/60">Edges</div>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="text-2xl font-bold text-yellow-400" id="material-count">0</div>
+                        <div class="text-sm text-white/60">Materials</div>
+                    </div>
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="text-2xl font-bold text-purple-400" id="step-count">0</div>
+                        <div class="text-sm text-white/60">Steps</div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">Search Knowledge Base</h3>
+                    <div class="flex space-x-2">
+                        <input type="text" id="search-query" placeholder="Enter keywords..." 
+                               class="flex-1 px-4 py-2 bg-white/10 rounded-lg border border-white/20">
+                        <button onclick="searchGraph()" class="px-6 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition">
+                            Search
+                        </button>
+                    </div>
+                    <div id="search-results" class="mt-4"></div>
+                </div>
+            </div>
+
+            <!-- Prediction Panel -->
+            <div id="panel-prediction" class="glass rounded-lg p-6 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Property Prediction</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Material Input</h3>
+                        <div class="space-y-3">
+                            <input type="text" id="pred-name" placeholder="Material Name" 
+                                   class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            <input type="text" id="pred-composition" placeholder="Composition (e.g., Au, CdSe)" 
+                                   class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            <input type="text" id="pred-structure" placeholder="Structure (e.g., nanorod, quantum dot)" 
+                                   class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            <select id="pred-property" class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                                <option value="shape">Shape</option>
+                                <option value="aspect_ratio">Aspect Ratio</option>
+                                <option value="bandgap">Bandgap</option>
+                                <option value="conductivity">Conductivity</option>
+                                <option value="stability">Stability</option>
+                                <option value="toxicity">Toxicity</option>
+                            </select>
+                            <button onclick="runPrediction()" class="w-full px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg font-semibold hover:from-cyan-600 hover:to-blue-600 transition">
+                                Predict Property
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Prediction Results</h3>
+                        <div id="prediction-results" class="bg-white/5 rounded-lg p-4">
+                            <div class="text-center text-white/50">No predictions yet</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">Batch Predictions</h3>
+                    <div id="batch-predictions" class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-white/20">
+                                    <th class="text-left py-2">Material</th>
+                                    <th class="text-left py-2">Shape</th>
+                                    <th class="text-left py-2">Aspect Ratio</th>
+                                    <th class="text-left py-2">Bandgap (eV)</th>
+                                    <th class="text-left py-2">Stability</th>
+                                </tr>
+                            </thead>
+                            <tbody id="batch-tbody">
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-white/50">Process text to generate predictions</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Panel -->
+            <div id="panel-design" class="glass rounded-lg p-6 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Inverse Design & DOE</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Target Properties</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm">LSPR Wavelength (nm)</label>
+                                <input type="number" id="target-lspr" value="800" 
+                                       class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            </div>
+                            <div>
+                                <label class="text-sm">Aspect Ratio</label>
+                                <input type="number" id="target-ar" value="3.5" step="0.1"
+                                       class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            </div>
+                            <div>
+                                <label class="text-sm">Size (nm)</label>
+                                <input type="number" id="target-size" value="50" 
+                                       class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            </div>
+                            <button onclick="generateRecipes()" class="w-full px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg font-semibold hover:from-green-600 hover:to-teal-600 transition">
+                                Generate Recipes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">DOE Parameters</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="text-sm">Temperature Range (°C)</label>
+                                <div class="flex space-x-2">
+                                    <input type="number" id="temp-min" value="20" class="w-1/2 px-2 py-1 bg-white/10 rounded border border-white/20">
+                                    <input type="number" id="temp-max" value="200" class="w-1/2 px-2 py-1 bg-white/10 rounded border border-white/20">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm">pH Range</label>
+                                <div class="flex space-x-2">
+                                    <input type="number" id="ph-min" value="2" step="0.1" class="w-1/2 px-2 py-1 bg-white/10 rounded border border-white/20">
+                                    <input type="number" id="ph-max" value="9" step="0.1" class="w-1/2 px-2 py-1 bg-white/10 rounded border border-white/20">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm">Number of Runs</label>
+                                <input type="number" id="doe-runs" value="12" class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                            </div>
+                            <select id="doe-type" class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                                <option value="factorial">Full Factorial</option>
+                                <option value="central_composite">Central Composite</option>
+                                <option value="random">Random Sampling</option>
+                                <option value="lhs">Latin Hypercube</option>
+                            </select>
+                            <button onclick="generateDOE()" class="w-full px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg font-semibold hover:from-purple-600 hover:to-indigo-600 transition">
+                                Generate DOE Matrix
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">Generated Recipes</h3>
+                    <div id="recipes-list" class="space-y-2">
+                        <div class="bg-white/5 rounded-lg p-3 text-center text-white/50">
+                            No recipes generated yet
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">DOE Matrix</h3>
+                    <div id="doe-matrix" class="overflow-x-auto">
+                        <div class="bg-white/5 rounded-lg p-3 text-center text-white/50">
+                            No DOE matrix generated yet
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Panel -->
+            <div id="panel-visualization" class="glass rounded-lg p-6 hidden">
+                <h2 class="text-2xl font-semibold mb-4">Data Visualization</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Property Distribution</h3>
+                        <canvas id="property-chart"></canvas>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Synthesis Methods</h3>
+                        <canvas id="method-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">3D Molecular Visualization</h3>
+                    <div id="molecule-viewer" class="molecule-3d"></div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold mb-3">Correlation Matrix</h3>
+                    <canvas id="correlation-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- API Panel -->
+            <div id="panel-api" class="glass rounded-lg p-6 hidden">
+                <h2 class="text-2xl font-semibold mb-4">API Documentation</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Available Endpoints</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white/5 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-mono text-green-400">POST /api/process</span>
+                                    <span class="text-xs bg-green-500/20 px-2 py-1 rounded">Text Processing</span>
+                                </div>
+                                <p class="text-sm text-white/70 mb-2">Process raw text and extract nanomaterial information</p>
+                                <div class="code-block text-xs">
+{
+  "text": "Au nanorods were synthesized...",
+  "metadata": {"source": "paper_123"}
+}
+                                </div>
+                            </div>
+
+                            <div class="bg-white/5 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-mono text-green-400">POST /api/predict</span>
+                                    <span class="text-xs bg-blue-500/20 px-2 py-1 rounded">Prediction</span>
+                                </div>
+                                <p class="text-sm text-white/70 mb-2">Predict material properties</p>
+                                <div class="code-block text-xs">
+{
+  "name": "Au nanorods",
+  "composition": "Au",
+  "structure": "nanorod",
+  "property": "aspect_ratio"
+}
+                                </div>
+                            </div>
+
+                            <div class="bg-white/5 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-mono text-green-400">POST /api/design</span>
+                                    <span class="text-xs bg-purple-500/20 px-2 py-1 rounded">Design</span>
+                                </div>
+                                <p class="text-sm text-white/70 mb-2">Generate synthesis recipes and DOE</p>
+                                <div class="code-block text-xs">
+{
+  "target": {"LSPR_nm": "800"},
+  "parameters": {
+    "temperature": [20, 200],
+    "pH": [2, 9]
+  },
+  "runs": 12
+}
+                                </div>
+                            </div>
+
+                            <div class="bg-white/5 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="font-mono text-green-400">GET /api/search</span>
+                                    <span class="text-xs bg-yellow-500/20 px-2 py-1 rounded">Search</span>
+                                </div>
+                                <p class="text-sm text-white/70 mb-2">Search the knowledge graph</p>
+                                <div class="code-block text-xs">
+/api/search?query=gold+nanorod&type=keyword
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3">Try It Out</h3>
+                        <div class="space-y-3">
+                            <select id="api-endpoint" class="w-full px-3 py-2 bg-white/10 rounded-lg border border-white/20">
+                                <option value="process">Process Text</option>
+                                <option value="predict">Predict Property</option>
+                                <option value="design">Generate Design</option>
+                                <option value="search">Search Graph</option>
+                            </select>
+                            <textarea id="api-payload" class="w-full p-3 bg-white/10 rounded-lg border border-white/20 font-mono text-sm" 
+                                      rows="6" placeholder="Enter JSON payload..."></textarea>
+                            <button onclick="testAPI()" class="w-full px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition">
+                                Send Request
+                            </button>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h4 class="font-medium mb-2">Response:</h4>
+                            <div id="api-response" class="code-block text-xs max-h-64 overflow-y-auto">
+                                // Response will appear here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentData = {
+            materials: [],
+            steps: [],
+            graph: { nodes: [], edges: [] },
+            predictions: {},
+            history: []
+        };
+        
+        let network = null;
+        let charts = {};
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all panels
+            document.querySelectorAll('[id^="panel-"]').forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('tab-active');
+            });
+            
+            // Show selected panel and activate tab
+            document.getElementById(`panel-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabName}`).classList.add('tab-active');
+            
+            // Initialize specific views
+            if (tabName === 'knowledge' && !network) {
+                initializeKnowledgeGraph();
+            } else if (tabName === 'visualization') {
+                initializeCharts();
+                initialize3DViewer();
+            }
+        }
+
+        // Process text
+        async function processText() {
+            const text = document.getElementById('input-text').value;
+            
+            if (!text) {
+                alert('Please enter some text to process');
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('ingestion-results').classList.remove('hidden');
+            
+            // Simulate processing
+            const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+            const words = text.split(/\s+/).length;
+            const paragraphs = text.split(/\n\n+/).length;
+            
+            // Update stats
+            document.getElementById('sentence-count').textContent = sentences.length;
+            document.getElementById('paragraph-count').textContent = paragraphs;
+            document.getElementById('word-count').textContent = words;
+            
+            // Display sentences
+            const sentencesList = document.getElementById('sentences-list');
+            sentencesList.innerHTML = sentences.map((s, i) => 
+                `<div class="mb-1"><span class="text-cyan-400">[${i+1}]</span> ${s.trim()}</div>`
+            ).join('');
+            
+            // Extract entities
+            extractEntities(text);
+            
+            // Build knowledge graph
+            buildKnowledgeGraph();
+            
+            // Generate predictions
+            generatePredictions();
+        }
+
+        // Entity extraction
+        function extractEntities(text) {
+            const materials = [];
+            const steps = [];
+            
+            // Simple pattern matching for demonstration
+            const chemPattern = /\b([A-Z][a-z]?[A-Z0-9]*[a-z]?\d*)\b/g;
+            const chemicals = [...new Set(text.match(chemPattern) || [])];
+            
+            const structures = ['nanorod', 'nanoparticle', 'quantum dot', 'nanowire', 'thin film'];
+            const detectedStructures = structures.filter(s => text.toLowerCase().includes(s));
+            
+            // Extract materials
+            chemicals.forEach(chem => {
+                detectedStructures.forEach(struct => {
+                    materials.push({
+                        name: `${chem} ${struct}`,
+                        composition: chem,
+                        structure: struct,
+                        properties: extractProperties(text),
+                        confidence: Math.random() * 0.3 + 0.7
+                    });
+                });
+            });
+            
+            // Extract synthesis steps
+            const methods = ['seed-mediated', 'hydrothermal', 'sol-gel', 'chemical reduction'];
+            methods.forEach(method => {
+                if (text.toLowerCase().includes(method)) {
+                    steps.push({
+                        method: method,
+                        reagents: chemicals.slice(0, 3),
+                        conditions: extractConditions(text),
+                        outcomes: extractOutcomes(text)
+                    });
+                }
+            });
+            
+            currentData.materials = materials;
+            currentData.steps = steps;
+            
+            // Update UI
+            updateExtractionPanel();
+        }
+
+        function extractProperties(text) {
+            const properties = {};
+            
+            // Extract numeric properties
+            const patterns = {
+                aspect_ratio: /aspect\s+ratio[^\d]*(\d+\.?\d*)/i,
+                size: /size[^\d]*(\d+\.?\d*)\s*(nm|µm)/i,
+                lspr: /LSPR[^\d]*(\d+)\s*nm/i,
+                yield: /yield[^\d]*(\d+\.?\d*)\s*%/i
+            };
+            
+            for (const [key, pattern] of Object.entries(patterns)) {
+                const match = text.match(pattern);
+                if (match) {
+                    properties[key] = match[1];
+                }
+            }
+            
+            return properties;
+        }
+
+        function extractConditions(text) {
+            const conditions = {};
+            
+            const tempMatch = text.match(/(\d+\.?\d*)\s*°C/);
+            if (tempMatch) conditions.temperature = tempMatch[1] + '°C';
+            
+            const phMatch = text.match(/pH\s*(\d+\.?\d*)/i);
+            if (phMatch) conditions.pH = phMatch[1];
+            
+            const timeMatch = text.match(/(\d+\.?\d*)\s*(min|hour|h)/);
+            if (timeMatch) conditions.time = timeMatch[1] + ' ' + timeMatch[2];
+            
+            return conditions;
+        }
+
+        function extractOutcomes(text) {
+            const outcomes = {};
+            
+            const yieldMatch = text.match(/yield[^\d]*(\d+\.?\d*)\s*%/i);
+            if (yieldMatch) outcomes.yield = yieldMatch[1] + '%';
+            
+            return outcomes;
+        }
+
+        function updateExtractionPanel() {
+            // Update materials list
+            const materialsList = document.getElementById('materials-list');
+            if (currentData.materials.length > 0) {
+                materialsList.innerHTML = currentData.materials.map(mat => `
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="font-semibold">${mat.name}</div>
+                        <div class="text-sm text-white/60">
+                            Composition: ${mat.composition} | Structure: ${mat.structure}
+                        </div>
+                        <div class="text-xs text-cyan-400 mt-1">
+                            Confidence: ${(mat.confidence * 100).toFixed(0)}%
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update synthesis steps
+            const synthesisList = document.getElementById('synthesis-list');
+            if (currentData.steps.length > 0) {
+                synthesisList.innerHTML = currentData.steps.map(step => `
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="font-semibold">${step.method}</div>
+                        <div class="text-sm text-white/60">
+                            Reagents: ${step.reagents.join(', ')}
+                        </div>
+                        <div class="text-xs text-green-400 mt-1">
+                            ${Object.entries(step.conditions).map(([k, v]) => `${k}: ${v}`).join(' | ')}
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update properties table
+            const tbody = document.getElementById('properties-tbody');
+            const rows = [];
+            currentData.materials.forEach(mat => {
+                Object.entries(mat.properties).forEach(([prop, value]) => {
+                    rows.push(`
+                        <tr class="border-b border-white/10">
+                            <td class="py-2">${mat.name}</td>
+                            <td class="py-2">${prop}</td>
+                            <td class="py-2">${value}</td>
+                            <td class="py-2">${(mat.confidence * 100).toFixed(0)}%</td>
+                        </tr>
+                    `);
+                });
+            });
+            
+            if (rows.length > 0) {
+                tbody.innerHTML = rows.join('');
+            }
+        }
+
+        // Knowledge Graph
+        function initializeKnowledgeGraph() {
+            const container = document.getElementById('knowledgeGraph');
+            
+            const data = {
+                nodes: new vis.DataSet([]),
+                edges: new vis.DataSet([])
+            };
+            
+            const options = {
+                nodes: {
+                    shape: 'dot',
+                    size: 20,
+                    font: {
+                        size: 12,
+                        color: '#ffffff'
+                    },
+                    borderWidth: 2
+                },
+                edges: {
+                    width: 2,
+                    color: { color: '#848484' },
+                    arrows: 'to',
+                    smooth: {
+                        type: 'cubicBezier',
+                        forceDirection: 'horizontal',
+                        roundness: 0.4
+                    }
+                },
+                physics: {
+                    forceAtlas2Based: {
+                        gravitationalConstant: -26,
+                        centralGravity: 0.005,
+                        springLength: 230,
+                        springConstant: 0.18
+                    },
+                    maxVelocity: 146,
+                    solver: 'forceAtlas2Based',
+                    timestep: 0.35,
+                    stabilization: { iterations: 150 }
+                }
+            };
+            
+            network = new vis.Network(container, data, options);
+        }
+
+        function buildKnowledgeGraph() {
+            if (!network) return;
+            
+            const nodes = [];
+            const edges = [];
+            let nodeId = 1;
+            
+            // Add material nodes
+            currentData.materials.forEach(mat => {
+                nodes.push({
+                    id: nodeId,
+                    label: mat.name,
+                    group: 'material',
+                    color: '#4FC3F7',
+                    title: `Composition: ${mat.composition}\nStructure: ${mat.structure}`
+                });
+                mat.nodeId = nodeId++;
+            });
+            
+            // Add synthesis step nodes
+            currentData.steps.forEach(step => {
+                const stepId = nodeId++;
+                nodes.push({
+                    id: stepId,
+                    label: step.method,
+                    group: 'step',
+                    color: '#81C784',
+                    title: 'Synthesis Method'
+                });
+                
+                // Add reagent nodes
+                step.reagents.forEach(reagent => {
+                    const reagentId = nodeId++;
+                    nodes.push({
+                        id: reagentId,
+                        label: reagent,
+                        group: 'reagent',
+                        color: '#FFB74D',
+                        title: 'Reagent'
+                    });
+                    
+                    edges.push({
+                        from: reagentId,
+                        to: stepId,
+                        label: 'used in'
+                    });
+                });
+                
+                // Connect steps to materials
+                currentData.materials.forEach(mat => {
+                    edges.push({
+                        from: stepId,
+                        to: mat.nodeId,
+                        label: 'produces'
+                    });
+                });
+            });
+            
+            // Update network
+            network.setData({
+                nodes: new vis.DataSet(nodes),
+                edges: new vis.DataSet(edges)
+            });
+            
+            // Update stats
+            document.getElementById('node-count').textContent = nodes.length;
+            document.getElementById('edge-count').textContent = edges.length;
+            document.getElementById('material-count').textContent = currentData.materials.length;
+            document.getElementById('step-count').textContent = currentData.steps.length;
+            
+            currentData.graph = { nodes, edges };
+        }
+
+        function refreshGraph() {
+            if (network) {
+                network.fit();
+            }
+        }
+
+        function changeGraphLayout() {
+            const layout = document.getElementById('graph-layout').value;
+            
+            if (!network) return;
+            
+            const options = {
+                physics: layout === 'physics',
+                layout: {}
+            };
+            
+            if (layout === 'hierarchical') {
+                options.layout = {
+                    hierarchical: {
+                        direction: 'UD',
+                        sortMethod: 'directed'
+                    }
+                };
+            }
+            
+            network.setOptions(options);
+        }
+
+        function exportGraph() {
+            const graphData = {
+                nodes: currentData.graph.nodes,
+                edges: currentData.graph.edges,
+                metadata: {
+                    exported: new Date().toISOString(),
+                    materials: currentData.materials.length,
+                    steps: currentData.steps.length
+                }
+            };
+            
+            const blob = new Blob([JSON.stringify(graphData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'knowledge_graph.json';
+            a.click();
+        }
+
+        function searchGraph() {
+            const query = document.getElementById('search-query').value;
+            const results = document.getElementById('search-results');
+            
+            if (!query) {
+                results.innerHTML = '';
+                return;
+            }
+            
+            // Simple keyword search
+            const matches = currentData.graph.nodes.filter(node => 
+                node.label.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            if (matches.length > 0) {
+                results.innerHTML = `
+                    <div class="bg-white/5 rounded-lg p-3">
+                        <div class="text-sm font-medium mb-2">Found ${matches.length} results:</div>
+                        ${matches.map(node => `
+                            <div class="mb-1">
+                                <span class="text-cyan-400">•</span> ${node.label} 
+                                <span class="text-xs text-white/50">(${node.group})</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                // Highlight nodes in graph
+                if (network) {
+                    network.selectNodes(matches.map(n => n.id));
+                }
+            } else {
+                results.innerHTML = `
+                    <div class="bg-white/5 rounded-lg p-3 text-center text-white/50">
+                        No results found
+                    </div>
+                `;
+            }
+        }
+
+        // Predictions
+        function generatePredictions() {
+            const tbody = document.getElementById('batch-tbody');
+            const rows = [];
+            
+            currentData.materials.forEach(mat => {
+                // Generate mock predictions
+                const predictions = {
+                    shape: ['rod', 'sphere', 'cube'][Math.floor(Math.random() * 3)],
+                    aspectRatio: (Math.random() * 5 + 1).toFixed(1),
+                    bandgap: (Math.random() * 3).toFixed(2),
+                    stability: ['stable', 'moderately stable', 'unstable'][Math.floor(Math.random() * 3)]
+                };
+                
+                currentData.predictions[mat.name] = predictions;
+                
+                rows.push(`
+                    <tr class="border-b border-white/10">
+                        <td class="py-2">${mat.name}</td>
+                        <td class="py-2">${predictions.shape}</td>
+                        <td class="py-2">${predictions.aspectRatio}</td>
+                        <td class="py-2">${predictions.bandgap}</td>
+                        <td class="py-2">
+                            <span class="px-2 py-1 rounded text-xs ${
+                                predictions.stability === 'stable' ? 'bg-green-500/20 text-green-400' :
+                                predictions.stability === 'moderately stable' ? 'bg-yellow-500/20 text-yellow-400' :
+                                'bg-red-500/20 text-red-400'
+                            }">
+                                ${predictions.stability}
+                            </span>
+                        </td>
+                    </tr>
+                `);
+            });
+            
+            if (rows.length > 0) {
+                tbody.innerHTML = rows.join('');
+            }
+        }
+
+        function runPrediction() {
+            const name = document.getElementById('pred-name').value;
+            const composition = document.getElementById('pred-composition').value;
+            const structure = document.getElementById('pred-structure').value;
+            const property = document.getElementById('pred-property').value;
+            
+            if (!name) {
+                alert('Please enter a material name');
+                return;
+            }
+            
+            // Generate prediction based on property type
+            let result = {};
+            
+            switch(property) {
+                case 'shape':
+                    result = {
+                        shape: structure || 'sphere',
+                        confidence: (Math.random() * 0.3 + 0.7).toFixed(2)
+                    };
+                    break;
+                case 'aspect_ratio':
+                    result = {
+                        aspect_ratio: (Math.random() * 5 + 1).toFixed(2),
+                        confidence: (Math.random() * 0.3 + 0.6).toFixed(2)
+                    };
+                    break;
+                case 'bandgap':
+                    result = {
+                        bandgap_eV: (Math.random() * 4).toFixed(2),
+                        confidence: (Math.random() * 0.3 + 0.65).toFixed(2)
+                    };
+                    break;
+                case 'conductivity':
+                    result = {
+                        conductivity: `${(Math.random() * 1e6).toExponential(2)} S/m`,
+                        confidence: (Math.random() * 0.3 + 0.6).toFixed(2)
+                    };
+                    break;
+                case 'stability':
+                    result = {
+                        stability: ['stable', 'moderately stable', 'unstable'][Math.floor(Math.random() * 3)],
+                        confidence: (Math.random() * 0.3 + 0.7).toFixed(2)
+                    };
+                    break;
+                case 'toxicity':
+                    result = {
+                        toxicity: composition && composition.includes('Cd') ? 'high' : 'low',
+                        confidence: (Math.random() * 0.2 + 0.8).toFixed(2)
+                    };
+                    break;
+            }
+            
+            // Display results
+            const resultsDiv = document.getElementById('prediction-results');
+            resultsDiv.innerHTML = `
+                <div class="space-y-2">
+                    <div class="text-lg font-semibold">${name}</div>
+                    <div class="text-sm text-white/70">Property: ${property}</div>
+                    ${Object.entries(result).map(([key, value]) => `
+                        <div class="flex justify-between">
+                            <span class="text-white/60">${key}:</span>
+                            <span class="font-medium">${value}</span>
+                        </div>
+                    `).join('')}
+                    <div class="mt-3 pt-3 border-t border-white/10 text-xs text-white/50">
+                        Prediction generated at ${new Date().toLocaleTimeString()}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Design functions
+        function generateRecipes() {
+            const lspr = document.getElementById('target-lspr').value;
+            const ar = document.getElementById('target-ar').value;
+            const size = document.getElementById('target-size').value;
+            
+            const recipes = [
+                {
+                    id: 'RCP_001',
+                    method: 'Seed-mediated growth',
+                    reagents: 'HAuCl4 (0.5 mM), CTAB (0.1 M), AgNO3 (4 mM), Ascorbic acid (0.08 M)',
+                    conditions: `Temperature: 28°C, pH: 2.5, Stirring: 300 rpm, Time: 30 min`,
+                    expected: `LSPR: ${lspr} nm, Aspect ratio: ${ar}`,
+                    confidence: 0.92
+                },
+                {
+                    id: 'RCP_002',
+                    method: 'Hydrothermal synthesis',
+                    reagents: 'HAuCl4 (1 mM), PVP (10 mM), NaOH (0.1 M)',
+                    conditions: `Temperature: 180°C, Pressure: 15 bar, Time: 6 hours`,
+                    expected: `Size: ${size} nm, Monodispersity: High`,
+                    confidence: 0.85
+                },
+                {
+                    id: 'RCP_003',
+                    method: 'Microwave-assisted',
+                    reagents: 'HAuCl4 (0.25 mM), Citrate (2.5 mM), PVP (5 mM)',
+                    conditions: `Power: 300W, Temperature: 150°C, Time: 10 min`,
+                    expected: `Rapid synthesis, Size: ${size} nm`,
+                    confidence: 0.78
+                }
+            ];
+            
+            const recipesList = document.getElementById('recipes-list');
+            recipesList.innerHTML = recipes.map(recipe => `
+                <div class="bg-white/5 rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <div class="font-semibold">${recipe.id}: ${recipe.method}</div>
+                            <div class="text-xs text-cyan-400">Confidence: ${(recipe.confidence * 100).toFixed(0)}%</div>
+                        </div>
+                        <button class="px-3 py-1 bg-purple-500/20 hover:bg-purple-500/30 rounded text-xs transition">
+                            Export
+                        </button>
+                    </div>
+                    <div class="text-sm space-y-1 text-white/70">
+                        <div><strong>Reagents:</strong> ${recipe.reagents}</div>
+                        <div><strong>Conditions:</strong> ${recipe.conditions}</div>
+                        <div><strong>Expected:</strong> ${recipe.expected}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generateDOE() {
+            const tempMin = parseFloat(document.getElementById('temp-min').value);
+            const tempMax = parseFloat(document.getElementById('temp-max').value);
+            const phMin = parseFloat(document.getElementById('ph-min').value);
+            const phMax = parseFloat(document.getElementById('ph-max').value);
+            const runs = parseInt(document.getElementById('doe-runs').value);
+            const type = document.getElementById('doe-type').value;
+            
+            const matrix = [];
+            
+            for (let i = 0; i < runs; i++) {
+                let temp, ph, time;
+                
+                if (type === 'factorial') {
+                    // Simple factorial design
+                    temp = i % 2 === 0 ? tempMin : tempMax;
+                    ph = Math.floor(i / 2) % 2 === 0 ? phMin : phMax;
+                    time = 30 + (i % 3) * 30;
+                } else if (type === 'central_composite') {
+                    // Central composite design
+                    const center = i < runs / 2;
+                    temp = center ? (tempMin + tempMax) / 2 : (i % 2 === 0 ? tempMin : tempMax);
+                    ph = center ? (phMin + phMax) / 2 : (i % 2 === 0 ? phMin : phMax);
+                    time = 30 + Math.random() * 90;
+                } else {
+                    // Random or LHS
+                    temp = tempMin + Math.random() * (tempMax - tempMin);
+                    ph = phMin + Math.random() * (phMax - phMin);
+                    time = 10 + Math.random() * 110;
+                }
+                
+                matrix.push({
+                    run: i + 1,
+                    temperature: temp.toFixed(1),
+                    pH: ph.toFixed(1),
+                    time: time.toFixed(0)
+                });
+            }
+            
+            const matrixDiv = document.getElementById('doe-matrix');
+            matrixDiv.innerHTML = `
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-white/20">
+                            <th class="text-left py-2">Run</th>
+                            <th class="text-left py-2">Temp (°C)</th>
+                            <th class="text-left py-2">pH</th>
+                            <th class="text-left py-2">Time (min)</th>
+                            <th class="text-left py-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${matrix.map(row => `
+                            <tr class="border-b border-white/10">
+                                <td class="py-2">${row.run}</td>
+                                <td class="py-2">${row.temperature}</td>
+                                <td class="py-2">${row.pH}</td>
+                                <td class="py-2">${row.time}</td>
+                                <td class="py-2">
+                                    <span class="px-2 py-1 bg-gray-500/20 rounded text-xs">Pending</span>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                <div class="mt-4 flex space-x-2">
+                    <button class="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 rounded text-sm transition">
+                        Export CSV
+                    </button>
+                    <button class="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 rounded text-sm transition">
+                        Run Simulations
+                    </button>
+                </div>
+            `;
+        }
+
+        // Visualization functions
+        function initializeCharts() {
+            // Property distribution chart
+            const propCtx = document.getElementById('property-chart').getContext('2d');
+            if (!charts.property) {
+                charts.property = new Chart(propCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Aspect Ratio', 'Size (nm)', 'LSPR (nm)', 'Yield (%)'],
+                        datasets: [{
+                            label: 'Average Value',
+                            data: [3.5, 45, 780, 85],
+                            backgroundColor: 'rgba(79, 195, 247, 0.6)',
+                            borderColor: 'rgba(79, 195, 247, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        },
+                        scales: {
+                            x: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                            y: { ticks: { color: '#fff' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                        }
+                    }
+                });
+            }
+            
+            // Method distribution chart
+            const methodCtx = document.getElementById('method-chart').getContext('2d');
+            if (!charts.method) {
+                charts.method = new Chart(methodCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Seed-mediated', 'Hydrothermal', 'Sol-gel', 'Other'],
+                        datasets: [{
+                            data: [35, 25, 20, 20],
+                            backgroundColor: [
+                                'rgba(129, 199, 132, 0.8)',
+                                'rgba(255, 183, 77, 0.8)',
+                                'rgba(186, 104, 200, 0.8)',
+                                'rgba(255, 138, 128, 0.8)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        }
+                    }
+                });
+            }
+            
+            // Correlation matrix
+            const corrCtx = document.getElementById('correlation-chart').getContext('2d');
+            if (!charts.correlation) {
+                const correlationData = [];
+                const labels = ['Temperature', 'pH', 'Time', 'Size', 'LSPR'];
+                
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 5; j++) {
+                        correlationData.push({
+                            x: labels[i],
+                            y: labels[j],
+                            v: i === j ? 100 : Math.floor(Math.random() * 100 - 50)
+                        });
+                    }
+                }
+                
+                charts.correlation = new Chart(corrCtx, {
+                    type: 'bubble',
+                    data: {
+                        datasets: [{
+                            label: 'Correlation',
+                            data: correlationData,
+                            backgroundColor: (context) => {
+                                const value = context.raw.v;
+                                const alpha = Math.abs(value) / 100;
+                                return value > 0 ? 
+                                    `rgba(129, 199, 132, ${alpha})` : 
+                                    `rgba(255, 138, 128, ${alpha})`;
+                            }
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { 
+                                type: 'category',
+                                ticks: { color: '#fff' }, 
+                                grid: { color: 'rgba(255,255,255,0.1)' } 
+                            },
+                            y: { 
+                                type: 'category',
+                                ticks: { color: '#fff' }, 
+                                grid: { color: 'rgba(255,255,255,0.1)' } 
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function initialize3DViewer() {
+            const container = document.getElementById('molecule-viewer');
+            
+            // Three.js setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000);
+            container.innerHTML = '';
+            container.appendChild(renderer.domElement);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+            
+            // Create nanorod structure
+            const geometry = new THREE.CylinderGeometry(0.5, 0.5, 3, 32);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0xFFD700,
+                specular: 0x222222,
+                shininess: 100
+            });
+            const nanorod = new THREE.Mesh(geometry, material);
+            scene.add(nanorod);
+            
+            // Add caps
+            const capGeometry = new THREE.SphereGeometry(0.5, 32, 16);
+            const cap1 = new THREE.Mesh(capGeometry, material);
+            cap1.position.y = 1.5;
+            scene.add(cap1);
+            
+            const cap2 = new THREE.Mesh(capGeometry, material);
+            cap2.position.y = -1.5;
+            scene.add(cap2);
+            
+            camera.position.z = 5;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                nanorod.rotation.x += 0.01;
+                nanorod.rotation.y += 0.01;
+                cap1.rotation.x += 0.01;
+                cap1.rotation.y += 0.01;
+                cap2.rotation.x += 0.01;
+                cap2.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // API testing
+        function testAPI() {
+            const endpoint = document.getElementById('api-endpoint').value;
+            const payload = document.getElementById('api-payload').value;
+            const responseDiv = document.getElementById('api-response');
+            
+            try {
+                const data = payload ? JSON.parse(payload) : {};
+                
+                // Simulate API response
+                let response = {};
+                
+                switch(endpoint) {
+                    case 'process':
+                        response = {
+                            status: 'success',
+                            materials: currentData.materials.length,
+                            steps: currentData.steps.length,
+                            timestamp: new Date().toISOString()
+                        };
+                        break;
+                    case 'predict':
+                        response = {
+                            status: 'success',
+                            prediction: {
+                                property: 'aspect_ratio',
+                                value: 3.8,
+                                confidence: 0.85
+                            }
+                        };
+                        break;
+                    case 'design':
+                        response = {
+                            status: 'success',
+                            recipes: 3,
+                            doe_runs: 12
+                        };
+                        break;
+                    case 'search':
+                        response = {
+                            status: 'success',
+                            results: currentData.materials.slice(0, 3)
+                        };
+                        break;
+                }
+                
+                responseDiv.textContent = JSON.stringify(response, null, 2);
+            } catch (e) {
+                responseDiv.textContent = `Error: ${e.message}`;
+            }
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set default text
+            document.getElementById('input-text').value = 
+                "Au nanorods were synthesized via a seed-mediated growth method at 28°C. " +
+                "CTAB was used as the surfactant with AgNO3 as the shape-directing agent. " +
+                "The aspect ratio was measured to be 3.8, resulting in an LSPR peak at 780 nm. " +
+                "The reaction was carried out at pH 2.5 for 30 minutes. " +
+                "TEM analysis confirmed uniform rod-shaped morphology with an average length of 45 nm. " +
+                "The yield was approximately 85%.";
+        });
+    </script>
+</body>
+</html>
