@@ -10,14 +10,37 @@ from app.db.session import get_db
 from app.db.models import User, Org, Member
 
 settings = get_settings()
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)  # Don't auto-error if no token in demo mode
 
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: Session = Depends(get_db)
 ) -> User:
-    """Get current authenticated user."""
+    """Get current authenticated user (or demo user if demo_mode enabled)."""
+    # Demo mode: return anonymous demo user
+    if settings.demo_mode and (credentials is None or not credentials.credentials):
+        # Get or create demo user
+        demo_user = db.query(User).filter(User.email == "demo@power-platform.local").first()
+        if not demo_user:
+            demo_user = User(
+                email="demo@power-platform.local",
+                name="Demo User",
+                provider="demo"
+            )
+            db.add(demo_user)
+            db.commit()
+            db.refresh(demo_user)
+        return demo_user
+
+    # Normal authentication flow
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -45,7 +68,26 @@ def get_current_org(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ) -> Org:
-    """Get current organization from header."""
+    """Get current organization from header (or demo org in demo mode)."""
+    # Demo mode: return default demo org
+    if settings.demo_mode and user.email == "demo@power-platform.local":
+        demo_org = db.query(Org).filter(Org.name == "Demo Organization").first()
+        if not demo_org:
+            demo_org = Org(name="Demo Organization", meta={})
+            db.add(demo_org)
+            db.commit()
+            db.refresh(demo_org)
+
+            # Add demo user as member
+            member = Member(
+                user_id=user.id,
+                org_id=demo_org.id,
+                role="admin"
+            )
+            db.add(member)
+            db.commit()
+        return demo_org
+
     if not x_org_id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

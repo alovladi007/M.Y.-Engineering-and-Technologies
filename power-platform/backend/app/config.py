@@ -47,6 +47,7 @@ class Settings(BaseSettings):
     # Environment
     environment: str = "development"
     debug: bool = True
+    demo_mode: bool = True  # Allow anonymous access without OAuth
 
     @property
     def cors_origins_list(self) -> List[str]:

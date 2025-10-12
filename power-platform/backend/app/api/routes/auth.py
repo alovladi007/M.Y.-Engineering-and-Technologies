@@ -113,6 +113,46 @@ async def oauth_callback(
     )
 
 
+@router.post("/demo")
+async def demo_login(db: Session = Depends(get_db)) -> TokenResponse:
+    """
+    Get demo access token (only available when DEMO_MODE=true).
+
+    This endpoint allows anonymous access for testing without OAuth setup.
+    """
+    if not settings.demo_mode:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Demo mode is not enabled"
+        )
+
+    # Get or create demo user
+    user = db.query(User).filter(User.email == "demo@power-platform.local").first()
+    if not user:
+        user = User(
+            email="demo@power-platform.local",
+            name="Demo User",
+            provider="demo"
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
+    # Create JWT token
+    token = _create_access_token({"sub": user.email})
+
+    return TokenResponse(
+        access_token=token,
+        token_type="bearer",
+        user={
+            "id": user.id,
+            "email": user.email,
+            "name": user.name,
+            "role": user.role.value
+        }
+    )
+
+
 @router.get("/me", response_model=UserResponse)
 async def get_current_user_info(
     db: Session = Depends(get_db),
