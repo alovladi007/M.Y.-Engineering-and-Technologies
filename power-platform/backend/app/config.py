@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     oauth_redirect_uri: str = "http://localhost:3000/auth/callback"
 
     # CORS
-    cors_origins: str = "http://localhost:3000,http://localhost:5173"
+    cors_origins: str = "http://localhost:3000,http://localhost:3001,http://localhost:5173"
 
     # File Storage
     storage_path: str = "/app/static/exports"
