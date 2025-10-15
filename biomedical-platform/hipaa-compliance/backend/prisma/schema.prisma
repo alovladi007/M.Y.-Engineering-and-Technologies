@@ -1,0 +1,227 @@
+// HIPAA Compliance Backend - Prisma Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  timestamp       DateTime @default(now())
+  userId          String?  @map("user_id")
+  userName        String?  @map("user_name")
+  action          String   // CREATE, READ, UPDATE, DELETE, LOGIN, LOGOUT, ACCESS_DENIED
+  resource        String   // patients, devices, readings, etc.
+  resourceId      String?  @map("resource_id")
+  details         Json?
+  ipAddress       String?  @map("ip_address")
+  userAgent       String?  @map("user_agent")
+  requestMethod   String?  @map("request_method")
+  requestPath     String?  @map("request_path")
+  statusCode      Int?     @map("status_code")
+  success         Boolean  @default(true)
+  errorMessage    String?  @map("error_message")
+  sessionId       String?  @map("session_id")
+  phi_accessed    Boolean  @default(false) @map("phi_accessed")
+  complianceFlags Json?    @map("compliance_flags")
+
+  @@index([userId])
+  @@index([action])
+  @@index([resource])
+  @@index([timestamp])
+  @@index([phi_accessed])
+  @@map("audit_logs")
+}
+
+model EncryptionKey {
+  id                String    @id @default(uuid())
+  keyId             String    @unique @map("key_id")
+  algorithm         String    @default("AES-256-GCM")
+  purpose           String    // DATA_ENCRYPTION, BACKUP_ENCRYPTION, KEY_ENCRYPTION
+  status            String    @default("active") // active, rotated, revoked
+  encryptedKey      String    @map("encrypted_key") // KEK-encrypted DEK
+  publicKey         String?   @map("public_key")
+  keyVersion        Int       @default(1) @map("key_version")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  rotatedAt         DateTime? @map("rotated_at")
+  expiresAt         DateTime? @map("expires_at")
+  createdBy         String    @map("created_by")
+  metadata          Json?
+
+  @@index([keyId])
+  @@index([status])
+  @@index([purpose])
+  @@map("encryption_keys")
+}
+
+model EncryptedData {
+  id              String   @id @default(uuid())
+  dataType        String   @map("data_type") // PHI, PII, MEDICAL_RECORD, etc.
+  encryptedValue  String   @map("encrypted_value")
+  keyId           String   @map("key_id")
+  iv              String   // Initialization Vector
+  authTag         String?  @map("auth_tag") // For authenticated encryption
+  dataHash        String   @map("data_hash") // SHA-256 hash for integrity
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  accessCount     Int      @default(0) @map("access_count")
+  lastAccessedAt  DateTime? @map("last_accessed_at")
+  ownerId         String?  @map("owner_id") // Patient ID or User ID
+  metadata        Json?
+
+  @@index([keyId])
+  @@index([dataType])
+  @@index([ownerId])
+  @@index([createdAt])
+  @@map("encrypted_data")
+}
+
+model BusinessAssociateAgreement {
+  id                    String    @id @default(uuid())
+  organizationName      String    @map("organization_name")
+  contactName           String    @map("contact_name")
+  contactEmail          String    @map("contact_email")
+  contactPhone          String?   @map("contact_phone")
+  agreementType         String    @map("agreement_type") // BAA, DPA, etc.
+  status                String    @default("draft") // draft, active, expired, terminated
+  effectiveDate         DateTime  @map("effective_date")
+  expirationDate        DateTime? @map("expiration_date")
+  signedDate            DateTime? @map("signed_date")
+  documentUrl           String?   @map("document_url")
+  documentHash          String?   @map("document_hash")
+  servicesProvided      String[]  @map("services_provided")
+  dataTypesShared       String[]  @map("data_types_shared")
+  securityRequirements  Json      @map("security_requirements")
+  breachNotificationSLA Int       @default(24) @map("breach_notification_sla") // hours
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+  createdBy             String    @map("created_by")
+  notes                 String?
+
+  auditTrail            BAAauditTrail[]
+
+  @@index([status])
+  @@index([expirationDate])
+  @@index([organizationName])
+  @@map("business_associate_agreements")
+}
+
+model BAAauditTrail {
+  id        String   @id @default(uuid())
+  baaId     String   @map("baa_id")
+  timestamp DateTime @default(now())
+  action    String   // CREATED, UPDATED, SIGNED, RENEWED, TERMINATED
+  performedBy String @map("performed_by")
+  changes   Json?
+  notes     String?
+
+  baa       BusinessAssociateAgreement @relation(fields: [baaId], references: [id], onDelete: Cascade)
+
+  @@index([baaId])
+  @@index([timestamp])
+  @@map("baa_audit_trail")
+}
+
+model ComplianceReport {
+  id              String   @id @default(uuid())
+  reportType      String   @map("report_type") // AUDIT, RISK_ASSESSMENT, BREACH, ANNUAL
+  title           String
+  description     String?
+  generatedAt     DateTime @default(now()) @map("generated_at")
+  generatedBy     String   @map("generated_by")
+  reportPeriodStart DateTime @map("report_period_start")
+  reportPeriodEnd   DateTime @map("report_period_end")
+  status          String   @default("draft") // draft, final, submitted
+  findings        Json     // Compliance findings
+  recommendations Json?    // Recommended actions
+  documentUrl     String?  @map("document_url")
+  submittedAt     DateTime? @map("submitted_at")
+  submittedTo     String?  @map("submitted_to")
+  metadata        Json?
+
+  @@index([reportType])
+  @@index([status])
+  @@index([generatedAt])
+  @@map("compliance_reports")
+}
+
+model DataBreachIncident {
+  id                    String    @id @default(uuid())
+  incidentNumber        String    @unique @map("incident_number")
+  severity              String    // LOW, MEDIUM, HIGH, CRITICAL
+  status                String    @default("reported") // reported, investigating, contained, resolved
+  discoveredAt          DateTime  @map("discovered_at")
+  reportedAt            DateTime  @default(now()) @map("reported_at")
+  reportedBy            String    @map("reported_by")
+  affectedDataTypes     String[]  @map("affected_data_types")
+  affectedRecordsCount  Int       @map("affected_records_count")
+  affectedPatients      String[]  @map("affected_patients")
+  breachDescription     String    @map("breach_description")
+  rootCause             String?   @map("root_cause")
+  containmentActions    Json?     @map("containment_actions")
+  remediationActions    Json?     @map("remediation_actions")
+  notificationsSent     Boolean   @default(false) @map("notifications_sent")
+  notificationDate      DateTime? @map("notification_date")
+  regulatoryReported    Boolean   @default(false) @map("regulatory_reported")
+  regulatoryReportDate  DateTime? @map("regulatory_report_date")
+  resolvedAt            DateTime? @map("resolved_at")
+  metadata              Json?
+
+  @@index([status])
+  @@index([severity])
+  @@index([discoveredAt])
+  @@map("data_breach_incidents")
+}
+
+model AccessControl {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  userName        String   @map("user_name")
+  role            String   // ADMIN, CLINICIAN, NURSE, TECHNICIAN, AUDITOR
+  permissions     String[] // Array of permission strings
+  resourceAccess  Json     @map("resource_access") // Resource-level permissions
+  mfaEnabled      Boolean  @default(false) @map("mfa_enabled")
+  mfaMethod       String?  @map("mfa_method")
+  lastLogin       DateTime? @map("last_login")
+  loginCount      Int      @default(0) @map("login_count")
+  failedAttempts  Int      @default(0) @map("failed_attempts")
+  lockedUntil     DateTime? @map("locked_until")
+  passwordHash    String   @map("password_hash")
+  passwordChangedAt DateTime @default(now()) @map("password_changed_at")
+  sessionTimeout  Int      @default(30) @map("session_timeout") // minutes
+  ipWhitelist     String[] @map("ip_whitelist")
+  status          String   @default("active") // active, suspended, revoked
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  expiresAt       DateTime? @map("expires_at")
+  metadata        Json?
+
+  @@index([userId])
+  @@index([role])
+  @@index([status])
+  @@map("access_controls")
+}
+
+model DataRetentionPolicy {
+  id                String   @id @default(uuid())
+  policyName        String   @map("policy_name")
+  dataType          String   @map("data_type")
+  retentionPeriodDays Int    @map("retention_period_days")
+  archiveEnabled    Boolean  @default(true) @map("archive_enabled")
+  archiveLocation   String?  @map("archive_location")
+  deletionMethod    String   @default("secure_wipe") @map("deletion_method")
+  legalHoldExempt   Boolean  @default(false) @map("legal_hold_exempt")
+  status            String   @default("active")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  createdBy         String   @map("created_by")
+  metadata          Json?
+
+  @@index([dataType])
+  @@index([status])
+  @@map("data_retention_policies")
+}
