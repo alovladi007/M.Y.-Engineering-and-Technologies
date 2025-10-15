@@ -1,0 +1,71 @@
+# BioTensor Labs Backend - Python Dependencies
+
+# Web Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# MLflow and ML
+mlflow==2.9.2
+scikit-learn==1.4.0
+numpy==1.26.3
+scipy==1.12.0
+pandas==2.1.4
+
+# Signal Processing
+pywavelets==1.5.0
+librosa==0.10.1
+opencv-python==4.9.0.80
+Pillow==10.2.0
+
+# Deep Learning
+torch==2.1.2
+tensorflow==2.15.0
+keras==2.15.0
+
+# Database
+sqlalchemy==2.0.25
+alembic==1.13.1
+psycopg2-binary==2.9.9
+redis==5.0.1
+
+# AWS Integration
+boto3==1.34.27
+s3fs==2024.2.0
+
+# Utilities
+python-multipart==0.0.6
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-dotenv==1.0.1
+aiofiles==23.2.1
+
+# Monitoring and Logging
+prometheus-client==0.19.0
+python-json-logger==2.0.7
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+httpx==0.26.0
+
+# Data Validation
+marshmallow==3.20.2
+
+# Job Queue
+celery==5.3.6
+flower==2.0.1
+
+# Experiment Tracking
+wandb==0.16.2
+tensorboard==2.15.1
+
+# Biomedical Signal Processing
+heartpy==1.2.7
+neurokit2==0.2.7
+mne==1.6.1
+
+# Time Series
+statsmodels==0.14.1
+prophet==1.1.5
