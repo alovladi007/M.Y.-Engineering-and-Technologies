@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioMedical Intelligence Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .platform-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+
+        .platform-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .platform-card h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .platform-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .platform-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .info-section h3 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .info-section p, .info-section ul {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            padding-left: 25px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #10b981;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .platforms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 BioMedical Intelligence Platform</h1>
+            <p>Comprehensive healthcare technology suite with AI diagnostics, medical imaging, real-time biosensing, HIPAA compliance, and MLOps</p>
+            <span class="status-badge">✓ Production Ready</span>
+        </div>
+
+        <div class="platforms-grid">
+            <!-- AI-Powered Diagnostics -->
+            <div class="platform-card">
+                <div class="platform-icon">🧠</div>
+                <h2>AI-Powered Diagnostics</h2>
+                <p>Advanced ML-based patient diagnostics with risk scoring, predictive analytics, and clinical decision support.</p>
+                <div class="platform-links">
+                    <a href="http://localhost:3001" class="btn btn-primary" target="_blank">Open Dashboard</a>
+                    <a href="http://localhost:5001/docs" class="btn btn-secondary" target="_blank">API Docs</a>
+                </div>
+            </div>
+
+            <!-- Medical Imaging AI -->
+            <div class="platform-card">
+                <div class="platform-icon">🔬</div>
+                <h2>Medical Imaging AI</h2>
+                <p>DICOM image processing with AI inference, Grad-CAM explainability, and multi-model support for radiology.</p>
+                <div class="platform-links">
+                    <a href="http://localhost:3002" class="btn btn-primary" target="_blank">Open Viewer</a>
+                    <a href="http://localhost:5002/docs" class="btn btn-secondary" target="_blank">API Docs</a>
+                </div>
+            </div>
+
+            <!-- Biosensing Technology -->
+            <div class="platform-card">
+                <div class="platform-icon">📡</div>
+                <h2>Biosensing Technology</h2>
+                <p>Real-time biosensor monitoring with AWS IoT Core, WebSocket streaming, and anomaly detection.</p>
+                <div class="platform-links">
+                    <a href="http://localhost:3003" class="btn btn-primary" target="_blank">Open Monitor</a>
+                    <a href="http://localhost:5003/api/v1" class="btn btn-secondary" target="_blank">API Docs</a>
+                </div>
+            </div>
+
+            <!-- HIPAA Compliance -->
+            <div class="platform-card">
+                <div class="platform-icon">🔐</div>
+                <h2>HIPAA Compliance</h2>
+                <p>AES-256-GCM encryption, comprehensive audit logging, BAA management, and data breach tracking.</p>
+                <div class="platform-links">
+                    <a href="http://localhost:3004" class="btn btn-primary" target="_blank">Open Admin</a>
+                    <a href="http://localhost:5004/api/v1" class="btn btn-secondary" target="_blank">API Docs</a>
+                </div>
+            </div>
+
+            <!-- BioTensor Labs -->
+            <div class="platform-card">
+                <div class="platform-icon">🧪</div>
+                <h2>BioTensor Labs</h2>
+                <p>MLOps platform with MLflow integration, experiment tracking, model registry, and signal processing.</p>
+                <div class="platform-links">
+                    <a href="http://localhost:3005" class="btn btn-primary" target="_blank">Open Labs</a>
+                    <a href="http://localhost:5005/docs" class="btn btn-secondary" target="_blank">API Docs</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="info-section">
+            <h3>🚀 Quick Start</h3>
+            <p>Start all services with one command:</p>
+            <div class="code-block">cd biomedical-platform<br>./START_ALL_SERVICES.sh</div>
+            <p>Or start individual services:</p>
+            <ul>
+                <li>Backend APIs run on ports 5001-5005</li>
+                <li>Frontend dashboards run on ports 3001-3005</li>
+                <li>All services support hot-reload for development</li>
+            </ul>
+        </div>
+
+        <!-- Features -->
+        <div class="info-section">
+            <h3>✨ Platform Features</h3>
+            <ul>
+                <li><strong>5 Complete Full-Stack Services</strong> - Each with backend API and frontend dashboard</li>
+                <li><strong>Enterprise Security</strong> - AES-256-GCM encryption, HIPAA-compliant audit logging</li>
+                <li><strong>Real-time Capabilities</strong> - WebSocket streaming, MQTT messaging, live updates</li>
+                <li><strong>Advanced ML/AI</strong> - TensorFlow, PyTorch, MLflow, Grad-CAM explainability</li>
+                <li><strong>Production Ready</strong> - Docker support, Kubernetes manifests, CI/CD pipelines</li>
+                <li><strong>Comprehensive APIs</strong> - RESTful with OpenAPI/Swagger documentation</li>
+            </ul>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="info-section">
+            <h3>🛠 Technology Stack</h3>
+            <p><strong>Backend:</strong> Python (FastAPI), Node.js (Express), TypeScript</p>
+            <p><strong>Frontend:</strong> Next.js 14, React 18, TypeScript, Tailwind CSS</p>
+            <p><strong>Databases:</strong> PostgreSQL, Redis</p>
+            <p><strong>ML/AI:</strong> TensorFlow, PyTorch, MLflow, scikit-learn</p>
+            <p><strong>Real-time:</strong> Socket.IO, AWS IoT Core, MQTT</p>
+            <p><strong>Security:</strong> AES-256-GCM, JWT, bcrypt</p>
+        </div>
+
+        <!-- Documentation -->
+        <div class="info-section">
+            <h3>📚 Documentation</h3>
+            <p>Comprehensive documentation available:</p>
+            <ul>
+                <li><a href="ACCESS_GUIDE.md" style="color: #667eea;">Complete Access Guide</a></li>
+                <li><a href="README.md" style="color: #667eea;">Platform Overview</a></li>
+                <li>Individual service READMEs in each directory</li>
+                <li>API documentation at /docs endpoints</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p><strong>BioMedical Intelligence Platform v1.0.0</strong></p>
+            <p>Built with ❤️ by M.Y. Engineering and Technologies</p>
+            <p style="margin-top: 20px; font-size: 0.9rem;">
+                <a href="https://github.com/alovladi007/M.Y.-Engineering-and-Technologies"
+                   style="color: white; text-decoration: none;">
+                    📦 View on GitHub
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Check if services are running
+        const services = [
+            { name: 'AI Diagnostics', port: 3001 },
+            { name: 'Medical Imaging', port: 3002 },
+            { name: 'Biosensing', port: 3003 },
+            { name: 'HIPAA Compliance', port: 3004 },
+            { name: 'BioTensor Labs', port: 3005 }
+        ];
+
+        console.log('🏥 BioMedical Intelligence Platform');
+        console.log('=====================================');
+        console.log('Services available on localhost:');
+        services.forEach(service => {
+            console.log(`• ${service.name}: http://localhost:${service.port}`);
+        });
+    </script>
+</body>
+</html>
