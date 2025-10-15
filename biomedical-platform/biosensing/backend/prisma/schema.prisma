@@ -1,0 +1,129 @@
+// Biosensing Backend - Prisma Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id                String              @id @default(uuid())
+  mrn               String              @unique
+  firstName         String              @map("first_name")
+  lastName          String              @map("last_name")
+  dateOfBirth       DateTime            @map("date_of_birth")
+  gender            String?
+  contactEmail      String?             @map("contact_email")
+  contactPhone      String?             @map("contact_phone")
+  emergencyContact  Json?               @map("emergency_contact")
+  medicalHistory    String[]            @map("medical_history")
+  allergies         String[]
+  medications       String[]
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+
+  devices           Device[]
+  readings          BiosensorReading[]
+  alerts            Alert[]
+  sessions          MonitoringSession[]
+
+  @@map("patients")
+}
+
+model Device {
+  id                String              @id @default(uuid())
+  deviceType        String              @map("device_type")
+  manufacturer      String
+  model             String
+  serialNumber      String              @unique @map("serial_number")
+  firmwareVersion   String?             @map("firmware_version")
+  assignedPatientId String?             @map("assigned_patient_id")
+  status            String              @default("offline")
+  lastSeen          DateTime?           @map("last_seen")
+  registeredAt      DateTime            @default(now()) @map("registered_at")
+  config            Json                @default("{}")
+
+  assignedPatient   Patient?            @relation(fields: [assignedPatientId], references: [id], onDelete: SetNull)
+  readings          BiosensorReading[]
+  alerts            Alert[]
+  sessions          MonitoringSession[]
+
+  @@index([assignedPatientId])
+  @@index([status])
+  @@map("devices")
+}
+
+model BiosensorReading {
+  id            String   @id @default(uuid())
+  deviceId      String   @map("device_id")
+  patientId     String?  @map("patient_id")
+  sensorType    String   @map("sensor_type")
+  value         Float
+  unit          String
+  timestamp     DateTime
+  processedAt   DateTime @default(now()) @map("processed_at")
+  qualityScore  Float    @default(1.0) @map("quality_score")
+  isAnomaly     Boolean  @default(false) @map("is_anomaly")
+  anomalyScore  Float    @default(0.0) @map("anomaly_score")
+  metadata      Json?
+
+  device        Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  patient       Patient? @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  alerts        Alert[]
+
+  @@index([deviceId])
+  @@index([patientId])
+  @@index([sensorType])
+  @@index([timestamp])
+  @@index([isAnomaly])
+  @@map("biosensor_readings")
+}
+
+model Alert {
+  id                String    @id @default(uuid())
+  deviceId          String    @map("device_id")
+  patientId         String?   @map("patient_id")
+  readingId         String?   @map("reading_id")
+  level             String
+  message           String
+  thresholdType     String?   @map("threshold_type")
+  acknowledged      Boolean   @default(false)
+  acknowledgedBy    String?   @map("acknowledged_by")
+  acknowledgedAt    DateTime? @map("acknowledged_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
+
+  device            Device              @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  patient           Patient?            @relation(fields: [patientId], references: [id], onDelete: SetNull)
+  reading           BiosensorReading?   @relation(fields: [readingId], references: [id], onDelete: SetNull)
+
+  @@index([deviceId])
+  @@index([patientId])
+  @@index([level])
+  @@index([acknowledged])
+  @@index([createdAt])
+  @@map("alerts")
+}
+
+model MonitoringSession {
+  id                String    @id @default(uuid())
+  patientId         String    @map("patient_id")
+  deviceId          String    @map("device_id")
+  startedAt         DateTime  @default(now()) @map("started_at")
+  endedAt           DateTime? @map("ended_at")
+  status            String    @default("active")
+  totalReadings     Int       @default(0) @map("total_readings")
+  alertsGenerated   Int       @default(0) @map("alerts_generated")
+  notes             String?
+
+  patient           Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  device            Device    @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([deviceId])
+  @@index([status])
+  @@index([startedAt])
+  @@map("monitoring_sessions")
+}

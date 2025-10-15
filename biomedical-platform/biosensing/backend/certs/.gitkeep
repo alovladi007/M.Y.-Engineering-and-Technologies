@@ -1,0 +1,4 @@
+# Place AWS IoT certificates here:
+# - private.key (private key)
+# - cert.pem (device certificate)
+# - AmazonRootCA1.pem (root CA)
